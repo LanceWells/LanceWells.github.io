@@ -8,8 +8,8 @@
 
  * @returns {Promise} A promise on the resolution to an image being loaded.
  */
-function LoadImage(imagePath) {
-    return new Promise((resolve, reject) => {
+function LoadImage(imagePath: string): Promise<any> {
+    var promise = new Promise(function(resolve, reject){
         let image = new Image();
         image.addEventListener("load", () => {
             resolve(image);
@@ -19,24 +19,34 @@ function LoadImage(imagePath) {
         });
         image.src = imagePath;
     });
+    return promise;
 }
 
-function draw() {
-    var canvas = document.getElementById('tutorial');
+var imgSrc_body : string = "images/CharacterCreator/BaseBody/Purple.png";
+var imgSrc_clothing : string = "images/CharacterCreator/Accessories/WorldsWorstHat.png";
+var imgSrc_clothingDecoration: string;
+var imgSrc_heldItem: string;
+var imgSrc_hair: string;
+var imgSrc_arm: string;
+var imgSrc_sleeves: string;
+var imgSrc_sleevesDecoration: string;
+
+function DrawCharacterCanvas() {
+    var canvas = document.getElementById('tutorial') as HTMLCanvasElement;
     if (canvas.getContext('2d')) {
         var ctx = canvas.getContext('2d');
         var imageSources =
-        [
-            "images/CharacterCreator/BaseBody/Purple.png",
-            "images/CharacterCreator/Accessories/WorldsWorstHat.png",
-        ];
+            [
+                imgSrc_body,
+                imgSrc_clothing,
+            ];
 
         Promise
             .all(imageSources.map(i => LoadImage(i)))
             .then((images) => {
                 images.forEach((image) => {
                     ctx.drawImage(image, 0, 0);
-                })
-            })
+                });
+            });
     }
 }
