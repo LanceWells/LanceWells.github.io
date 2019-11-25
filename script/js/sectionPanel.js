@@ -21,3 +21,4 @@ for (i = 0; i < acc.length; i++) {
         }
     });
 }
+//# sourceMappingURL=sectionPanel.js.map

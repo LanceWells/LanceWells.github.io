@@ -1,3 +1,31 @@
+var json_body = '{ "images": [{ "key": "empty", "value": { "image": "images/CharacterCreator/Empty/Empty.png", "yOffset": 0, "zOffset": 0 } }, { "key": "purple", "value": { "image": "images/CharacterCreator/BaseBody/Purple.png", "yOffset": 0, "zOffset": 0 } }] }';
+var json_clothing = '{"images":[{"key":"empty","value":{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0}},{"key":"worldsWorstHat","value":{"image":"images/CharacterCreator/Accessories/WorldsWorstHat.png","yOffset":0,"zOffset":0}}]}';
+var json_clothingDecoration;
+var json_heldItem;
+var json_hair;
+var json_arm;
+var json_sleeves;
+var json_sleevesDecoration;
+var imgSrc_body = "images/CharacterCreator/BaseBody/Purple.png";
+var imgSrc_clothing = "images/CharacterCreator/Accessories/WorldsWorstHat.png";
+var imgSrc_clothingDecoration = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_heldItem = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_hair = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_arm = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_sleeves = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_sleevesDecoration = "images/CharacterCreator/Empty/Empty.png";
+var loadedCharParts = document.getElementsByClassName("charPart");
+var i = 0;
+var _loop_1 = function () {
+    var loadedCharPart = loadedCharParts[i];
+    loadedCharPart.onclick = function () {
+        var charPartImage = loadedCharPart.firstElementChild;
+        alert(charPartImage.src);
+    };
+};
+for (i = 0; i < loadedCharParts.length; i++) {
+    _loop_1();
+}
 /**
  * @description
  * Creates a promise on loading an image. Borrowed from an answer to this this StackOverflow question:
@@ -23,14 +51,14 @@ function LoadImage(imagePath) {
     });
     return promise;
 }
-var imgSrc_body = "images/CharacterCreator/BaseBody/Purple.png";
-var imgSrc_clothing = "images/CharacterCreator/Accessories/WorldsWorstHat.png";
-var imgSrc_clothingDecoration;
-var imgSrc_heldItem;
-var imgSrc_hair;
-var imgSrc_arm;
-var imgSrc_sleeves;
-var imgSrc_sleevesDecoration;
+/**
+ * @description
+ * Populates the html panels with elements from the json stored in the json folder.
+ */
+function PopulatePartButtonsFromJson() {
+    // var obj = JSON.parse(json_body);
+    // alert(obj.images[0].key);
+}
 /**
  * @description
  * Draws the elements on the character creation canvas, in-order.
@@ -52,3 +80,4 @@ function DrawCharacterCanvas() {
         });
     }
 }
+//# sourceMappingURL=canvas.js.map

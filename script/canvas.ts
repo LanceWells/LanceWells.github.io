@@ -1,3 +1,36 @@
+var json_body: string                   = '{ "images": [{ "key": "empty", "value": { "image": "images/CharacterCreator/Empty/Empty.png", "yOffset": 0, "zOffset": 0 } }, { "key": "purple", "value": { "image": "images/CharacterCreator/BaseBody/Purple.png", "yOffset": 0, "zOffset": 0 } }] }';
+var json_clothing: string               = '{"images":[{"key":"empty","value":{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0}},{"key":"worldsWorstHat","value":{"image":"images/CharacterCreator/Accessories/WorldsWorstHat.png","yOffset":0,"zOffset":0}}]}';
+var json_clothingDecoration: string;
+var json_heldItem: string;
+var json_hair: string;
+var json_arm: string;
+var json_sleeves: string;
+var json_sleevesDecoration: string;
+
+var imgSrc_body: string                 = "images/CharacterCreator/BaseBody/Purple.png";
+var imgSrc_clothing: string             = "images/CharacterCreator/Accessories/WorldsWorstHat.png";
+var imgSrc_clothingDecoration: string   = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_heldItem: string             = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_hair: string                 = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_arm: string                  = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_sleeves: string              = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_sleevesDecoration: string    = "images/CharacterCreator/Empty/Empty.png";
+
+var loadedCharParts: HTMLCollectionOf<HTMLDivElement> =
+    document.getElementsByClassName("charPart") as HTMLCollectionOf<HTMLDivElement>;
+
+var i = 0;
+for (i = 0; i < loadedCharParts.length; i++)
+{
+    let loadedCharPart: HTMLDivElement = loadedCharParts[i];
+    
+    loadedCharPart.onclick = function()
+    {
+        let charPartImage = loadedCharPart.firstElementChild as HTMLImageElement;
+        alert(charPartImage.src);
+    }
+}
+
 /**
  * @description
  * Creates a promise on loading an image. Borrowed from an answer to this this StackOverflow question:
@@ -24,14 +57,15 @@ function LoadImage(imagePath: string): Promise<any> {
     return promise;
 }
 
-var imgSrc_body : string = "images/CharacterCreator/BaseBody/Purple.png";
-var imgSrc_clothing : string = "images/CharacterCreator/Accessories/WorldsWorstHat.png";
-var imgSrc_clothingDecoration: string;
-var imgSrc_heldItem: string;
-var imgSrc_hair: string;
-var imgSrc_arm: string;
-var imgSrc_sleeves: string;
-var imgSrc_sleevesDecoration: string;
+/**
+ * @description
+ * Populates the html panels with elements from the json stored in the json folder.
+ */
+function PopulatePartButtonsFromJson()
+{
+    // var obj = JSON.parse(json_body);
+    // alert(obj.images[0].key);
+}
 
 /**
  * @description

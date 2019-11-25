@@ -4,6 +4,7 @@
         "lib": ["es5", "es2015", "dom", "scripthost"],
         "noUnusedLocals": true,
         "module": "commonjs",
-        "outDir": "js"
+        "outDir": "script/js",
+        "sourceMap": true
     }
 }
