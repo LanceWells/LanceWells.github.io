@@ -6,14 +6,22 @@ var json_hair;
 var json_arm;
 var json_sleeves;
 var json_sleevesDecoration;
-var imgSrc_body = "images/CharacterCreator/BaseBody/Purple.png";
-var imgSrc_clothing = "images/CharacterCreator/Accessories/WorldsWorstHat.png";
+var imgSrc_body = "images/CharacterCreator/Empty/Empty.png";
+var imgSrc_clothing = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_clothingDecoration = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_heldItem = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_hair = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_arm = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleeves = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleevesDecoration = "images/CharacterCreator/Empty/Empty.png";
+var panelId_body = "Panel_BaseBody";
+var panelId_clothing = "Panel_Clothing";
+var panelId_clothingDecoration = "Panel_ClothingDecoration";
+var panelId_heldItem = "Panel_HeldItem";
+var panelId_hair = "Panel_Hair";
+var panelId_arm = "Panel_Arm";
+var panelId_sleeves = "Panel_Sleeves";
+var panelId_sleevesDecoration = "Panel_SleevesDecoration";
 /**
  * @description
  * Creates a promise on loading an image. Borrowed from an answer to this this StackOverflow question:
@@ -47,11 +55,10 @@ function LoadImage(imagePath) {
  * elements that contain an "image" key with a string field.
  * @param idToPopulate The id of the accordion panel to populate the new image-buttons with.
  */
-function PopulateAccordionPanel(json, idToPopulate) {
+function PopulateCharImagePanel(json, idToPopulate) {
     var clothingJson = JSON.parse(json);
     var i = 0;
-    var accordionButton = document.getElementById(idToPopulate);
-    var buttonPanel = accordionButton.nextElementSibling;
+    var buttonPanel = document.getElementById(idToPopulate);
     for (i = 0; i < clothingJson.images.length; i++) {
         var imgSrc = clothingJson.images[i].image;
         var imgHtml = '<div class="charPart" style="float: left"><img src="'
@@ -68,6 +75,8 @@ function DrawCharacterCanvas() {
     var canvas = document.getElementById('tutorial');
     if (canvas.getContext('2d')) {
         var ctx = canvas.getContext('2d');
+        // We're drawing, so always assume there's stuff on the canvas! Clear it out so we can redraw!
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         var imageSources = [
             imgSrc_body,
             imgSrc_clothing,
@@ -98,7 +107,42 @@ function DecorateCharacterPartButtons() {
         var loadedCharPart = loadedCharParts[i];
         loadedCharPart.onclick = function () {
             var charPartImage = loadedCharPart.firstElementChild;
-            alert(charPartImage.src);
+            var imageSrc = charPartImage.src;
+            // All of these divs should be nested in larger 'panel' class divs, which contain an id that
+            // represents which character customization bit this specific button changes. Use a switch-case to
+            // determine which of our character customization strings we should update.
+            var panel = loadedCharPart.parentElement;
+            var panelId = panel.id;
+            switch (panelId) {
+                case panelId_body:
+                    imgSrc_body = imageSrc;
+                    break;
+                case panelId_clothing:
+                    imgSrc_clothing = imageSrc;
+                    break;
+                case panelId_clothingDecoration:
+                    imgSrc_clothingDecoration = imageSrc;
+                    break;
+                case panelId_heldItem:
+                    imgSrc_heldItem = imageSrc;
+                    break;
+                case panelId_hair:
+                    imgSrc_hair = imageSrc;
+                    break;
+                case panelId_arm:
+                    imgSrc_arm = imageSrc;
+                    break;
+                case panelId_sleeves:
+                    imgSrc_sleeves = imageSrc;
+                    break;
+                case panelId_sleevesDecoration:
+                    imgSrc_sleevesDecoration = imageSrc;
+                    break;
+                default:
+                    break;
+            }
+            // We've updated something. Re-draw!
+            DrawCharacterCanvas();
         };
     };
     for (i = 0; i < loadedCharParts.length; i++) {
@@ -111,8 +155,8 @@ function DecorateCharacterPartButtons() {
  */
 function PopulatePartButtonsFromJson() {
     // First, get all of the json from our JSON strings, and populate the accordions with that info.
-    PopulateAccordionPanel(json_clothing, "ClothingAccordion");
-    PopulateAccordionPanel(json_body, "BaseBodyAccordion");
+    PopulateCharImagePanel(json_clothing, panelId_clothing);
+    PopulateCharImagePanel(json_body, panelId_body);
     // Now, add the callbacks to every button!
     DecorateCharacterPartButtons();
 }
