@@ -1,5 +1,5 @@
 var json_body = '{ "images": [{ "key": "empty", "value": { "image": "images/CharacterCreator/Empty/Empty.png", "yOffset": 0, "zOffset": 0 } }, { "key": "purple", "value": { "image": "images/CharacterCreator/BaseBody/Purple.png", "yOffset": 0, "zOffset": 0 } }] }';
-var json_clothing = '{"images":[{"key":"empty","value":{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0}},{"key":"worldsWorstHat","value":{"image":"images/CharacterCreator/Accessories/WorldsWorstHat.png","yOffset":0,"zOffset":0}}]}';
+var json_clothing = '{"images":[{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0},{"image":"images/CharacterCreator/Clothing/WorldsWorstHat.png","yOffset":0,"zOffset":0}]}';
 var json_clothingDecoration;
 var json_heldItem;
 var json_hair;
@@ -14,17 +14,35 @@ var imgSrc_hair = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_arm = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleeves = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleevesDecoration = "images/CharacterCreator/Empty/Empty.png";
-var loadedCharParts = document.getElementsByClassName("charPart");
-var i = 0;
-var _loop_1 = function () {
-    var loadedCharPart = loadedCharParts[i];
-    loadedCharPart.onclick = function () {
-        var charPartImage = loadedCharPart.firstElementChild;
-        alert(charPartImage.src);
+// var loadedCharParts: HTMLCollectionOf<HTMLDivElement> =
+//     document.getElementsByClassName("charPart") as HTMLCollectionOf<HTMLDivElement>;
+// var i = 0;
+// for (i = 0; i < loadedCharParts.length; i++)
+// {
+//     let loadedCharPart: HTMLDivElement = loadedCharParts[i];
+//     loadedCharPart.onclick = function()
+//     {
+//         let charPartImage = loadedCharPart.firstElementChild as HTMLImageElement;
+//         alert(charPartImage.src);
+//     }
+// }
+/**
+ * @description
+ * Decorates all of the character part buttons with their respective callback functions when clicked.
+ */
+function DecorateCharacterPartButtons() {
+    var loadedCharParts = document.getElementsByClassName("charPart");
+    var i = 0;
+    var _loop_1 = function () {
+        var loadedCharPart = loadedCharParts[i];
+        loadedCharPart.onclick = function () {
+            var charPartImage = loadedCharPart.firstElementChild;
+            alert(charPartImage.src);
+        };
     };
-};
-for (i = 0; i < loadedCharParts.length; i++) {
-    _loop_1();
+    for (i = 0; i < loadedCharParts.length; i++) {
+        _loop_1();
+    }
 }
 /**
  * @description
@@ -56,8 +74,18 @@ function LoadImage(imagePath) {
  * Populates the html panels with elements from the json stored in the json folder.
  */
 function PopulatePartButtonsFromJson() {
-    // var obj = JSON.parse(json_body);
-    // alert(obj.images[0].key);
+    var clothingJson = JSON.parse(json_clothing);
+    var i = 0;
+    var accordionButton = document.getElementById("ClothingAccordion");
+    var buttonPanel = accordionButton.nextElementSibling;
+    for (i = 0; i < clothingJson.images.length; i++) {
+        var imgSrc = clothingJson.images[i].image;
+        var imgHtml = '<div class="charPart" style="float: left"><img src="'
+            + imgSrc
+            + '"><button class="charPartButton"></button></div>';
+        buttonPanel.insertAdjacentHTML('afterbegin', imgHtml);
+    }
+    DecorateCharacterPartButtons();
 }
 /**
  * @description

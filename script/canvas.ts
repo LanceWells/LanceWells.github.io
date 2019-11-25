@@ -1,5 +1,5 @@
 var json_body: string                   = '{ "images": [{ "key": "empty", "value": { "image": "images/CharacterCreator/Empty/Empty.png", "yOffset": 0, "zOffset": 0 } }, { "key": "purple", "value": { "image": "images/CharacterCreator/BaseBody/Purple.png", "yOffset": 0, "zOffset": 0 } }] }';
-var json_clothing: string               = '{"images":[{"key":"empty","value":{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0}},{"key":"worldsWorstHat","value":{"image":"images/CharacterCreator/Accessories/WorldsWorstHat.png","yOffset":0,"zOffset":0}}]}';
+var json_clothing: string = '{"images":[{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0},{"image":"images/CharacterCreator/Clothing/WorldsWorstHat.png","yOffset":0,"zOffset":0}]}';
 var json_clothingDecoration: string;
 var json_heldItem: string;
 var json_hair: string;
@@ -16,18 +16,38 @@ var imgSrc_arm: string                  = "images/CharacterCreator/Empty/Empty.p
 var imgSrc_sleeves: string              = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleevesDecoration: string    = "images/CharacterCreator/Empty/Empty.png";
 
-var loadedCharParts: HTMLCollectionOf<HTMLDivElement> =
-    document.getElementsByClassName("charPart") as HTMLCollectionOf<HTMLDivElement>;
+// var loadedCharParts: HTMLCollectionOf<HTMLDivElement> =
+//     document.getElementsByClassName("charPart") as HTMLCollectionOf<HTMLDivElement>;
 
-var i = 0;
-for (i = 0; i < loadedCharParts.length; i++)
-{
-    let loadedCharPart: HTMLDivElement = loadedCharParts[i];
+// var i = 0;
+// for (i = 0; i < loadedCharParts.length; i++)
+// {
+//     let loadedCharPart: HTMLDivElement = loadedCharParts[i];
     
-    loadedCharPart.onclick = function()
-    {
-        let charPartImage = loadedCharPart.firstElementChild as HTMLImageElement;
-        alert(charPartImage.src);
+//     loadedCharPart.onclick = function()
+//     {
+//         let charPartImage = loadedCharPart.firstElementChild as HTMLImageElement;
+//         alert(charPartImage.src);
+//     }
+// }
+
+/**
+ * @description
+ * Decorates all of the character part buttons with their respective callback functions when clicked.
+ */
+function DecorateCharacterPartButtons()
+{
+    var loadedCharParts: HTMLCollectionOf<HTMLDivElement> =
+        document.getElementsByClassName("charPart") as HTMLCollectionOf<HTMLDivElement>;
+
+    var i = 0;
+    for (i = 0; i < loadedCharParts.length; i++) {
+        let loadedCharPart: HTMLDivElement = loadedCharParts[i];
+
+        loadedCharPart.onclick = function () {
+            let charPartImage = loadedCharPart.firstElementChild as HTMLImageElement;
+            alert(charPartImage.src);
+        }
     }
 }
 
@@ -63,8 +83,22 @@ function LoadImage(imagePath: string): Promise<any> {
  */
 function PopulatePartButtonsFromJson()
 {
-    // var obj = JSON.parse(json_body);
-    // alert(obj.images[0].key);
+    var clothingJson = JSON.parse(json_clothing);
+    var i: number = 0;
+
+    var accordionButton: HTMLButtonElement = document.getElementById("ClothingAccordion") as HTMLButtonElement;
+    var buttonPanel: HTMLDivElement = accordionButton.nextElementSibling as HTMLDivElement;
+
+    for (i = 0; i < clothingJson.images.length; i++)
+    {
+        let imgSrc: string = clothingJson.images[i].image;
+        let imgHtml: string = '<div class="charPart" style="float: left"><img src="'
+                            + imgSrc
+                            + '"><button class="charPartButton"></button></div>';
+        buttonPanel.insertAdjacentHTML('afterbegin', imgHtml);
+    }
+
+    DecorateCharacterPartButtons();
 }
 
 /**
