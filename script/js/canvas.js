@@ -1,4 +1,4 @@
-var json_body = '{ "images": [{ "key": "empty", "value": { "image": "images/CharacterCreator/Empty/Empty.png", "yOffset": 0, "zOffset": 0 } }, { "key": "purple", "value": { "image": "images/CharacterCreator/BaseBody/Purple.png", "yOffset": 0, "zOffset": 0 } }] }';
+var json_body = '{"images":[{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0},{"image":"images/CharacterCreator/BaseBody/Purple.png","yOffset":0,"zOffset":0}]}';
 var json_clothing = '{"images":[{"image":"images/CharacterCreator/Empty/Empty.png","yOffset":0,"zOffset":0},{"image":"images/CharacterCreator/Clothing/WorldsWorstHat.png","yOffset":0,"zOffset":0}]}';
 var json_clothingDecoration;
 var json_heldItem;
@@ -14,36 +14,6 @@ var imgSrc_hair = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_arm = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleeves = "images/CharacterCreator/Empty/Empty.png";
 var imgSrc_sleevesDecoration = "images/CharacterCreator/Empty/Empty.png";
-// var loadedCharParts: HTMLCollectionOf<HTMLDivElement> =
-//     document.getElementsByClassName("charPart") as HTMLCollectionOf<HTMLDivElement>;
-// var i = 0;
-// for (i = 0; i < loadedCharParts.length; i++)
-// {
-//     let loadedCharPart: HTMLDivElement = loadedCharParts[i];
-//     loadedCharPart.onclick = function()
-//     {
-//         let charPartImage = loadedCharPart.firstElementChild as HTMLImageElement;
-//         alert(charPartImage.src);
-//     }
-// }
-/**
- * @description
- * Decorates all of the character part buttons with their respective callback functions when clicked.
- */
-function DecorateCharacterPartButtons() {
-    var loadedCharParts = document.getElementsByClassName("charPart");
-    var i = 0;
-    var _loop_1 = function () {
-        var loadedCharPart = loadedCharParts[i];
-        loadedCharPart.onclick = function () {
-            var charPartImage = loadedCharPart.firstElementChild;
-            alert(charPartImage.src);
-        };
-    };
-    for (i = 0; i < loadedCharParts.length; i++) {
-        _loop_1();
-    }
-}
 /**
  * @description
  * Creates a promise on loading an image. Borrowed from an answer to this this StackOverflow question:
@@ -71,12 +41,16 @@ function LoadImage(imagePath) {
 }
 /**
  * @description
- * Populates the html panels with elements from the json stored in the json folder.
+ * Populates the accordion file (specified by idToPopulate) with images in the json provided by the json
+ * parameter.
+ * @param json The json that contains a series of image elements. Note that this must contain an array with
+ * elements that contain an "image" key with a string field.
+ * @param idToPopulate The id of the accordion panel to populate the new image-buttons with.
  */
-function PopulatePartButtonsFromJson() {
-    var clothingJson = JSON.parse(json_clothing);
+function PopulateAccordionPanel(json, idToPopulate) {
+    var clothingJson = JSON.parse(json);
     var i = 0;
-    var accordionButton = document.getElementById("ClothingAccordion");
+    var accordionButton = document.getElementById(idToPopulate);
     var buttonPanel = accordionButton.nextElementSibling;
     for (i = 0; i < clothingJson.images.length; i++) {
         var imgSrc = clothingJson.images[i].image;
@@ -85,7 +59,6 @@ function PopulatePartButtonsFromJson() {
             + '"><button class="charPartButton"></button></div>';
         buttonPanel.insertAdjacentHTML('afterbegin', imgHtml);
     }
-    DecorateCharacterPartButtons();
 }
 /**
  * @description
@@ -98,6 +71,12 @@ function DrawCharacterCanvas() {
         var imageSources = [
             imgSrc_body,
             imgSrc_clothing,
+            imgSrc_clothingDecoration,
+            imgSrc_heldItem,
+            imgSrc_hair,
+            imgSrc_arm,
+            imgSrc_sleeves,
+            imgSrc_sleevesDecoration
         ];
         Promise
             .all(imageSources.map(function (i) { return LoadImage(i); }))
@@ -107,5 +86,34 @@ function DrawCharacterCanvas() {
             });
         });
     }
+}
+/**
+ * @description
+ * Decorates all of the character part buttons with their respective callback functions when clicked.
+ */
+function DecorateCharacterPartButtons() {
+    var loadedCharParts = document.getElementsByClassName("charPart");
+    var i = 0;
+    var _loop_1 = function () {
+        var loadedCharPart = loadedCharParts[i];
+        loadedCharPart.onclick = function () {
+            var charPartImage = loadedCharPart.firstElementChild;
+            alert(charPartImage.src);
+        };
+    };
+    for (i = 0; i < loadedCharParts.length; i++) {
+        _loop_1();
+    }
+}
+/**
+ * @description
+ * Populates the html panels with elements from the json stored in the json folder.
+ */
+function PopulatePartButtonsFromJson() {
+    // First, get all of the json from our JSON strings, and populate the accordions with that info.
+    PopulateAccordionPanel(json_clothing, "ClothingAccordion");
+    PopulateAccordionPanel(json_body, "BaseBodyAccordion");
+    // Now, add the callbacks to every button!
+    DecorateCharacterPartButtons();
 }
 //# sourceMappingURL=canvas.js.map
