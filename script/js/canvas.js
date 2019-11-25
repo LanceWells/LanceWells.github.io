@@ -13,9 +13,11 @@ function LoadImage(imagePath) {
         var image = new Image();
         image.addEventListener("load", function () {
             resolve(image);
+            console.log("Successfully loaded: " + imagePath);
         });
         image.addEventListener("error", function (err) {
             reject(err);
+            console.error("Successfully loaded: " + imagePath);
         });
         image.src = imagePath;
     });
@@ -29,6 +31,10 @@ var imgSrc_hair;
 var imgSrc_arm;
 var imgSrc_sleeves;
 var imgSrc_sleevesDecoration;
+/**
+ * @description
+ * Draws the elements on the character creation canvas, in-order.
+ */
 function DrawCharacterCanvas() {
     var canvas = document.getElementById('tutorial');
     if (canvas.getContext('2d')) {

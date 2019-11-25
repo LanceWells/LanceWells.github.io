@@ -13,9 +13,11 @@ function LoadImage(imagePath: string): Promise<any> {
         let image = new Image();
         image.addEventListener("load", () => {
             resolve(image);
+            console.log("Successfully loaded: " + imagePath)
         });
         image.addEventListener("error", (err) => {
             reject(err);
+            console.error("Successfully loaded: " + imagePath)
         });
         image.src = imagePath;
     });
@@ -31,6 +33,10 @@ var imgSrc_arm: string;
 var imgSrc_sleeves: string;
 var imgSrc_sleevesDecoration: string;
 
+/**
+ * @description
+ * Draws the elements on the character creation canvas, in-order.
+ */
 function DrawCharacterCanvas() {
     var canvas = document.getElementById('tutorial') as HTMLCanvasElement;
     if (canvas.getContext('2d')) {
