@@ -12,6 +12,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 interface ICharacterCreatorProps {
 };
@@ -92,7 +93,9 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                         </Col>
                         <Col className='RightSplit'>
                             <h1>HELLLOOOOO</h1>
-                            { this.renderBodySelection() }
+                            <ButtonGroup>
+                                { this.renderBodySelection() }
+                            </ButtonGroup>
                             <Accordion defaultActiveKey="1">
                                 <Card>
                                     <Accordion.Toggle as={Card.Header} eventKey="0"
