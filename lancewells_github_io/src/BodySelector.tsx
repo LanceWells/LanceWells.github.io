@@ -2,12 +2,12 @@ import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 
-interface BodySelectorProps {
+interface IBodySelector {
     onClick: Function;
     src: string;
 }
 
-export default function BodySelector(props: BodySelectorProps) {
+export default function BodySelector(props: IBodySelector) {
     return (
         <Button
             variant='outline-dark'

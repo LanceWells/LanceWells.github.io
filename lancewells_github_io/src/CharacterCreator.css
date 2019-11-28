@@ -21,3 +21,7 @@
     right: 0;
     height: 100vh;
 }
+
+Canvas {
+    border: 1px solid black;
+}
