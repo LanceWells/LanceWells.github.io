@@ -9,8 +9,13 @@ interface BodySelectorProps {
 
 export default function BodySelector(props: BodySelectorProps) {
     return (
-        <Button onClick={() => props.onClick()}>
-            <Image src='images/BodyTypes/Blue' className="bodySelector" roundedCircle />
+        <Button
+            variant='outline-dark'
+            onClick={() => props.onClick(props.src)}>
+            <Image
+                className="bodySelector"
+                src={props.src}
+                roundedCircle />
         </Button>
     )
 }
