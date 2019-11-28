@@ -1,0 +1,56 @@
+{
+    "bodies": [
+        {
+            "imageSource": "./images/BodyTypes/Blue.png",
+            "accessoryImages": {
+                "clothing": [],
+                "clothingDecoration": [],
+                "heldItem": [],
+                "hair": [],
+                "hat": [],
+                "arm": [],
+                "sleeves": [],
+                "sleevesDecoration": []
+            }
+        },
+        {
+            "imageSource": "./images/BodyTypes/Purple.png",
+            "accessoryImages": {
+                "clothing": [],
+                "clothingDecoration": [],
+                "heldItem": [],
+                "hair": [],
+                "hat": [],
+                "arm": [],
+                "sleeves": [],
+                "sleevesDecoration": []
+            }
+        },
+        {
+            "imageSource": "./images/BodyTypes/Tan.png",
+            "accessoryImages": {
+                "clothing": [],
+                "clothingDecoration": [],
+                "heldItem": [],
+                "hair": [],
+                "hat": [],
+                "arm": [],
+                "sleeves": [],
+                "sleevesDecoration": []
+            }
+        },
+        {
+            "imageSource": "./images/BodyTypes/Green.png",
+            "accessoryImages": {
+                "clothing": [],
+                "clothingDecoration": [],
+                "heldItem": [],
+                "hair": [],
+                "hat": [],
+                "arm": [],
+                "sleeves": [],
+                "sleevesDecoration": []
+            }
+        }
+    ]
+}

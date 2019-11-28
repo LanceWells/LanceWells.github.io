@@ -1,4 +1,6 @@
-import './CharacterCreator.css'
+import './CharacterCreator.css';
+import bodySelectionJson from './json/bodySelection.json';
+
 import React from 'react';
 
 import BodySelector from './BodySelector';
@@ -58,6 +60,23 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     }
 
     /**
+     * Renders a series of body selectors for the user to pick from. These body selectors will modify the list
+     * of available accessories (since a tiny hat looks silly on a giant person . . . or does it?). Needs to
+     * look at a json file (json/bodySelection.json) to understand what to populate.
+     */
+    renderBodySelection()
+    {
+        return bodySelectionJson.bodies.map((body) => {
+            return (
+                <BodySelector
+                    src={body.imageSource}
+                    onClick={(bodyType: string) => this.handleBodySelection(bodyType)}
+                />
+            );
+        });
+    }
+
+    /**
      * Renders this object.
      */
     render() {
@@ -73,14 +92,7 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                         </Col>
                         <Col className='RightSplit'>
                             <h1>HELLLOOOOO</h1>
-                            <BodySelector
-                                src='./images/BodyTypes/Blue.png'
-                                onClick={(bodyType: string) => this.handleBodySelection(bodyType)}
-                            />
-                            <BodySelector
-                                src='./images/BodyTypes/Purple.png'
-                                onClick={(bodyType: string) => this.handleBodySelection(bodyType)}
-                            />
+                            { this.renderBodySelection() }
                             <Accordion defaultActiveKey="1">
                                 <Card>
                                     <Accordion.Toggle as={Card.Header} eventKey="0"
