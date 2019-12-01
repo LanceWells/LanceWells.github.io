@@ -86,18 +86,28 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
 
         return (
             <div className="CharacterCreator">
-                <Container fluid={true}>
-                    <Row>
-                        <Col xs lg="4" className='LeftSplit'>
-                            <h1>HELLO!</h1>
+                <h1>Character Creator</h1>
+                <Container>
+                    <Row className="align-items-center">
+                        <Col lg={true} className='TopSplit'>
                             <Canvas imagesToRender={canvasImagesToRender} />
+                            <p className="italics">(Right-click and select 'Save Image As' to save)</p>
                         </Col>
-                        <Col className='RightSplit'>
-                            <h1>HELLLOOOOO</h1>
+                    </Row>
+                    <Row>
+                        <Col lg={true} className='BottomSplit'>
+                            <h2>Body Selection</h2>
+                            <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
                             <ButtonGroup>
                                 {this.renderBodySelection()}
                             </ButtonGroup>
-                            <Accordion defaultActiveKey="1">
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg={true} className='BottomSplit'>
+                            <h2>Accessory Selection</h2>
+                            <p className="italics">(You need to select a body first if this is empty)</p>
+                            <Accordion>
                                 <PartAccordion
                                     layers={currentBodyMap}
                                     onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}

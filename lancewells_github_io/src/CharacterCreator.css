@@ -1,27 +1,47 @@
-.CharacterCreator {
-    background: darkturquoise;
-    top:0;
-}
-
-.LeftSplit {
-    background: darkslategray;
-    height: 100%;
-    padding-top: 0%;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    color: whitesmoke;
-}
-
-.RightSplit {
-    background: whitesmoke;
-    height: 100%;
-    top: 0;
-    padding-top: 0%;
-    right: 0;
-    height: 100vh;
-}
-
 Canvas {
     border: 1px solid black;
+    display: block;
+    margin: auto;
+    margin-bottom: 15px;
+}
+
+html,
+body {
+    height: 100%;
+    background: burlywood;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #fdfdfd;
+    text-align: center;
+    padding: 5px;
+}
+
+h1 {
+    width: 100%;
+    background: #000000;
+    padding: 10px;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.TopSplit,
+.BottomSplit
+{
+    padding: 15px;
+    margin: 15px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fdfdfd;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.CharacterCreator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: #121212;
 }

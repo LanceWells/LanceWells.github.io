@@ -25,12 +25,12 @@ export class PartAccordion extends React.Component<IPartAccordion> {
     renderPartCards() {
         return this.props.layers.map((layer) => {
             return (
-                <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0"
+                <Card style={{ background: 'rgba(255, 255, 255, 0.07)' }} text="white">
+                    <Accordion.Toggle as={Card.Header} eventKey={layer.layerIndex.toString()}
                         style={{ cursor: "pointer" }}>
                         {layer.key}
                     </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
+                    <Accordion.Collapse eventKey={layer.layerIndex.toString()}>
                         <Card.Body>
                             {this.renderPartsButtons(layer)}
                         </Card.Body>
