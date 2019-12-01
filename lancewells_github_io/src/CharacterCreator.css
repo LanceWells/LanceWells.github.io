@@ -11,7 +11,12 @@ body {
     background: #121212;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #fdfdfd;
     text-align: center;
     padding: 5px;
@@ -28,8 +33,7 @@ h1 {
 }
 
 .TopSplit,
-.BottomSplit
-{
+.BottomSplit {
     padding: 15px;
     margin: 15px;
     border-radius: 3px;
@@ -48,4 +52,9 @@ h1 {
 
 .downloadButton {
     margin: 15px;
+}
+
+.card-title {
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
 }

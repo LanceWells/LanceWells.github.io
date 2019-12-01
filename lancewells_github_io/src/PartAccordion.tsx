@@ -40,15 +40,6 @@ export class PartAccordion extends React.Component<IPartAccordion> {
         });
     }
 
-    // renderPartCards() {
-    //     const layers = this.props.layers;
-    //     return layers.map((layer) => {
-    //         return (
-    //             <h1>{layer.key}</h1>
-    //         );
-    //     });
-    // }
-
     render() {
         return (
             <div>

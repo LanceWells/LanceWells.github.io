@@ -7,7 +7,7 @@ interface ICanvasProps {
     onClickDownload: Function;
 }
 
-class Canvas extends React.Component<ICanvasProps> {
+export class Canvas extends React.Component<ICanvasProps> {
     canvasHeight: number = 256;
     canvasWidth: number = 256;
 
@@ -55,4 +55,3 @@ class Canvas extends React.Component<ICanvasProps> {
         )
     }
 }
-export default Canvas;

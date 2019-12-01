@@ -1,26 +1,37 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
-import {BodyMap} from './BodyMap';
+import { BodyMap } from './BodyMap';
+import Card from 'react-bootstrap/Card';
 
 interface IBodySelector {
     onClick: Function;
     bodyMap: BodyMap;
 }
 
-export default function BodySelector(props: IBodySelector) {
+export function BodySelector(props: IBodySelector) {
     return (
-        <Button
-            variant='outline-light'
+        <Card
+            bg='dark'
             style={{
+                width: '18rem',
                 borderColor: 'rgba(255, 255, 255, 0.05)',
                 boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
-            }}
-            onClick={() => props.onClick(props.bodyMap)}>
-            <Image
-                className="bodySelector"
-                src={props.bodyMap.imageSource}
-                roundedCircle />
-        </Button>
+            }}>
+            <Button
+                className='bodySelector'
+                variant='dark'
+                style={{
+                    borderColor: 'rgba(255, 255, 255, 0.05)',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+                }}
+                onClick={() => props.onClick(props.bodyMap)}>
+                <Card.Img src={props.bodyMap.imageSource} />
+                <Card.Body
+                    className='body-selector-card'>
+                    <Card.Title>{props.bodyMap.name}</Card.Title>
+                    <Card.Text>{props.bodyMap.description}</Card.Text>
+                </Card.Body>
+            </Button>
+        </Card>
     )
 }

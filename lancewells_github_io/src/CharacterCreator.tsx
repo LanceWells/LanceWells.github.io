@@ -3,20 +3,34 @@ import { bodyMaps, BodyMap, ImageLayer } from './BodyMap';
 
 import React from 'react';
 
-import BodySelector from './BodySelector';
-import Canvas from './Canvas';
+import {BodySelector} from './BodySelector';
+import {PartAccordion} from './PartAccordion';
+import {Canvas} from './Canvas';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Accordion from 'react-bootstrap/Accordion';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import {PartAccordion} from './PartAccordion';
+import CardColumns from 'react-bootstrap/CardColumns'
 
+/**
+ * @description
+ * The interface for props passed to this object. This class in particular takes no props; it is effectively
+ * the app itself.
+ */
 interface ICharacterCreatorProps {
 };
 
+/**
+ * @description
+ * The interface for the internal state maintained by this object.
+ * @param canvasImages The list of image sources, represented as strings, that will be rendered using the
+ * Canvas class.
+ * @param partLayers A list of image layers. This contains information about all of the possible layers that
+ * can be drawn to the currently-selected body type. This contains information about what each layer is, how
+ * that layer is drawn, and what the possible images are in that layer.
+ */
 interface ICharacterCreatorState {
     canvasImages: Array<string>,
     partLayers: ImageLayer[]
@@ -36,6 +50,12 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         }
     }
 
+    /**
+     * @description
+     * Used to download the main character image from the canvas. This is a callback that is passed down to
+     * the canvas element.
+     * @param canvas The canvas html element from the Canvas character creator class.
+     */
     downloadImage(canvas: HTMLCanvasElement)
     {
         const downloadUrl = canvas.toDataURL('image/png');
@@ -46,6 +66,12 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         link.click();
     }
 
+    /**
+     * A handler for a part selector. Replaces the image at the specified index with a new image.
+     * @param layerIndex The index of the layer. This is the z-layer, effectively. The higher the number, the
+     * more layers that it draws over.
+     * @param imageSource The image source. This is what gets drawn.
+     */
     handlePartSelection(layerIndex: number, imageSource: string) {
         const newCanvasImages: Array<string> = this.state.canvasImages.slice();
 
@@ -74,9 +100,10 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     }
 
     /**
+     * @description
      * Renders a series of body selectors for the user to pick from. These body selectors will modify the list
      * of available accessories (since a tiny hat looks silly on a giant person . . . or does it?). Needs to
-     * look at a json file (json/bodySelection.json) to understand what to populate.
+     * look at the BodyMap.tsx file to understand what will be populated.
      */
     renderBodySelection() {
         return bodyMaps.map((bodyMap) => {
@@ -124,9 +151,9 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                         <Col lg={true} className='BottomSplit'>
                             <h2>Body Selection</h2>
                             <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-                            <ButtonGroup>
+                            <CardColumns>
                                 {this.renderBodySelection()}
-                            </ButtonGroup>
+                            </CardColumns>
                         </Col>
                     </Row>
                 </Container>
