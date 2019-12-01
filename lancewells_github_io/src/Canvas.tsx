@@ -1,8 +1,10 @@
 // https://blog.cloudboost.io/using-html5-canvas-with-react-ff7d93f5dc76
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 interface ICanvasProps {
     imagesToRender: Array<string>;
+    onClickDownload: Function;
 }
 
 class Canvas extends React.Component<ICanvasProps> {
@@ -42,7 +44,13 @@ class Canvas extends React.Component<ICanvasProps> {
     render() {
         return (
             <div>
-                <canvas ref="canvas" width={this.canvasWidth} height={this.canvasHeight} />
+                <canvas id="characterCanvas" ref="canvas" width={this.canvasWidth} height={this.canvasHeight} />
+                <Button
+                    variant="primary"
+                    className="downloadButton"
+                    onClick={() => this.props.onClickDownload(document.getElementById('characterCanvas'))}>
+                    <h4>&gt;&gt; DOWNLOAD &lt;&lt;</h4>
+                </Button>
             </div>
         )
     }

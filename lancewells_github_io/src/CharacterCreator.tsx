@@ -36,9 +36,21 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         }
     }
 
+    downloadImage(canvas: HTMLCanvasElement)
+    {
+        const downloadUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+
+        link.download = 'characterImage.png';
+        link.href = downloadUrl;
+        link.click();
+    }
+
     handlePartSelection(layerIndex: number, imageSource: string) {
         const newCanvasImages: Array<string> = this.state.canvasImages.slice();
-        newCanvasImages[layerIndex] =  imageSource;
+
+        // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
+        newCanvasImages[layerIndex] = imageSource;
 
         this.setState({
             canvasImages: newCanvasImages
@@ -90,17 +102,10 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                 <Container>
                     <Row className="align-items-center">
                         <Col lg={true} className='TopSplit'>
-                            <Canvas imagesToRender={canvasImagesToRender} />
-                            <p className="italics">(Right-click and select 'Save Image As' to save)</p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={true} className='BottomSplit'>
-                            <h2>Body Selection</h2>
-                            <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-                            <ButtonGroup>
-                                {this.renderBodySelection()}
-                            </ButtonGroup>
+                            <Canvas
+                                imagesToRender={canvasImagesToRender}
+                                onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
+                            />
                         </Col>
                     </Row>
                     <Row>
@@ -113,6 +118,15 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                                     onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
                                 />
                             </Accordion>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg={true} className='BottomSplit'>
+                            <h2>Body Selection</h2>
+                            <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
+                            <ButtonGroup>
+                                {this.renderBodySelection()}
+                            </ButtonGroup>
                         </Col>
                     </Row>
                 </Container>
