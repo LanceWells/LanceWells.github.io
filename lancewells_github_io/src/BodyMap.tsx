@@ -14,6 +14,7 @@ bodyMaps.push({
     layers: [{
         key: "Clothing",
         images: [
+            "./images/Empty/Empty.png",
             "./images/BlueAccessories/BlueTriangle.png"
         ]
     }]

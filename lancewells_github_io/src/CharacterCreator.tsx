@@ -17,6 +17,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {PartAccordion} from './PartAccordion';
+import { string } from 'prop-types';
 
 interface ICharacterCreatorProps {
 };
@@ -41,7 +42,13 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     }
 
     handlePartSelection(layer: string, imageSource: string) {
-        alert(layer + 'becomes: ' + imageSource);
+        // alert(layer + 'becomes: ' + imageSource);
+        const newCanvasImages: Map<string, string> = new Map<string, string>(this.state.canvasImages);
+        newCanvasImages.set(layer, imageSource);
+
+        this.setState({
+            canvasImages: newCanvasImages
+        })
     }
 
     /**
