@@ -1,8 +1,11 @@
 import './CharacterCreator.css';
-import bodySelectionJson from './json/bodySelection.json';
+import { bodyMaps, BodyMap, ImageLayer } from './BodyMap';
+// const bodyMaps = require('BodyMap');
+// import bodySelectionJson from './json/bodyMap_00.json';
 
 import React from 'react';
 
+// import ImageLayer from './BodyMap';
 import BodySelector from './BodySelector';
 import Canvas from './Canvas';
 
@@ -13,12 +16,14 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import {PartAccordion} from './PartAccordion';
 
 interface ICharacterCreatorProps {
 };
 
 interface ICharacterCreatorState {
-    canvasImages: string[]
+    canvasImages: Map<string, string>,
+    partLayers: ImageLayer[]
 };
 
 /**
@@ -26,21 +31,24 @@ interface ICharacterCreatorState {
  * character image on a canvas element.
  */
 class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacterCreatorState> {
-    constructor(props: ICharacterCreatorProps)
-    {
+    constructor(props: ICharacterCreatorProps) {
         super(props);
         this.state = {
             // Just fill the canvas images with nothing. We'll re-define it when we add to it.
-            canvasImages: Array(0)
+            canvasImages: new Map<string, string>(),
+            partLayers: Array(0)
         }
+    }
+
+    handlePartSelection(layer: string, imageSource: string) {
+        alert(layer + 'becomes: ' + imageSource);
     }
 
     /**
      * Handles the prop-pass from the body-type selector.
      * @param bodyType The type of body that this character creator should acknowledge.
      */
-    handleBodySelection(bodyType: string)
-    {
+    handleBodySelection(bodyMap: BodyMap) {
         // alert(bodyType);
         // this.state.canvasImages.length;
 
@@ -48,16 +56,20 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         // // slate though, so this doesn't belong here.
         // const arraySize = this.state.canvasImages.length;
         // const newImagesToRender = this.state.canvasImages.slice();
-        
+
         // newImagesToRender[arraySize + 1] = bodyType;
-        
-        const newImagesToRender: string[] = Array(0);
+
+        const newImagesToRender: Map<string, string> = new Map<string, string>();
 
         // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
-        newImagesToRender[0] = bodyType;
+        newImagesToRender.set('body', bodyMap.imageSource);
+
         this.setState({
-            canvasImages: newImagesToRender
+            canvasImages: newImagesToRender,
+            partLayers: bodyMap.layers
         });
+
+        // alert(layers.toString());
     }
 
     /**
@@ -65,13 +77,12 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
      * of available accessories (since a tiny hat looks silly on a giant person . . . or does it?). Needs to
      * look at a json file (json/bodySelection.json) to understand what to populate.
      */
-    renderBodySelection()
-    {
-        return bodySelectionJson.bodies.map((body) => {
+    renderBodySelection() {
+        return bodyMaps.map((bodyMap) => {
             return (
                 <BodySelector
-                    src={body.imageSource}
-                    onClick={(bodyType: string) => this.handleBodySelection(bodyType)}
+                    onClick={(body: BodyMap) => this.handleBodySelection(body)}
+                    bodyMap={bodyMap}
                 />
             );
         });
@@ -82,6 +93,7 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
      */
     render() {
         const canvasImagesToRender = this.state.canvasImages;
+        const currentBodyMap = this.state.partLayers;
 
         return (
             <div className="CharacterCreator">
@@ -89,23 +101,18 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                     <Row>
                         <Col xs lg="4" className='LeftSplit'>
                             <h1>HELLO!</h1>
-                            <Canvas imagesToRender={canvasImagesToRender}/>
+                            <Canvas imagesToRender={canvasImagesToRender} />
                         </Col>
                         <Col className='RightSplit'>
                             <h1>HELLLOOOOO</h1>
                             <ButtonGroup>
-                                { this.renderBodySelection() }
+                                {this.renderBodySelection()}
                             </ButtonGroup>
                             <Accordion defaultActiveKey="1">
-                                <Card>
-                                    <Accordion.Toggle as={Card.Header} eventKey="0"
-                                        style={{ cursor: "pointer" }}>
-                                        Click!
-                                </Accordion.Toggle>
-                                    <Accordion.Collapse eventKey="0">
-                                        <Card.Body>The body of the card! THE HEAAART OF THE CARDS.</Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
+                                <PartAccordion
+                                    layers={currentBodyMap}
+                                    onClick={(layerName: string, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
+                                />
                             </Accordion>
                         </Col>
                     </Row>

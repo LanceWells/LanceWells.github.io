@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface ICanvasProps {
-    imagesToRender: string[]
+    imagesToRender: Map<string, string>;
 }
 
 class Canvas extends React.Component<ICanvasProps> {
@@ -12,6 +12,7 @@ class Canvas extends React.Component<ICanvasProps> {
     componentDidMount() {
         const canvas = this.refs.canvas as HTMLCanvasElement;
         const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+        ctx.imageSmoothingEnabled = false;
     }
 
     componentDidUpdate(prevProps: ICanvasProps)
@@ -27,7 +28,7 @@ class Canvas extends React.Component<ICanvasProps> {
             ctx.clearRect(0, 0, this.canvasHeight, this.canvasWidth);
             
             // Muss with it again! This draws each of the images in our props field one-after-another.
-            this.props.imagesToRender.map((imgSrc: string) => {
+            this.props.imagesToRender.forEach((imgSrc: string) => {
                 var htmlImg = new Image(this.canvasWidth, this.canvasHeight);
                 htmlImg.src = imgSrc;
                 
