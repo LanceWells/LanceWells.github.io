@@ -1,29 +1,24 @@
 import './CharacterCreator.css';
 import { bodyMaps, BodyMap, ImageLayer } from './BodyMap';
-// const bodyMaps = require('BodyMap');
-// import bodySelectionJson from './json/bodyMap_00.json';
 
 import React from 'react';
 
-// import ImageLayer from './BodyMap';
 import BodySelector from './BodySelector';
 import Canvas from './Canvas';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {PartAccordion} from './PartAccordion';
-import { string } from 'prop-types';
 
 interface ICharacterCreatorProps {
 };
 
 interface ICharacterCreatorState {
-    canvasImages: Map<string, string>,
+    canvasImages: Array<string>,
     partLayers: ImageLayer[]
 };
 
@@ -36,15 +31,14 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         super(props);
         this.state = {
             // Just fill the canvas images with nothing. We'll re-define it when we add to it.
-            canvasImages: new Map<string, string>(),
+            canvasImages: new Array<string>(),
             partLayers: Array(0)
         }
     }
 
-    handlePartSelection(layer: string, imageSource: string) {
-        // alert(layer + 'becomes: ' + imageSource);
-        const newCanvasImages: Map<string, string> = new Map<string, string>(this.state.canvasImages);
-        newCanvasImages.set(layer, imageSource);
+    handlePartSelection(layerIndex: number, imageSource: string) {
+        const newCanvasImages: Array<string> = this.state.canvasImages.slice();
+        newCanvasImages[layerIndex] =  imageSource;
 
         this.setState({
             canvasImages: newCanvasImages
@@ -56,27 +50,15 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
      * @param bodyType The type of body that this character creator should acknowledge.
      */
     handleBodySelection(bodyMap: BodyMap) {
-        // alert(bodyType);
-        // this.state.canvasImages.length;
-
-        // // Keeping this stuff since I'll need it for additional image layering. Body selection needs a clean
-        // // slate though, so this doesn't belong here.
-        // const arraySize = this.state.canvasImages.length;
-        // const newImagesToRender = this.state.canvasImages.slice();
-
-        // newImagesToRender[arraySize + 1] = bodyType;
-
-        const newImagesToRender: Map<string, string> = new Map<string, string>();
+        const newImagesToRender: Array<string> = new Array<string>(0);
 
         // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
-        newImagesToRender.set('body', bodyMap.imageSource);
+        newImagesToRender[0] = bodyMap.imageSource;
 
         this.setState({
             canvasImages: newImagesToRender,
             partLayers: bodyMap.layers
         });
-
-        // alert(layers.toString());
     }
 
     /**
@@ -118,7 +100,7 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                             <Accordion defaultActiveKey="1">
                                 <PartAccordion
                                     layers={currentBodyMap}
-                                    onClick={(layerName: string, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
+                                    onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
                                 />
                             </Accordion>
                         </Col>

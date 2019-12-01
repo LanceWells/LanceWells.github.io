@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface ICanvasProps {
-    imagesToRender: Map<string, string>;
+    imagesToRender: Array<string>;
 }
 
 class Canvas extends React.Component<ICanvasProps> {

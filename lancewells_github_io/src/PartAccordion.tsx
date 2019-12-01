@@ -15,7 +15,7 @@ export class PartAccordion extends React.Component<IPartAccordion> {
             return (
                 <PartSelector
                     onClick={this.props.onClick}
-                    layerName={layer.key}
+                    layerIndex={layer.layerIndex}
                     imageSource={src}
                 />
             );
