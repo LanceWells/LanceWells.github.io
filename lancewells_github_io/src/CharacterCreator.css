@@ -58,3 +58,8 @@ h1 {
     font-weight: bold;
     text-shadow: 2px 2px 4px #000000;
 }
+
+.part-selector-button {
+    padding: 5px;
+    margin: 5px;
+}
