@@ -84,11 +84,27 @@ bodyMaps.push({
             "./images/Size_Average/FemaleClothing/Cloaks/DarkCloak.png",
         ]
     }, {
-        key: "Leggings",
+        key: "Bottoms",
         layerIndex: 3,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Leggings/BlackSimple.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/BlackSimple.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/Jeans.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/Bellbottoms.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/BluePlainPoofyPants.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/BluePoofyPants.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreenPlainPoofyPants.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreenPoofyPants.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreenShorts.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreyCapris.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreyPlainPoofyPants.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreyPoofyPants.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/RedCapris.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/YellowCapris.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/BlackSkirt.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/GreenSkirt.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/PinkSkirt.png",
+            "./images/Size_Average/FemaleClothing/Bottoms/RedSkirt.png",
         ]
     }, {
         key: "Lower Armor",
@@ -107,12 +123,12 @@ bodyMaps.push({
             "./images/Size_Average/FemaleClothing/Shoes/PlainShoes.png",
         ]
     }, {
-        key: "Shirts",
+        key: "Tops",
         layerIndex: 6,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Shirts/WhiteSimple.png",
-            "./images/Size_Average/FemaleClothing/Shirts/SimpleDark.png",
+            "./images/Size_Average/FemaleClothing/Tops/WhiteSimple.png",
+            "./images/Size_Average/FemaleClothing/Tops/SimpleDark.png",
         ]
     }, {
         key: "Upper Armor",
@@ -147,6 +163,12 @@ bodyMaps.push({
             "./images/Size_Average/FemaleClothing/Hair/RedLong.png",
             "./images/Size_Average/FemaleClothing/Hair/BlackLong.png",
             "./images/Size_Average/FemaleClothing/Hair/DarkHood.png",
+            "./images/Size_Average/FemaleClothing/Hair/CurlsBlonde.png",
+            "./images/Size_Average/FemaleClothing/Hair/CurlsRed.png",
+            "./images/Size_Average/FemaleClothing/Hair/ShortBlack.png",
+            "./images/Size_Average/FemaleClothing/Hair/ShortBlonde.png",
+            "./images/Size_Average/FemaleClothing/Hair/ShortBrown.png",
+            "./images/Size_Average/FemaleClothing/Hair/ShortRed.png",
         ]
     }, {
         key: "Hats",
