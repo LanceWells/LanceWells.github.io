@@ -76,15 +76,75 @@ bodyMaps.push({
             "./images/Size_Average/Base_Female_Darker.png",
             "./images/Size_Average/Base_Female_Darkest.png",
         ],
-    },
-    {
-        key: "Sparkles",
+    }, {
+        key: "Leggings",
         layerIndex: 2,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Sparkles/YellowSparkles.png",
+            "./images/Size_Average/FemaleClothing/Leggings/BlackSimple.png",
         ]
-    }]
+    }, {
+        key: "Lower Armor",
+        layerIndex: 3,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/LowerArmor/KneePlates.png",
+        ]
+    }, {
+        key: "Shoes",
+        layerIndex: 4,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/Shoes/BattleBoots.png",
+            "./images/Size_Average/FemaleClothing/Shoes/Boots.png",
+            "./images/Size_Average/FemaleClothing/Shoes/PlainShoes.png",
+        ]
+    }, {
+        key: "Shirts",
+        layerIndex: 5,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/Shirts/WhiteSimple.png",
+        ]
+    }, {
+        key: "Upper Armor",
+        layerIndex: 6,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/UpperArmor/LeatherCorset.png",
+        ]
+    }, {
+        key: "Mid Accessory",
+        layerIndex: 7,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/MidAccessory/LargeBelt.png",
+            "./images/Size_Average/FemaleClothing/MidAccessory/LargeBeltWithKnives.png",
+        ]
+    }, {
+        key: "Cloaks",
+        layerIndex: 8,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/Cloaks/GreenScales.png",
+            "./images/Size_Average/FemaleClothing/Cloaks/RedScales.png",
+        ]
+    }, {
+        key: "Hair",
+        layerIndex: 9,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/Hair/RedLong.png",
+            "./images/Size_Average/FemaleClothing/Hair/BlackLong.png",
+        ]
+    }, {
+        key: "Hats",
+        layerIndex: 10,
+        images: [
+            "./images/Empty/Empty.png",
+        ]
+    }
+    ]
 }
 
 );
