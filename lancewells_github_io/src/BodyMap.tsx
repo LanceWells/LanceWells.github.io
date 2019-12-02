@@ -32,53 +32,57 @@ export type BodyMap = {
  */
 export const bodyMaps: BodyMap[] = new Array(0);
 bodyMaps.push({
-    name: 'Blue',
-    description: "It's blue! This is a placeholder body type.",
-    imageSource: "./images/BodyTypes/Blue.png",
+    name: 'Average-Sized Male',
+    description: "Men of average height! Useful for human characters and elves.",
+    imageSource: "./images/Size_Average/Base_Male_Light.png",
     layers: [{
-        key: "Clothing",
+        key: "Body Archetype",
         layerIndex: 1,
         images: [
             "./images/Empty/Empty.png",
-            "./images/BlueAccessories/BlueTriangle.png"
-        ]
-    }]
-}, {
-    name: 'Green',
-    description: "It's green! This is another placeholder body type. This one has sparkles!",
-    imageSource: "./images/BodyTypes/Green.png",
-    layers: [{
-        key: "Clothing",
-        layerIndex: 1,
-        images: [
-            "./images/Empty/Empty.png",
-            "./images/GreenAccessories/GreenTriangle.png"
+            "./images/Size_Average/Base_Male_Drow.png",
+            "./images/Size_Average/Base_Male_Pale.png",
+            "./images/Size_Average/Base_Male_Fair.png",
+            "./images/Size_Average/Base_Male_Light.png",
+            "./images/Size_Average/Base_Male_Tan.png",
+            "./images/Size_Average/Base_Male_Dark.png",
+            "./images/Size_Average/Base_Male_Darker.png",
+            "./images/Size_Average/Base_Male_Darkest.png",
         ],
     },
     {
         key: "Sparkles",
         layerIndex: 2,
         images: [
-            "./images/Sparkles/YellowSparkles.png"
+            "./images/Empty/Empty.png",
+            "./images/Sparkles/YellowSparkles.png",
         ]
     }]
 }, {
-    name: 'Tan',
-    description: "It's tan! This is yet another of those placeholder body types. This one has sparkles!",
-    imageSource: "./images/BodyTypes/Tan.png",
+    name: 'Average-Sized Female',
+    description: "Women of average height! Useful for human characters and elves.",
+    imageSource: "./images/Size_Average/Base_Female_Light.png",
     layers: [{
-        key: "Clothing",
+        key: "Body Archetype",
         layerIndex: 1,
         images: [
             "./images/Empty/Empty.png",
-            "./images/GreenAccessories/GreenTriangle.png"
+            "./images/Size_Average/Base_Female_Drow.png",
+            "./images/Size_Average/Base_Female_Pale.png",
+            "./images/Size_Average/Base_Female_Fair.png",
+            "./images/Size_Average/Base_Female_Light.png",
+            "./images/Size_Average/Base_Female_Tan.png",
+            "./images/Size_Average/Base_Female_Dark.png",
+            "./images/Size_Average/Base_Female_Darker.png",
+            "./images/Size_Average/Base_Female_Darkest.png",
         ],
     },
     {
         key: "Sparkles",
         layerIndex: 2,
         images: [
-            "./images/Sparkles/YellowSparkles.png"
+            "./images/Empty/Empty.png",
+            "./images/Sparkles/YellowSparkles.png",
         ]
     }]
 }
