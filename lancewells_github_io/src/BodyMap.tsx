@@ -77,22 +77,29 @@ bodyMaps.push({
             "./images/Size_Average/Base_Female_Darkest.png",
         ],
     }, {
-        key: "Leggings",
+        key: "Cloaks",
         layerIndex: 2,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/Cloaks/DarkCloak.png",
+        ]
+    }, {
+        key: "Leggings",
+        layerIndex: 3,
         images: [
             "./images/Empty/Empty.png",
             "./images/Size_Average/FemaleClothing/Leggings/BlackSimple.png",
         ]
     }, {
         key: "Lower Armor",
-        layerIndex: 3,
+        layerIndex: 4,
         images: [
             "./images/Empty/Empty.png",
             "./images/Size_Average/FemaleClothing/LowerArmor/KneePlates.png",
         ]
     }, {
         key: "Shoes",
-        layerIndex: 4,
+        layerIndex: 5,
         images: [
             "./images/Empty/Empty.png",
             "./images/Size_Average/FemaleClothing/Shoes/BattleBoots.png",
@@ -101,45 +108,49 @@ bodyMaps.push({
         ]
     }, {
         key: "Shirts",
-        layerIndex: 5,
-        images: [
-            "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Shirts/WhiteSimple.png",
-        ]
-    }, {
-        key: "Upper Armor",
         layerIndex: 6,
         images: [
             "./images/Empty/Empty.png",
+            "./images/Size_Average/FemaleClothing/Shirts/WhiteSimple.png",
+            "./images/Size_Average/FemaleClothing/Shirts/SimpleDark.png",
+        ]
+    }, {
+        key: "Upper Armor",
+        layerIndex: 7,
+        images: [
+            "./images/Empty/Empty.png",
             "./images/Size_Average/FemaleClothing/UpperArmor/LeatherCorset.png",
+            "./images/Size_Average/FemaleClothing/UpperArmor/PurpleScaleMail.png",
         ]
     }, {
         key: "Mid Accessory",
-        layerIndex: 7,
+        layerIndex: 8,
         images: [
             "./images/Empty/Empty.png",
             "./images/Size_Average/FemaleClothing/MidAccessory/LargeBelt.png",
             "./images/Size_Average/FemaleClothing/MidAccessory/LargeBeltWithKnives.png",
         ]
     }, {
-        key: "Cloaks",
-        layerIndex: 8,
+        key: "Arm Armor",
+        layerIndex: 9,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Cloaks/GreenScales.png",
-            "./images/Size_Average/FemaleClothing/Cloaks/RedScales.png",
+            "./images/Size_Average/FemaleClothing/ArmArmor/GreenScales.png",
+            "./images/Size_Average/FemaleClothing/ArmArmor/RedScales.png",
+            "./images/Size_Average/FemaleClothing/ArmArmor/PlatedSleeves.png",
         ]
     }, {
         key: "Hair",
-        layerIndex: 9,
+        layerIndex: 10,
         images: [
             "./images/Empty/Empty.png",
             "./images/Size_Average/FemaleClothing/Hair/RedLong.png",
             "./images/Size_Average/FemaleClothing/Hair/BlackLong.png",
+            "./images/Size_Average/FemaleClothing/Hair/DarkHood.png",
         ]
     }, {
         key: "Hats",
-        layerIndex: 10,
+        layerIndex: 11,
         images: [
             "./images/Empty/Empty.png",
         ]
