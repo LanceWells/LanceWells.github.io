@@ -40,6 +40,9 @@ bodyMaps.push({
         layerIndex: 1,
         images: [
             "./images/Empty/Empty.png",
+            "./images/Size_Average/Body/Male/Base_Male_Bright_Orc.png",
+            "./images/Size_Average/Body/Male/Base_Male_Medium_Orc.png",
+            "./images/Size_Average/Body/Male/Base_Male_Dorc.png",
             "./images/Size_Average/Body/Male/Base_Male_Drow.png",
             "./images/Size_Average/Body/Male/Base_Male_Pale.png",
             "./images/Size_Average/Body/Male/Base_Male_Fair.png",
@@ -87,6 +90,7 @@ bodyMaps.push({
             "./images/Size_Average/Tops/Male/PlainBlackShirt.png",
             "./images/Size_Average/Tops/Male/PlainWhiteShirt.png",
             "./images/Size_Average/Tops/Male/LooseBlackShirt.png",
+            "./images/Size_Average/Tops/Male/Chainmail.png",
         ]
     }, {
         key: "Upper Armor",
@@ -95,6 +99,7 @@ bodyMaps.push({
             "./images/Empty/Empty.png",
             "./images/Size_Average/UpperArmor/Male/LeatherCoat.png",
             "./images/Size_Average/UpperArmor/Male/LeatherVest.png",
+            "./images/Size_Average/UpperArmor/Male/ChainmailDecorations.png",
         ]
     }, {
         key: "Mid Accessory",
@@ -112,10 +117,11 @@ bodyMaps.push({
             "./images/Size_Average/ArmArmor/Male/LeatherSleeves.png",
             "./images/Size_Average/ArmArmor/Male/RedShoulderCloak.png",
             "./images/Size_Average/ArmArmor/Male/BlackShoulderCloak.png",
+            "./images/Size_Average/ArmArmor/Male/PlateArms.png",
         ]
     }, {
         key: "Hair",
-        layerIndex: 10,
+        layerIndex: 11,
         images: [
             "./images/Empty/Empty.png",
             "./images/Size_Average/Hair/Androgynous/DarkHood.png",
@@ -131,12 +137,37 @@ bodyMaps.push({
             "./images/Size_Average/Hair/Androgynous/ShortRed.png",
             "./images/Size_Average/Hair/Androgynous/BrownWavy.png",
             "./images/Size_Average/Hair/Androgynous/GreyWavy.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopBlack.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopBrown.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopRed.png",
+            "./images/Size_Average/Hair/Androgynous/BrownClose.png",
+            "./images/Size_Average/Hair/Androgynous/RedClose.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedBlack.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedBrown.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedRed.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailBlack.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailBrown.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailRed.png",
         ]
     }, {
-        key: "Hats",
-        layerIndex: 11,
+        key: "Headwear",
+        layerIndex: 10,
         images: [
             "./images/Empty/Empty.png",
+            "./images/Size_Average/HeadWear/Androgynous/RedMask.png",
+            "./images/Size_Average/HeadWear/Androgynous/SkeletonMask.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowBlue.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowGreen.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowPink.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowRed.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowYellow.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsBlonde.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsBrown.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsBlack.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsRed.png",
         ]
     }
     ]
@@ -149,6 +180,9 @@ bodyMaps.push({
         layerIndex: 1,
         images: [
             "./images/Empty/Empty.png",
+            "./images/Size_Average/Body/Female/Base_Female_Bright_Orc.png",
+            "./images/Size_Average/Body/Female/Base_Female_Medium_Orc.png",
+            "./images/Size_Average/Body/Female/Base_Female_Dorc.png",
             "./images/Size_Average/Body/Female/Base_Female_Drow.png",
             "./images/Size_Average/Body/Female/Base_Female_Pale.png",
             "./images/Size_Average/Body/Female/Base_Female_Fair.png",
@@ -257,15 +291,39 @@ bodyMaps.push({
             "./images/Size_Average/Hair/Androgynous/ShortRed.png",
             "./images/Size_Average/Hair/Androgynous/BrownWavy.png",
             "./images/Size_Average/Hair/Androgynous/GreyWavy.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopBlack.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopBrown.png",
+            "./images/Size_Average/Hair/Androgynous/BrickTopRed.png",
+            "./images/Size_Average/Hair/Androgynous/BrownClose.png",
+            "./images/Size_Average/Hair/Androgynous/RedClose.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedBlack.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedBrown.png",
+            "./images/Size_Average/Hair/Androgynous/SlickedRed.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailBlack.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailBrown.png",
+            "./images/Size_Average/Hair/Androgynous/PonyTailRed.png",
         ]
     }, {
-        key: "Hats",
+        key: "Headwear",
         layerIndex: 11,
         images: [
             "./images/Empty/Empty.png",
+            "./images/Size_Average/HeadWear/Androgynous/RedMask.png",
+            "./images/Size_Average/HeadWear/Androgynous/SkeletonMask.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowBlue.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowGreen.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowPink.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowRed.png",
+            "./images/Size_Average/HeadWear/Androgynous/BowYellow.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsBlonde.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsBrown.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsBlack.png",
+            "./images/Size_Average/HeadWear/Androgynous/BangsRed.png",
         ]
     }
     ]
 }
-
 );
