@@ -32,143 +32,231 @@ export type BodyMap = {
  */
 export const bodyMaps: BodyMap[] = new Array(0);
 bodyMaps.push({
-    name: 'Average-Sized Male',
-    description: "Men of average height! Useful for human characters and elves.",
-    imageSource: "./images/Size_Average/Base_Male_Light.png",
+    name: 'Masculine, Average-Sized',
+    description: "Masculine body type! Of average size; good for humans, elves, and orcs",
+    imageSource: "./images/Size_Average/Body/Male/Base_Male_Tan.png",
     layers: [{
         key: "Body Archetype",
         layerIndex: 1,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/Base_Male_Drow.png",
-            "./images/Size_Average/Base_Male_Pale.png",
-            "./images/Size_Average/Base_Male_Fair.png",
-            "./images/Size_Average/Base_Male_Light.png",
-            "./images/Size_Average/Base_Male_Tan.png",
-            "./images/Size_Average/Base_Male_Dark.png",
-            "./images/Size_Average/Base_Male_Darker.png",
-            "./images/Size_Average/Base_Male_Darkest.png",
-        ],
-    },
-    {
-        key: "Sparkles",
-        layerIndex: 2,
-        images: [
-            "./images/Empty/Empty.png",
-            "./images/Sparkles/YellowSparkles.png",
-        ]
-    }]
-}, {
-    name: 'Average-Sized Female',
-    description: "Women of average height! Useful for human characters and elves.",
-    imageSource: "./images/Size_Average/Base_Female_Light.png",
-    layers: [{
-        key: "Body Archetype",
-        layerIndex: 1,
-        images: [
-            "./images/Empty/Empty.png",
-            "./images/Size_Average/Base_Female_Drow.png",
-            "./images/Size_Average/Base_Female_Pale.png",
-            "./images/Size_Average/Base_Female_Fair.png",
-            "./images/Size_Average/Base_Female_Light.png",
-            "./images/Size_Average/Base_Female_Tan.png",
-            "./images/Size_Average/Base_Female_Dark.png",
-            "./images/Size_Average/Base_Female_Darker.png",
-            "./images/Size_Average/Base_Female_Darkest.png",
+            "./images/Size_Average/Body/Male/Base_Male_Drow.png",
+            "./images/Size_Average/Body/Male/Base_Male_Pale.png",
+            "./images/Size_Average/Body/Male/Base_Male_Fair.png",
+            "./images/Size_Average/Body/Male/Base_Male_Light.png",
+            "./images/Size_Average/Body/Male/Base_Male_Tan.png",
+            "./images/Size_Average/Body/Male/Base_Male_Dark.png",
+            "./images/Size_Average/Body/Male/Base_Male_Darker.png",
+            "./images/Size_Average/Body/Male/Base_Male_Darkest.png",
         ],
     }, {
         key: "Cloaks",
         layerIndex: 2,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Cloaks/DarkCloak.png",
         ]
     }, {
         key: "Bottoms",
         layerIndex: 3,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/BlackSimple.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/Jeans.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/Bellbottoms.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/BluePlainPoofyPants.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/BluePoofyPants.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreenPlainPoofyPants.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreenPoofyPants.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreenShorts.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreyCapris.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreyPlainPoofyPants.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreyPoofyPants.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/RedCapris.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/YellowCapris.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/BlackSkirt.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/GreenSkirt.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/PinkSkirt.png",
-            "./images/Size_Average/FemaleClothing/Bottoms/RedSkirt.png",
+            "./images/Size_Average/Bottoms/Male/BluePants.png",
+            "./images/Size_Average/Bottoms/Male/BlackPants.png",
         ]
     }, {
         key: "Lower Armor",
         layerIndex: 4,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/LowerArmor/KneePlates.png",
+            "./images/Size_Average/LowerArmor/Male/LegBands.png",
         ]
     }, {
         key: "Shoes",
         layerIndex: 5,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Shoes/BattleBoots.png",
-            "./images/Size_Average/FemaleClothing/Shoes/Boots.png",
-            "./images/Size_Average/FemaleClothing/Shoes/PlainShoes.png",
+            "./images/Size_Average/Shoes/Male/TallBoots.png",
+            "./images/Size_Average/Shoes/Male/PlatedBoots.png",
+            "./images/Size_Average/Shoes/Male/BlackSandals.png",
         ]
     }, {
         key: "Tops",
         layerIndex: 6,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Tops/WhiteSimple.png",
-            "./images/Size_Average/FemaleClothing/Tops/SimpleDark.png",
+            "./images/Size_Average/Tops/Male/PlainBlackShirt.png",
+            "./images/Size_Average/Tops/Male/PlainWhiteShirt.png",
+            "./images/Size_Average/Tops/Male/LooseBlackShirt.png",
         ]
     }, {
         key: "Upper Armor",
         layerIndex: 7,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/UpperArmor/LeatherCorset.png",
-            "./images/Size_Average/FemaleClothing/UpperArmor/PurpleScaleMail.png",
+            "./images/Size_Average/UpperArmor/Male/LeatherCoat.png",
+            "./images/Size_Average/UpperArmor/Male/LeatherVest.png",
         ]
     }, {
         key: "Mid Accessory",
         layerIndex: 8,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/MidAccessory/LargeBelt.png",
-            "./images/Size_Average/FemaleClothing/MidAccessory/LargeBeltWithKnives.png",
+            "./images/Size_Average/MidAccessory/Male/PlainBelt.png",
+            "./images/Size_Average/MidAccessory/Male/Pouches.png",
         ]
     }, {
         key: "Arm Armor",
         layerIndex: 9,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/ArmArmor/GreenScales.png",
-            "./images/Size_Average/FemaleClothing/ArmArmor/RedScales.png",
-            "./images/Size_Average/FemaleClothing/ArmArmor/PlatedSleeves.png",
+            "./images/Size_Average/ArmArmor/Male/LeatherSleeves.png",
+            "./images/Size_Average/ArmArmor/Male/RedShoulderCloak.png",
+            "./images/Size_Average/ArmArmor/Male/BlackShoulderCloak.png",
         ]
     }, {
         key: "Hair",
         layerIndex: 10,
         images: [
             "./images/Empty/Empty.png",
-            "./images/Size_Average/FemaleClothing/Hair/RedLong.png",
-            "./images/Size_Average/FemaleClothing/Hair/BlackLong.png",
-            "./images/Size_Average/FemaleClothing/Hair/DarkHood.png",
-            "./images/Size_Average/FemaleClothing/Hair/CurlsBlonde.png",
-            "./images/Size_Average/FemaleClothing/Hair/CurlsRed.png",
-            "./images/Size_Average/FemaleClothing/Hair/ShortBlack.png",
-            "./images/Size_Average/FemaleClothing/Hair/ShortBlonde.png",
-            "./images/Size_Average/FemaleClothing/Hair/ShortBrown.png",
-            "./images/Size_Average/FemaleClothing/Hair/ShortRed.png",
+            "./images/Size_Average/Hair/Androgynous/DarkHood.png",
+            "./images/Size_Average/Hair/Androgynous/RedHood.png",
+            "./images/Size_Average/Hair/Androgynous/GreenHood.png",
+            "./images/Size_Average/Hair/Androgynous/RedLong.png",
+            "./images/Size_Average/Hair/Androgynous/BlackLong.png",
+            "./images/Size_Average/Hair/Androgynous/CurlsBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/CurlsRed.png",
+            "./images/Size_Average/Hair/Androgynous/ShortBlack.png",
+            "./images/Size_Average/Hair/Androgynous/ShortBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/ShortBrown.png",
+            "./images/Size_Average/Hair/Androgynous/ShortRed.png",
+            "./images/Size_Average/Hair/Androgynous/BrownWavy.png",
+            "./images/Size_Average/Hair/Androgynous/GreyWavy.png",
+        ]
+    }, {
+        key: "Hats",
+        layerIndex: 11,
+        images: [
+            "./images/Empty/Empty.png",
+        ]
+    }
+    ]
+}, {
+    name: 'Feminine, Average-Sized',
+    description: "Feminine body type! Of average size; good for humans, elves, and orcs",
+    imageSource: "./images/Size_Average/Body/Female/Base_Female_Tan.png",
+    layers: [{
+        key: "Body Archetype",
+        layerIndex: 1,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/Body/Female/Base_Female_Drow.png",
+            "./images/Size_Average/Body/Female/Base_Female_Pale.png",
+            "./images/Size_Average/Body/Female/Base_Female_Fair.png",
+            "./images/Size_Average/Body/Female/Base_Female_Light.png",
+            "./images/Size_Average/Body/Female/Base_Female_Tan.png",
+            "./images/Size_Average/Body/Female/Base_Female_Dark.png",
+            "./images/Size_Average/Body/Female/Base_Female_Darker.png",
+            "./images/Size_Average/Body/Female/Base_Female_Darkest.png",
+        ],
+    }, {
+        key: "Cloaks",
+        layerIndex: 2,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/Cloaks/Female/DarkCloak.png",
+            "./images/Size_Average/Cloaks/Female/GreenCloak.png",
+            "./images/Size_Average/Cloaks/Female/RedCloak.png",
+        ]
+    }, {
+        key: "Bottoms",
+        layerIndex: 3,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/Bottoms/Female/BlackSimple.png",
+            "./images/Size_Average/Bottoms/Female/Jeans.png",
+            "./images/Size_Average/Bottoms/Female/Bellbottoms.png",
+            "./images/Size_Average/Bottoms/Female/BluePlainPoofyPants.png",
+            "./images/Size_Average/Bottoms/Female/BluePoofyPants.png",
+            "./images/Size_Average/Bottoms/Female/GreenPlainPoofyPants.png",
+            "./images/Size_Average/Bottoms/Female/GreenPoofyPants.png",
+            "./images/Size_Average/Bottoms/Female/GreenShorts.png",
+            "./images/Size_Average/Bottoms/Female/GreyCapris.png",
+            "./images/Size_Average/Bottoms/Female/GreyPlainPoofyPants.png",
+            "./images/Size_Average/Bottoms/Female/GreyPoofyPants.png",
+            "./images/Size_Average/Bottoms/Female/RedCapris.png",
+            "./images/Size_Average/Bottoms/Female/YellowCapris.png",
+            "./images/Size_Average/Bottoms/Female/BlackSkirt.png",
+            "./images/Size_Average/Bottoms/Female/GreenSkirt.png",
+            "./images/Size_Average/Bottoms/Female/PinkSkirt.png",
+            "./images/Size_Average/Bottoms/Female/RedSkirt.png",
+        ]
+    }, {
+        key: "Lower Armor",
+        layerIndex: 4,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/LowerArmor/Female/KneePlates.png",
+        ]
+    }, {
+        key: "Shoes",
+        layerIndex: 5,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/Shoes/Female/BattleBoots.png",
+            "./images/Size_Average/Shoes/Female/Boots.png",
+            "./images/Size_Average/Shoes/Female/PlainShoes.png",
+        ]
+    }, {
+        key: "Tops",
+        layerIndex: 6,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/Tops/Female/WhiteSimple.png",
+            "./images/Size_Average/Tops/Female/SimpleDark.png",
+        ]
+    }, {
+        key: "Upper Armor",
+        layerIndex: 7,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/UpperArmor/Female/LeatherCorset.png",
+            "./images/Size_Average/UpperArmor/Female/PurpleScaleMail.png",
+        ]
+    }, {
+        key: "Mid Accessory",
+        layerIndex: 8,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/MidAccessory/Female/LargeBelt.png",
+            "./images/Size_Average/MidAccessory/Female/LargeBeltWithKnives.png",
+        ]
+    }, {
+        key: "Arm Armor",
+        layerIndex: 9,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/ArmArmor/Female/GreenScales.png",
+            "./images/Size_Average/ArmArmor/Female/RedScales.png",
+            "./images/Size_Average/ArmArmor/Female/PlatedSleeves.png",
+        ]
+    }, {
+        key: "Hair",
+        layerIndex: 10,
+        images: [
+            "./images/Empty/Empty.png",
+            "./images/Size_Average/Hair/Androgynous/DarkHood.png",
+            "./images/Size_Average/Hair/Androgynous/RedHood.png",
+            "./images/Size_Average/Hair/Androgynous/GreenHood.png",
+            "./images/Size_Average/Hair/Androgynous/RedLong.png",
+            "./images/Size_Average/Hair/Androgynous/BlackLong.png",
+            "./images/Size_Average/Hair/Androgynous/CurlsBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/CurlsRed.png",
+            "./images/Size_Average/Hair/Androgynous/ShortBlack.png",
+            "./images/Size_Average/Hair/Androgynous/ShortBlonde.png",
+            "./images/Size_Average/Hair/Androgynous/ShortBrown.png",
+            "./images/Size_Average/Hair/Androgynous/ShortRed.png",
+            "./images/Size_Average/Hair/Androgynous/BrownWavy.png",
+            "./images/Size_Average/Hair/Androgynous/GreyWavy.png",
         ]
     }, {
         key: "Hats",
