@@ -21,7 +21,7 @@ export default function PartSelector(props: IPartSelector) {
             <Image
                 className='partSelector'
                 src={props.imageSource}
-                roundedCircle />
+                rounded />
         </Button>
     )
 }
