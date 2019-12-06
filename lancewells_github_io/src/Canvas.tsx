@@ -23,7 +23,7 @@ export class Canvas extends React.Component<ICanvasProps, ICanvasState> {
     constructor(props: Readonly<ICanvasProps>) {
         super(props);
         this.state = {
-            backgroundColor: 'whitesmoke'
+            backgroundColor: '#ffffff'
         };
     }
 
