@@ -3,6 +3,7 @@ Canvas {
     display: block;
     margin: auto;
     margin-bottom: 15px;
+    /* background: white; */
 }
 
 html,
@@ -87,3 +88,8 @@ img {
     width: 128px;
     height: auto;
 }
+
+.GithubPicker {
+    background: blue;
+}
+
