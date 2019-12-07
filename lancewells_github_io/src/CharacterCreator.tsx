@@ -13,6 +13,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CardColumns from 'react-bootstrap/CardColumns'
+import { number } from 'prop-types';
+import { Alert } from 'react-bootstrap';
 
 /**
  * @description
@@ -73,7 +75,7 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
      * @param imageSource The image source. This is what gets drawn.
      */
     handlePartSelection(layerIndex: number, imageSource: string) {
-        const newCanvasImages: Array<string> = this.state.canvasImages.slice();
+        const newCanvasImages: Array<string> = this.state.canvasImages;
 
         // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
         newCanvasImages[layerIndex] = imageSource;
