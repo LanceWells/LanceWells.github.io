@@ -4,8 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { Color, ColorResult, CirclePicker } from 'react-color';
 import { Container } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
-import { render } from 'react-dom';
 
 interface ICanvasProps {
     imagesToRender: Array<string>;
@@ -24,12 +22,14 @@ export class Canvas extends React.Component<ICanvasProps, ICanvasState> {
     constructor(props: Readonly<ICanvasProps>) {
         super(props);
         this.state = {
-            backgroundColor: '#ffffff'
+            backgroundColor: '#131313'
         };
     }
 
     componentDidMount() {
         const canvas = this.refs.canvas as HTMLCanvasElement;
+        canvas.style.display = "none";
+        
         const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
         ctx.imageSmoothingEnabled = false;
     }
@@ -91,13 +91,16 @@ export class Canvas extends React.Component<ICanvasProps, ICanvasState> {
                 const borderCtx = borderCanvas.getContext("2d") as CanvasRenderingContext2D;
                 borderCtx.clearRect(0, 0, borderCanvas.width, borderCanvas.height);
 
-                drawCharacterBorder(borderCanvas, borderImg, "red");
-                // drawCharacterBorder(borderCanvas, borderImg, "red");
+                drawCharacterBorder(borderCanvas, borderImg, "rgba(255, 255, 255, 1)", 4);
 
                 borderCtx.globalCompositeOperation = "source-over";
                 borderCtx.drawImage(borderImg, 0, 0, borderImg.width, borderImg.height);
 
-                function drawCharacterBorder(borderCanvas: HTMLCanvasElement, borderImg: HTMLImageElement, fillStyle: string) {
+                function drawCharacterBorder(
+                        borderCanvas: HTMLCanvasElement,
+                        borderImg: HTMLImageElement,
+                        fillStyle: string,
+                        borderWidth: number) {
                     const borderCtx = borderCanvas.getContext("2d") as CanvasRenderingContext2D;
 
                     // Now that we have used the original canvas to render the character image, now we use another
@@ -107,19 +110,22 @@ export class Canvas extends React.Component<ICanvasProps, ICanvasState> {
                     // Get a list of offsets, provided as a list of paired x-y coordinates.
                     var dArr = [
                         -1, -1,
-                        0, -1,
-                        1, -1,
-                        -1, 0,
-                        1, 0,
-                        -1, 1,
-                        0, 1,
-                        1, 1
+                         0, -1,
+                         1, -1,
+                        -1,  0,
+                         1,  0,
+                        -1,  1,
+                         0,  1,
+                         1,  1
                     ];
-                    var s = 4;  // Thickness scale.
+
+                    var s = borderWidth;  // Thickness scale.
+                    var doubleS = s * 2;
                     var i = 0;  // Iterator.
                     var x = 0;  // X-Offset.
                     var y = 0;  // Y-Offset.
 
+                    borderCtx.globalAlpha = 1;
                     for (; i < dArr.length; i += 2) {
                         borderCtx.drawImage(borderImg, x + dArr[i] * s, y + dArr[i + 1] * s, borderImg.width, borderImg.height);
                     }
