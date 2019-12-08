@@ -5,7 +5,7 @@ import React from 'react';
 
 import {BodySelector} from './BodySelector';
 import {PartAccordion} from './PartAccordion';
-import {Canvas} from './Canvas';
+import {CharacterCanvas} from './CharacterCanvas';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Accordion from 'react-bootstrap/Accordion';
@@ -13,8 +13,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CardColumns from 'react-bootstrap/CardColumns'
-import { number } from 'prop-types';
-import { Alert } from 'react-bootstrap';
 
 /**
  * @description
@@ -131,7 +129,7 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                 <Container>
                     <Row className="align-items-center">
                         <Col lg={true} className='TopSplit'>
-                            <Canvas
+                            <CharacterCanvas
                                 imagesToRender={canvasImagesToRender}
                                 onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
                             />
