@@ -36,12 +36,12 @@ export var bodyMaps: BodyMap[] = new Array(0);
 bodyMaps.push({
     name: 'Masculine, Average-Sized',
     description: "Masculine body type! Of average size; good for humans, elves, and orcs",
-    imageSource: "./images/Size_Average/0-Body/Male/Base_Male_Tan.png",
+    imageSource: "./images/Size_Average/2-Body/Male/Base_Male_Tan.png",
     layers: avgMasculineLayers
 }, {
     name: 'Feminine, Average-Sized',
     description: "Feminine body type! Of average size; good for humans, elves, and orcs",
-    imageSource: "./images/Size_Average/0-Body/Female/Base_Female_Tan.png",
+    imageSource: "./images/Size_Average/2-Body/Female/Base_Female_Tan.png",
     layers: avgFeminineLayers
 }
 );

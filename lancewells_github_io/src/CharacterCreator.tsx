@@ -91,7 +91,7 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         const newImagesToRender: Array<string> = new Array<string>(0);
 
         // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
-        newImagesToRender[0] = bodyMap.imageSource;
+        newImagesToRender[2] = bodyMap.imageSource;
 
         this.setState({
             canvasImages: newImagesToRender,
