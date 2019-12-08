@@ -37,10 +37,25 @@ interface ICanvasState {
  * tools to change the color of the border, and a means to download the image itself.
  */
 export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState> {
+    /**
+     * @description The height of the canvas' used by this object.
+     */
     canvasHeight: number = 256;
-    canvasWidth: number = 256;
-    outlineColors: string[] = ["#131313", "#ffffff", ];
 
+    /**
+     * @description The width of the canvas' used by this object.
+     */
+    canvasWidth: number = 256;
+
+    /**
+     * @description A list of all possible outline color that may be used by the canvas.
+     */
+    outlineColors: string[] = ["#131313", "#ffffff", "#571c27" ];
+
+    /**
+     * @description The constructor for this object.
+     * @param props A list of properties provided by the parent object.
+     */
     constructor(props: Readonly<ICanvasProps>) {
         super(props);
         this.state = {
@@ -48,20 +63,37 @@ export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState>
         };
     }
 
+    /**
+     * A handler for when this component has been fully loaded. Establishes some basic settings about how to
+     * handle the image.
+     */
     componentDidMount() {
         const canvas = this.refs.canvas as HTMLCanvasElement;
+        const borderCanvas = this.refs.borderCanvas as HTMLCanvasElement;
+
         canvas.style.display = "none";
         
         const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
         ctx.imageSmoothingEnabled = false;
+
+        const borderCtx = borderCanvas.getContext("2d") as CanvasRenderingContext2D;
+        borderCtx.imageSmoothingEnabled = false;
     }
 
+    /**
+     * @description A handler for a change on an outline color.
+     */
     handleOutlineColorChange = (color: ColorResult) => {
         this.setState({
             outlineColor: color.hex
         });
     }
 
+    /**
+     * @description A handler for when the component itself updates; either the props or the state of this
+     * object. Updates the character display.
+     * @param prevProps 
+     */
     componentDidUpdate(prevProps: ICanvasProps)
     {
         const imagesWidth = this.canvasWidth;
@@ -70,6 +102,16 @@ export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState>
         // https://stackoverflow.com/questions/34534549/how-do-you-deal-with-html5s-canvas-image-load-asynchrony
         var loadedImages: Array<HTMLImageElement> = new Array<HTMLImageElement>();
 
+        /**
+         * Provides a function to be used when loading each of the images that will be drawn on the character.
+         * @param loadedImages A list of loaded images to maintain outside of this function. This needs to be
+         * accessible from where the promise list is being run.
+         * @param index The index of the array @see loadedImages that the result of the promise will end up
+         * in.
+         * @param imgSrc The string/html source for the image to be rendered.
+         * @param width The width of the image to be rendered.
+         * @param height The height of the image to be rendered.
+         */
         var renderImagesFn = function(
                 loadedImages: Array<HTMLImageElement>,
                 index: number,
@@ -88,9 +130,13 @@ export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState>
             })
         };
 
+        // Take the list of images that we should render, and ensure that each and every one of them is A:
+        // rendered, and B: exists in a separate loadedImages array for us to draw next.
         var promiseArray = this.props.imagesToRender.map(
             (image, index) => renderImagesFn(loadedImages, index, image, this.canvasWidth, this.canvasHeight));
 
+        // Ensure that all of the promises have been met, then call the giant handleImagesLoaded() function to
+        // draw the images and their border.
         Promise.all(promiseArray).then(handleImagesLoaded);
 
         const borderColor= this.state.outlineColor as Color;
@@ -194,8 +240,11 @@ export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState>
         }
     }
 
+    /**
+     * @description Renders this object.
+     */
     render() {
-        var bgColor: string = this.state.outlineColor.toString();
+        var outlineColor: string = this.state.outlineColor.toString();
 
         return (
             <div>
@@ -205,7 +254,7 @@ export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState>
                     <Row>
                         <CirclePicker
                             onChangeComplete={this.handleOutlineColorChange}
-                            color={bgColor}
+                            color={outlineColor}
                             colors={this.outlineColors}
                         />
                     </Row>
