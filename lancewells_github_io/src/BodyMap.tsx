@@ -1,5 +1,5 @@
-import avgFeminineLayers from './json/avgFeminine.json';
-import avgMasculineLayers from './json/avgMasculine.json';
+import avgFeminineLayers from './json/avg_Feminine.json';
+import avgMasculineLayers from './json/avg_Masculine.json';
 
 /**
  * @description
@@ -14,7 +14,12 @@ import avgMasculineLayers from './json/avgMasculine.json';
 export type ImageLayer = {
     key: string;
     layerIndex: number;
-    images: string[];
+    images: ImageDescriptor[];
+}
+
+export type ImageDescriptor = {
+    imageSource: string;
+    tags: string[];
 }
 
 /**
@@ -36,12 +41,12 @@ export var bodyMaps: BodyMap[] = new Array(0);
 bodyMaps.push({
     name: 'Masculine, Average-Sized',
     description: "Masculine body type! Of average size; good for humans, elves, and orcs",
-    imageSource: "./images/Size_Average/2-Body/Male/Base_Male_Tan.png",
+    imageSource: "./images/Examples/Avg_Male.png",
     layers: avgMasculineLayers
 }, {
     name: 'Feminine, Average-Sized',
     description: "Feminine body type! Of average size; good for humans, elves, and orcs",
-    imageSource: "./images/Size_Average/2-Body/Female/Base_Female_Tan.png",
+    imageSource: "./images/Examples/Avg_Female.png",
     layers: avgFeminineLayers
 }
 );

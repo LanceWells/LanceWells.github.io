@@ -90,8 +90,21 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     handleBodySelection(bodyMap: BodyMap) {
         const newImagesToRender: Array<string> = new Array<string>(0);
 
-        // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
-        newImagesToRender[2] = bodyMap.imageSource;
+        bodyMap.layers.forEach(layer => {
+            layer.images.forEach(image => {
+                if (image.imageSource.includes('default.png'))
+                {
+                    newImagesToRender[layer.layerIndex] = image.imageSource;
+                }
+                // image.tags.forEach(tag => {
+                //     if (tag === 'default') {
+                //         // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used
+                //         // to this.
+                //         newImagesToRender[layer.layerIndex] = image.imageSource;
+                //     }
+                // });
+            });
+        });
 
         this.setState({
             canvasImages: newImagesToRender,

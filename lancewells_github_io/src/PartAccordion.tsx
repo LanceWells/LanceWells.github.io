@@ -3,20 +3,21 @@ import { ImageLayer } from './BodyMap';
 import PartSelector from './PartSelector';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
+import src from '*.bmp';
 
-interface IPartAccordion {
+interface IPartAccordionProps {
     layers: ImageLayer[];
     onClick: Function;
 }
 
-export class PartAccordion extends React.Component<IPartAccordion> {
+export class PartAccordion extends React.Component<IPartAccordionProps> {
     renderPartsButtons(layer: ImageLayer) {
         return layer.images.map((src) => {
             return (
                 <PartSelector
                     onClick={this.props.onClick}
                     layerIndex={layer.layerIndex}
-                    imageSource={src}
+                    imageSource={src.imageSource}
                 />
             );
         });

@@ -1,2 +1,2 @@
-BodyMapGenerator.exe .\..\public\images\Size_Average .\..\src\json\avgFeminine.json ./images/ Female Androgynous
-BodyMapGenerator.exe .\..\public\images\Size_Average .\..\src\json\avgMasculine.json ./images/ Male Androgynous
+BodyMapGenerator.exe .\..\public\images\Size_Average .\..\src\json\avg_Feminine.json ./images/ Female Androgynous
+BodyMapGenerator.exe .\..\public\images\Size_Average .\..\src\json\avg_Masculine.json ./images/ Male Androgynous
