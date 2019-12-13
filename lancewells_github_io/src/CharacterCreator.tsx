@@ -139,40 +139,75 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         return (
             <div className="CharacterCreator">
                 <h1>Character Creator</h1>
-                <Container>
-                    <Row className="align-items-center">
-                        <Col lg={true} className='TopSplit'>
-                            <CharacterCanvas
-                                imagesToRender={canvasImagesToRender}
-                                onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
-                            />
-                        </Col>
-                    </Row>
+                <Container fluid={true}>
                     <Row>
-                        <Col lg={true} className='BottomSplit'>
-                            <h2>Accessory Selection</h2>
-                            <p className="italics">(You need to select a body first if this is empty)</p>
-                            <Accordion>
+                        <Col lg={1} />
+                        <Col lg={4}>
+                            <div className='body-creation'>
+                                <div className='body-selector'>
+                                    <h2>Body Selection</h2>
+                                    <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
+                                    <div className='body-cards'>
+                                        {this.renderBodySelection()}
+                                    </div>
+                                </div>
+                                <div className='body-canvas'>
+                                    <CharacterCanvas
+                                        imagesToRender={canvasImagesToRender}
+                                        onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
+                                    />
+                                </div>
+                            </div>
+                        </Col>
+                        <Col lg={6}>
+                            <div className='acc-selector'>
+                                <h2>Accessory Selection</h2>
+                                <p className="italics">(You need to select a body first if this is empty)</p>
                                 <PartAccordion
                                     layers={currentBodyMap}
                                     onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
                                 />
-                            </Accordion>
+                            </div>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={true} className='BottomSplit'>
-                            <h2>Body Selection</h2>
-                            <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-                            <CardColumns>
-                                {this.renderBodySelection()}
-                            </CardColumns>
-                        </Col>
+                        <Col lg={1} />
                     </Row>
                 </Container>
             </div>
         );
     }
 }
+
+// <div className="CharacterCreator">
+//     <h1>Character Creator</h1>
+//     <Container>
+//         <Row className="align-items-center">
+            // <Col lg={true} className='TopSplit'>
+            //     <CharacterCanvas
+            //         imagesToRender={canvasImagesToRender}
+            //         onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
+            //     />
+            // </Col>
+//         </Row>
+//         <Row>
+//             <Col lg={true} className='BottomSplit'>
+//                 <h2>Accessory Selection</h2>
+//                 <p className="italics">(You need to select a body first if this is empty)</p>
+//                 <PartAccordion
+//                     layers={currentBodyMap}
+//                     onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
+//                 />
+//             </Col>
+//         </Row>
+//         <Row>
+//             <Col lg={true} className='BottomSplit'>
+//                 <h2>Body Selection</h2>
+//                 <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
+//                 <CardColumns>
+//                     {this.renderBodySelection()}
+//                 </CardColumns>
+//             </Col>
+//         </Row>
+//     </Container>
+// </div>
 
 export default CharacterCreator;

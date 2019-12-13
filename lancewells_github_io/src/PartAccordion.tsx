@@ -3,7 +3,8 @@ import { ImageLayer } from './BodyMap';
 import PartSelector from './PartSelector';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
-import src from '*.bmp';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs'
 
 interface IPartAccordionProps {
     layers: ImageLayer[];
@@ -41,10 +42,24 @@ export class PartAccordion extends React.Component<IPartAccordionProps> {
         });
     }
 
+    renderPartTabs() {
+        return this.props.layers.map((layer) => {
+            return (
+                <Tab eventKey={layer.layerIndex.toString()} title={layer.key}>
+                    <div className='part-button-tab'>
+                        {this.renderPartsButtons(layer)}
+                    </div>
+                </Tab>
+            );
+        });
+    }
+
     render() {
         return (
             <div>
-                {this.renderPartCards()}
+                <Tabs defaultActiveKey="Body" id="part-accordion-tabs">
+                    {this.renderPartTabs()}
+                </Tabs>
             </div>
         );
     }

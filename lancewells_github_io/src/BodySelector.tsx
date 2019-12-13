@@ -10,12 +10,10 @@ interface IBodySelector {
 
 export function BodySelector(props: IBodySelector) {
     return (
-        <Card
+        <Card className='body-card'
             bg='dark'
             style={{
-                width: '18rem',
-                borderColor: 'rgba(255, 255, 255, 0.05)',
-                boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+                width: '16rem',
             }}>
             <Button
                 className='bodySelector'
