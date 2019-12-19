@@ -40,12 +40,12 @@ export type BodyMap = {
 export var bodyMaps: BodyMap[] = new Array(0);
 bodyMaps.push({
     name: 'Masculine, Average-Sized',
-    description: "Masculine body type! Of average size; good for humans, elves, and orcs",
+    description: "Masculine body type! Of average size; good for humans, elves, orcs, and tieflings.",
     imageSource: "./images/Examples/Avg_Male.png",
     layers: avgMasculineLayers
 }, {
     name: 'Feminine, Average-Sized',
-    description: "Feminine body type! Of average size; good for humans, elves, and orcs",
+    description: "Feminine body type! Of average size; good for humans, elves, orcs, and tieflings.",
     imageSource: "./images/Examples/Avg_Female.png",
     layers: avgFeminineLayers
 }

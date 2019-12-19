@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Carousel } from 'react-bootstrap';
 
 /**
  * @description
@@ -119,10 +120,12 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     renderBodySelection() {
         return bodyMaps.map((bodyMap) => {
             return (
-                <BodySelector
-                    onClick={(body: BodyMap) => this.handleBodySelection(body)}
-                    bodyMap={bodyMap}
-                />
+                <Carousel.Item>
+                    <BodySelector
+                        onClick={(body: BodyMap) => this.handleBodySelection(body)}
+                        bodyMap={bodyMap}
+                    />
+                </Carousel.Item>
             );
         });
     }
@@ -145,15 +148,17 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                                 <div className='body-selector'>
                                     <h2>Body Selection</h2>
                                     <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-                                    <div className='body-cards'>
+                                    <Carousel
+                                        interval={null}
+                                        indicators={false}>
                                         {this.renderBodySelection()}
+                                    </Carousel>
                                     </div>
-                                </div>
-                                <div className='body-canvas'>
-                                    <CharacterCanvas
-                                        imagesToRender={canvasImagesToRender}
-                                        onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
-                                    />
+                                    <div className='body-canvas'>
+                                        <CharacterCanvas
+                                            imagesToRender={canvasImagesToRender}
+                                            onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
+                                        />
                                 </div>
                             </div>
                         </Col>
@@ -175,37 +180,12 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     }
 }
 
-// <div className="CharacterCreator">
-//     <h1>Character Creator</h1>
-//     <Container>
-//         <Row className="align-items-center">
-            // <Col lg={true} className='TopSplit'>
-            //     <CharacterCanvas
-            //         imagesToRender={canvasImagesToRender}
-            //         onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
-            //     />
-            // </Col>
-//         </Row>
-//         <Row>
-//             <Col lg={true} className='BottomSplit'>
-//                 <h2>Accessory Selection</h2>
-//                 <p className="italics">(You need to select a body first if this is empty)</p>
-//                 <PartAccordion
-//                     layers={currentBodyMap}
-//                     onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
-//                 />
-//             </Col>
-//         </Row>
-//         <Row>
-//             <Col lg={true} className='BottomSplit'>
-//                 <h2>Body Selection</h2>
-//                 <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-//                 <CardColumns>
-//                     {this.renderBodySelection()}
-//                 </CardColumns>
-//             </Col>
-//         </Row>
-//     </Container>
+// <div className='body-selector'>
+//     <h2>Body Selection</h2>
+//     <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
+//     <div className='body-cards'>
+//         {this.renderBodySelection()}
+//     </div>
 // </div>
 
 export default CharacterCreator;
