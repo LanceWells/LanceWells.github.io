@@ -1,5 +1,7 @@
 import avgFeminineLayers from './json/avg_Feminine.json';
 import avgMasculineLayers from './json/avg_Masculine.json';
+import avgFeminineReptilianLayers from './json/avg_Feminine_Reptilian.json';
+import avgMasculineReptilianLayers from './json/avg_Masculine_Reptilian.json';
 
 /**
  * @description
@@ -39,14 +41,24 @@ export type BodyMap = {
  */
 export var bodyMaps: BodyMap[] = new Array(0);
 bodyMaps.push({
-    name: 'Masculine, Average-Sized',
+    name: 'Average-Sized, Masculine',
     description: "Masculine body type! Of average size; good for humans, elves, orcs, and tieflings.",
     imageSource: "./images/Examples/Avg_Male.png",
     layers: avgMasculineLayers
 }, {
-    name: 'Feminine, Average-Sized',
+    name: 'Average-Sized, Feminine',
     description: "Feminine body type! Of average size; good for humans, elves, orcs, and tieflings.",
     imageSource: "./images/Examples/Avg_Female.png",
     layers: avgFeminineLayers
+}, {
+    name: 'Dragonborn, Masculine',
+    description: "Dragonborn! Cold-blooded and rainbow-colored! These are masculine-bodied dragonborn.",
+    imageSource: "./images/Examples/Reptilian_Male.png",
+    layers: avgMasculineReptilianLayers
+}, {
+    name: 'Dragonborn, Feminine',
+    description: "Dragonborn! Cold-blooded and rainbow-colored! These are feminine-bodied dragonborn.",
+    imageSource: "./images/Examples/Reptilian_Female.png",
+    layers: avgFeminineReptilianLayers
 }
 );

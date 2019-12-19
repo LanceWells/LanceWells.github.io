@@ -32,7 +32,9 @@ interface ICharacterCreatorProps {
  */
 interface ICharacterCreatorState {
     canvasImages: Array<string>,
-    partLayers: ImageLayer[]
+    partLayers: ImageLayer[],
+    carouselIndex: any,
+    carouselDirection: "prev" | "next"
 };
 
 /**
@@ -45,7 +47,9 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         this.state = {
             // Just fill the canvas images with nothing. We'll re-define it when we add to it.
             canvasImages: new Array<string>(),
-            partLayers: Array(0)
+            partLayers: Array(0),
+            carouselIndex: 0,
+            carouselDirection: "next"
         }
     }
 
@@ -131,6 +135,20 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
     }
 
     /**
+     * @description
+     * Handles a carousel selection event. Is used to ensure that the carousel cycles left when the left
+     * button is pressed; and the same for the right button.
+     * @param eventKey The event key. This is the index that the carousel is being cycled to.
+     * @param direction The direction that the carousel is being cycled in.
+     */
+    handleCarouselSelect(eventKey: any, direction: "prev" | "next") {
+        this.setState({
+            carouselIndex: eventKey,
+            carouselDirection: direction
+        });
+    }
+
+    /**
      * Renders this object.
      */
     render() {
@@ -150,7 +168,8 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
                                     <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
                                     <Carousel
                                         interval={null}
-                                        indicators={false}>
+                                        indicators={false}
+                                        onSelect={this.handleCarouselSelect.bind(this)}>
                                         {this.renderBodySelection()}
                                     </Carousel>
                                     </div>
@@ -179,13 +198,5 @@ class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacte
         );
     }
 }
-
-// <div className='body-selector'>
-//     <h2>Body Selection</h2>
-//     <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-//     <div className='body-cards'>
-//         {this.renderBodySelection()}
-//     </div>
-// </div>
 
 export default CharacterCreator;
