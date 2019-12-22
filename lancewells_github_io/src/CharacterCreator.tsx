@@ -18,7 +18,7 @@ import { Carousel } from 'react-bootstrap';
  * The interface for props passed to this object. This class in particular takes no props; it is effectively
  * the app itself.
  */
-interface ICharacterCreatorProps {
+export interface ICharacterCreatorProps {
 };
 
 /**
@@ -41,7 +41,7 @@ interface ICharacterCreatorState {
  * The main entry point for this application. Provides all of the buttons and fun stuff needed to create a
  * character image on a canvas element.
  */
-class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacterCreatorState> {
+export class CharacterCreator extends React.Component<ICharacterCreatorProps, ICharacterCreatorState> {
     constructor(props: ICharacterCreatorProps) {
         super(props);
         this.state = {
