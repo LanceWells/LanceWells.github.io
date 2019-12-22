@@ -27,10 +27,40 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 </div>
                 <div className='bazaar-area'>
                     <div className='shop-rug green-rug'>
-                        <ShopItem />
+                        <ShopItem 
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Jewel Red.png'
+                            floatDelay={0}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png'
+                            floatDelay={-1}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Snake Flower Blue.png'
+                            floatDelay={-2}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
+                            floatDelay={-3}
+                        />
                     </div>
                     <div className='shop-rug red-rug'>
-                        <ShopItem />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Jewel Red.png'
+                            floatDelay={0}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png'
+                            floatDelay={-1}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Snake Flower Blue.png'
+                            floatDelay={-2}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
+                            floatDelay={-3}
+                        />
                     </div>
                 </div>
             </div>
