@@ -1,0 +1,44 @@
+.ItemShop {
+    flex: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    background: #121212;
+}
+
+/* .shop-item {
+    border-image: url("/images/Item_Shop/Items/Rings/rug.png")
+          27 fill /             
+          32px 32px 32px 32px / 
+          16px 16px 16px 16px   
+          repeat;               
+} */
+
+.item-layer {
+    padding: 8px 16px;
+}
+
+.bazaar-area {
+    display: flex;
+    justify-content: center;
+}
+
+.green-rug {
+    border-image: url("/images/Item_Shop/Items/Rings/rug.png");
+}
+
+.red-rug {
+    border-image: url("/images/Item_Shop/Items/Rings/redrug.png");
+}
+
+.shop-rug {
+    border-image-slice: 27 fill;
+    border-image-width: 32px;
+    border-image-outset: 16px;
+    border-image-repeat: repeat;
+    margin: 64px;
+    max-width: 20%;
+}

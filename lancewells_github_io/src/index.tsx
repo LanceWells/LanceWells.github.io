@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './css/index.css';
 import CharacterCreator from './CharacterCreator'
 import * as serviceWorker from './serviceWorker';
 import LandingSpace from './LandingSpace';
