@@ -2,7 +2,7 @@ import './css/LandingSpace.css';
 
 import React from 'react';
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
     Route,
     Link
@@ -15,6 +15,8 @@ interface ILandingSpaceProps {
 interface ILandingSpaceState {
 };
 
+// Use the hash router instead of a browser router so that refreshes and direct-links to pages work.
+//https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
 export default function LandingSpace() {
     const charCreatorProps: ICharacterCreatorProps = {};
 
