@@ -9,14 +9,6 @@
     background: #121212;
 }
 
-/* .shop-item {
-    border-image: url("/images/Item_Shop/Items/Rings/rug.png")
-          27 fill /             
-          32px 32px 32px 32px / 
-          16px 16px 16px 16px   
-          repeat;               
-} */
-
 .item-layer {
     padding: 8px 16px;
 }
@@ -41,4 +33,25 @@
     border-image-repeat: repeat;
     margin: 64px;
     max-width: 20%;
+}
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/drop-shadow */
+@keyframes float {
+    0% {
+        transform: translateY(-16px);
+        filter: drop-shadow(0px 12px 4px rgba(0, 0, 0, 0.8));
+    }
+
+    100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.8));
+    }
+}
+
+.item-layer {
+    animation-name: float;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
 }
