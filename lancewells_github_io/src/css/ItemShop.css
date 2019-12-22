@@ -27,12 +27,15 @@
 }
 
 .shop-rug {
-    border-image-slice: 32 fill;
+    border-image-slice: 32 32 fill;
     border-image-width: 32px;
     border-image-outset: 32px;
     border-image-repeat: repeat;
     margin: 64px;
     max-width: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/drop-shadow */
@@ -54,4 +57,11 @@
     animation-iteration-count: infinite;
     animation-direction: alternate-reverse;
     animation-timing-function: ease-in-out;
+}
+
+.item-cost {
+    text-align: center;
+    font-family: 'Press Start 2P';
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
 }

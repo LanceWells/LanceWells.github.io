@@ -2,7 +2,7 @@ import './css/ItemShop.css';
 import React from 'react';
 
 import { ShopItem } from './ShopItem';
-import { Modal, ModalTitle } from 'react-bootstrap';
+import { Modal, ModalTitle, Button } from 'react-bootstrap';
 
 interface IItemShopProps {
 };
@@ -58,52 +58,68 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <div className='shop-rug green-rug'>
                         <ShopItem 
                             imageSource='./images/Item_Shop/Items/Rings/Ring Jewel Red.png'
+                            itemCost={100}
                             floatDelay={0}
                             itemName='Ring Jewel Red'
+                            source="Official"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                         <ShopItem
                             imageSource='./images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png'
+                            itemCost={50}
                             floatDelay={-1}
                             itemName='Ring Silver Jewel Green'
+                            source="Homebrew"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                         <ShopItem
                             imageSource='./images/Item_Shop/Items/Rings/Ring Silver Snake Flower Blue.png'
+                            itemCost={10}
                             floatDelay={-2}
                             itemName='Ring Silver Snake Flower Blue'
+                            source="Official"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                         <ShopItem
                             imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
+                            itemCost={5}
                             floatDelay={-3}
                             itemName='Ring Simple'
+                            source="Official"
+                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
+                        />
+                        <ShopItem
+                            imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
+                            itemCost={5}
+                            floatDelay={-3}
+                            itemName='Ring Simple'
+                            source="Official"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                     </div>
                     <div className='shop-rug red-rug'>
                         <ShopItem
                             imageSource='./images/Item_Shop/Items/Rings/Ring Jewel Red.png'
+                            itemCost={1000}
                             floatDelay={0}
                             itemName='Ring Jewel Red'
+                            source="Homebrew"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                         <ShopItem
                             imageSource='./images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png'
+                            itemCost={25}
                             floatDelay={-1}
                             itemName='Ring Silver Jewel Green'
+                            source="Official"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                         <ShopItem
                             imageSource='./images/Item_Shop/Items/Rings/Ring Silver Snake Flower Blue.png'
+                            itemCost={100}
                             floatDelay={-2}
                             itemName='Ring Silver Snake Flower Blue'
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
-                            floatDelay={-3}
-                            itemName='Ring Simple'
+                            source="Homebrew"
                             onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
                         />
                     </div>
@@ -117,6 +133,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <Modal.Body>
                         {this.state.itemDialogBody}
                     </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={hideModal}>Close</Button>
+                    </Modal.Footer>
                 </Modal>
             </div>
         );
