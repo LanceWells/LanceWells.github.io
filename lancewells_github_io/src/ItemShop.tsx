@@ -3,14 +3,15 @@ import React from 'react';
 
 import { ShopItem } from './ShopItem';
 import { Modal, ModalTitle, Button } from 'react-bootstrap';
+import { SourceTypes } from './SourceTypes';
+import { ItemDetails } from './ItemDetails';
 
 interface IItemShopProps {
 };
 
 interface IItemShopState {
     showItemDialog: boolean;
-    itemDialogTitle: string;
-    itemDialogBody: string;
+    itemDetails: ItemDetails;
 };
 
 export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
@@ -18,8 +19,13 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         super(props);
         this.state = {
             showItemDialog: false,
-            itemDialogTitle: 'test title',
-            itemDialogBody: 'test body',
+            itemDetails: {
+                title: '',
+                body: '',
+                iconSource: '',
+                itemCost: 0,
+                source: SourceTypes.homebrew
+            }
         };
     }
 
@@ -30,21 +36,46 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         });
     }
 
-    onItemClick(itemTitle: string)
+    onItemClick(item: ItemDetails)
     {
         this.setState({
-            itemDialogTitle: itemTitle,
+            itemDetails: item,
         });
         
         this.setModalVisiblity(true);
     }
 
-    render() {
+    getSourceText(source: SourceTypes)
+    {
+        switch(source)
+        {
+            case SourceTypes.official:
+            {
+                return (<p style={{color: 'rgb(255, 153, 0)'}}>Official</p>);
+            }
+            case SourceTypes.homebrew:
+            {
+                return (<p style={{color: 'rgb(153, 0, 153)'}}>Official</p>);
+            }
+        };
+    }
+
+    render()
+    {
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
         const hideModal = () => this.setModalVisiblity(false);
         const showModal = () => this.setModalVisiblity(true);
+        
+        const redRing: ItemDetails = {
+            title: 'Ring Jewel Red',
+            body: '',
+            iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
+            source: SourceTypes.official,
+            itemCost: 100
+        };
+
 
         return (
             <div className="ItemShop">
@@ -57,84 +88,42 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 <div className='bazaar-area'>
                     <div className='shop-rug green-rug'>
                         <ShopItem 
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Jewel Red.png'
-                            itemCost={100}
-                            floatDelay={0}
-                            itemName='Ring Jewel Red'
-                            source="Official"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png'
-                            itemCost={50}
-                            floatDelay={-1}
-                            itemName='Ring Silver Jewel Green'
-                            source="Homebrew"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Snake Flower Blue.png'
-                            itemCost={10}
-                            floatDelay={-2}
-                            itemName='Ring Silver Snake Flower Blue'
-                            source="Official"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
-                            itemCost={5}
-                            floatDelay={-3}
-                            itemName='Ring Simple'
-                            source="Official"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Simple.png'
-                            itemCost={5}
-                            floatDelay={-3}
-                            itemName='Ring Simple'
-                            source="Official"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
+                            itemDetails={redRing}
+                            floatDelay= {0}
+                            onItemClick={(itemDetails: ItemDetails) => this.onItemClick(itemDetails)}
                         />
                     </div>
                     <div className='shop-rug red-rug'>
                         <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Jewel Red.png'
-                            itemCost={1000}
+                            itemDetails={redRing}
                             floatDelay={0}
-                            itemName='Ring Jewel Red'
-                            source="Homebrew"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png'
-                            itemCost={25}
-                            floatDelay={-1}
-                            itemName='Ring Silver Jewel Green'
-                            source="Official"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
-                        />
-                        <ShopItem
-                            imageSource='./images/Item_Shop/Items/Rings/Ring Silver Snake Flower Blue.png'
-                            itemCost={100}
-                            floatDelay={-2}
-                            itemName='Ring Silver Snake Flower Blue'
-                            source="Homebrew"
-                            onItemClick={(itemTitle: string) => this.onItemClick(itemTitle)}
+                            onItemClick={(itemDetails: ItemDetails) => this.onItemClick(itemDetails)}
                         />
                     </div>
                 </div>
-                <Modal show={this.state.showItemDialog} onHide={hideModal} centered={true}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            {this.state.itemDialogTitle}
+                <Modal
+                    size="lg"
+                    show={this.state.showItemDialog}
+                    onHide={hideModal}
+                    centered={true}>
+                    <Modal.Header>
+                        <Modal.Title className='pixel-font'>
+                            {this.state.itemDetails.title}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {this.state.itemDialogBody}
+                        <div className='item-preview'>
+                            <img src={this.state.itemDetails.iconSource} width={128} height={128} />
+                        </div>
+                        <hr className='white-hr' />
+                        <div className='item-details pixel-font'>
+                            {this.getSourceText(this.state.itemDetails.source)}
+                        </div>
+                        <hr className='white-hr' />
+                        {this.state.itemDetails.body}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={hideModal}>Close</Button>
+                        <Button variant='dark' onClick={hideModal}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

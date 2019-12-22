@@ -1,12 +1,10 @@
 import React from 'react';
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {ItemDetails} from './ItemDetails';
 
 interface IShopItemProps {
-    imageSource: string;
-    itemName: string;
-    itemCost: number;
+    itemDetails: ItemDetails;
     floatDelay: number;
-    source: "Official" | "Homebrew";
     onItemClick: Function;
 };
 
@@ -17,17 +15,17 @@ export function ShopItem(props: IShopItemProps) {
             delay={{ show: 0, hide: 400 }}
             overlay={
                 <Tooltip id='item-tooltip'>
-                    {props.itemName}
+                    {props.itemDetails.title}
                 </Tooltip>
             }
             >
             <div className='item-box'>
-                <Button variant='link' onClick={() => props.onItemClick(props.itemName)}>
+                <Button variant='link' onClick={() => props.onItemClick(props.itemDetails)}>
                     <div className='item-layer' style={{ animationDelay: `${props.floatDelay}s` }}>
-                        <img src={props.imageSource} />
+                        <img src={props.itemDetails.iconSource} />
                     </div>
                 </Button>
-                <p className='item-cost'>{props.itemCost}x</p>
+                <p className='item-cost'>{props.itemDetails.itemCost}x</p>
             </div>
         </OverlayTrigger>
     )
