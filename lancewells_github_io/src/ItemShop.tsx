@@ -73,6 +73,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         this.setState({
             itemDetails: item,
         });
+
+        this.getFormattedItemDescription(item.body);
         
         this.setModalVisiblity(true);
     }
@@ -137,6 +139,41 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 />
             );
         });
+    }
+
+    getFormattedItemDescription(description: string)
+    {
+        var splitDesc: string[];
+        splitDesc = description.split(/(\b\d+d\d+\b)/);
+
+        return (splitDesc.map((desc, index) =>{
+            if (index % 2 == 0)
+            {
+                return <span>desc</span>
+            }
+            else
+            {
+                return <span style={{fontWeight: 'bold'}}>desc</span>
+            }
+        }));
+
+        // var outputDescription: HTMLSpanElement[];
+
+        // for (var i = 1; i < splitDesc.length; i += 2)
+        // {
+        //     if (i % 2 == 0)
+        //     {
+        //         outputDescription[i] = <span>splitDesc[i]</span>
+        //     }
+        //     else
+        //     {
+        //         splitDesc[i] = <span style={{fontWeight:'bold'}}></span>
+        //     }
+        // }
+
+        // splitDesc.forEach(phrase => {
+        //     alert(phrase);
+        // });
     }
 
     /**
