@@ -6,6 +6,7 @@ import { SourceTypes } from './enums/SourceTypes';
 import { IItemDetails } from './interfaces/IItemDetails';
 import { ItemType } from './enums/ItemType';
 import { BazaarCarpet } from './BazaarCarpet';
+import { CarpetMaps } from './CarpetMap';
 
 /**
  * @description
@@ -123,6 +124,22 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     }
 
     /**
+     * @description Gets a list of bazaar carpets for display.
+     * @param onItemClick The click event-handler for item clicks.
+     */
+    getBazaarCarpets(onItemClick: Function) {
+        return CarpetMaps.map((carpet) => {
+            return (
+                <BazaarCarpet
+                    rugBorderSource={carpet.rugBorderSource}
+                    itemDetails={carpet.itemDetails}
+                    onItemClick={onItemClick}
+                />
+            );
+        });
+    }
+
+    /**
      * @description Renders an instance of this class.
      */
     render()
@@ -132,26 +149,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
          * ItemShop as 'this'. */
         const hideModal = () => this.setModalVisiblity(false);
         const showModal = () => this.setModalVisiblity(true);
-        
-        const redRing: IItemDetails = {
-            title: 'Ring Jewel Red',
-            body: 'Bacon ipsum dolor amet buffalo salami meatball, ribeye sirloin tri-tip pancetta. Doner capicola shankle porchetta drumstick. Chuck tail rump ham buffalo. Leberkas turkey pork loin, pig cow doner kevin landjaeger capicola shankle pork belly flank. Sirloin turkey tenderloin chislic tail spare ribs kielbasa short loin shank burgdoggen. Frankfurter hamburger venison, boudin pork loin turkey salami doner chicken tongue. Turkey ball tip buffalo, ribeye bacon leberkas sirloin cupim short loin venison.',
-            iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
-            source: SourceTypes.official,
-            itemCost: 100,
-            type: ItemType.wondrous,
-        };
-
-        const greenRing: IItemDetails = {
-            title: 'Silver Ring with a Green Jewel',
-            body: 'Bacon ipsum dolor amet bacon jowl venison, picanha porchetta salami boudin chicken. Bresaola cow chuck sirloin turducken salami ground round pancetta. Sausage alcatra chislic shankle leberkas bresaola. T-bone venison strip steak corned beef brisket, salami turkey. Kielbasa hamburger brisket pastrami bresaola, beef tail pork chop pork.',
-            iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
-            source: SourceTypes.homebrew,
-            itemCost: 1000,
-            type: ItemType.armor,
-        };
-
-        const itemArray: Array<IItemDetails> = Array(redRing, greenRing);
+        const handleItemClick = (itemDetails: IItemDetails) => this.onItemClick(itemDetails);
 
         return (
             <div className="ItemShop">
@@ -162,16 +160,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' />
                 </div>
                 <div className='bazaar-area'>
-                    <BazaarCarpet
-                        rugBorderSource= "url(/images/Item_Shop/Items/Rings/rug.png)"
-                        itemDetails={itemArray}
-                        onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
-                    />
-                    <BazaarCarpet
-                        rugBorderSource="url(/images/Item_Shop/Items/Rings/redrug.png)"
-                        itemDetails={itemArray}
-                        onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
-                    />
+                    {this.getBazaarCarpets(handleItemClick)}
                 </div>
                 <Modal
                     size="lg"
