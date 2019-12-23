@@ -18,14 +18,6 @@
     justify-content: center;
 }
 
-.green-rug {
-    border-image: url("/images/Item_Shop/Items/Rings/rug.png");
-}
-
-.red-rug {
-    border-image: url("/images/Item_Shop/Items/Rings/redrug.png");
-}
-
 .shop-rug {
     border-image-slice: 32 fill;
     border-image-width: 32px;

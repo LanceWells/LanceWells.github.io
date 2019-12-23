@@ -2,12 +2,26 @@ import React from 'react';
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {IItemDetails} from './interfaces/IItemDetails';
 
+/**
+ * @description A series of properties needed to render this component.
+ * @param itemDetails The set of item details that are used to represent this item.
+ * @param floatDelay The amount of time to offset the delay for this item's float animation.
+ * @param onItemClick The click event-handler when this item is clicked. Will need to pass back the item
+ * details property.
+ */
 interface IShopItemProps {
     itemDetails: IItemDetails;
     floatDelay: number;
     onItemClick: Function;
 };
 
+/**
+ * Returns an instance of this component.
+ * @param props The properties requried to render this component.
+ * 
+ * Utilizes this free font:
+ * https://fonts.google.com/specimen/Press+Start+2P
+ */
 export function ShopItem(props: IShopItemProps) {
     return (
         <OverlayTrigger
@@ -30,6 +44,3 @@ export function ShopItem(props: IShopItemProps) {
         </OverlayTrigger>
     )
 }
-
-// Utilizes the free font:
-// https://fonts.google.com/specimen/Press+Start+2P

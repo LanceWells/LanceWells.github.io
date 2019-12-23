@@ -1,22 +1,40 @@
 import './css/ItemShop.css';
 import React from 'react';
 
-import { ShopItem } from './ShopItem';
 import { Modal, Button } from 'react-bootstrap';
 import { SourceTypes } from './enums/SourceTypes';
 import { IItemDetails } from './interfaces/IItemDetails';
 import { ItemType } from './enums/ItemType';
 import { BazaarCarpet } from './BazaarCarpet';
 
+/**
+ * @description
+ * Describes the properties that are passed into this class.
+ */
 interface IItemShopProps {
 };
 
+/**
+ * @description Describes the state that is maintained by this object.
+ * @param showItemDialog A boolean value to describe whether the item dialog (modal) is displayed at any
+ * given point.
+ * @param itemDetails A set of details that describe the currently selected item. This is used to populate
+ * the modal that appears.
+ */
 interface IItemShopState {
     showItemDialog: boolean;
     itemDetails: IItemDetails;
 };
 
+/**
+ * @description
+ * Represents an item shop! This is a full-screen application that is used to 'browse' some digital items.
+ */
 export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
+    /**
+     * @description Creates a new instance of @see ItemShop .
+     * @param props The properties required to instantiate this class.
+     */
     constructor (props: IItemShopProps) {
         super(props);
         this.state = {
@@ -32,6 +50,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         };
     }
 
+    /**
+     * @description
+     * Shows or hides the item details modal.
+     * @param show If true, show the modal; otherwise false.
+     */
     setModalVisiblity(show: boolean)
     {
         this.setState({
@@ -39,6 +62,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         });
     }
 
+    /**
+     * @description Handles an item click event.
+     * @param item The item details that are provided as a result of the click event (this is a set of
+     * properties that represent the item that was clicked).
+     */
     onItemClick(item: IItemDetails)
     {
         this.setState({
@@ -48,6 +76,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         this.setModalVisiblity(true);
     }
 
+    /**
+     * @description Performs an enum-<p> lookup to get something nice and pixelated to represent the source
+     * of the item that is being displayed.
+     * @param source The source to lookup and return a <p> element that represents it.
+     */
     getSourceText(source: SourceTypes)
     {
         switch(source)
@@ -63,6 +96,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         };
     }
 
+    /**
+     * @description Performs an enum-<p> lookup to get something nice and pixelated to represent the type
+     * of the item that is being displayed.
+     * @param type The type to lookup and return a <p> element that represents it.
+     */
     getTypeText(type: ItemType) {
         switch (type) {
             case ItemType.weapon:
@@ -84,6 +122,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         };
     }
 
+    /**
+     * @description Renders an instance of this class.
+     */
     render()
     {
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
@@ -169,14 +210,3 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         );
     }
 }
-
-// <ShopItem
-//     itemDetails={redRing}
-//     floatDelay={0}
-//     onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
-// />
-//     <ShopItem
-//         itemDetails={greenRing}
-//         floatDelay={-1}
-//         onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
-//     />
