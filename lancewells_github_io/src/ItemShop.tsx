@@ -3,15 +3,17 @@ import React from 'react';
 
 import { ShopItem } from './ShopItem';
 import { Modal, Button } from 'react-bootstrap';
-import { SourceTypes } from './SourceTypes';
-import { ItemDetails } from './ItemDetails';
+import { SourceTypes } from './enums/SourceTypes';
+import { IItemDetails } from './interfaces/IItemDetails';
+import { ItemType } from './enums/ItemType';
+import { BazaarCarpet } from './BazaarCarpet';
 
 interface IItemShopProps {
 };
 
 interface IItemShopState {
     showItemDialog: boolean;
-    itemDetails: ItemDetails;
+    itemDetails: IItemDetails;
 };
 
 export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
@@ -24,7 +26,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 body: '',
                 iconSource: '',
                 itemCost: 0,
-                source: SourceTypes.homebrew
+                source: SourceTypes.homebrew,
+                type: ItemType.wondrous,
             }
         };
     }
@@ -36,7 +39,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         });
     }
 
-    onItemClick(item: ItemDetails)
+    onItemClick(item: IItemDetails)
     {
         this.setState({
             itemDetails: item,
@@ -60,6 +63,27 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         };
     }
 
+    getTypeText(type: ItemType) {
+        switch (type) {
+            case ItemType.weapon:
+            {
+                return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
+            }
+            case ItemType.armor:
+            {
+                return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
+            }
+            case ItemType.potion:
+            {
+                return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
+            }
+            case ItemType.wondrous:
+            {
+                return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
+            }
+        };
+    }
+
     render()
     {
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
@@ -68,22 +92,25 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         const hideModal = () => this.setModalVisiblity(false);
         const showModal = () => this.setModalVisiblity(true);
         
-        const redRing: ItemDetails = {
+        const redRing: IItemDetails = {
             title: 'Ring Jewel Red',
             body: 'Bacon ipsum dolor amet buffalo salami meatball, ribeye sirloin tri-tip pancetta. Doner capicola shankle porchetta drumstick. Chuck tail rump ham buffalo. Leberkas turkey pork loin, pig cow doner kevin landjaeger capicola shankle pork belly flank. Sirloin turkey tenderloin chislic tail spare ribs kielbasa short loin shank burgdoggen. Frankfurter hamburger venison, boudin pork loin turkey salami doner chicken tongue. Turkey ball tip buffalo, ribeye bacon leberkas sirloin cupim short loin venison.',
             iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
             source: SourceTypes.official,
-            itemCost: 100
+            itemCost: 100,
+            type: ItemType.wondrous,
         };
 
-        const greenRing: ItemDetails = {
+        const greenRing: IItemDetails = {
             title: 'Silver Ring with a Green Jewel',
             body: 'Bacon ipsum dolor amet bacon jowl venison, picanha porchetta salami boudin chicken. Bresaola cow chuck sirloin turducken salami ground round pancetta. Sausage alcatra chislic shankle leberkas bresaola. T-bone venison strip steak corned beef brisket, salami turkey. Kielbasa hamburger brisket pastrami bresaola, beef tail pork chop pork.',
             iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
             source: SourceTypes.homebrew,
-            itemCost: 1000
+            itemCost: 1000,
+            type: ItemType.armor,
         };
 
+        const itemArray: Array<IItemDetails> = Array(redRing, greenRing);
 
         return (
             <div className="ItemShop">
@@ -94,30 +121,16 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' />
                 </div>
                 <div className='bazaar-area'>
-                    <div className='shop-rug green-rug'>
-                        <ShopItem 
-                            itemDetails={redRing}
-                            floatDelay= {0}
-                            onItemClick={(itemDetails: ItemDetails) => this.onItemClick(itemDetails)}
-                        />
-                        <ShopItem
-                            itemDetails={greenRing}
-                            floatDelay={0}
-                            onItemClick={(itemDetails: ItemDetails) => this.onItemClick(itemDetails)}
-                        />
-                    </div>
-                    <div className='shop-rug red-rug'>
-                        <ShopItem
-                            itemDetails={redRing}
-                            floatDelay={0}
-                            onItemClick={(itemDetails: ItemDetails) => this.onItemClick(itemDetails)}
-                        />
-                        <ShopItem
-                            itemDetails={greenRing}
-                            floatDelay={0}
-                            onItemClick={(itemDetails: ItemDetails) => this.onItemClick(itemDetails)}
-                        />
-                    </div>
+                    <BazaarCarpet
+                        rugBorderSource= "url(/images/Item_Shop/Items/Rings/rug.png)"
+                        itemDetails={itemArray}
+                        onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
+                    />
+                    <BazaarCarpet
+                        rugBorderSource="url(/images/Item_Shop/Items/Rings/redrug.png)"
+                        itemDetails={itemArray}
+                        onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
+                    />
                 </div>
                 <Modal
                     size="lg"
@@ -141,6 +154,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                             <div className='item-tag'>
                                 {`${this.state.itemDetails.itemCost}x`}
                             </div>
+                            <div className='item-tag'>
+                                {this.getTypeText(this.state.itemDetails.type)}
+                            </div>
                         </div>
                         <hr className='white-hr' />
                         {this.state.itemDetails.body}
@@ -153,3 +169,14 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         );
     }
 }
+
+// <ShopItem
+//     itemDetails={redRing}
+//     floatDelay={0}
+//     onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
+// />
+//     <ShopItem
+//         itemDetails={greenRing}
+//         floatDelay={-1}
+//         onItemClick={(itemDetails: IItemDetails) => this.onItemClick(itemDetails)}
+//     />

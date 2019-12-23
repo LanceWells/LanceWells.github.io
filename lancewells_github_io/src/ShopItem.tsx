@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import {ItemDetails} from './ItemDetails';
+import {IItemDetails} from './interfaces/IItemDetails';
 
 interface IShopItemProps {
-    itemDetails: ItemDetails;
+    itemDetails: IItemDetails;
     floatDelay: number;
     onItemClick: Function;
 };
