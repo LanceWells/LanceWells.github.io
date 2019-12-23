@@ -7,22 +7,63 @@ export type CarpetMap = {
     rugBorderSource: string;
 }
 
+/**********************************************************************************************************
+ * Rings
+ *********************************************************************************************************/
 const redRing: IItemDetails = {
-    title: 'Ring Jewel Red',
-    body: 'Bacon ipsum dolor amet buffalo salami meatball, ribeye sirloin tri-tip pancetta. Doner capicola shankle porchetta drumstick. Chuck tail rump ham buffalo. Leberkas turkey pork loin, pig cow doner kevin landjaeger capicola shankle pork belly flank. Sirloin turkey tenderloin chislic tail spare ribs kielbasa short loin shank burgdoggen. Frankfurter hamburger venison, boudin pork loin turkey salami doner chicken tongue. Turkey ball tip buffalo, ribeye bacon leberkas sirloin cupim short loin venison.',
+    title: 'Firey Ring',
+    body: 'A golden ring with a ruby fastened to its exterior. The ring is warm to the touch. Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
     iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
-    source: SourceTypes.official,
+    source: SourceTypes.homebrew,
     itemCost: 100,
     type: ItemType.wondrous,
 };
 
 const greenRing: IItemDetails = {
-    title: 'Silver Ring with a Green Jewel',
-    body: 'Bacon ipsum dolor amet bacon jowl venison, picanha porchetta salami boudin chicken. Bresaola cow chuck sirloin turducken salami ground round pancetta. Sausage alcatra chislic shankle leberkas bresaola. T-bone venison strip steak corned beef brisket, salami turkey. Kielbasa hamburger brisket pastrami bresaola, beef tail pork chop pork.',
+    title: 'Frigid Ring',
+    body: 'A silver ring with a sapphire fastened to its exterior. The ring is cold to the touch. Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
     iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
     source: SourceTypes.homebrew,
-    itemCost: 1000,
-    type: ItemType.armor,
+    itemCost: 100,
+    type: ItemType.wondrous,
+};
+/**********************************************************************************************************
+ * Weapons
+ *********************************************************************************************************/
+const weapon_spear: IItemDetails = {
+    title: 'Spear',
+    body: 'A long, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
+    iconSource: './images/Item_Shop/Items/Weapons/Spear Wrap Yellow.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_longsword: IItemDetails = {
+    title: 'Longsword',
+    body: 'A long blade. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+    iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
+    source: SourceTypes.official,
+    itemCost: 15,
+    type: ItemType.weapon,
+};
+
+const weapon_shortsword: IItemDetails = {
+    title: 'Shortsword',
+    body: 'A short, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
+    iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
+    source: SourceTypes.official,
+    itemCost: 10,
+    type: ItemType.weapon,
+};
+
+const weapon_snake_staff: IItemDetails = {
+    title: 'Snake Staff',
+    body: 'A long oaken staff. The staff is wrapped by the likeness of a clay snake. Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
+    iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.weapon,
 };
 
 export const CarpetMaps: CarpetMap[] = new Array(
@@ -32,6 +73,6 @@ export const CarpetMaps: CarpetMap[] = new Array(
     },
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rings/redrug.png)",
-        itemDetails: new Array(redRing, greenRing)
+        itemDetails: new Array(weapon_spear, weapon_longsword, weapon_shortsword, weapon_snake_staff)
     },
 );
