@@ -39,7 +39,14 @@ export function ShopItem(props: IShopItemProps) {
                         <img src={props.itemDetails.iconSource} />
                     </div>
                 </Button>
-                <p className='item-cost'>{props.itemDetails.itemCost}x</p>
+                <div className='item-cost'>
+                    <div>
+                        {props.itemDetails.itemCost}x
+                    </div>
+                    <div>
+                        <img className='item-coin' src='./images/Item_Shop/itemCoinStill.png' />
+                    </div>
+                </div>
             </div>
         </OverlayTrigger>
     )

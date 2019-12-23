@@ -52,6 +52,9 @@
 }
 
 .item-cost {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
     text-align: center;
     font-family: 'Press Start 2P';
     color: white;
@@ -82,8 +85,13 @@
     display: flex;
     text-align: center;
     justify-content: center;
+    align-items: stretch;
 }
 
 .item-tag {
     padding: 0px 16px;
+}
+
+.item-coin {
+    position: absolute;
 }

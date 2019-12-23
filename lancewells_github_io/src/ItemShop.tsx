@@ -183,6 +183,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                             </div>
                             <div className='item-tag'>
                                 {`${this.state.itemDetails.itemCost}x`}
+                                <img src='./images/Item_Shop/itemCoin.gif'/>
                             </div>
                             <div className='item-tag'>
                                 {this.getTypeText(this.state.itemDetails.type)}
