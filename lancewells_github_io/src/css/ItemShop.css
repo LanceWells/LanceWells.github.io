@@ -14,9 +14,26 @@
     padding: 8px 16px;
 }
 
-.bazaar-area {
+.shopkeeper-area {
     display: flex;
     justify-content: center;
+    flex-wrap: nowrap;
+    align-items: baseline;
+}
+
+.bazaar-area {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.shop-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 33%;
+    max-width: 100%;
 }
 
 .shop-rug {
@@ -25,7 +42,6 @@
     border-image-outset: 32px;
     border-image-repeat: repeat;
     margin: 64px;
-    max-width: 20%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;

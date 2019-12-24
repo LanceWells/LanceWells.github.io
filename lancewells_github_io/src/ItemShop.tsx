@@ -133,6 +133,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         return CarpetMaps.map((carpet) => {
             return (
                 <BazaarCarpet
+                    rugName={carpet.rugName}
                     rugBorderSource={carpet.rugBorderSource}
                     itemDetails={carpet.itemDetails}
                     onItemClick={onItemClick}
@@ -202,7 +203,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         // https://regex101.com/r/PneEIz/4
         // https://github.com/facebook/react/issues/3386
         var splitDesc: string[];
-        splitDesc = description.split(/(\b\d+d\d+\s(?:acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder)\b|(?:\bwithdrawal effect\b))/gi);
+        splitDesc = description.split(/(\b(?:\d+d\d+|\d)\s(?:acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder)\b|(?:\bwithdrawal effect\b))/gi);
 
         return (splitDesc.map((desc, index) =>{
             if (index % 2 === 0)
@@ -230,7 +231,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
-        const hideModal = () => this.setModalVisiblity(false);
+        const hideModal = () => this.setModalVisiblity(false); 
         const handleItemClick = (itemDetails: IItemDetails) => this.onItemClick(itemDetails);
 
         return (

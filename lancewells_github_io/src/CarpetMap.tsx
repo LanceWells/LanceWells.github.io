@@ -3,6 +3,7 @@ import { SourceTypes } from "./enums/SourceTypes";
 import { ItemType } from "./enums/ItemType";
 
 export type CarpetMap = {
+    rugName: string;
     itemDetails: Array<IItemDetails>;
     rugBorderSource: string;
 }
@@ -28,6 +29,15 @@ const greenRing: IItemDetails = {
     type: ItemType.wondrous,
 };
 
+const ring_floral: IItemDetails = {
+    title: 'Ring of Floral Accomodation',
+    body: 'A silver ring with the likeness of a pink rose fastened to its exterior. When touched to any surface, that surface will sprout flowers at a rapid pace for the next 6 seconds.',
+    iconSource: './images/Item_Shop/Items/Rings/Ring Floral.png',
+    source: SourceTypes.homebrew,
+    itemCost: 50,
+    type: ItemType.wondrous,
+};
+
 /**********************************************************************************************************
  * Weapons
  *********************************************************************************************************/
@@ -45,7 +55,7 @@ const weapon_dagger: IItemDetails = {
     body: 'A small piercing weapon. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
     iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
     source: SourceTypes.official,
-    itemCost: 1,
+    itemCost: 2,
     type: ItemType.weapon,
 };
 
@@ -63,7 +73,7 @@ const weapon_handaxe: IItemDetails = {
     body: 'A small throwing axe. Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
     iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
     source: SourceTypes.official,
-    itemCost: 1,
+    itemCost: 5,
     type: ItemType.weapon,
 };
 
@@ -72,7 +82,7 @@ const weapon_javelin: IItemDetails = {
     body: 'A long, pointed, throwing weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
     iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
     source: SourceTypes.official,
-    itemCost: 1,
+    itemCost: 5,
     type: ItemType.weapon,
 };
 
@@ -81,7 +91,7 @@ const weapon_light_hammer: IItemDetails = {
     body: 'A small bludgeoning weapon. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
     iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
     source: SourceTypes.official,
-    itemCost: 1,
+    itemCost: 2,
     type: ItemType.weapon,
 };
 
@@ -90,7 +100,7 @@ const weapon_light_hammer: IItemDetails = {
     body: 'A bludgeoning weapon. Attacks with this weapon deal 1d6 bludgeoning damage.',
     iconSource: './images/Item_Shop/Items/Weapons/mace.png',
     source: SourceTypes.official,
-    itemCost: 1,
+    itemCost: 5,
     type: ItemType.weapon,
 };
 
@@ -179,9 +189,36 @@ const potion_angelic: IItemDetails = {
 };
 
 const potion_dark_contract: IItemDetails = {
-    title: 'Potion of the Dark Contract',
+    title: 'Venemous ',
     body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack deals double damage.',
     iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.potion,
+};
+
+const potion_poison_miasma: IItemDetails = {
+    title: 'Poisonous Miasma',
+    body: 'A swirling, toxic potion. The likeness of a long, green, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 poison damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
+    iconSource: './images/Item_Shop/Items/Potions/poison.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.potion,
+};
+
+const potion_poison_burning: IItemDetails = {
+    title: 'Burning Miasma',
+    body: 'A swirling, heated potion. The likeness of a long, red, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 fire damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
+    iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.potion,
+};
+
+const potion_poison_lightning: IItemDetails = {
+    title: 'Electric Miasma',
+    body: 'A swirling, shocking potion. The likeness of a long, yellow, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 lightning damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
+    iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
     source: SourceTypes.homebrew,
     itemCost: 100,
     type: ItemType.potion,
@@ -192,14 +229,30 @@ const potion_dark_contract: IItemDetails = {
  */
 export const CarpetMaps: CarpetMap[] = [
     {
-        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/greenrug.png)",
+        rugName: 'Potions',
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/bluerug.png)",
         itemDetails: [
-            redRing,
-            greenRing
+            potion_healing_low,
+            potion_mana_low,
+            potion_angelic,
+            potion_dark_contract,
+            potion_poison_miasma,
+            potion_poison_burning,
+            potion_poison_lightning,
         ]
     },
     {
-        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/redrug.png)",
+        rugName: 'Rings',
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/greenrug.png)",
+        itemDetails: [
+            redRing,
+            greenRing,
+            ring_floral
+        ]
+    },
+    {
+        rugName: 'Simple Weapons',
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/purplerug.png)",
         itemDetails: [
             weapon_spear,
             weapon_longsword,
@@ -213,15 +266,6 @@ export const CarpetMaps: CarpetMap[] = [
             weapon_mace,
             weapon_quarterstaff,
             weapon_sickle,
-        ]
-    },
-    {
-        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/bluerug.png)",
-        itemDetails: [
-            potion_healing_low,
-            potion_mana_low,
-            potion_angelic,
-            potion_dark_contract,
         ]
     },
 ];

@@ -12,6 +12,7 @@ interface IBazaarCarpetProps {
     itemDetails: Array<IItemDetails>;
     onItemClick: Function;
     rugBorderSource: string;
+    rugName: string;
 }
 
 /**
@@ -40,10 +41,13 @@ function getShopItems(itemDetails: Array<IItemDetails>, onItemClick: Function)
 export function BazaarCarpet(props: IBazaarCarpetProps)
 {
     return (
-        <div
-            className='shop-rug'
-            style={{borderImageSource: `${props.rugBorderSource}`}}>
-            {getShopItems(props.itemDetails, props.onItemClick)}
+        <div className='shop-section'>
+            <h2 className='pixel-font' style={{fontSize: 18}}>{props.rugName}</h2>
+            <div
+                className='shop-rug'
+                style={{ borderImageSource: `${props.rugBorderSource}` }}>
+                {getShopItems(props.itemDetails, props.onItemClick)}
+            </div>
         </div>
     );
 }
