@@ -189,9 +189,18 @@ const potion_angelic: IItemDetails = {
 };
 
 const potion_dark_contract: IItemDetails = {
-    title: 'Venemous ',
+    title: 'Potion of the Dark Contract',
     body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack deals double damage.',
     iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.potion,
+};
+
+const potion_tiamat: IItemDetails = {
+    title: "Tiamat's Brew",
+    body: "A rainbow of shifting colors lives in this bottle. On consumption, cast the Dragon's Breath spell on self. Consuming this potion will result in a withdrawal effect.",
+    iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
     source: SourceTypes.homebrew,
     itemCost: 100,
     type: ItemType.potion,
@@ -235,6 +244,7 @@ export const CarpetMaps: CarpetMap[] = [
             potion_healing_low,
             potion_mana_low,
             potion_angelic,
+            potion_tiamat,
             potion_dark_contract,
             potion_poison_miasma,
             potion_poison_burning,
