@@ -145,55 +145,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Gets the color association for a given damage type.
      * @param damageDesc The snippet from the description associated with the damage type.
      */
-    getDamageColor(damageDesc: string) : string
-    {
-        if (/acid/.test(damageDesc)) {
-            return 'rgb(153, 230, 95)';
-        }
-        if (/bludgeoning/.test(damageDesc)) {
-            return 'rgb(137, 30, 43)';
-        }
-        if (/cold/.test(damageDesc)) {
-            return 'rgb(12, 241, 255)';
-        }
-        if (/fire/.test(damageDesc)) {
-            return 'rgb(237, 118, 20)';
-        }
-        if (/force/.test(damageDesc)) {
-            return 'rgb(3, 25, 63)';
-        }
-        if (/lightning/.test(damageDesc)) {
-            return 'rgb(255, 200, 37)';
-        }
-        if (/necrotic/.test(damageDesc)) {
-            return 'rgb(66, 76, 110)';
-        }
-        if (/piercing/.test(damageDesc)) {
-            return 'rgb(234, 50, 60)';
-        }
-        if (/poison/.test(damageDesc)) {
-            return 'rgb(30, 111, 80)';
-        }
-        if (/psychic/.test(damageDesc)) {
-            return 'rgb(246, 129, 135)';
-        }
-        if (/radiant/.test(damageDesc)) {
-            return 'rgb(255, 235, 87)';
-        }
-        if (/slashing/.test(damageDesc)) {
-            return 'rgb(101, 115, 146)';
-        }
-        if (/thunder/.test(damageDesc)) {
-            return 'rgb(249, 230, 207)';
-        }
-
-        return 'rgb(255, 255, 255)';
-    }
-
-    /**
-     * @description Gets the color association for a given damage type.
-     * @param damageDesc The snippet from the description associated with the damage type.
-     */
     getDescriptionStyle(desc: string): string {
         if (/withdrawal effect/.test(desc)) {
             return 'text-color-withdrawal';

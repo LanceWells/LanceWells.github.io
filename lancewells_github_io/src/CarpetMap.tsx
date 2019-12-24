@@ -27,6 +27,7 @@ const greenRing: IItemDetails = {
     itemCost: 100,
     type: ItemType.wondrous,
 };
+
 /**********************************************************************************************************
  * Weapons
  *********************************************************************************************************/
@@ -66,6 +67,9 @@ const weapon_snake_staff: IItemDetails = {
     type: ItemType.weapon,
 };
 
+/**********************************************************************************************************
+ * Potions
+ *********************************************************************************************************/
 const potion_healing_low: IItemDetails = {
     title: 'Small Healing Potion',
     body: 'A small healing potion. Heals 2d4+2 when consumed.',
@@ -73,7 +77,7 @@ const potion_healing_low: IItemDetails = {
     source: SourceTypes.official,
     itemCost: 50,
     type: ItemType.potion,
-};
+}; 
 
 const potion_mana_low: IItemDetails = {
     title: 'Small Mana Potion',
@@ -86,13 +90,25 @@ const potion_mana_low: IItemDetails = {
 
 const potion_angelic: IItemDetails = {
     title: 'Angelic Potion',
-    body: 'A large, winged potion. The bottle is miraculously light. Bubbles rise endlessly from the bottom of the glass. When consumed, heals 4d4+6 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
+    body: 'A large, winged potion. The bottle is miraculously light. Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
     iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
     source: SourceTypes.homebrew,
     itemCost: 250,
     type: ItemType.potion,
 };
 
+const potion_dark_contract: IItemDetails = {
+    title: 'Potion of the Dark Contract',
+    body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack deals double damage.',
+    iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.potion,
+};
+
+/**
+ * @description A mapping for each carpet and its contents in the bazaar.
+ */
 export const CarpetMaps: CarpetMap[] = [
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/greenrug.png)",
@@ -104,6 +120,6 @@ export const CarpetMaps: CarpetMap[] = [
     },
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/bluerug.png)",
-        itemDetails: [potion_healing_low, potion_mana_low, potion_angelic]
+        itemDetails: [potion_healing_low, potion_mana_low, potion_angelic, potion_dark_contract]
     },
 ];
