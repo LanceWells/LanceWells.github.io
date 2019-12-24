@@ -19,7 +19,7 @@ export function BodySelector(props: IBodySelector) {
                 width: '100%'
             }}
             onClick={() => props.onClick(props.bodyMap)}>
-            <img src={props.bodyMap.imageSource} />
+            <img src={props.bodyMap.imageSource} alt='body selection'/>
             <Carousel.Caption>
                 <h3 className='body-option-title'>{props.bodyMap.name}</h3>
                 <p className='body-option-caption'>{props.bodyMap.description}</p>

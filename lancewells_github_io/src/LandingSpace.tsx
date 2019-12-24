@@ -7,7 +7,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import {CharacterCreator, ICharacterCreatorProps} from './CharacterCreator';
+import {CharacterCreator} from './CharacterCreator';
 import {ItemShop} from './ItemShop';
 
 interface ILandingSpaceProps {
@@ -19,8 +19,6 @@ interface ILandingSpaceState {
 // Use the hash router instead of a browser router so that refreshes and direct-links to pages work.
 //https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
 export default function LandingSpace() {
-    const charCreatorProps: ICharacterCreatorProps = {};
-
     return (
         <div className="page-nav">
             <Router>

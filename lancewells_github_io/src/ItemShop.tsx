@@ -7,7 +7,6 @@ import { IItemDetails } from './interfaces/IItemDetails';
 import { ItemType } from './enums/ItemType';
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
-import { string } from 'prop-types';
 
 /**
  * @description
@@ -142,6 +141,10 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         });
     }
 
+    /**
+     * @description Gets the color association for a given damage type.
+     * @param damageDesc The snippet from the description associated with the damage type.
+     */
     getDamageColor(damageDesc: string) : string
     {
         if (/acid/.test(damageDesc)) {
@@ -187,14 +190,19 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         return 'rgb(255, 255, 255)';
     }
 
+    /**
+     * @description Gets the description for an item as a set of elements.
+     * @param description The description that will be represented as a series of elements.
+     */
     getFormattedItemDescription(description: string)
     {
         // https://regex101.com/r/PneEIz/2
+        // https://github.com/facebook/react/issues/3386
         var splitDesc: string[];
         splitDesc = description.split(/(\b\d+d\d+\s(?:acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder)\b)/gi);
 
         return (splitDesc.map((desc, index) =>{
-            if (index % 2 == 0)
+            if (index % 2 === 0)
             {
                 return <span>{desc}</span>
             }
@@ -222,16 +230,15 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
         const hideModal = () => this.setModalVisiblity(false);
-        const showModal = () => this.setModalVisiblity(true);
         const handleItemClick = (itemDetails: IItemDetails) => this.onItemClick(itemDetails);
 
         return (
             <div className="ItemShop">
                 <h1>Item Shop</h1>
                 <div className='shopkeeper-area'>
-                    <img src='./images/Item_Shop/brazier-lit.gif' />
-                    <img src='./images/Item_Shop/shopkeeper.gif' />
-                    <img src='./images/Item_Shop/brazier-lit.gif' />
+                    <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
+                    <img src='./images/Item_Shop/shopkeeper.gif' alt="shopkeeper"/>
+                    <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
                     {this.getBazaarCarpets(handleItemClick)}
@@ -248,7 +255,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     </Modal.Header>
                     <Modal.Body>
                         <div className='item-preview'>
-                            <img src={this.state.itemDetails.iconSource} width={128} height={128} />
+                            <img src={this.state.itemDetails.iconSource} width={128} height={128} alt="item preview" />
                         </div>
                         <hr className='white-hr' />
                         <div className='item-details pixel-font'>
@@ -257,7 +264,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                             </div>
                             <div className='item-tag'>
                                 {`${this.state.itemDetails.itemCost}x`}
-                                <img src='./images/Item_Shop/itemCoin.gif'/>
+                                <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon"/>
                             </div>
                             <div className='item-tag'>
                                 {this.getTypeText(this.state.itemDetails.type)}

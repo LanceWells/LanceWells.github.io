@@ -36,7 +36,7 @@ export function ShopItem(props: IShopItemProps) {
             <div className='item-box'>
                 <Button variant='link' onClick={() => props.onItemClick(props.itemDetails)}>
                     <div className='item-layer' style={{ animationDelay: `${props.floatDelay}s` }}>
-                        <img src={props.itemDetails.iconSource} />
+                        <img src={props.itemDetails.iconSource} alt="item icon"/>
                     </div>
                 </Button>
                 <div className='item-cost'>
@@ -44,7 +44,7 @@ export function ShopItem(props: IShopItemProps) {
                         {props.itemDetails.itemCost}x
                     </div>
                     <div>
-                        <img className='item-coin' src='./images/Item_Shop/itemCoinStill.png' />
+                        <img className='item-coin' src='./images/Item_Shop/itemCoinStill.png' alt="coin icon"/>
                     </div>
                 </div>
             </div>

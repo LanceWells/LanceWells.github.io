@@ -33,7 +33,7 @@ const greenRing: IItemDetails = {
 const weapon_spear: IItemDetails = {
     title: 'Spear',
     body: 'A long, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
-    iconSource: './images/Item_Shop/Items/Weapons/Spear Wrap Yellow.png',
+    iconSource: './images/Item_Shop/Items/Weapons/spear.png',
     source: SourceTypes.official,
     itemCost: 1,
     type: ItemType.weapon,
@@ -66,13 +66,13 @@ const weapon_snake_staff: IItemDetails = {
     type: ItemType.weapon,
 };
 
-export const CarpetMaps: CarpetMap[] = new Array(
+export const CarpetMaps: CarpetMap[] = [
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rings/rug.png)",
-        itemDetails: new Array(redRing, greenRing)
+        itemDetails: [redRing, greenRing]
     },
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rings/redrug.png)",
-        itemDetails: new Array(weapon_spear, weapon_longsword, weapon_shortsword, weapon_snake_staff)
+        itemDetails: [weapon_spear, weapon_longsword, weapon_shortsword, weapon_snake_staff]
     },
-);
+];
