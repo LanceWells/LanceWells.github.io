@@ -31,7 +31,88 @@ const greenRing: IItemDetails = {
 /**********************************************************************************************************
  * Weapons
  *********************************************************************************************************/
-const weapon_spear: IItemDetails = {
+const weapon_club: IItemDetails = {
+    title: 'Club',
+    body: 'A stout bludgeoning weapon made of oak. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light]',
+    iconSource: './images/Item_Shop/Items/Weapons/club.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_dagger: IItemDetails = {
+    title: 'Dagger',
+    body: 'A small piercing weapon. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
+    iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_greatclub: IItemDetails = {
+    title: 'Greatclub',
+    body: 'A massive bludgeoning weapon. Attacks with this weapon deal 1d8 bludgeoning damage. [Properties: Two-handed]',
+    iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_handaxe: IItemDetails = {
+    title: 'Handaxe',
+    body: 'A small throwing axe. Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
+    iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_javelin: IItemDetails = {
+    title: 'Javelin',
+    body: 'A long, pointed, throwing weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
+    iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_light_hammer: IItemDetails = {
+    title: 'Light Hammer',
+    body: 'A small bludgeoning weapon. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
+    iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+ const weapon_mace: IItemDetails = {
+    title: 'Mace',
+    body: 'A bludgeoning weapon. Attacks with this weapon deal 1d6 bludgeoning damage.',
+    iconSource: './images/Item_Shop/Items/Weapons/mace.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_quarterstaff: IItemDetails = {
+    title: 'Quarterstaff',
+    body: 'A long, bludgeoning weapon made of oak. Attacks with this weapon deal 1d6 bludgeoning damage. [Properties: Versatile (1d8)]',
+    iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_sickle: IItemDetails = {
+    title: 'Sickle',
+    body: 'A curved weapon made of steel. Attacks with this weapon deal 1d4 slashing damage. [Properties: Light]',
+    iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+ const weapon_spear: IItemDetails = {
     title: 'Spear',
     body: 'A long, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
     iconSource: './images/Item_Shop/Items/Weapons/spear.png',
@@ -112,14 +193,35 @@ const potion_dark_contract: IItemDetails = {
 export const CarpetMaps: CarpetMap[] = [
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/greenrug.png)",
-        itemDetails: [redRing, greenRing]
+        itemDetails: [
+            redRing,
+            greenRing
+        ]
     },
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/redrug.png)",
-        itemDetails: [weapon_spear, weapon_longsword, weapon_shortsword, weapon_snake_staff]
+        itemDetails: [
+            weapon_spear,
+            weapon_longsword,
+            weapon_shortsword,
+            weapon_club,
+            weapon_dagger,
+            weapon_greatclub,
+            weapon_handaxe,
+            weapon_javelin,
+            weapon_light_hammer,
+            weapon_mace,
+            weapon_quarterstaff,
+            weapon_sickle,
+        ]
     },
     {
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/bluerug.png)",
-        itemDetails: [potion_healing_low, potion_mana_low, potion_angelic, potion_dark_contract]
+        itemDetails: [
+            potion_healing_low,
+            potion_mana_low,
+            potion_angelic,
+            potion_dark_contract,
+        ]
     },
 ];

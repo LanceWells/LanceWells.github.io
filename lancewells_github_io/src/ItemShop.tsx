@@ -245,7 +245,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     {this.getBazaarCarpets(handleItemClick)}
                 </div>
                 <Modal
-                    size="lg"
                     show={this.state.showItemDialog}
                     onHide={hideModal}
                     centered={true}>
