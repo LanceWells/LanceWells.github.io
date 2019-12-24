@@ -131,15 +131,6 @@ const weapon_sickle: IItemDetails = {
     type: ItemType.weapon,
 };
 
-const weapon_longsword: IItemDetails = {
-    title: 'Longsword',
-    body: 'A long blade. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
-    iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
-    source: SourceTypes.official,
-    itemCost: 15,
-    type: ItemType.weapon,
-};
-
 const weapon_shortsword: IItemDetails = {
     title: 'Shortsword',
     body: 'A short, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
@@ -157,6 +148,70 @@ const weapon_snake_staff: IItemDetails = {
     itemCost: 100,
     type: ItemType.weapon,
 };
+
+const weapon_dart: IItemDetails = {
+    title: 'Darts',
+    body: 'A small thrown weapon. 20 darts line a leather pouch. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Thrown (range 20/60)]',
+    iconSource: './images/Item_Shop/Items/Weapons/dart.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_light_crossbow: IItemDetails = {
+    title: 'Light Crossbow',
+    body: 'A light, mechanical device used for firing arrows across large distances. Attacks with this weapon deal 1d8 piercing damage. [Properties: Ammunition (range 80/320), Loading, Two-handed]',
+    iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
+    source: SourceTypes.official,
+    itemCost: 25,
+    type: ItemType.weapon,
+};
+
+const weapon_shortbow: IItemDetails = {
+    title: 'Shortbow',
+    body: 'A long, curved piece of wood held taut by a length of wire. Attacks with this weapon deal 1d6 piercing damage. [Properties: Ammunition (range 80/320), Two-handed]',
+    iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
+    source: SourceTypes.official,
+    itemCost: 25,
+    type: ItemType.weapon,
+};
+
+const weapon_sling: IItemDetails = {
+    title: 'Sling',
+    body: 'A small pocket held by two lengths of rope. When spun quickly, it can hurl projectiles at lethal speed. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Ammunition (range 30/120)]',
+    iconSource: './images/Item_Shop/Items/Weapons/sling.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_battleaxe: IItemDetails = {
+    title: 'Battleaxe',
+    body: 'A large, double-bladed axe. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+    iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_glaive: IItemDetails = {
+    title: 'Glaive',
+    body: 'A long polearm with a menacing length of steel at one end. Attacks with this weapon deal 1d10 slashing damage. [Properties: Heavy, Reach, Two-handed]',
+    iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
+    source: SourceTypes.official,
+    itemCost: 1,
+    type: ItemType.weapon,
+};
+
+const weapon_longsword: IItemDetails = {
+    title: 'Longsword',
+    body: 'A large, double-bladed axe. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+    iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
+    source: SourceTypes.official,
+    itemCost: 15,
+    type: ItemType.weapon,
+};
+
 
 /**********************************************************************************************************
  * Potions
@@ -238,6 +293,23 @@ const potion_poison_lightning: IItemDetails = {
  */
 export const CarpetMaps: CarpetMap[] = [
     {
+        rugName: 'Simple Weapons',
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/purplerug.png)",
+        itemDetails: [
+            weapon_spear,
+            weapon_shortsword,
+            weapon_club,
+            weapon_dagger,
+            weapon_greatclub,
+            weapon_handaxe,
+            weapon_javelin,
+            weapon_light_hammer,
+            weapon_mace,
+            weapon_quarterstaff,
+            weapon_sickle,
+        ]
+    },
+    {
         rugName: 'Potions',
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/bluerug.png)",
         itemDetails: [
@@ -261,21 +333,22 @@ export const CarpetMaps: CarpetMap[] = [
         ]
     },
     {
-        rugName: 'Simple Weapons',
+        rugName: 'Simple Ranged Weapons',
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/redrug.png)",
+        itemDetails: [
+            weapon_dart,
+            weapon_light_crossbow,
+            weapon_shortbow,
+            weapon_sling,
+        ]
+    },
+    {
+        rugName: 'Martial Weapons',
         rugBorderSource: "url(/images/Item_Shop/Items/Rugs/purplerug.png)",
         itemDetails: [
-            weapon_spear,
+            weapon_battleaxe,
+            weapon_glaive,
             weapon_longsword,
-            weapon_shortsword,
-            weapon_club,
-            weapon_dagger,
-            weapon_greatclub,
-            weapon_handaxe,
-            weapon_javelin,
-            weapon_light_hammer,
-            weapon_mace,
-            weapon_quarterstaff,
-            weapon_sickle,
         ]
     },
 ];
