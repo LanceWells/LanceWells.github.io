@@ -43,6 +43,25 @@
     }
 }
 
+@keyframes withdrawal {
+    0% {
+        color: #93388f;
+        text-shadow: 0 0 6px #3b1443;
+    }
+    25% {
+        color: #0098dc;
+        text-shadow: 0 0 6px #00396d;
+    }
+    50% {
+        color: #93388f;
+        text-shadow: 0 0 6px #3b1443;
+    }
+    100% {
+        color: #0098dc;
+        text-shadow: 0 0 6px #00396d;
+    }
+}
+
 .item-layer {
     animation-name: float;
     animation-duration: 2s;
@@ -94,4 +113,68 @@
 
 .item-coin {
     position: absolute;
+}
+
+.text-color-acid {
+    color: rgb(153, 230, 95);
+}
+
+.text-color-bludgeoning {
+    color: rgb(137, 30, 43);
+}
+
+.text-color-cold {
+    color: rgb(12, 241, 255);
+}
+
+.text-color-fire {
+    color: rgb(237, 118, 20);
+}
+
+.text-color-force {
+    color: rgb(3, 25, 63);
+}
+
+.text-color-lightning {
+    color: rgb(255, 200, 37);
+}
+
+.text-color-necrotic {
+    color: rgb(66, 76, 110);
+}
+
+.text-color-piercing {
+    color: rgb(234, 50, 60);
+}
+
+.text-color-poison {
+    color: rgb(30, 111, 80);
+}
+
+.text-color-psychic {
+    color: rgb(246, 129, 135);
+}
+
+.text-color-radiant {
+    color: rgb(255, 235, 87);
+}
+
+.text-color-slashing {
+    color: rgb(101, 115, 146);
+}
+
+.text-color-thunder {
+    color: rgb(249, 230, 207);
+}
+
+.text-color-withdrawal {
+    animation-name: withdrawal;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+
+.text-color-plain {
+    color: white;
 }

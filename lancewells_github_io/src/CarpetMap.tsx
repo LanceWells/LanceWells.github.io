@@ -66,13 +66,44 @@ const weapon_snake_staff: IItemDetails = {
     type: ItemType.weapon,
 };
 
+const potion_healing_low: IItemDetails = {
+    title: 'Small Healing Potion',
+    body: 'A small healing potion. Heals 2d4+2 when consumed.',
+    iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
+    source: SourceTypes.official,
+    itemCost: 50,
+    type: ItemType.potion,
+};
+
+const potion_mana_low: IItemDetails = {
+    title: 'Small Mana Potion',
+    body: 'A small mana potion. Restores 1 level 1 spell slot when consumed. Use of this potion will result in a withdrawal effect.',
+    iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
+    source: SourceTypes.homebrew,
+    itemCost: 100,
+    type: ItemType.potion,
+};
+
+const potion_angelic: IItemDetails = {
+    title: 'Angelic Potion',
+    body: 'A large, winged potion. The bottle is miraculously light. Bubbles rise endlessly from the bottom of the glass. When consumed, heals 4d4+6 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
+    iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
+    source: SourceTypes.homebrew,
+    itemCost: 200,
+    type: ItemType.potion,
+};
+
 export const CarpetMaps: CarpetMap[] = [
     {
-        rugBorderSource: "url(/images/Item_Shop/Items/Rings/rug.png)",
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/greenrug.png)",
         itemDetails: [redRing, greenRing]
     },
     {
-        rugBorderSource: "url(/images/Item_Shop/Items/Rings/redrug.png)",
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/redrug.png)",
         itemDetails: [weapon_spear, weapon_longsword, weapon_shortsword, weapon_snake_staff]
+    },
+    {
+        rugBorderSource: "url(/images/Item_Shop/Items/Rugs/bluerug.png)",
+        itemDetails: [potion_healing_low, potion_mana_low, potion_angelic]
     },
 ];

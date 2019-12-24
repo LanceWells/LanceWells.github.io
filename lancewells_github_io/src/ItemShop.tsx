@@ -191,15 +191,67 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     }
 
     /**
+     * @description Gets the color association for a given damage type.
+     * @param damageDesc The snippet from the description associated with the damage type.
+     */
+    getDescriptionStyle(desc: string): string {
+        if (/withdrawal effect/.test(desc)) {
+            return 'text-color-withdrawal';
+        }
+        if (/acid/.test(desc)) {
+            return 'text-color-acid';
+        }
+        if (/bludgeoning/.test(desc)) {
+            return 'text-color-bludgeoning';
+        }
+        if (/cold/.test(desc)) {
+            return 'text-color-cold';
+        }
+        if (/fire/.test(desc)) {
+            return 'text-color-fire';
+        }
+        if (/force/.test(desc)) {
+            return 'text-color-force';
+        }
+        if (/lightning/.test(desc)) {
+            return 'text-color-lightning';
+        }
+        if (/necrotic/.test(desc)) {
+            return 'text-color-necrotic';
+        }
+        if (/piercing/.test(desc)) {
+            return 'text-color-piercing';
+        }
+        if (/poison/.test(desc)) {
+            return 'text-color-poison';
+        }
+        if (/psychic/.test(desc)) {
+            return 'text-color-psychic';
+        }
+        if (/radiant/.test(desc)) {
+            return 'text-color-radiant';
+        }
+        if (/slashing/.test(desc)) {
+            return 'text-color-slashing';
+        }
+        if (/thunder/.test(desc)) {
+            return 'text-color-thunder';
+        }
+
+        // Not sure what it was, but don't return nothing.
+        return 'text-color-plain';
+    }
+
+    /**
      * @description Gets the description for an item as a set of elements.
      * @param description The description that will be represented as a series of elements.
      */
     getFormattedItemDescription(description: string)
     {
-        // https://regex101.com/r/PneEIz/2
+        // https://regex101.com/r/PneEIz/4
         // https://github.com/facebook/react/issues/3386
         var splitDesc: string[];
-        splitDesc = description.split(/(\b\d+d\d+\s(?:acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder)\b)/gi);
+        splitDesc = description.split(/(\b\d+d\d+\s(?:acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder)\b|(?:\bwithdrawal effect\b))/gi);
 
         return (splitDesc.map((desc, index) =>{
             if (index % 2 === 0)
@@ -210,10 +262,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             {
                 return(
                     <span
-                        style={{
-                            fontWeight: 'bolder',
-                            color: this.getDamageColor(desc)
-                        }}>
+                        style={{ fontWeight: 'bolder' }}
+                        className={this.getDescriptionStyle(desc)}>
                         {desc}
                     </span>
                 );
