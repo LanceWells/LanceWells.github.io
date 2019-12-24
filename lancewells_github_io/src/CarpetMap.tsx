@@ -89,7 +89,7 @@ const potion_angelic: IItemDetails = {
     body: 'A large, winged potion. The bottle is miraculously light. Bubbles rise endlessly from the bottom of the glass. When consumed, heals 4d4+6 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
     iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
     source: SourceTypes.homebrew,
-    itemCost: 200,
+    itemCost: 250,
     type: ItemType.potion,
 };
 
