@@ -245,7 +245,7 @@ const potion_angelic: IItemDetails = {
 
 const potion_dark_contract: IItemDetails = {
     title: 'Potion of the Dark Contract',
-    body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack deals double damage.',
+    body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.',
     iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
     source: SourceTypes.homebrew,
     itemCost: 100,
