@@ -2,7 +2,7 @@ import './css/LandingSpace.css';
 
 import React from 'react';
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Switch,
     Route,
     Link
@@ -23,9 +23,9 @@ export default function LandingSpace() {
         <div className="page-nav">
             <Router>
                 <Switch>
-                    <Route exact path={`${process.env.PUBLIC_URL}/`} children={<Home />} />
-                    <Route path={`${process.env.PUBLIC_URL}/creatorPage`} children={<CharacterCreator />} />
-                    <Route path={`${process.env.PUBLIC_URL}/itemShop`} children={<ItemShop />} />
+                    <Route exact path="/" children={<Home />} />
+                    <Route path="/creatorPage" children={<CharacterCreator />} />
+                    <Route path="/itemShop" children={<ItemShop />} />
                 </Switch>
             </Router>
         </div>
