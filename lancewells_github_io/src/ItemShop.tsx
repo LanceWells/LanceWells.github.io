@@ -2,9 +2,7 @@ import './css/ItemShop.css';
 import React from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
-import { SourceTypes } from './enums/SourceTypes';
-import { IItemDetails } from './interfaces/IItemDetails';
-import { ItemType } from './enums/ItemType';
+import { IItemDetails, SourceType, ItemType } from './interfaces/IItemDetails';
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
 
@@ -45,8 +43,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 body: '',
                 iconSource: '',
                 itemCost: 0,
-                source: SourceTypes.homebrew,
-                type: ItemType.wondrous,
+                source: "Homebrew",
+                type: "Wondrous",
             }
         };
     }
@@ -84,15 +82,15 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * of the item that is being displayed.
      * @param source The source to lookup and return a <p> element that represents it.
      */
-    getSourceText(source: SourceTypes)
+    getSourceText(source: SourceType)
     {
         switch(source)
         {
-            case SourceTypes.official:
+            case "Official":
             {
                 return (<p style={{color: 'rgb(255, 200, 37)'}}>Official</p>);
             }
-            case SourceTypes.homebrew:
+            case "Homebrew":
             {
                 return (<p style={{color: 'rgb(147, 56, 143)'}}>Homebrew</p>);
             }
@@ -106,19 +104,19 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      */
     getTypeText(type: ItemType) {
         switch (type) {
-            case ItemType.weapon:
+            case "Weapon":
             {
                 return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
             }
-            case ItemType.armor:
+            case "Armor":
             {
                 return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
             }
-            case ItemType.potion:
+            case "Potion":
             {
                 return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
             }
-            case ItemType.wondrous:
+            case "Wondrous":
             {
                 return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
             }
