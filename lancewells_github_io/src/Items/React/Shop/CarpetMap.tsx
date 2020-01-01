@@ -1,7 +1,7 @@
-import { IItemDetails } from "./interfaces/IItemDetails";
-import { ItemMap_Weapons } from "./itemMaps/weapons";
-import { ItemMap_Potions } from "./itemMaps/potions";
-import { ItemMap_Wondrous } from "./itemMaps/wondrous_items";
+import { IItemDetails } from "../../Interfaces/IItemDetails";
+import { ItemMap_Weapons } from "../Common/ItemMaps/weapons";
+import { ItemMap_Potions } from "../Common/ItemMaps/potions";
+import { ItemMap_Wondrous } from "../Common/ItemMaps/wondrous_items";
 
 export type CarpetMap = {
     rugName: string;

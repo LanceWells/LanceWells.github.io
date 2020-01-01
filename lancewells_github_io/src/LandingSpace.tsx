@@ -8,7 +8,8 @@ import {
     Link
 } from "react-router-dom";
 import {CharacterCreator} from './CharacterCreator';
-import {ItemShop} from './ItemShop';
+import {ItemShop} from './Items/React/Shop/ItemShop';
+import {Inventory} from './Items/React/Inventory/Inventory';
 
 interface ILandingSpaceProps {
 };
@@ -26,6 +27,7 @@ export default function LandingSpace() {
                     <Route exact path="/" children={<Home />} />
                     <Route path="/creatorPage" children={<CharacterCreator />} />
                     <Route path="/itemShop" children={<ItemShop />} />
+                    <Route path="/inventory" children={<Inventory />} />
                 </Switch>
             </Router>
         </div>
@@ -44,6 +46,11 @@ function Home() {
             <h2 className="nav-entry">
                 <Link to="/itemShop">
                     &gt;&gt;&gt; DnD Item Shop &lt;&lt;&lt;
+                </Link>
+            </h2>
+            <h2 className="nav-entry">
+                <Link to="/inventory">
+                    &gt;&gt;&gt; DnD Item Inventory &lt;&lt;&lt;
                 </Link>
             </h2>
         </div>

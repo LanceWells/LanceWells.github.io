@@ -1,8 +1,10 @@
-import './css/ItemShop.css';
+import './ItemShop.css';
 import React from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
-import { IItemDetails, SourceType, ItemType } from './interfaces/IItemDetails';
+import { IItemDetails } from "../../Interfaces/IItemDetails";
+import { TSourceType } from "../../Types/TSourceType";
+import { TItemType } from "../../Types/TItemType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
 
@@ -82,7 +84,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * of the item that is being displayed.
      * @param source The source to lookup and return a <p> element that represents it.
      */
-    getSourceText(source: SourceType)
+    getSourceText(source: TSourceType)
     {
         switch(source)
         {
@@ -102,7 +104,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * of the item that is being displayed.
      * @param type The type to lookup and return a <p> element that represents it.
      */
-    getTypeText(type: ItemType) {
+    getTypeText(type: TItemType) {
         switch (type) {
             case "Weapon":
             {

@@ -1,4 +1,4 @@
-import { IItemIndexer } from '../interfaces/IItemDetails';
+import { IItemIndexer } from "../../../Interfaces/IItemIndexer";
 
 export const ItemMap_Wondrous: IItemIndexer =
 {
