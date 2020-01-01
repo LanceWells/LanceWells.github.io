@@ -7,7 +7,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import {CharacterCreator} from './CharacterCreator';
+import {CharacterCreator} from './CharacterCreator/React/CharacterCreator';
 import {ItemShop} from './Items/React/Shop/ItemShop';
 import {Inventory} from './Items/React/Inventory/Inventory';
 

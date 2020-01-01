@@ -1,4 +1,4 @@
-import './css/CharacterCreator.css';
+import './CharacterCreator.css';
 import { bodyMaps, BodyMap, ImageLayer } from './BodyMap';
 
 import React from 'react';
