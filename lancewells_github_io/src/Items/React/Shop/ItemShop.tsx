@@ -133,9 +133,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         return CarpetMaps.map((carpet) => {
             return (
                 <BazaarCarpet
-                    rugName={carpet.rugName}
-                    rugBorderSource={carpet.rugBorderSource}
-                    itemDetails={carpet.items}
+                    carpetMap={carpet}
                     onItemClick={onItemClick}
                 />
             );

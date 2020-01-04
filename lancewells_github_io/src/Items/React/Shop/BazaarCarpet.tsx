@@ -1,6 +1,7 @@
 import React from 'react';
 import {IItem} from '../../Interfaces/IItem';
 import {ShopItem} from './ShopItem';
+import { CarpetMap } from './CarpetMap';
 
 /**
  * @description An interface used to represent the properties required to display this class.
@@ -9,10 +10,8 @@ import {ShopItem} from './ShopItem';
  * @param rugBorderSource The source image location for the rug border.
  */
 interface IBazaarCarpetProps {
-    itemDetails: Array<IItem>;
+    carpetMap: CarpetMap;
     onItemClick: Function;
-    rugBorderSource: string;
-    rugName: string;
 }
 
 /**
@@ -42,11 +41,11 @@ export function BazaarCarpet(props: IBazaarCarpetProps)
 {
     return (
         <div className='shop-section'>
-            <h2 className='pixel-font' style={{fontSize: 18}}>{props.rugName}</h2>
+            <h2 className='pixel-font' style={{ fontSize: 18 }}>{props.carpetMap.rugName}</h2>
             <div
                 className='shop-rug'
-                style={{ borderImageSource: `${props.rugBorderSource}` }}>
-                {getShopItems(props.itemDetails, props.onItemClick)}
+                style={{ borderImageSource: `${props.carpetMap.rugBorderSource}` }}>
+                {getShopItems(props.carpetMap.items, props.onItemClick)}
             </div>
         </div>
     );
