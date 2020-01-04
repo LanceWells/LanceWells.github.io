@@ -1,11 +1,11 @@
-import { IItemDetails } from "../../Interfaces/IItemDetails";
+import { IItem } from "../../Interfaces/IItemDetails";
 import { ItemMap_Weapons } from "../Common/ItemMaps/weapons";
 import { ItemMap_Potions } from "../Common/ItemMaps/potions";
 import { ItemMap_Wondrous } from "../Common/ItemMaps/wondrous_items";
 
 export type CarpetMap = {
     rugName: string;
-    itemDetails: Array<IItemDetails>;
+    itemDetails: Array<IItem>;
     rugBorderSource: string;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {IItemDetails} from '../../Interfaces/IItemDetails';
+import {IItem} from '../../Interfaces/IItemDetails';
 import {ShopItem} from './ShopItem';
 
 /**
@@ -9,7 +9,7 @@ import {ShopItem} from './ShopItem';
  * @param rugBorderSource The source image location for the rug border.
  */
 interface IBazaarCarpetProps {
-    itemDetails: Array<IItemDetails>;
+    itemDetails: Array<IItem>;
     onItemClick: Function;
     rugBorderSource: string;
     rugName: string;
@@ -21,7 +21,7 @@ interface IBazaarCarpetProps {
  * @param onItemClick The click event-handler for items.
  * @see ShopItem
  */
-function getShopItems(itemDetails: Array<IItemDetails>, onItemClick: Function)
+function getShopItems(itemDetails: Array<IItem>, onItemClick: Function)
 {
     return itemDetails.map((item, index) => {
         return (

@@ -1,3 +1,3 @@
-export interface IInventoryListener {
-    (newContents: Array<string>): void
+export interface ListListener<T> {
+    (newContents: Array<T>): void
 }

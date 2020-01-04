@@ -1,5 +1,5 @@
-import { IItemDetails } from "./IItemDetails";
+import { IItem } from "./IItemDetails";
 
 export interface IItemIndexer {
-    [index: string]: IItemDetails
+    [index: string]: IItem
 }

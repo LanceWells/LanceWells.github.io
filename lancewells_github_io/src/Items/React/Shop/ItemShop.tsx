@@ -2,7 +2,7 @@ import './ItemShop.css';
 import React from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
-import { IItemDetails } from "../../Interfaces/IItemDetails";
+import { IItem } from "../../Interfaces/IItemDetails";
 import { TSourceType } from "../../Types/TSourceType";
 import { TItemType } from "../../Types/TItemType";
 import { BazaarCarpet } from './BazaarCarpet';
@@ -24,7 +24,7 @@ interface IItemShopProps {
  */
 interface IItemShopState {
     showItemDialog: boolean;
-    itemDetails: IItemDetails;
+    itemDetails: IItem;
 };
 
 /**
@@ -68,7 +68,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @param item The item details that are provided as a result of the click event (this is a set of
      * properties that represent the item that was clicked).
      */
-    onItemClick(item: IItemDetails)
+    onItemClick(item: IItem)
     {
         this.setState({
             itemDetails: item,
@@ -232,7 +232,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
         const hideModal = () => this.setModalVisiblity(false); 
-        const handleItemClick = (itemDetails: IItemDetails) => this.onItemClick(itemDetails);
+        const handleItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
 
         return (
             <div className="ItemShop">
