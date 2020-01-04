@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import { IItem } from "../../Interfaces/IItemDetails";
+import { IItem } from "../../Interfaces/IItem";
 
 /**
  * @description A series of properties needed to render this component.

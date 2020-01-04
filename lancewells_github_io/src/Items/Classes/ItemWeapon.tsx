@@ -1,6 +1,7 @@
-import { IItem } from '../Interfaces/IItemDetails';
+import { IItem } from '../Interfaces/IItem';
 import { TSourceType } from "../Types/TSourceType";
 import { TItemType } from "../Types/TItemType";
+import { TAttack } from "../Types/TAttack";
 
 export class ItemWeapon implements IItem {
     public title: string = "";
@@ -8,7 +9,13 @@ export class ItemWeapon implements IItem {
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
-    public readonly type: TItemType = "Armor";
+    
+    /**
+     * @description The mapping here is 1 attack to a series of dice rolls that represent that attack.
+     * The idea is that multiple damage types necessitate different rolls or modifiers. Each attack is
+     * indexed by a unique name.
+     */
+    public attacks: { [index: string]: TAttack[] } = {};
 
-    public constructor() { }
+    public readonly type: TItemType = "Armor";
 }

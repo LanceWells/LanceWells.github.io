@@ -2,7 +2,7 @@ import './ItemShop.css';
 import React from 'react';
 
 import { Modal, Button } from 'react-bootstrap';
-import { IItem } from "../../Interfaces/IItemDetails";
+import { IItem } from "../../Interfaces/IItem";
 import { TSourceType } from "../../Types/TSourceType";
 import { TItemType } from "../../Types/TItemType";
 import { BazaarCarpet } from './BazaarCarpet';
@@ -135,7 +135,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 <BazaarCarpet
                     rugName={carpet.rugName}
                     rugBorderSource={carpet.rugBorderSource}
-                    itemDetails={carpet.itemDetails}
+                    itemDetails={carpet.items}
                     onItemClick={onItemClick}
                 />
             );

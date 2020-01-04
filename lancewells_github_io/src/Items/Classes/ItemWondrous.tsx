@@ -1,4 +1,4 @@
-import { IItem } from '../Interfaces/IItemDetails';
+import { IItem } from '../Interfaces/IItem';
 import { TSourceType } from "../Types/TSourceType";
 import { TItemType } from "../Types/TItemType";
 
@@ -9,6 +9,4 @@ export class ItemWondrous implements IItem {
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
     public readonly type: TItemType = "Armor";
-
-    public constructor() { }
 }

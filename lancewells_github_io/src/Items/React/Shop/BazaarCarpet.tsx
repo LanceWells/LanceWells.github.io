@@ -1,5 +1,5 @@
 import React from 'react';
-import {IItem} from '../../Interfaces/IItemDetails';
+import {IItem} from '../../Interfaces/IItem';
 import {ShopItem} from './ShopItem';
 
 /**
