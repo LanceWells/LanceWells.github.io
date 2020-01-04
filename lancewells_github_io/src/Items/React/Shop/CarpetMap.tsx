@@ -1,4 +1,4 @@
-import { ItemSource } from "../Common/ItemSource";
+import { ItemSource } from "../../Classes/ItemSource";
 import { IItem } from "../../Interfaces/IItem";
 import { ItemWeapon } from "../../Classes/ItemWeapon";
 import { ItemArmor } from "../../Classes/ItemArmor";

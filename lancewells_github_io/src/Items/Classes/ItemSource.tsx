@@ -1,7 +1,7 @@
-import { ItemWeapon } from '../../Classes/ItemWeapon';
-import { ItemPotion } from '../../Classes/ItemPotion';
-import { ItemArmor } from '../../Classes/ItemArmor';
-import { ItemWondrous } from '../../Classes/ItemWondrous';
+import { ItemWeapon } from './ItemWeapon';
+import { ItemPotion } from './ItemPotion';
+import { ItemArmor } from './ItemArmor';
+import { ItemWondrous } from './ItemWondrous';
 
 /**
  * @description A class used to fetch items based on a specific index and call.

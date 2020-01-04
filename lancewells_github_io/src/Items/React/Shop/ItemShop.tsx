@@ -4,7 +4,6 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { IItem } from "../../Interfaces/IItem";
 import { TSourceType } from "../../Types/TSourceType";
-import { TItemType } from "../../Types/TItemType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
 
@@ -36,7 +35,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Creates a new instance of @see ItemShop .
      * @param props The properties required to instantiate this class.
      */
-    constructor (props: IItemShopProps) {
+    constructor(props: IItemShopProps) {
         super(props);
         this.state = {
             showItemDialog: false,
@@ -56,8 +55,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * Shows or hides the item details modal.
      * @param show If true, show the modal; otherwise false.
      */
-    setModalVisiblity(show: boolean)
-    {
+    setModalVisiblity(show: boolean) {
         this.setState({
             showItemDialog: show
         });
@@ -68,14 +66,13 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @param item The item details that are provided as a result of the click event (this is a set of
      * properties that represent the item that was clicked).
      */
-    onItemClick(item: IItem)
-    {
+    onItemClick(item: IItem) {
         this.setState({
             itemDetails: item,
         });
 
         // this.getFormattedItemDescription(item.body);
-        
+
         this.setModalVisiblity(true);
     }
 
@@ -84,45 +81,47 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * of the item that is being displayed.
      * @param source The source to lookup and return a <p> element that represents it.
      */
-    getSourceText(source: TSourceType)
-    {
-        switch(source)
-        {
+    getSourceText(source: TSourceType) {
+        switch (source) {
             case "Official":
-            {
-                return (<p style={{color: 'rgb(255, 200, 37)'}}>Official</p>);
-            }
+                {
+                    return (<p style={{ color: 'rgb(255, 200, 37)' }}>Official</p>);
+                }
             case "Homebrew":
-            {
-                return (<p style={{color: 'rgb(147, 56, 143)'}}>Homebrew</p>);
-            }
+                {
+                    return (<p style={{ color: 'rgb(147, 56, 143)' }}>Homebrew</p>);
+                }
         };
     }
 
     /**
      * @description Performs an enum-<p> lookup to get something nice and pixelated to represent the type
      * of the item that is being displayed.
-     * @param type The type to lookup and return a <p> element that represents it.
+     * @param type The item to lookup and return a <p> element that represents it.
      */
-    getTypeText(type: TItemType) {
-        switch (type) {
+    getTypeDisplay(item: IItem) {
+        switch (item.type) {
             case "Weapon":
-            {
-                return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
-            }
+                {
+                    return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
+                }
             case "Armor":
-            {
-                return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
-            }
+                {
+                    return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
+                }
             case "Potion":
-            {
-                return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
-            }
+                {
+                    return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
+                }
             case "Wondrous":
-            {
-                return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
-            }
-        };
+                {
+                    return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
+                }
+            default:
+                {
+                    return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
+                }
+        }
     }
 
     /**
@@ -196,21 +195,18 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Gets the description for an item as a set of elements.
      * @param description The description that will be represented as a series of elements.
      */
-    getFormattedItemDescription(description: string)
-    {
+    getFormattedItemDescription(description: string) {
         // https://regex101.com/r/PneEIz/4
         // https://github.com/facebook/react/issues/3386
         var splitDesc: string[];
         splitDesc = description.split(/(\b(?:\d+d\d+|\d)\s(?:acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder)\b|(?:\bwithdrawal effect\b))/gi);
 
-        return (splitDesc.map((desc, index) =>{
-            if (index % 2 === 0)
-            {
+        return (splitDesc.map((desc, index) => {
+            if (index % 2 === 0) {
                 return <span>{desc}</span>
             }
-            else
-            {
-                return(
+            else {
+                return (
                     <span
                         style={{ fontWeight: 'bolder' }}
                         className={this.getDescriptionStyle(desc)}>
@@ -224,12 +220,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     /**
      * @description Renders an instance of this class.
      */
-    render()
-    {
+    render() {
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
-        const hideModal = () => this.setModalVisiblity(false); 
+        const hideModal = () => this.setModalVisiblity(false);
         const handleItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
 
         return (
@@ -237,7 +232,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 <h1>Item Shop</h1>
                 <div className='shopkeeper-area'>
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
-                    <img src='./images/Item_Shop/shopkeeper.gif' alt="shopkeeper"/>
+                    <img src='./images/Item_Shop/shopkeeper.gif' alt="shopkeeper" />
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
@@ -263,10 +258,10 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                             </div>
                             <div className='item-tag'>
                                 {`${this.state.itemDetails.itemCost}x`}
-                                <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon"/>
+                                <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
                             </div>
                             <div className='item-tag'>
-                                {this.getTypeText(this.state.itemDetails.type)}
+                                {this.getTypeDisplay(this.state.itemDetails)}
                             </div>
                         </div>
                         <hr className='white-hr' />

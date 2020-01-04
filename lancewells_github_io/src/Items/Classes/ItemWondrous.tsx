@@ -8,5 +8,5 @@ export class ItemWondrous implements IItem {
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
-    public readonly type: TItemType = "Armor";
+    public readonly type: TItemType = "Wondrous";
 }

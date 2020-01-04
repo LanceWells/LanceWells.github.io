@@ -17,5 +17,5 @@ export class ItemWeapon implements IItem {
      */
     public attacks: { [index: string]: TAttack[] } = {};
 
-    public readonly type: TItemType = "Armor";
+    public readonly type: TItemType = "Weapon";
 }
