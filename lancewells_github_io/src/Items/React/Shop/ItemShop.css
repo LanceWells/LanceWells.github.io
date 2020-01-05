@@ -79,6 +79,11 @@
     }
 }
 
+.added-alert {
+    display: flex;
+    align-items: center;
+}
+
 .item-layer {
     animation-name: float;
     animation-duration: 2s;

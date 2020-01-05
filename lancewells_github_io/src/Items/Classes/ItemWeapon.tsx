@@ -4,6 +4,7 @@ import { TItemType } from "../Types/TItemType";
 import { TAttack } from "../Types/TAttack";
 
 export class ItemWeapon implements IItem {
+    public readonly key: string = "";
     public title: string = "";
     public body: string = "";
     public iconSource: string = "";

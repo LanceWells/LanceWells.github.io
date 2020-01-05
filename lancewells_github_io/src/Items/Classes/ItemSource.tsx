@@ -1,4 +1,4 @@
-import { ItemWeapon } from './ItemWeapon';
+import { ItemWeapon } from "./ItemWeapon";
 import { ItemPotion } from './ItemPotion';
 import { ItemArmor } from './ItemArmor';
 import { ItemWondrous } from './ItemWondrous';
@@ -19,12 +19,22 @@ export class ItemSource {
     static GetWeapon(index: string): ItemWeapon | undefined {
         var item: ItemWeapon | undefined = undefined;
 
-        if (index in ItemMap_Weapons) {
-            item = ItemMap_Weapons[index];
+        // This is very low-tech, but not sure yet on how this information will be stored in future. For
+        // now, just use an iterator to go over all of the possible items to find one that matches. This
+        // isn't too bad provided that the item list will be < 100 for a good amount of time.
+        for (let i = 0; i < ItemMap_Weapons.length; i++) {
+            let currentItem = ItemMap_Weapons[i];
+            if (currentItem.key === index)
+            {
+                item = currentItem;
+                break;
+            }
         }
-        else {
+
+        if (item == undefined) {
             console.error(`Could not find the weapon item ${index}. Returning undefined.`);
         }
+
         return item;
     }
 
@@ -37,12 +47,21 @@ export class ItemSource {
     static GetPotion(index: string): ItemPotion | undefined {
         var item: ItemPotion | undefined = undefined;
 
-        if (index in ItemMap_Potions) {
-            item = ItemMap_Potions[index];
+        // This is very low-tech, but not sure yet on how this information will be stored in future. For
+        // now, just use an iterator to go over all of the possible items to find one that matches. This
+        // isn't too bad provided that the item list will be < 100 for a good amount of time.
+        for (let i = 0; i < ItemMap_Potions.length; i++) {
+            let currentItem = ItemMap_Potions[i];
+            if (currentItem.key === index) {
+                item = currentItem;
+                break;
+            }
         }
-        else {
-            console.error(`Could not find the potion item ${index}. Returning undefined.`);
+
+        if (item == undefined) {
+            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
         }
+
         return item;
     }
 
@@ -55,12 +74,21 @@ export class ItemSource {
     static GetArmor(index: string): ItemArmor | undefined {
         var item: ItemArmor | undefined = undefined;
 
-        if (index in ItemMap_Armor) {
-            item = ItemMap_Armor[index];
+        // This is very low-tech, but not sure yet on how this information will be stored in future. For
+        // now, just use an iterator to go over all of the possible items to find one that matches. This
+        // isn't too bad provided that the item list will be < 100 for a good amount of time.
+        for (let i = 0; i < ItemMap_Armor.length; i++) {
+            let currentItem = ItemMap_Armor[i];
+            if (currentItem.key === index) {
+                item = currentItem;
+                break;
+            }
         }
-        else {
-            console.error(`Could not find the armor item ${index}. Returning undefined.`);
+
+        if (item == undefined) {
+            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
         }
+
         return item;
     }
 
@@ -73,12 +101,21 @@ export class ItemSource {
     static GetWondrous(index: string): ItemWondrous | undefined {
         var item: ItemWondrous | undefined = undefined;
 
-        if (index in ItemMap_Wondrous) {
-            item = ItemMap_Wondrous[index];
+        // This is very low-tech, but not sure yet on how this information will be stored in future. For
+        // now, just use an iterator to go over all of the possible items to find one that matches. This
+        // isn't too bad provided that the item list will be < 100 for a good amount of time.
+        for (let i = 0; i < ItemMap_Wondrous.length; i++) {
+            let currentItem = ItemMap_Wondrous[i];
+            if (currentItem.key === index) {
+                item = currentItem;
+                break;
+            }
         }
-        else {
-            console.error(`Could not find the wondrous item ${index}. Returning undefined.`);
+
+        if (item == undefined) {
+            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
         }
+
         return item;
     }
 }
@@ -87,9 +124,10 @@ export class ItemSource {
  * The purpose of the following classes and constants is to act as a proxy for a server. This will likely all
  * go away if/when this software switches to use AWS or something similar.
  */
-const ItemMap_Weapons: { [index: string]: ItemWeapon } =
-{
-    "Club": {
+const ItemMap_Weapons: Array<ItemWeapon> =
+[
+    {
+        key: 'Club',
         title: 'Club',
         body: 'A stout bludgeoning weapon made of oak. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light]',
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
@@ -108,7 +146,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Dagger": {
+    {
+        key: 'Dagger',
         title: 'Dagger',
         body: 'A small piercing weapon. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
@@ -127,7 +166,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Greatclub": {
+    {
+        key: 'Greatclub',
         title: 'Greatclub',
         body: 'A massive bludgeoning weapon. Attacks with this weapon deal 1d8 bludgeoning damage. [Properties: Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
@@ -146,7 +186,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Handaxe": {
+    {
+        key: 'Handaxe',
         title: 'Handaxe',
         body: 'A small throwing axe. Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
@@ -165,7 +206,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Javelin": {
+    {
+        key: 'Javelin',
         title: 'Javelin',
         body: 'A long, pointed, throwing weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
@@ -184,7 +226,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "LightHammer": {
+    {
+        key: 'LightHammer',
         title: 'Light Hammer',
         body: 'A small bludgeoning weapon. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
@@ -203,7 +246,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Mace": {
+    {
+        key: 'Mace',
         title: 'Mace',
         body: 'A bludgeoning weapon. Attacks with this weapon deal 1d6 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
@@ -222,7 +266,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Quarterstaff": {
+    {
+        key: 'Quarterstaff',
         title: 'Quarterstaff',
         body: 'A long, bludgeoning weapon made of oak. Attacks with this weapon deal 1d6 bludgeoning damage. [Properties: Versatile (1d8)]',
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
@@ -241,7 +286,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Sickle": {
+    {
+        key: 'Sickle',
         title: 'Sickle',
         body: 'A curved weapon made of steel. Attacks with this weapon deal 1d4 slashing damage. [Properties: Light]',
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
@@ -260,7 +306,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Spear": {
+    {
+        key: 'Spear',
         title: 'Spear',
         body: 'A long, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
@@ -279,7 +326,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Shortsword": {
+    {
+        key: 'Shortsword',
         title: 'Shortsword',
         body: 'A short, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
@@ -298,7 +346,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "SnakeStaff": {
+    {
+        key: 'SnakeStaff',
         title: 'Snake Staff',
         body: 'A long oaken staff. The staff is wrapped by the likeness of a clay snake. Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
@@ -323,7 +372,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Darts": {
+    {
+        key: 'Darts',
         title: 'Darts',
         body: 'A small thrown weapon. 20 darts line a leather pouch. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
@@ -342,7 +392,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "LightCrossbow": {
+    {
+        key: 'LightCrossbow',
         title: 'Light Crossbow',
         body: 'A light, mechanical device used for firing arrows across large distances. Attacks with this weapon deal 1d8 piercing damage. [Properties: Ammunition (range 80/320), Loading, Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
@@ -361,7 +412,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Shortbow": {
+    {
+        key: 'Shortbow',
         title: 'Shortbow',
         body: 'A long, curved piece of wood held taut by a length of wire. Attacks with this weapon deal 1d6 piercing damage. [Properties: Ammunition (range 80/320), Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
@@ -380,7 +432,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Sling": {
+    {
+        key: 'Sling',
         title: 'Sling',
         body: 'A small pocket held by two lengths of rope. When spun quickly, it can hurl projectiles at lethal speed. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Ammunition (range 30/120)]',
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
@@ -399,7 +452,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Battleaxe": {
+    {
+        key: 'Battleaxe',
         title: 'Battleaxe',
         body: 'A large, double-bladed axe. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
@@ -418,7 +472,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Glaive": {
+    {
+        key: 'Glaive',
         title: 'Glaive',
         body: 'A long polearm with a menacing length of steel at one end. Attacks with this weapon deal 1d10 slashing damage. [Properties: Heavy, Reach, Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
@@ -437,7 +492,8 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-    "Longsword": {
+    {
+        key: 'Longsword',
         title: 'Longsword',
         body: 'A large, double-bladed axe. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
@@ -456,11 +512,12 @@ const ItemMap_Weapons: { [index: string]: ItemWeapon } =
                 ]
         }
     },
-}
+]
 
-const ItemMap_Potions: { [index: string]: ItemPotion } =
-{
-    "SmallHealth": {
+const ItemMap_Potions: Array<ItemPotion> =
+[
+    {
+        key: 'SmallHealing',
         title: 'Small Healing Potion',
         body: 'A small healing potion. Heals 2d4+2 when consumed.',
         iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
@@ -468,7 +525,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 50,
         type: "Potion",
     },
-    "SmallMana": {
+    {
+        key: 'SmallMana',
         title: 'Small Mana Potion',
         body: 'A small mana potion. Restores 1 level 1 spell slot when consumed. Use of this potion will result in a withdrawal effect.',
         iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
@@ -476,7 +534,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 100,
         type: "Potion",
     },
-    "DarkContract": {
+    {
+        key: 'DarkContract',
         title: 'Potion of the Dark Contract',
         body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.',
         iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
@@ -484,7 +543,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 100,
         type: "Potion",
     },
-    "TiamatBrew": {
+    {
+        key: 'TiamatBrew',
         title: "Tiamat's Brew",
         body: "A rainbow of shifting colors lives in this bottle. On consumption, cast the Dragon's Breath spell on self. Consuming this potion will result in a withdrawal effect.",
         iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
@@ -492,7 +552,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 100,
         type: "Potion",
     },
-    "MiasmaPoison": {
+    {
+        key: 'PoisonousMiasma',
         title: 'Poisonous Miasma',
         body: 'A swirling, toxic potion. The likeness of a long, green, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 poison damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison.png',
@@ -500,7 +561,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 100,
         type: "Potion",
     },
-    "MiasmaBurning": {
+    {
+        key: 'BurningMiasma',
         title: 'Burning Miasma',
         body: 'A swirling, heated potion. The likeness of a long, red, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 fire damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
@@ -508,7 +570,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 100,
         type: "Potion",
     },
-    "MiasmaLightning": {
+    {
+        key: 'ElectricMiasma',
         title: 'Electric Miasma',
         body: 'A swirling, shocking potion. The likeness of a long, yellow, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 lightning damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
@@ -516,7 +579,8 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 100,
         type: "Potion",
     },
-    "Angelic": {
+    {
+        key: 'AngelicPotion',
         title: 'Angelic Potion',
         body: 'A large, winged potion. The bottle is miraculously light. Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
         iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
@@ -524,13 +588,14 @@ const ItemMap_Potions: { [index: string]: ItemPotion } =
         itemCost: 250,
         type: "Potion",
     },
-}
+]
 
-const ItemMap_Armor: { [index: string]: ItemArmor } = {}
+const ItemMap_Armor: Array<ItemArmor> = [];
 
-const ItemMap_Wondrous: { [index: string]: ItemWondrous } =
-{
-    "RedRing": {
+const ItemMap_Wondrous: Array<ItemWondrous> =
+[
+    {
+        key: 'FireyRing',
         title: 'Firey Ring',
         body: 'A golden ring with a ruby fastened to its exterior. The ring is warm to the touch. Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
@@ -538,7 +603,8 @@ const ItemMap_Wondrous: { [index: string]: ItemWondrous } =
         itemCost: 100,
         type: "Wondrous",
     },
-    "BlueRing": {
+    {
+        key: 'FrigidRing',
         title: 'Frigid Ring',
         body: 'A silver ring with a sapphire fastened to its exterior. The ring is cold to the touch. Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
@@ -546,7 +612,8 @@ const ItemMap_Wondrous: { [index: string]: ItemWondrous } =
         itemCost: 100,
         type: "Wondrous",
     },
-    "FloralRing": {
+    {
+        key: 'FloralRing',
         title: 'Ring of Floral Accomodation',
         body: 'A silver ring with the likeness of a pink rose fastened to its exterior. When touched to any surface, that surface will sprout flowers at a rapid pace for the next 6 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Floral.png',
@@ -554,4 +621,4 @@ const ItemMap_Wondrous: { [index: string]: ItemWondrous } =
         itemCost: 50,
         type: "Wondrous",
     },
-}
+]

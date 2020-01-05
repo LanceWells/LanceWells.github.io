@@ -1,11 +1,12 @@
 import './ItemShop.css';
 import React from 'react';
 
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Alert, Spinner } from 'react-bootstrap';
 import { IItem } from "../../Interfaces/IItem";
 import { TSourceType } from "../../Types/TSourceType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
+import { InventoryStorage } from '../../Classes/InventoryStorage';
 
 /**
  * @description
@@ -23,6 +24,7 @@ interface IItemShopProps {
  */
 interface IItemShopState {
     showItemDialog: boolean;
+    showAddedAlert: boolean;
     itemDetails: IItem;
 };
 
@@ -31,15 +33,20 @@ interface IItemShopState {
  * Represents an item shop! This is a full-screen application that is used to 'browse' some digital items.
  */
 export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
+    private inventoryStorage: InventoryStorage;
+
     /**
      * @description Creates a new instance of @see ItemShop .
      * @param props The properties required to instantiate this class.
      */
     constructor(props: IItemShopProps) {
         super(props);
+        this.inventoryStorage = InventoryStorage.getInstance()
         this.state = {
             showItemDialog: false,
+            showAddedAlert: false,
             itemDetails: {
+                key: '',
                 title: '',
                 body: '',
                 iconSource: '',
@@ -221,11 +228,27 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Renders an instance of this class.
      */
     render() {
+        var item: IItem = this.state.itemDetails;
+
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
         const hideModal = () => this.setModalVisiblity(false);
         const handleItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
+        const addItem = () => {
+            // this.showAlert();
+            this.setState({
+                showAddedAlert: true
+            }, () => {
+                window.setTimeout(() => {
+                    this.setState({
+                        showAddedAlert: false
+                    })
+                }, 3000)
+            })
+
+            InventoryStorage.getInstance().AddItem(item.key, item.type);
+        };
 
         return (
             <div className="ItemShop">
@@ -248,6 +271,12 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <Alert
+                            variant='success'
+                            show={this.state.showAddedAlert}>
+                            <Spinner animation="grow" variant="success"/>
+                            Added item to inventory!
+                        </Alert>
                         <div className='item-preview'>
                             <img src={this.state.itemDetails.iconSource} width={128} height={128} alt="item preview" />
                         </div>
@@ -268,6 +297,13 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                         {this.getFormattedItemDescription(this.state.itemDetails.body)}
                     </Modal.Body>
                     <Modal.Footer>
+                        <Button
+                            variant='dark'
+                            onClick={this.state.showAddedAlert ? undefined : addItem}
+                            disabled={this.state.showAddedAlert}
+                            style={this.state.showAddedAlert ? { cursor: "default" } : { cursor: "pointer" }}>
+                            Add to Inventory
+                        </Button>
                         <Button variant='dark' onClick={hideModal}>Close</Button>
                     </Modal.Footer>
                 </Modal>

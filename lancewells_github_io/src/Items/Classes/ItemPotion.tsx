@@ -3,6 +3,7 @@ import { TSourceType } from "../Types/TSourceType";
 import { TItemType } from "../Types/TItemType";
 
 export class ItemPotion implements IItem {
+    public readonly key: string = "";
     public title: string = "";
     public body: string = "";
     public iconSource: string = "";

@@ -1,8 +1,8 @@
-import { ListListener } from "../Interfaces/IInventoryListener";
+import { IListListener } from "../Interfaces/IListListener";
 
 export class ObservableList<T> {
     private _items: Array<T>;
-    private _listeners: Array<ListListener<T>>;
+    private _listeners: Array<IListListener<T>>;
 
     constructor() {
         this._items = [];
@@ -30,20 +30,23 @@ export class ObservableList<T> {
             if (this._items[i] === itemToRemove)
             {
                 // By removing an item, we're reducing the size of this array, and by effect jumping
-                // forward one index if we don't backtrack here.
+                // forward one index if we don't backtrack.
                 this._items.splice(i--, 1);
             }
         }
         this.NotifyListeners();
     }
 
-    public AddListener(listener: ListListener<T>) {
+    public AddListener(listener: IListListener<T>) {
         this._listeners.push(listener);
     }
 
     private NotifyListeners() {
+        var itemsCopy: Array<T> = [];
+        itemsCopy = this._items.slice(0);
+
         this._listeners.forEach(listener => {
-            listener(this._items);
+            listener(itemsCopy);
         });
     }
 }
