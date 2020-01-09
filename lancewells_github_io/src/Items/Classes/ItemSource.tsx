@@ -12,131 +12,43 @@ import { IItem } from "../Interfaces/IItem";
  * https://basarat.gitbooks.io/typescript/docs/tips/staticConstructor.html
  */
 export class ItemSource {
+    /**
+     * @description Finds the item under the specified index, and returns that item. If the item cannot be
+     * found, returns undefined instead. This function returns undefined such that a caller can determine how
+     * to handle the missing element, rather than throw an exception.
+     * @param index The index to search for the item.
+     * @param type The type of item to search for.
+     */
     static GetItem(index: string, type: TItemType): IItem | undefined {
         var item: IItem | undefined = undefined;
+        var listToSearch: IItem[] | undefined = undefined;
 
         switch (type) {
             case "Weapon":
-                for (let i = 0; i < ItemMap_Weapons.length; i++) {
-                    let currentItem = ItemMap_Weapons[i];
-                    if (currentItem.key === index) {
-                        item = currentItem;
-                        break;
-                    }
-                }
+                listToSearch = ItemMap_Weapons;
                 break;
-        
+            case "Armor":
+                listToSearch = ItemMap_Armor;
+                break;
+            case "Potion":
+                listToSearch = ItemMap_Potions;
+                break;
+            case "Wondrous":
+                listToSearch = ItemMap_Wondrous;
+                break;
             default:
+                listToSearch = undefined;
                 break;
         }
-
-        return item;
-    }
-
-    /**
-     * @description Finds the item under the specified index, and returns that item. If the item cannot be
-     * found, returns undefined instead. This function returns undefined such that a caller can determine how
-     * to handle the missing element, rather than throw an exception.
-     * @param index The index to search for the item.
-     */
-    static GetWeapon(index: string): ItemWeapon | undefined {
-        var item: ItemWeapon | undefined = undefined;
-
-        // This is very low-tech, but not sure yet on how this information will be stored in future. For
-        // now, just use an iterator to go over all of the possible items to find one that matches. This
-        // isn't too bad provided that the item list will be < 100 for a good amount of time.
-        for (let i = 0; i < ItemMap_Weapons.length; i++) {
-            let currentItem = ItemMap_Weapons[i];
-            if (currentItem.key === index)
-            {
-                item = currentItem;
-                break;
+        
+        if (listToSearch !== undefined) {
+            for (let i = 0; i < listToSearch.length; i++) {
+                let currentItem = listToSearch[i];
+                if (currentItem.key === index) {
+                    item = currentItem;
+                    break;
+                }
             }
-        }
-
-        if (item == undefined) {
-            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
-        }
-
-        return item;
-    }
-
-    /**
-     * @description Finds the item under the specified index, and returns that item. If the item cannot be
-     * found, returns undefined instead. This function returns undefined such that a caller can determine how
-     * to handle the missing element, rather than throw an exception.
-     * @param index The index to search for the item.
-     */
-    static GetPotion(index: string): ItemPotion | undefined {
-        var item: ItemPotion | undefined = undefined;
-
-        // This is very low-tech, but not sure yet on how this information will be stored in future. For
-        // now, just use an iterator to go over all of the possible items to find one that matches. This
-        // isn't too bad provided that the item list will be < 100 for a good amount of time.
-        for (let i = 0; i < ItemMap_Potions.length; i++) {
-            let currentItem = ItemMap_Potions[i];
-            if (currentItem.key === index) {
-                item = currentItem;
-                break;
-            }
-        }
-
-        if (item == undefined) {
-            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
-        }
-
-        return item;
-    }
-
-    /**
-     * @description Finds the item under the specified index, and returns that item. If the item cannot be
-     * found, returns undefined instead. This function returns undefined such that a caller can determine how
-     * to handle the missing element, rather than throw an exception.
-     * @param index The index to search for the item.
-     */
-    static GetArmor(index: string): ItemArmor | undefined {
-        var item: ItemArmor | undefined = undefined;
-
-        // This is very low-tech, but not sure yet on how this information will be stored in future. For
-        // now, just use an iterator to go over all of the possible items to find one that matches. This
-        // isn't too bad provided that the item list will be < 100 for a good amount of time.
-        for (let i = 0; i < ItemMap_Armor.length; i++) {
-            let currentItem = ItemMap_Armor[i];
-            if (currentItem.key === index) {
-                item = currentItem;
-                break;
-            }
-        }
-
-        if (item == undefined) {
-            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
-        }
-
-        return item;
-    }
-
-    /**
-     * @description Finds the item under the specified index, and returns that item. If the item cannot be
-     * found, returns undefined instead. This function returns undefined such that a caller can determine how
-     * to handle the missing element, rather than throw an exception.
-     * @param index The index to search for the item.
-     */
-    static GetWondrous(index: string): ItemWondrous | undefined {
-        var item: ItemWondrous | undefined = undefined;
-
-        // This is very low-tech, but not sure yet on how this information will be stored in future. For
-        // now, just use an iterator to go over all of the possible items to find one that matches. This
-        // isn't too bad provided that the item list will be < 100 for a good amount of time.
-        for (let i = 0; i < ItemMap_Wondrous.length; i++) {
-            let currentItem = ItemMap_Wondrous[i];
-            if (currentItem.key === index) {
-                item = currentItem;
-                break;
-            }
-        }
-
-        if (item == undefined) {
-            console.error(`Could not find the weapon item ${index}. Returning undefined.`);
         }
 
         return item;

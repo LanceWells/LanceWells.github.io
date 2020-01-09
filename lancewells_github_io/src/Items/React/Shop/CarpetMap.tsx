@@ -1,9 +1,6 @@
 import { ItemSource } from "../../Classes/ItemSource";
 import { IItem } from "../../Interfaces/IItem";
-import { ItemWeapon } from "../../Classes/ItemWeapon";
-import { ItemArmor } from "../../Classes/ItemArmor";
-import { ItemPotion } from "../../Classes/ItemPotion";
-import { ItemWondrous } from "../../Classes/ItemWondrous";
+import { TItemType } from "../../Types/TItemType";
 
 /**
  * @description A class used to represent a 'carpet'. A carpet is a section of an item shop, where
@@ -18,7 +15,7 @@ export class CarpetMap {
     /**
      * @description The items that are contained within the rug.
      */
-    items: Array<IItem> = [];
+    items: IItem[] = [];
 
     /**
      * @description The border source image to display around the rug. The syntax for this should be:
@@ -40,48 +37,18 @@ export class CarpetMap {
     public constructor(
         rugName: string,
         borderSource: string,
-        weapons: Array<string>,
-        armor: Array<string>,
-        potions: Array<string>,
-        wondrous: Array<string>)
+        itemType: TItemType,
+        items: string[])
     {
         this.rugName = rugName;
         this.rugBorderSource = borderSource;
 
-        var getWeapons = (itemIndex: string) => { return ItemSource.GetWeapon(itemIndex) }
-        var getArmor = (itemIndex: string) => { return ItemSource.GetArmor(itemIndex) }
-        var getPotions = (itemIndex: string) => { return ItemSource.GetPotion(itemIndex) }
-        var getWondrous = (itemIndex: string) => { return ItemSource.GetWondrous(itemIndex) }
-
-        this.AddItems<ItemWeapon>(weapons, getWeapons);
-        this.AddItems<ItemArmor>(armor, getArmor);
-        this.AddItems<ItemPotion>(potions, getPotions);
-        this.AddItems<ItemWondrous>(wondrous, getWondrous);
-    }
-
-    /**
-     * @description Gets a list of items of the specified type, from the specified function call.
-     * @param itemIndices The list of item indices to iterate over. This should result in a 1:1 list of items.
-     * @param itemFunc The function used to get the items.
-     */
-    private AddItems<T extends IItem>(itemIndices: Array<string>, itemFunc: (itemIndex: string) => T | undefined): void {
-        var items: Array<T> = [];
-
-        itemIndices.forEach(itemIndex => {
-            var item = itemFunc(itemIndex);
-            if (item !== undefined)
-            {
-                items.push(item as T);
-            }
-            else
-            {
-                console.error(`The item ${itemIndex} could not be found.`);
-            }
-        });
-
         items.forEach(item => {
-            this.items.push(item);
-        });
+            var itemLookup = ItemSource.GetItem(item, itemType);
+            if (itemLookup !== undefined) {
+                this.items.push(itemLookup);
+            }
+        })
     }
 }
 
@@ -90,7 +57,7 @@ export class CarpetMap {
  * purposes, and will be removed eventually.
  */
 export const CarpetMaps: CarpetMap[] = [
-    new CarpetMap("Simple Weapons", "url(/images/Item_Shop/Items/Rugs/purplerug.png)", ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "LightHammer"], [], [], []),
-    new CarpetMap("Potions", "url(/images/Item_Shop/Items/Rugs/greenrug.png)", [], [], ["SmallHealth", "SmallMana", "DarkContract", "TiamatBrew", "Angelic", "MiasmaBurning"], []),
-    new CarpetMap("Wondrous Items", "url(/images/Item_Shop/Items/Rugs/bluerug.png)", [], [], [], ["RedRing", "BlueRing", "FloralRing"]),
+    new CarpetMap("Simple Weapons", "url(/images/Item_Shop/Items/Rugs/purplerug.png)", "Weapon", ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "LightHammer"]),
+    new CarpetMap("Potions", "url(/images/Item_Shop/Items/Rugs/greenrug.png)", "Potion", ["SmallHealth", "SmallMana", "DarkContract", "TiamatBrew", "Angelic", "MiasmaBurning"]),
+    new CarpetMap("Wondrous Items", "url(/images/Item_Shop/Items/Rugs/bluerug.png)", "Wondrous", ["RedRing", "BlueRing", "FloralRing"]),
 ]

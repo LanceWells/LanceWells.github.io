@@ -11,10 +11,10 @@ interface IInventoryProps {
 }
 
 interface IInventoryState {
-    armorItems: Array<ItemArmor>;
-    potionItems: Array<ItemPotion>;
+    armorItems: Array<IItem>;
+    potionItems: Array<IItem>;
     weaponItems: Array<IItem>;
-    wondrousItems: Array<ItemWondrous>;
+    wondrousItems: Array<IItem>;
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {
@@ -58,10 +58,10 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     private updateFromInventory() {
         // alert("updating");
         this.setState({
-            armorItems: InventoryStorage.getInstance().Armor.GetItems(),
-            potionItems: InventoryStorage.getInstance().Potions.GetItems(),
+            armorItems: InventoryStorage.getInstance().GetItemsOfType("Armor"),
+            potionItems: InventoryStorage.getInstance().GetItemsOfType("Potion"),
             weaponItems: InventoryStorage.getInstance().GetItemsOfType("Weapon"),
-            wondrousItems: InventoryStorage.getInstance().Wondrous.GetItems(),
+            wondrousItems: InventoryStorage.getInstance().GetItemsOfType("Wondrous"),
         });
     }
 
