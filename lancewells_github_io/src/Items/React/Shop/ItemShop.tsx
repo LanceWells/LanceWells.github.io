@@ -62,7 +62,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      */
     setModalVisiblity(show: boolean) {
         this.setState({
-            showItemDialog: show
+            showItemDialog: show,
+            showAddedAlert: this.state.showAddedAlert && !show
         });
     }
 
@@ -75,8 +76,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         this.setState({
             itemDetails: item,
         });
-
-        // this.getFormattedItemDescription(item.body);
 
         this.setModalVisiblity(true);
     }
@@ -231,8 +230,15 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
-        const hideModal = () => this.setModalVisiblity(false);
+
         const handleItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
+
+        const hideModal = () => {
+            this.setState({
+                showItemDialog: false,
+                showAddedAlert: false
+            });
+        };
 
         // https://codesandbox.io/s/qqn6nxjp9
         const addItem = () => {

@@ -210,11 +210,20 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         itemCost: 1,
         type: "Weapon",
         attacks: {
-            "Whap":
+            "Whap (1h)":
                 [
                     {
                         diceCount: 1,
                         diceSize: 6,
+                        modifier: 0,
+                        damageType: "Bludgeoning"
+                    }
+                ],
+            "Whap (2h)":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 8,
                         modifier: 0,
                         damageType: "Bludgeoning"
                     }
@@ -250,11 +259,20 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         itemCost: 1,
         type: "Weapon",
         attacks: {
-            "Stab":
+            "Stab (1h)":
                 [
                     {
                         diceCount: 1,
                         diceSize: 6,
+                        modifier: 0,
+                        damageType: "Piercing"
+                    }
+                ],
+            "Stab (2h)":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 8,
                         modifier: 0,
                         damageType: "Piercing"
                     }
@@ -360,7 +378,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
                 [
                     {
                         diceCount: 1,
-                        diceSize: 4,
+                        diceSize: 6,
                         modifier: 0,
                         damageType: "Piercing"
                     }
@@ -396,11 +414,20 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         itemCost: 1,
         type: "Weapon",
         attacks: {
-            "Slash":
+            "Slash (1h)":
                 [
                     {
                         diceCount: 1,
-                        diceSize: 4,
+                        diceSize: 8,
+                        modifier: 0,
+                        damageType: "Slashing"
+                    }
+                ],
+            "Slash (2h)":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 10,
                         modifier: 0,
                         damageType: "Slashing"
                     }
@@ -420,7 +447,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
                 [
                     {
                         diceCount: 1,
-                        diceSize: 4,
+                        diceSize: 10,
                         modifier: 0,
                         damageType: "Slashing"
                     }
@@ -436,11 +463,20 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         itemCost: 15,
         type: "Weapon",
         attacks: {
-            "Slash":
+            "Slash (1h)":
                 [
                     {
                         diceCount: 1,
-                        diceSize: 4,
+                        diceSize: 8,
+                        modifier: 0,
+                        damageType: "Slashing"
+                    }
+                ],
+            "Slash (2h)":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 10,
                         modifier: 0,
                         damageType: "Slashing"
                     }

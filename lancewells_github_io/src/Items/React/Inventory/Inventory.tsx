@@ -36,8 +36,9 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
     private getWeapons() {
         return this.state.weaponItems.map((item) => {
+            var weapon: ItemWeapon = item as ItemWeapon;
             return (
-                <span>{item.title + Object.keys((item as ItemWeapon).attacks)[0]}</span>
+                <span>{weapon.title + Object.keys(weapon.attacks)[0]}</span>
             );
         });
     }
