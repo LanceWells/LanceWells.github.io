@@ -22,7 +22,10 @@ export class InventoryStorage {
 
     private _armor: ObservableList<ItemArmor> = new ObservableList<ItemArmor>();
     private _potions: ObservableList<ItemPotion> = new ObservableList<ItemPotion>();
-    private _weapons: ObservableList<ItemWeapon> = new ObservableList<ItemWeapon>();
+    // private _weapons: ObservableList<IItem> = new ObservableList<IItem>();
+    // Use strings as the key for this map; objects as keys require direct references to the same object.
+    // https://stackoverflow.com/questions/43592760/typescript-javascript-using-tuple-as-key-of-map
+    private _items: Map<TItemType, IItem[]> = new Map<TItemType, IItem[]>();
     private _wondrous: ObservableList<ItemWondrous> = new ObservableList<ItemWondrous>();
     private _characterName: string;
 
@@ -50,6 +53,17 @@ export class InventoryStorage {
         this.UpdateInventoryUsingCache();
     }
 
+    public GetItemsOfType(type: TItemType): IItem[] {
+        var typedItems: IItem[] = [];
+
+        if (this._items.has(type))
+        {
+            typedItems = this._items.get(type) as IItem[];
+        }
+
+        return typedItems;
+    }
+
     /**
      * @description Stores the current character's armor items.
      */
@@ -64,12 +78,12 @@ export class InventoryStorage {
         return this._potions;
     }
 
-    /**
-     * @description Stores the current character's weapon items.
-     */
-    public get Weapons(): ObservableList<ItemWeapon> {
-        return this._weapons;
-    }
+    // /**
+    //  * @description Stores the current character's weapon items.
+    //  */
+    // public get Weapons(): ObservableList<IItem> {
+    //     return this._weapons;
+    // }
 
     /**
      * @description Stores the current character's wondrous items.
@@ -206,14 +220,14 @@ export class InventoryStorage {
      * @param key The key for the given item to add to the inventory.
      * @param type The type of item that is being added to the inventory.
      */
-    public AddItem(key: string, type: TItemType) {
+    private AddItemInternal(key: string, type: TItemType) {
         switch (type) {
             case "Armor":
                 this.AddToList(this._armor, ItemSource.GetArmor(key));
                 break;
-            case "Weapon":
-                this.AddToList(this._weapons, ItemSource.GetWeapon(key));
-                break;
+            // case "Weapon":
+            //     this.AddToList(this._weapons, ItemSource.GetItem(key, "Weapon"));
+            //     break;
             case "Potion":
                 this.AddToList(this._potions, ItemSource.GetPotion(key));
                 break;
@@ -221,9 +235,30 @@ export class InventoryStorage {
                 this.AddToList(this._wondrous, ItemSource.GetWondrous(key));
                 break;
             default:
+                console.log("Adding item!");
+                var item: IItem | undefined = ItemSource.GetItem(key, type);
+                if (!this._items.has(type)) {
+                    console.log("Adding an item to an item type that doesn't exist yet.");
+                    this._items.set(type, []);
+                }
+                if (item !== undefined) {
+                    console.log("Item was found! Adding item to the list.");
+                    this._items.get(type)?.push(item);
+                }
                 break;
         }
 
+        this.SaveToCache(this.CharacterName);
+    }
+
+    /**
+     * @description Adds a given item to the inventory. An item key and type must be provided. Listeners
+     * will be notified when this function is called.
+     * @param key The key for the given item to add to the inventory.
+     * @param type The type of item that is being added to the inventory.
+     */
+    public AddItem(key: string, type: TItemType) {
+        this.AddItemInternal(key, type);
         this.SaveToCache(this.CharacterName);
     }
 
@@ -238,9 +273,9 @@ export class InventoryStorage {
             case "Armor":
                 this.RemoveFromList(this._armor, ItemSource.GetArmor(key));
                 break;
-            case "Weapon":
-                this.RemoveFromList(this._weapons, ItemSource.GetWeapon(key));
-                break;
+            // case "Weapon":
+            //     this.RemoveFromList(this._weapons, ItemSource.GetItem(key, "Weapon"));
+            //     break;
             case "Potion":
                 this.RemoveFromList(this._potions, ItemSource.GetPotion(key));
                 break;
@@ -248,6 +283,18 @@ export class InventoryStorage {
                 this.RemoveFromList(this._wondrous, ItemSource.GetWondrous(key));
                 break;
             default:
+                if (this._items.has(type)) {
+                    var itemsOfType: IItem[] = this._items.get(type) as IItem[];
+                    
+                    for(let i = 0; i < itemsOfType.length; i++) {
+                        if (itemsOfType[i].key === key) {
+                            itemsOfType.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                    this._items.set(type, itemsOfType);
+                }
                 break;
         }
 
@@ -282,18 +329,43 @@ export class InventoryStorage {
      * @param charName The name of the character that this information is being saved to.
      */
     private SaveToCache(charName: string): void {
+        console.log("Saving items to the cache.");
+
+        var cacheItems: {[key: string]: string[]} = {};
+
+        for(let [key, value] of this._items) {
+            console.log(`cacheItems: ${JSON.stringify(cacheItems)}`);
+            cacheItems[key] = value.map((item) => item.key);
+            console.log(`cacheItems: ${JSON.stringify(cacheItems)}`);
+        }
+
+        // console.log("Adding items to a list to be stored.");
+        // // https://stackoverflow.com/questions/37699320/iterating-over-typescript-map
+        // this._items.forEach((value: IItem[], key: TItemType) => {
+        //     let keysList: string[] = value.map((item) => item.key);
+
+        //     console.log(`Adding items to list ${key}: ${keysList}`);
+        //     console.log(`Before: ${JSON.stringify(cacheItems)}`);
+        //     cacheItems.set(key, keysList);
+        //     console.log(`After: ${JSON.stringify(cacheItems)}`);
+        // });
+
         var inventoryModel: TInventoryModel = {
             characterName: charName,
             armorKeys: this._armor.GetItems().map((item) => { return item.key }),
             potionKeys: this._potions.GetItems().map((item) => { return item.key }),
-            weaponKeys: this._weapons.GetItems().map((item) => { return item.key }),
+            // weaponKeys: this._weapons.GetItems().map((item) => { return item.key }),
             wondrousKeys: this._wondrous.GetItems().map((item) => { return item.key }),
+            items: cacheItems
         };
+
+        console.log(`New char inventory: ${JSON.stringify(inventoryModel)}`);
 
         var parsedStorage: TInventoryModelStorage = this.GetInventoryStorage();
 
         parsedStorage[charName] = inventoryModel;
         var jsonStorage = JSON.stringify(parsedStorage);
+        console.log(`Saving ${jsonStorage}`);
 
         localStorage.setItem(EStorageType.Inventory, jsonStorage);
     }
@@ -342,8 +414,8 @@ export class InventoryStorage {
                 characterName: "",
                 armorKeys: [],
                 potionKeys: [],
-                weaponKeys: [],
-                wondrousKeys: []
+                wondrousKeys: [],
+                items: {}
             };
         }
 
@@ -357,13 +429,19 @@ export class InventoryStorage {
             this.AddToList(this._potions, ItemSource.GetPotion(item));
         });
 
-        inventoryModel.weaponKeys.forEach((item) => {
-            this.AddToList(this._weapons, ItemSource.GetWeapon(item));
-        });
+        // inventoryModel.weaponKeys.forEach((item) => {
+        //     this.AddToList(this._weapons, ItemSource.GetItem(item, "Weapon"));
+        // });
 
         inventoryModel.wondrousKeys.forEach((item) => {
             this.AddToList(this._wondrous, ItemSource.GetWondrous(item));
         });
+
+        Object.keys(inventoryModel.items).forEach((itemType) => {
+            inventoryModel.items[itemType].forEach((item) => {
+                this.AddItemInternal(item, itemType as TItemType);
+            })
+        })
     }
 
     /**
@@ -372,7 +450,7 @@ export class InventoryStorage {
     private InitializeLists(): void {
         this._armor = new ObservableList<ItemArmor>();
         this._potions = new ObservableList<ItemPotion>();
-        this._weapons = new ObservableList<ItemWeapon>();
+        // this._weapons = new ObservableList<IItem>();
         this._wondrous = new ObservableList<ItemWondrous>();
     }
 }

@@ -2,6 +2,8 @@ import { ItemWeapon } from "./ItemWeapon";
 import { ItemPotion } from './ItemPotion';
 import { ItemArmor } from './ItemArmor';
 import { ItemWondrous } from './ItemWondrous';
+import { TItemType } from "../Types/TItemType";
+import { IItem } from "../Interfaces/IItem";
 
 /**
  * @description A class used to fetch items based on a specific index and call.
@@ -10,6 +12,27 @@ import { ItemWondrous } from './ItemWondrous';
  * https://basarat.gitbooks.io/typescript/docs/tips/staticConstructor.html
  */
 export class ItemSource {
+    static GetItem(index: string, type: TItemType): IItem | undefined {
+        var item: IItem | undefined = undefined;
+
+        switch (type) {
+            case "Weapon":
+                for (let i = 0; i < ItemMap_Weapons.length; i++) {
+                    let currentItem = ItemMap_Weapons[i];
+                    if (currentItem.key === index) {
+                        item = currentItem;
+                        break;
+                    }
+                }
+                break;
+        
+            default:
+                break;
+        }
+
+        return item;
+    }
+
     /**
      * @description Finds the item under the specified index, and returns that item. If the item cannot be
      * found, returns undefined instead. This function returns undefined such that a caller can determine how

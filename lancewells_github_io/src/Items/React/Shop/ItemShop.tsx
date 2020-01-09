@@ -33,7 +33,6 @@ interface IItemShopState {
  * Represents an item shop! This is a full-screen application that is used to 'browse' some digital items.
  */
 export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
-    private inventoryStorage: InventoryStorage;
 
     /**
      * @description Creates a new instance of @see ItemShop .
@@ -41,7 +40,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      */
     constructor(props: IItemShopProps) {
         super(props);
-        this.inventoryStorage = InventoryStorage.getInstance()
         this.state = {
             showItemDialog: false,
             showAddedAlert: false,
@@ -235,6 +233,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
          * ItemShop as 'this'. */
         const hideModal = () => this.setModalVisiblity(false);
         const handleItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
+
+        // https://codesandbox.io/s/qqn6nxjp9
         const addItem = () => {
             // this.showAlert();
             this.setState({

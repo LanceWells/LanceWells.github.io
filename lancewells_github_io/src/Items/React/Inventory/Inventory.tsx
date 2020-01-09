@@ -5,6 +5,7 @@ import { ItemArmor } from '../../Classes/ItemArmor';
 import { ItemPotion } from '../../Classes/ItemPotion';
 import { ItemWeapon } from "../../Classes/ItemWeapon";
 import { ItemWondrous } from '../../Classes/ItemWondrous';
+import { IItem } from '../../Interfaces/IItem';
 
 interface IInventoryProps {
 }
@@ -12,7 +13,7 @@ interface IInventoryProps {
 interface IInventoryState {
     armorItems: Array<ItemArmor>;
     potionItems: Array<ItemPotion>;
-    weaponItems: Array<ItemWeapon>;
+    weaponItems: Array<IItem>;
     wondrousItems: Array<ItemWondrous>;
 }
 
@@ -36,7 +37,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     private getWeapons() {
         return this.state.weaponItems.map((item) => {
             return (
-                <span>{item.title}</span>
+                <span>{item.title + Object.keys((item as ItemWeapon).attacks)[0]}</span>
             );
         });
     }
@@ -59,7 +60,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         this.setState({
             armorItems: InventoryStorage.getInstance().Armor.GetItems(),
             potionItems: InventoryStorage.getInstance().Potions.GetItems(),
-            weaponItems: InventoryStorage.getInstance().Weapons.GetItems(),
+            weaponItems: InventoryStorage.getInstance().GetItemsOfType("Weapon"),
             wondrousItems: InventoryStorage.getInstance().Wondrous.GetItems(),
         });
     }

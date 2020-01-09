@@ -31,6 +31,19 @@ export class ObservableList<T> {
             {
                 // By removing an item, we're reducing the size of this array, and by effect jumping
                 // forward one index if we don't backtrack.
+                this._items.splice(i, 1);
+                break;
+            }
+        }
+        this.NotifyListeners();
+    }
+
+    public RemoveAllInstances(itemToRemove: T) {
+
+        for (let i = 0; i < this._items.length; i++) {
+            if (this._items[i] === itemToRemove) {
+                // By removing an item, we're reducing the size of this array, and by effect jumping
+                // forward one index if we don't backtrack.
                 this._items.splice(i--, 1);
             }
         }
