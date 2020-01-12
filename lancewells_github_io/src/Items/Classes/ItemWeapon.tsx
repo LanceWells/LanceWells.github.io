@@ -10,6 +10,7 @@ export class ItemWeapon implements IItem {
     public details: string = "";
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
+    public requiresAttunement: boolean = false;
     public itemCost: number = 0;
     
     /**

@@ -111,6 +111,14 @@
     z-index: 5;
 }
 
+.card-icons {
+    position: absolute;
+    z-index: 6;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
 @keyframes hover {
     0% {
         transform: translateY(0px);

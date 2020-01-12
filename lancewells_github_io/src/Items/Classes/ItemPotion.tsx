@@ -10,6 +10,8 @@ export class ItemPotion implements IItem {
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
+    public requiresAttunement: boolean = false;
+    public withdrawalEffect: boolean = false;
     public readonly type: TItemType = "Potion";
 }
 

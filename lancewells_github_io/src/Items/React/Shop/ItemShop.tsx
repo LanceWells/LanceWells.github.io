@@ -49,6 +49,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 description: '',
                 details: '',
                 iconSource: '',
+                requiresAttunement: false,
                 itemCost: 0,
                 source: "Homebrew",
                 type: "Wondrous",

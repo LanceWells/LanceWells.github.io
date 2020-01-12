@@ -13,6 +13,7 @@ export class ItemArmor implements IItem {
     public armorBonus: number = 0;
     public addDex: boolean = true;
     public stealthDisadvantage: boolean = false;
+    public requiresAttunement: boolean = false;
     public readonly type: TItemType = "Armor";
 }
 

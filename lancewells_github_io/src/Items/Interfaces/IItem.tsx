@@ -9,5 +9,6 @@ export interface IItem {
     iconSource: string;
     source: TSourceType;
     itemCost: number;
+    requiresAttunement: boolean;
     readonly type: TItemType;
 }

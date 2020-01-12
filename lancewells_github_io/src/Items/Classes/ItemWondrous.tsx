@@ -10,6 +10,7 @@ export class ItemWondrous implements IItem {
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
+    public requiresAttunement: boolean = false;
     public readonly type: TItemType = "Wondrous";
 }
 

@@ -2,7 +2,9 @@ import React from 'react';
 import { IItem } from '../../Interfaces/IItem';
 import { IItemIsItemWeapon } from '../../Classes/ItemWeapon';
 import { TAttack } from '../../Types/TAttack';
-import { Button } from 'react-bootstrap';
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { CardIcon } from './CardIcon';
+import { IItemIsItemPotion } from '../../Classes/ItemPotion';
 
 interface IItemCardProps {
     itemDetails: IItem;
@@ -34,8 +36,13 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     readonly descAreaDefaultOffset: number = 88;
     readonly descAreaDefaultSize: number = 44;
 
+    // Attack Icon measurements.
+    readonly attackIconDefaultSize: number = 16;
+
     // Icon measurements.
     readonly iconDefaultSize: number = 16;
+    readonly iconDefaultLeftOffset: number = 87;
+    readonly iconDefaultTopOffset: number = 23;
 
     // Coin measurements.
     readonly coinDefaultSize: number = 16;
@@ -83,13 +90,13 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         var source: string;
         switch (this.props.itemDetails.type) {
             case "Weapon":
-                source = "./images/Item_Shop/ItemCards/CardRed.png";
+                source = "./images/Item_Shop/ItemCards/CardForge.png";
                 break;
             case "Potion":
-                source = "./images/Item_Shop/ItemCards/CardGreen.png";
+                source = "./images/Item_Shop/ItemCards/CardAlchemist.png";
                 break;
             default:
-                source = "./images/Item_Shop/ItemCards/CardRed.png";
+                source = "./images/Item_Shop/ItemCards/CardDungeon.png";
                 break;
         }
 
@@ -114,8 +121,8 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                             src={this.GetAttackDiceIconSource(attack.diceSize)}
                             style = {{
                                 margin: "0 2px 0 2px",
-                                width: `${this.iconDefaultSize * this.cardRatio}px`,
-                                height: `${this.iconDefaultSize * this.cardRatio}px`
+                                width: `${this.attackIconDefaultSize * this.cardRatio}px`,
+                                height: `${this.attackIconDefaultSize * this.cardRatio}px`
                             }}
                             className={`icon-color-${attack.damageType.toLowerCase()}`}
                         />
@@ -134,11 +141,38 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         }
         else {
             return (
-                <div>
+                <div style={{
+                    width:"100%"
+                }}>
                     {this.props.itemDetails.description}
                 </div>
             );
         }
+    }
+
+    private GetCardIcons(): JSX.Element[] {
+        var itemDetails: IItem = this.props.itemDetails;
+        var icons: JSX.Element[] = [];
+
+        if (itemDetails.requiresAttunement) {
+            icons.push(CardIcon({
+                iconSource: './images/Item_Shop/ItemCards/Icons/Attunement.png',
+                tooltipText: 'This item requires attunement.',
+                width: (this.iconDefaultSize * this.cardRatio),
+                height: (this.iconDefaultSize * this.cardRatio),
+            }));
+        }
+
+        if (IItemIsItemPotion(itemDetails) && itemDetails.withdrawalEffect) {
+            icons.push(CardIcon({
+                iconSource: './images/Item_Shop/ItemCards/Icons/Withdrawal.png',
+                tooltipText: 'Using this potion will grant a withdrawal effect.',
+                width: (this.iconDefaultSize * this.cardRatio),
+                height: (this.iconDefaultSize * this.cardRatio),
+            }));
+        }
+
+        return icons;
     }
 
     /**
@@ -283,6 +317,16 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                 >
                     {this.props.itemDetails.itemCost}
                 </span>
+                <div
+                    className="card-icons"
+                    style={{
+                        top: `${this.iconDefaultTopOffset * this.cardRatio}px`,
+                        left: `${this.iconDefaultLeftOffset * this.cardRatio}px`,
+                        maxWidth: `${this.iconDefaultSize * this.cardRatio}px`,
+                        height: `${this.iconDefaultSize * this.cardRatio * 4}px`
+                    }}>
+                    {this.GetCardIcons()}
+                </div>
                 <div
                     className="card-info"
                     style={{

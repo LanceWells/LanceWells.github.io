@@ -68,6 +68,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light]',
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -89,6 +90,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 2,
         type: "Weapon",
         attacks: {
@@ -110,6 +112,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d8 bludgeoning damage. [Properties: Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -131,6 +134,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 5,
         type: "Weapon",
         attacks: {
@@ -152,6 +156,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 5,
         type: "Weapon",
         attacks: {
@@ -173,6 +178,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 2,
         type: "Weapon",
         attacks: {
@@ -194,6 +200,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 5,
         type: "Weapon",
         attacks: {
@@ -215,6 +222,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 bludgeoning damage. [Properties: Versatile (1d8)]',
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -245,6 +253,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d4 slashing damage. [Properties: Light]',
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -266,6 +275,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -296,6 +306,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 10,
         type: "Weapon",
         attacks: {
@@ -317,6 +328,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'The staff is wrapped by the likeness of a clay snake. Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: "Homebrew",
+        requiresAttunement: false,
         itemCost: 100,
         type: "Weapon",
         attacks: {
@@ -344,6 +356,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -365,6 +378,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d8 piercing damage. [Properties: Ammunition (range 80/320), Loading, Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 25,
         type: "Weapon",
         attacks: {
@@ -386,6 +400,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Ammunition (range 80/320), Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 25,
         type: "Weapon",
         attacks: {
@@ -407,6 +422,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Ammunition (range 30/120)]',
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -428,6 +444,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -458,6 +475,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d10 slashing damage. [Properties: Heavy, Reach, Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -479,6 +497,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         details: 'Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: "Official",
+        requiresAttunement: false,
         itemCost: 15,
         type: "Weapon",
         attacks: {
@@ -513,6 +532,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'Heals 2d4+2 when consumed.',
         iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
         source: "Official",
+        requiresAttunement: false,
+        withdrawalEffect: false,
         itemCost: 50,
         type: "Potion",
     },
@@ -523,6 +544,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'Restores 1 level 1 spell slot when consumed. Use of this potion will result in a withdrawal effect.',
         iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: true,
         itemCost: 100,
         type: "Potion",
     },
@@ -533,6 +556,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.',
         iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -543,6 +568,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: "On consumption, cast the Dragon's Breath spell on self. Consuming this potion will result in a withdrawal effect.",
         iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: true,
         itemCost: 100,
         type: "Potion",
     },
@@ -553,6 +580,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'When used, causes a weapon to deal an additional 2 poison damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -563,6 +592,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'When used, causes a weapon to deal an additional 2 fire damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -573,6 +604,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'When used, causes a weapon to deal an additional 2 lightning damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -583,6 +616,8 @@ const ItemMap_Potions: Array<ItemPotion> =
         details: 'Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
         iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
         source: "Homebrew",
+        requiresAttunement: false,
+        withdrawalEffect: true,
         itemCost: 250,
         type: "Potion",
     },
@@ -599,6 +634,7 @@ const ItemMap_Wondrous: Array<ItemWondrous> =
         details: 'Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
         source: "Homebrew",
+        requiresAttunement: true,
         itemCost: 100,
         type: "Wondrous",
     },
@@ -609,6 +645,7 @@ const ItemMap_Wondrous: Array<ItemWondrous> =
         details: 'Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
         source: "Homebrew",
+        requiresAttunement: true,
         itemCost: 100,
         type: "Wondrous",
     },
@@ -619,6 +656,7 @@ const ItemMap_Wondrous: Array<ItemWondrous> =
         details: 'When touched to any surface, that surface will sprout flowers at a rapid pace for the next 6 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Floral.png',
         source: "Homebrew",
+        requiresAttunement: true,
         itemCost: 50,
         type: "Wondrous",
     },
