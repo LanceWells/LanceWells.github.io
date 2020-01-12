@@ -46,7 +46,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             itemDetails: {
                 key: '',
                 title: '',
-                body: '',
+                description: '',
+                details: '',
                 iconSource: '',
                 itemCost: 0,
                 source: "Homebrew",
@@ -300,7 +301,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                             </div>
                         </div>
                         <hr className='white-hr' />
-                        {this.getFormattedItemDescription(this.state.itemDetails.body)}
+                        {this.getFormattedItemDescription(this.state.itemDetails.description + " " + this.state.itemDetails.details)}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button

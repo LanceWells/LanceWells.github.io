@@ -64,7 +64,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Club',
         title: 'Club',
-        body: 'A stout bludgeoning weapon made of oak. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light]',
+        description: 'A stout bludgeoning weapon made of oak.',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light]',
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
         source: "Official",
         itemCost: 1,
@@ -84,7 +85,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Dagger',
         title: 'Dagger',
-        body: 'A small piercing weapon. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
+        description: 'A small piercing weapon.',
+        details: 'Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
         source: "Official",
         itemCost: 2,
@@ -104,7 +106,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Greatclub',
         title: 'Greatclub',
-        body: 'A massive bludgeoning weapon. Attacks with this weapon deal 1d8 bludgeoning damage. [Properties: Two-handed]',
+        description: 'A massive bludgeoning weapon.',
+        details: 'Attacks with this weapon deal 1d8 bludgeoning damage. [Properties: Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
         source: "Official",
         itemCost: 1,
@@ -124,7 +127,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Handaxe',
         title: 'Handaxe',
-        body: 'A small throwing axe. Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
+        description: 'A small throwing axe.',
+        details: 'Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
         source: "Official",
         itemCost: 5,
@@ -144,7 +148,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Javelin',
         title: 'Javelin',
-        body: 'A long, pointed, throwing weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
+        description: 'A long, pointed, throwing weapon.',
+        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
         source: "Official",
         itemCost: 5,
@@ -164,7 +169,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'LightHammer',
         title: 'Light Hammer',
-        body: 'A small bludgeoning weapon. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
+        description: 'A small bludgeoning weapon.',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
         source: "Official",
         itemCost: 2,
@@ -184,7 +190,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Mace',
         title: 'Mace',
-        body: 'A bludgeoning weapon. Attacks with this weapon deal 1d6 bludgeoning damage.',
+        description: 'A bludgeoning weapon.',
+        details: 'Attacks with this weapon deal 1d6 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
         source: "Official",
         itemCost: 5,
@@ -204,7 +211,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Quarterstaff',
         title: 'Quarterstaff',
-        body: 'A long, bludgeoning weapon made of oak. Attacks with this weapon deal 1d6 bludgeoning damage. [Properties: Versatile (1d8)]',
+        description: 'A long, bludgeoning weapon made of oak.',
+        details: 'Attacks with this weapon deal 1d6 bludgeoning damage. [Properties: Versatile (1d8)]',
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
         source: "Official",
         itemCost: 1,
@@ -233,7 +241,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Sickle',
         title: 'Sickle',
-        body: 'A curved weapon made of steel. Attacks with this weapon deal 1d4 slashing damage. [Properties: Light]',
+        description: 'A curved weapon made of steel.',
+        details: 'Attacks with this weapon deal 1d4 slashing damage. [Properties: Light]',
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
         source: "Official",
         itemCost: 1,
@@ -253,7 +262,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Spear',
         title: 'Spear',
-        body: 'A long, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
+        description: 'A long, pointed weapon.',
+        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
         source: "Official",
         itemCost: 1,
@@ -282,7 +292,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Shortsword',
         title: 'Shortsword',
-        body: 'A short, pointed weapon. Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
+        description: 'A short, pointed weapon.',
+        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
         source: "Official",
         itemCost: 10,
@@ -302,7 +313,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'SnakeStaff',
         title: 'Snake Staff',
-        body: 'A long oaken staff. The staff is wrapped by the likeness of a clay snake. Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
+        description: 'A long oaken staff.',
+        details: 'The staff is wrapped by the likeness of a clay snake. Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: "Homebrew",
         itemCost: 100,
@@ -328,7 +340,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Darts',
         title: 'Darts',
-        body: 'A small thrown weapon. 20 darts line a leather pouch. Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Thrown (range 20/60)]',
+        description: 'A small thrown weapon. 20 darts line a leather pouch.',
+        details: 'Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Thrown (range 20/60)]',
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: "Official",
         itemCost: 1,
@@ -348,7 +361,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'LightCrossbow',
         title: 'Light Crossbow',
-        body: 'A light, mechanical device used for firing arrows across large distances. Attacks with this weapon deal 1d8 piercing damage. [Properties: Ammunition (range 80/320), Loading, Two-handed]',
+        description: 'A light, mechanical device used for firing arrows across large distances.',
+        details: 'Attacks with this weapon deal 1d8 piercing damage. [Properties: Ammunition (range 80/320), Loading, Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
         source: "Official",
         itemCost: 25,
@@ -368,7 +382,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Shortbow',
         title: 'Shortbow',
-        body: 'A long, curved piece of wood held taut by a length of wire. Attacks with this weapon deal 1d6 piercing damage. [Properties: Ammunition (range 80/320), Two-handed]',
+        description: 'A long, curved piece of wood held taut by a length of wire.',
+        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Ammunition (range 80/320), Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
         source: "Official",
         itemCost: 25,
@@ -388,7 +403,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Sling',
         title: 'Sling',
-        body: 'A small pocket held by two lengths of rope. When spun quickly, it can hurl projectiles at lethal speed. Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Ammunition (range 30/120)]',
+        description: 'A small pocket held by two lengths of rope. When spun quickly, it can hurl projectiles at lethal speed.',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Ammunition (range 30/120)]',
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
         source: "Official",
         itemCost: 1,
@@ -408,7 +424,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Battleaxe',
         title: 'Battleaxe',
-        body: 'A large, double-bladed axe. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+        description: 'A large, double-bladed axe.',
+        details: 'Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
         source: "Official",
         itemCost: 1,
@@ -437,7 +454,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Glaive',
         title: 'Glaive',
-        body: 'A long polearm with a menacing length of steel at one end. Attacks with this weapon deal 1d10 slashing damage. [Properties: Heavy, Reach, Two-handed]',
+        description: 'A long polearm with a menacing length of steel at one end.',
+        details: 'Attacks with this weapon deal 1d10 slashing damage. [Properties: Heavy, Reach, Two-handed]',
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
         source: "Official",
         itemCost: 1,
@@ -457,7 +475,8 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'Longsword',
         title: 'Longsword',
-        body: 'A large, double-bladed axe. Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+        description: 'A large, double-bladed axe.',
+        details: 'Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: "Official",
         itemCost: 15,
@@ -490,7 +509,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'SmallHealing',
         title: 'Small Healing Potion',
-        body: 'A small healing potion. Heals 2d4+2 when consumed.',
+        description: 'A small healing potion.',
+        details: 'Heals 2d4+2 when consumed.',
         iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
         source: "Official",
         itemCost: 50,
@@ -499,7 +519,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'SmallMana',
         title: 'Small Mana Potion',
-        body: 'A small mana potion. Restores 1 level 1 spell slot when consumed. Use of this potion will result in a withdrawal effect.',
+        description: 'A small mana potion.',
+        details: 'Restores 1 level 1 spell slot when consumed. Use of this potion will result in a withdrawal effect.',
         iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
         source: "Homebrew",
         itemCost: 100,
@@ -508,7 +529,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'DarkContract',
         title: 'Potion of the Dark Contract',
-        body: 'A dark, bubbling brew. Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.',
+        description: 'A dark, bubbling brew.',
+        details: 'Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.',
         iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
         source: "Homebrew",
         itemCost: 100,
@@ -517,7 +539,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'TiamatBrew',
         title: "Tiamat's Brew",
-        body: "A rainbow of shifting colors lives in this bottle. On consumption, cast the Dragon's Breath spell on self. Consuming this potion will result in a withdrawal effect.",
+        description: 'A rainbow of shifting colors lives in this bottle.',
+        details: "On consumption, cast the Dragon's Breath spell on self. Consuming this potion will result in a withdrawal effect.",
         iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
         source: "Homebrew",
         itemCost: 100,
@@ -526,7 +549,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'PoisonousMiasma',
         title: 'Poisonous Miasma',
-        body: 'A swirling, toxic potion. The likeness of a long, green, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 poison damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
+        description: 'A swirling, toxic potion. The likeness of a long, green, clay snake is enveloped around the bottle.',
+        details: 'When used, causes a weapon to deal an additional 2 poison damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison.png',
         source: "Homebrew",
         itemCost: 100,
@@ -535,7 +559,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'BurningMiasma',
         title: 'Burning Miasma',
-        body: 'A swirling, heated potion. The likeness of a long, red, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 fire damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
+        description: 'A swirling, heated potion. The likeness of a long, red, clay snake is enveloped around the bottle.',
+        details: 'When used, causes a weapon to deal an additional 2 fire damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
         source: "Homebrew",
         itemCost: 100,
@@ -544,7 +569,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'ElectricMiasma',
         title: 'Electric Miasma',
-        body: 'A swirling, shocking potion. The likeness of a long, yellow, clay snake is enveloped around the bottle. When used, causes a weapon to deal an additional 2 lightning damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
+        description: 'A swirling, shocking potion. The likeness of a long, yellow, clay snake is enveloped around the bottle.',
+        details: 'When used, causes a weapon to deal an additional 2 lightning damage to attacks that deal slashing or piercing damage. The effect lasts 24 hours. Application takes 1 minute, and this item is consumed on use.',
         iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
         source: "Homebrew",
         itemCost: 100,
@@ -553,7 +579,8 @@ const ItemMap_Potions: Array<ItemPotion> =
     {
         key: 'AngelicPotion',
         title: 'Angelic Potion',
-        body: 'A large, winged potion. The bottle is miraculously light. Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
+        description: 'A large, winged potion. The bottle is miraculously light.',
+        details: 'Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
         iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
         source: "Homebrew",
         itemCost: 250,
@@ -568,7 +595,8 @@ const ItemMap_Wondrous: Array<ItemWondrous> =
     {
         key: 'FireyRing',
         title: 'Firey Ring',
-        body: 'A golden ring with a ruby fastened to its exterior. The ring is warm to the touch. Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
+        description: 'A golden ring with a ruby fastened to its exterior. The ring is warm to the touch.',
+        details: 'Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
         source: "Homebrew",
         itemCost: 100,
@@ -577,7 +605,8 @@ const ItemMap_Wondrous: Array<ItemWondrous> =
     {
         key: 'FrigidRing',
         title: 'Frigid Ring',
-        body: 'A silver ring with a sapphire fastened to its exterior. The ring is cold to the touch. Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
+        description: 'A silver ring with a sapphire fastened to its exterior. The ring is cold to the touch.',
+        details: 'Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
         source: "Homebrew",
         itemCost: 100,
@@ -586,7 +615,8 @@ const ItemMap_Wondrous: Array<ItemWondrous> =
     {
         key: 'FloralRing',
         title: 'Ring of Floral Accomodation',
-        body: 'A silver ring with the likeness of a pink rose fastened to its exterior. When touched to any surface, that surface will sprout flowers at a rapid pace for the next 6 seconds.',
+        description: 'A silver ring with the likeness of a pink rose fastened to its exterior.',
+        details: 'When touched to any surface, that surface will sprout flowers at a rapid pace for the next 6 seconds.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Floral.png',
         source: "Homebrew",
         itemCost: 50,

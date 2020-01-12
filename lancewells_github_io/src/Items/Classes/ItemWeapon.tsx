@@ -6,7 +6,8 @@ import { TAttack } from "../Types/TAttack";
 export class ItemWeapon implements IItem {
     public readonly key: string = "";
     public title: string = "";
-    public body: string = "";
+    public description: string = "";
+    public details: string = "";
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
@@ -19,4 +20,13 @@ export class ItemWeapon implements IItem {
     public attacks: { [index: string]: TAttack[] } = {};
 
     public readonly type: TItemType = "Weapon";
+}
+
+export function IItemIsItemWeapon(item: IItem): item is ItemWeapon {
+    var isType: boolean = true;
+
+    isType = isType && (item as ItemWeapon).type === "Weapon";
+    isType = isType && (item as ItemWeapon).attacks != undefined;
+
+    return isType;
 }

@@ -47,6 +47,79 @@
     justify-content: space-around;
 }
 
+.item-card {
+    justify-content: center;
+    align-items: baseline;
+    position: relative;
+    display: flex;
+    z-index: 1;
+    transition: 0.5s;
+    animation-delay: 0.2s;
+    animation-timing-function: ease-out;
+}
+
+.item-card:hover {
+    transform: translateY(-16px);
+}
+
+.card-canvas {
+    border: none;
+    margin: 1em;
+    position: relative;
+    z-index: 1;
+}
+
+.card-title {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    text-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    font-family: "Open Sans";
+    font-weight: normal;
+}
+
+.card-info {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    width: 85%;
+    color: white;
+    overflow-y: hidden;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-cost {
+    z-index: 3;
+    width: 100%;
+    position: absolute;
+    text-align: left;
+}
+
+.card-cost-text {
+    font-family: "Press Start 2P";
+    z-index: 4;
+    position: absolute;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.card-details-button {
+    position: absolute;
+    z-index: 5;
+}
+
+@keyframes hover {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(16px);
+    }
+}
+
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/drop-shadow */
 @keyframes float {
     0% {
@@ -137,56 +210,123 @@
     position: absolute;
 }
 
+.attack-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 100%;
+    width: 100%;
+    font-family: 'Press Start 2P';
+    font-weight: normal;
+}
+
+/* 
+ * All of the filters below were generated using:
+ * https://codepen.io/sosuke/pen/Pjoqqp
+ */
+
 .text-color-acid {
     color: rgb(153, 230, 95);
+}
+
+.icon-color-acid {
+    filter: invert(100%) sepia(21%) saturate(6550%) hue-rotate(36deg) brightness(112%) contrast(80%);
 }
 
 .text-color-bludgeoning {
     color: rgb(137, 30, 43);
 }
 
+.icon-color-bludgeoning {
+    filter: invert(12%) sepia(100%) saturate(2426%) hue-rotate(338deg) brightness(90%) contrast(90%);
+}
+
 .text-color-cold {
     color: rgb(12, 241, 255);
+}
+
+.icon-color-cold {
+    filter: invert(78%) sepia(26%) saturate(2002%) hue-rotate(136deg) brightness(100%) contrast(103%);
 }
 
 .text-color-fire {
     color: rgb(237, 118, 20);
 }
 
+.icon-color-fire {
+    filter: invert(45%) sepia(92%) saturate(1253%) hue-rotate(358deg) brightness(99%) contrast(87%);
+}
+
 .text-color-force {
     color: rgb(3, 25, 63);
+}
+
+.icon-color-force {
+    filter: invert(11%) sepia(27%) saturate(3655%) hue-rotate(198deg) brightness(90%) contrast(105%);
 }
 
 .text-color-lightning {
     color: rgb(255, 200, 37);
 }
 
+.icon-color-lightning {
+    filter: invert(89%) sepia(19%) saturate(5418%) hue-rotate(338deg) brightness(109%) contrast(101%);
+}
+
 .text-color-necrotic {
     color: rgb(101, 115, 146);
+}
+
+.icon-color-necrotic {
+    filter: invert(41%) sepia(36%) saturate(313%) hue-rotate(182deg) brightness(100%) contrast(92%);
 }
 
 .text-color-piercing {
     color: rgb(234, 50, 60);
 }
 
+.icon-color-piercing {
+    filter: invert(29%) sepia(67%) saturate(6694%) hue-rotate(345deg) brightness(101%) contrast(83%);
+}
+
 .text-color-poison {
     color: rgb(30, 111, 80);
+}
+
+.icon-color-poison {
+    filter: invert(34%) sepia(51%) saturate(526%) hue-rotate(105deg) brightness(94%) contrast(94%);
 }
 
 .text-color-psychic {
     color: rgb(246, 129, 135);
 }
 
+.icon-color-psychic {
+    filter: invert(57%) sepia(43%) saturate(526%) hue-rotate(308deg) brightness(98%) contrast(97%);
+}
+
 .text-color-radiant {
     color: rgb(255, 235, 87);
+}
+
+.icon-color-radiant {
+    filter: invert(77%) sepia(78%) saturate(337%) hue-rotate(0deg) brightness(103%) contrast(104%);
 }
 
 .text-color-slashing {
     color: rgb(101, 115, 146);
 }
 
+.icon-color-slashing {
+    filter: invert(47%) sepia(7%) saturate(1611%) hue-rotate(184deg) brightness(91%) contrast(86%);
+}
+
 .text-color-thunder {
     color: rgb(249, 230, 207);
+}
+
+.icon-color-thunder {
+    filter: invert(95%) sepia(7%) saturate(1585%) hue-rotate(313deg) brightness(105%) contrast(95%);
 }
 
 .text-color-withdrawal {
@@ -199,4 +339,24 @@
 
 .text-color-plain {
     color: white;
+}
+
+/* https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas */
+/* http://jsfiddle.net/namuol/VAXrL/1459/ */
+/* https://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
+canvas, img {
+    image-rendering: optimizeSpeed;
+    /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;
+    /* Firefox                        */
+    image-rendering: -o-crisp-edges;
+    /* Opera                          */
+    image-rendering: -webkit-optimize-contrast;
+    /* Chrome (and eventually Safari) */
+    image-rendering: pixelated;
+    /* Chrome */
+    image-rendering: optimize-contrast;
+    /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;
+    /* IE8+                           */
 }

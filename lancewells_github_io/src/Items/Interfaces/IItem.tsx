@@ -4,7 +4,8 @@ import { TItemType } from "../Types/TItemType";
 export interface IItem {
     key: string;
     title: string;
-    body: string;
+    description: string;
+    details: string;
     iconSource: string;
     source: TSourceType;
     itemCost: number;

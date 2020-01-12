@@ -53,11 +53,9 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
     private handleStorageChange() {
         this.updateFromInventory();
-        // alert(this.state.weaponItems.length);
     }
 
     private updateFromInventory() {
-        // alert("updating");
         this.setState({
             armorItems: InventoryStorage.getInstance().GetItemsOfType("Armor"),
             potionItems: InventoryStorage.getInstance().GetItemsOfType("Potion"),

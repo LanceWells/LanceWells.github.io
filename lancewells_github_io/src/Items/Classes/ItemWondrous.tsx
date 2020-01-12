@@ -5,9 +5,18 @@ import { TItemType } from "../Types/TItemType";
 export class ItemWondrous implements IItem {
     public readonly key: string = "";
     public title: string = "";
-    public body: string = "";
+    public description: string = "";
+    public details: string = "";
     public iconSource: string = "";
     public source: TSourceType = "Homebrew";
     public itemCost: number = 0;
     public readonly type: TItemType = "Wondrous";
+}
+
+export function IItemIsItemWondrous(item: IItem): item is ItemWondrous {
+    var isType: boolean = true;
+
+    isType = isType && (item as ItemWondrous).type === "Wondrous";
+
+    return isType;
 }

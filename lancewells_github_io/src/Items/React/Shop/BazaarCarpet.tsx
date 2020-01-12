@@ -2,6 +2,7 @@ import React from 'react';
 import {IItem} from '../../Interfaces/IItem';
 import {ShopItem} from './ShopItem';
 import { CarpetMap } from './CarpetMap';
+import { ItemCard } from '../Common/ItemCard';
 
 /**
  * @description An interface used to represent the properties required to display this class.
@@ -22,16 +23,21 @@ interface IBazaarCarpetProps {
  */
 function getShopItems(itemDetails: Array<IItem>, onItemClick: Function)
 {
-    return itemDetails.map((item, index) => {
+    return itemDetails.map((item) => {
         return (
-            <ShopItem
+            <ItemCard
                 itemDetails={item}
-                floatDelay={-index}
                 onItemClick={onItemClick}
             />
         );
     });
 }
+
+// <ShopItem
+//     itemDetails={item}
+//     floatDelay={-index}
+//     onItemClick={onItemClick}
+// />
 
 /**
  * @description Returns an instance of this component, BazaarCarpet.
