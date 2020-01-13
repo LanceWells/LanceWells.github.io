@@ -166,7 +166,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
 
         const showAttackModal: TAttackClick = (attackName: string, attackRolls: TAttack[]) => {
                 this.setState({
-                    showAttackRoll: true
+                    showAttackRoll: true,
+                    attackName: attackName,
+                    attackRolls: attackRolls
                 });
             };
 
