@@ -1,5 +1,5 @@
 import React from 'react';
-import {IItem} from '../../Interfaces/IItem';
+import {IItemJson} from '../../Interfaces/IItem';
 import {ShopItem} from './ShopItem';
 import { CarpetMap } from './CarpetMap';
 import { ItemCard } from '../Common/ItemCard';
@@ -21,7 +21,7 @@ interface IBazaarCarpetProps {
  * @param onItemClick The click event-handler for items.
  * @see ShopItem
  */
-function getShopItems(itemDetails: Array<IItem>, onItemClick: Function)
+function getShopItems(itemDetails: Array<IItemJson>, onItemClick: Function)
 {
     return itemDetails.map((item) => {
         return (

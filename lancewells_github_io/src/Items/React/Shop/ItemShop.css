@@ -53,13 +53,14 @@
     position: relative;
     display: flex;
     z-index: 1;
-    transition: 0.5s;
-    animation-delay: 0.2s;
+    transition: 0.3s;
+    animation-delay: 0.1s;
     animation-timing-function: ease-out;
 }
 
 .item-card:hover {
-    transform: translateY(-16px);
+    /* transform: translateY(-16px); */
+    filter: drop-shadow(0 0 6px rgb(255, 235, 87));
 }
 
 .card-canvas {
@@ -199,6 +200,11 @@
 .modal-content {
     background: rgb(18, 18, 18);
     color: white;
+}
+
+.item-description-title {
+    font-family: 'Press Start 2P';
+    text-align: left;
 }
 
 .white-hr {
@@ -423,6 +429,7 @@
 }
 
 .text-color-withdrawal {
+    font-weight: bold;
     animation-name: withdrawal;
     animation-duration: 8s;
     animation-iteration-count: infinite;

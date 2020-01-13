@@ -1,6 +1,6 @@
 import { TItemType } from "../Types/TItemType";
 import { ItemSource } from "./ItemSource";
-import { IItem } from "../Interfaces/IItem";
+import { IItemJson, IItem } from "../Interfaces/IItem";
 import { TInventoryModel } from "../Types/TInventoryModel";
 import { TInventoryModelStorage } from "../Types/TInventoryModelStorage";
 import { EStorageType } from "../Enums/EStorageType";
@@ -17,7 +17,7 @@ export class InventoryStorage {
 
     // Use strings as the key for this map; objects as keys require direct references to the same object.
     // https://stackoverflow.com/questions/43592760/typescript-javascript-using-tuple-as-key-of-map
-    private _items: Map<TItemType, IItem[]> = new Map<TItemType, IItem[]>();
+    private _items: Map<TItemType, IItemJson[]> = new Map<TItemType, IItemJson[]>();
     private _characterName: string;
 
     // https://regex101.com/r/AJU90m/1
@@ -44,12 +44,12 @@ export class InventoryStorage {
         this.UpdateInventoryUsingCache();
     }
 
-    public GetItemsOfType(type: TItemType): IItem[] {
-        var typedItems: IItem[] = [];
+    public GetItemsOfType(type: TItemType): IItemJson[] {
+        var typedItems: IItemJson[] = [];
 
         if (this._items.has(type))
         {
-            typedItems = this._items.get(type) as IItem[];
+            typedItems = this._items.get(type) as IItemJson[];
         }
 
         return typedItems;
@@ -214,7 +214,7 @@ export class InventoryStorage {
      */
     public RemoveItem(key: string, type: TItemType) {
         if (this._items.has(type)) {
-            var itemsOfType: IItem[] = this._items.get(type) as IItem[];
+            var itemsOfType: IItemJson[] = this._items.get(type) as IItemJson[];
             
             for(let i = 0; i < itemsOfType.length; i++) {
                 if (itemsOfType[i].key === key) {

@@ -2,11 +2,12 @@ import './ItemShop.css';
 import React from 'react';
 
 import { Modal, Button, Alert, Spinner } from 'react-bootstrap';
-import { IItem } from "../../Interfaces/IItem";
+import { IItemJson, IItem } from "../../Interfaces/IItem";
 import { TSourceType } from "../../Types/TSourceType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
 import { InventoryStorage } from '../../Classes/InventoryStorage';
+import { IItemIsItemWondrous, ItemWondrous } from '../../Classes/ItemWondrous';
 
 /**
  * @description
@@ -43,17 +44,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         this.state = {
             showItemDialog: false,
             showAddedAlert: false,
-            itemDetails: {
-                key: '',
-                title: '',
-                description: '',
-                details: '',
-                iconSource: '',
-                requiresAttunement: false,
-                itemCost: 0,
-                source: "Homebrew",
-                type: "Wondrous",
-            }
+            itemDetails: new ItemWondrous()
         };
     }
 
@@ -105,7 +96,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * of the item that is being displayed.
      * @param type The item to lookup and return a <p> element that represents it.
      */
-    getTypeDisplay(item: IItem) {
+    getTypeDisplay(item: IItemJson) {
         switch (item.type) {
             case "Weapon":
                 {
@@ -302,7 +293,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                             </div>
                         </div>
                         <hr className='white-hr' />
-                        {this.getFormattedItemDescription(this.state.itemDetails.description + " " + this.state.itemDetails.details)}
+                        {this.state.itemDetails.RenderItemDescription()}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -319,3 +310,5 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         );
     }
 }
+
+// {this.getFormattedItemDescription(this.state.itemDetails.description + " " + this.state.itemDetails.details)}

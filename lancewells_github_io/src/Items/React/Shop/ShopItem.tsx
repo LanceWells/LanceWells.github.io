@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import { IItem } from "../../Interfaces/IItem";
+import { IItemJson } from "../../Interfaces/IItem";
 
 /**
  * @description A series of properties needed to render this component.
@@ -10,7 +10,7 @@ import { IItem } from "../../Interfaces/IItem";
  * details property.
  */
 interface IShopItemProps {
-    itemDetails: IItem;
+    itemDetails: IItemJson;
     floatDelay: number;
     onItemClick: Function;
 };

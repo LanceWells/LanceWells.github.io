@@ -1,5 +1,5 @@
 import React from 'react';
-import { IItem } from '../../Interfaces/IItem';
+import { IItemJson } from '../../Interfaces/IItem';
 import { IItemIsItemWeapon } from '../../Classes/ItemWeapon';
 import { TAttack } from '../../Types/TAttack';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import { CardIcon } from './CardIcon';
 import { IItemIsItemPotion } from '../../Classes/ItemPotion';
 
 interface IItemCardProps {
-    itemDetails: IItem;
+    itemDetails: IItemJson;
     onItemClick: Function; // TODO: Figure out a function signature for this.
 }
 
@@ -78,22 +78,22 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
      * Gets any additional content that should appear on the card. Includes attack buttons, etc.
      */
     private GetAdditionalCardContent() {
-        var itemDetails: IItem = this.props.itemDetails;
+        var itemDetails: IItemJson = this.props.itemDetails;
 
         // This uses a type guard to enforce that itemDetails must be a specific type.
         // https://medium.com/ovrsea/checking-the-type-of-an-object-in-typescript-the-type-guards-24d98d9119b0
         if (IItemIsItemWeapon(itemDetails)) {
             return Object.entries(itemDetails.attacks).flatMap(element => {
                 let name: string = element[0];
-                let attacks: TAttack[] = element[1];
-                let attackIndicators: JSX.Element[] = attacks.map(attack => {
+                let damageRolls: TAttack[] = element[1];
+                let attackIndicators: JSX.Element[] = damageRolls.map(roll => {
                     return (
                         <div
-                            className={`card-attack-row badge badge-color-${attack.damageType.toLowerCase()}`}
+                            className={`card-attack-row badge badge-color-${roll.damageType.toLowerCase()}`}
                             style={{
                             width: "100%"
                         }}>
-                            {`${attack.diceCount}d${attack.diceSize}${attack.modifier > 0 ? `+${attack.modifier}` : ''}`}
+                            {`${roll.diceCount}d${roll.diceSize}${roll.modifier > 0 ? `+${roll.modifier}` : ''}`}
                         </div>
                     );
                 });
@@ -124,7 +124,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     }
 
     private GetCardIcons(): JSX.Element[] {
-        var itemDetails: IItem = this.props.itemDetails;
+        var itemDetails: IItemJson = this.props.itemDetails;
         var icons: JSX.Element[] = [];
         var iconDimensions: number = this.iconDefaultSize * this.cardRatio;
 
@@ -137,7 +137,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             }));
         }
 
-        if (IItemIsItemPotion(itemDetails) && itemDetails.withdrawalEffect) {
+        if (IItemIsItemPotion(itemDetails) && itemDetails.hasWithdrawalEffect) {
             icons.push(CardIcon({
                 iconSource: './images/Item_Shop/ItemCards/Icons/Withdrawal.png',
                 tooltipText: 'Using this potion will result in a withdrawal effect.',

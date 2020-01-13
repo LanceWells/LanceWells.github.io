@@ -1,5 +1,5 @@
 import { ItemSource } from "../../Classes/ItemSource";
-import { IItem } from "../../Interfaces/IItem";
+import { IItemJson, IItem } from "../../Interfaces/IItem";
 import { TItemType } from "../../Types/TItemType";
 
 /**
@@ -15,7 +15,7 @@ export class CarpetMap {
     /**
      * @description The items that are contained within the rug.
      */
-    items: IItem[] = [];
+    items: IItemJson[] = [];
 
     /**
      * @description The border source image to display around the rug. The syntax for this should be:
@@ -44,7 +44,7 @@ export class CarpetMap {
         this.rugBorderSource = borderSource;
 
         items.forEach(item => {
-            var itemLookup = ItemSource.GetItem(item, itemType);
+            var itemLookup: IItem | undefined = ItemSource.GetItem(item, itemType);
             if (itemLookup !== undefined) {
                 this.items.push(itemLookup);
             }

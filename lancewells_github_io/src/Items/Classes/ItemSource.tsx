@@ -1,9 +1,9 @@
-import { ItemWeapon } from "./ItemWeapon";
-import { ItemPotion } from './ItemPotion';
-import { ItemArmor } from './ItemArmor';
-import { ItemWondrous } from './ItemWondrous';
+import { ItemWeapon, IItemWeaponJson, IItemIsItemWeapon } from "./ItemWeapon";
+import { ItemPotion, IItemPotionJson, IItemIsItemPotion } from './ItemPotion';
+import { ItemArmor, IItemArmorJson, IItemIsItemArmor } from './ItemArmor';
+import { ItemWondrous, IItemWondrousJson, IItemIsItemWondrous } from './ItemWondrous';
 import { TItemType } from "../Types/TItemType";
-import { IItem } from "../Interfaces/IItem";
+import { IItemJson, IItem } from "../Interfaces/IItem";
 
 /**
  * @description A class used to fetch items based on a specific index and call.
@@ -20,8 +20,9 @@ export class ItemSource {
      * @param type The type of item to search for.
      */
     static GetItem(index: string, type: TItemType): IItem | undefined {
-        var item: IItem | undefined = undefined;
-        var listToSearch: IItem[] | undefined = undefined;
+        var item: IItemJson | undefined = undefined;
+        var listToSearch: IItemJson[] | undefined = undefined;
+        var constructedItem: IItem | undefined = undefined;
 
         switch (type) {
             case "Weapon":
@@ -51,7 +52,22 @@ export class ItemSource {
             }
         }
 
-        return item;
+        if (item !== undefined) {
+            if (IItemIsItemWeapon(item)) {
+                constructedItem = ItemWeapon.fromJson(item)
+            }
+            else if (IItemIsItemArmor(item)) {
+                constructedItem = ItemArmor.fromJson(item);
+            }
+            else if (IItemIsItemPotion(item)) {
+                constructedItem = ItemPotion.fromJson(item);
+            }
+            else if (IItemIsItemWondrous(item)) {
+                constructedItem = ItemWondrous.fromJson(item);
+            }
+        }
+
+        return constructedItem;
     }
 }
 
@@ -59,13 +75,13 @@ export class ItemSource {
  * The purpose of the following classes and constants is to act as a proxy for a server. This will likely all
  * go away if/when this software switches to use AWS or something similar.
  */
-const ItemMap_Weapons: Array<ItemWeapon> =
+const ItemMap_Weapons: Array<IItemWeaponJson> =
 [
     {
         key: 'Club',
         title: 'Club',
         description: 'A stout bludgeoning weapon made of oak.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
         source: "Official",
         requiresAttunement: false,
@@ -92,7 +108,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Dagger',
         title: 'Dagger',
         description: 'A small piercing weapon.',
-        details: 'Attacks with this weapon deal 1d4 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
         source: "Official",
         requiresAttunement: false,
@@ -121,7 +137,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Greatclub',
         title: 'Greatclub',
         description: 'A massive bludgeoning weapon.',
-        details: 'Attacks with this weapon deal 1d8 bludgeoning damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
         source: "Official",
         requiresAttunement: false,
@@ -148,7 +164,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Handaxe',
         title: 'Handaxe',
         description: 'A small throwing axe.',
-        details: 'Attacks with this weapon deal 1d6 slashing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
         source: "Official",
         requiresAttunement: false,
@@ -176,7 +192,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Javelin',
         title: 'Javelin',
         description: 'A long, pointed, throwing weapon.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
         source: "Official",
         requiresAttunement: false,
@@ -203,7 +219,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'LightHammer',
         title: 'Light Hammer',
         description: 'A small bludgeoning weapon.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
         source: "Official",
         requiresAttunement: false,
@@ -231,7 +247,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Mace',
         title: 'Mace',
         description: 'A bludgeoning weapon.',
-        details: 'Attacks with this weapon deal 1d6 bludgeoning damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
         source: "Official",
         requiresAttunement: false,
@@ -257,7 +273,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Quarterstaff',
         title: 'Quarterstaff',
         description: 'A long, bludgeoning weapon made of oak.',
-        details: 'Attacks with this weapon deal 1d6 bludgeoning damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
         source: "Official",
         requiresAttunement: false,
@@ -293,7 +309,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Sickle',
         title: 'Sickle',
         description: 'A curved weapon made of steel.',
-        details: 'Attacks with this weapon deal 1d4 slashing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
         source: "Official",
         requiresAttunement: false,
@@ -320,7 +336,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Spear',
         title: 'Spear',
         description: 'A long, pointed weapon.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
         source: "Official",
         requiresAttunement: false,
@@ -357,7 +373,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Shortsword',
         title: 'Shortsword',
         description: 'A short, pointed weapon.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
         source: "Official",
         requiresAttunement: false,
@@ -385,7 +401,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'SnakeStaff',
         title: 'Snake Staff',
         description: 'The staff is wrapped by the likeness of a clay snake.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: "Homebrew",
         requiresAttunement: false,
@@ -418,7 +434,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Darts',
         title: 'Darts',
         description: 'A small thrown weapon. 20 darts line a leather pouch.',
-        details: 'Attacks with this weapon deal 1d4 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: "Official",
         requiresAttunement: false,
@@ -446,7 +462,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'LightCrossbow',
         title: 'Light Crossbow',
         description: 'A light, mechanical device used for firing arrows across large distances.',
-        details: 'Attacks with this weapon deal 1d8 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
         source: "Official",
         requiresAttunement: false,
@@ -475,7 +491,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Shortbow',
         title: 'Shortbow',
         description: 'A long, curved piece of wood held taut by a length of wire.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
         source: "Official",
         requiresAttunement: false,
@@ -503,7 +519,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Sling',
         title: 'Sling',
         description: 'A small pocket held by two lengths of rope. When spun quickly, it can hurl projectiles at lethal speed.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
         source: "Official",
         requiresAttunement: false,
@@ -530,7 +546,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Battleaxe',
         title: 'Battleaxe',
         description: 'A large, double-bladed axe.',
-        details: 'Attacks with this weapon deal 1d8 slashing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
         source: "Official",
         requiresAttunement: false,
@@ -566,7 +582,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Glaive',
         title: 'Glaive',
         description: 'A long polearm with a menacing length of steel at one end.',
-        details: 'Attacks with this weapon deal 1d10 slashing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
         source: "Official",
         requiresAttunement: false,
@@ -595,7 +611,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Longsword',
         title: 'Longsword',
         description: 'A large, double-bladed axe.',
-        details: 'Attacks with this weapon deal 1d8 slashing damage.',
+        details: '',
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: "Official",
         requiresAttunement: false,
@@ -629,7 +645,7 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     },
 ]
 
-const ItemMap_Potions: Array<ItemPotion> =
+const ItemMap_Potions: Array<IItemPotionJson> =
 [
     {
         key: 'SmallHealing',
@@ -639,7 +655,7 @@ const ItemMap_Potions: Array<ItemPotion> =
         iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
         source: "Official",
         requiresAttunement: false,
-        withdrawalEffect: false,
+        hasWithdrawalEffect: false,
         itemCost: 50,
         type: "Potion",
     },
@@ -647,11 +663,11 @@ const ItemMap_Potions: Array<ItemPotion> =
         key: 'SmallMana',
         title: 'Small Mana Potion',
         description: 'A small mana potion.',
-        details: 'Restores 1 level 1 spell slot when consumed. Use of this potion will result in a withdrawal effect.',
+        details: 'Restores 1 level 1 spell slot when consumed.',
         iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: true,
+        hasWithdrawalEffect: true,
         itemCost: 100,
         type: "Potion",
     },
@@ -663,7 +679,7 @@ const ItemMap_Potions: Array<ItemPotion> =
         iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: false,
+        hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -671,11 +687,11 @@ const ItemMap_Potions: Array<ItemPotion> =
         key: 'TiamatBrew',
         title: "Tiamat's Brew",
         description: 'A rainbow of shifting colors lives in this bottle.',
-        details: "On consumption, cast the Dragon's Breath spell on self. Consuming this potion will result in a withdrawal effect.",
+        details: "On consumption, cast the Dragon's Breath spell on self.",
         iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: true,
+        hasWithdrawalEffect: true,
         itemCost: 100,
         type: "Potion",
     },
@@ -687,7 +703,7 @@ const ItemMap_Potions: Array<ItemPotion> =
         iconSource: './images/Item_Shop/Items/Potions/poison.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: false,
+        hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -699,7 +715,7 @@ const ItemMap_Potions: Array<ItemPotion> =
         iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: false,
+        hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -711,7 +727,7 @@ const ItemMap_Potions: Array<ItemPotion> =
         iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: false,
+        hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
     },
@@ -719,19 +735,19 @@ const ItemMap_Potions: Array<ItemPotion> =
         key: 'AngelicPotion',
         title: 'Angelic Potion',
         description: 'A large, winged potion. The bottle is miraculously light.',
-        details: 'Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat). Use of this potion will result in a withdrawal effect.',
+        details: 'Bubbles rise endlessly from the bottom of the glass. When consumed, heals 2d4+2 hitpoints and grants the user the ability to fly for the next 18 seconds (3 rounds of combat).',
         iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
         source: "Homebrew",
         requiresAttunement: false,
-        withdrawalEffect: true,
+        hasWithdrawalEffect: true,
         itemCost: 250,
         type: "Potion",
     },
 ]
 
-const ItemMap_Armor: Array<ItemArmor> = [];
+const ItemMap_Armor: Array<IItemArmorJson> = [];
 
-const ItemMap_Wondrous: Array<ItemWondrous> =
+const ItemMap_Wondrous: Array<IItemWondrousJson> =
 [
     {
         key: 'FireyRing',

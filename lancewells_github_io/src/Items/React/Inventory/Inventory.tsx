@@ -5,16 +5,16 @@ import { ItemArmor } from '../../Classes/ItemArmor';
 import { ItemPotion } from '../../Classes/ItemPotion';
 import { ItemWeapon } from "../../Classes/ItemWeapon";
 import { ItemWondrous } from '../../Classes/ItemWondrous';
-import { IItem } from '../../Interfaces/IItem';
+import { IItemJson } from '../../Interfaces/IItem';
 
 interface IInventoryProps {
 }
 
 interface IInventoryState {
-    armorItems: Array<IItem>;
-    potionItems: Array<IItem>;
-    weaponItems: Array<IItem>;
-    wondrousItems: Array<IItem>;
+    armorItems: Array<IItemJson>;
+    potionItems: Array<IItemJson>;
+    weaponItems: Array<IItemJson>;
+    wondrousItems: Array<IItemJson>;
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {

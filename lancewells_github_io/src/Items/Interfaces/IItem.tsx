@@ -1,7 +1,7 @@
 import { TSourceType } from "../Types/TSourceType";
 import { TItemType } from "../Types/TItemType";
 
-export interface IItem {
+export interface IItemJson {
     key: string;
     title: string;
     description: string;
@@ -11,4 +11,8 @@ export interface IItem {
     itemCost: number;
     requiresAttunement: boolean;
     readonly type: TItemType;
+}
+
+export interface IItem extends IItemJson {
+    RenderItemDescription(): JSX.Element;
 }
