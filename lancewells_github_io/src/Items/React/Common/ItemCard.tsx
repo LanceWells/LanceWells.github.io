@@ -2,13 +2,16 @@ import React from 'react';
 import { IItemJson } from '../../Interfaces/IItem';
 import { IItemIsItemWeapon } from '../../Classes/ItemWeapon';
 import { TAttack } from '../../Types/TAttack';
-import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { CardIcon } from './CardIcon';
 import { IItemIsItemPotion } from '../../Classes/ItemPotion';
+
+export type TAttackClick = (attackName: string, attackRolls: TAttack[]) => void;
 
 interface IItemCardProps {
     itemDetails: IItemJson;
     onItemClick: Function; // TODO: Figure out a function signature for this.
+    onAttackClick: TAttackClick;
 }
 
 interface IItemCardState {
@@ -101,7 +104,8 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                 return (
                     <Button
                         className="card-attack-button"
-                        variant="dark">
+                        variant="dark"
+                        onClick={() => {this.props.onAttackClick(name, damageRolls)}}>
                         <div className="card-attack-indicators">
                             {attackIndicators}
                         </div>
@@ -288,22 +292,18 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             });
         });
 
-        Promise.all(loadedImagesPromises).then(() => this.DrawCard(iconImage, borderImage));
+        Promise.all(loadedImagesPromises).then(() => this.DrawCard(borderImage));
     }
 
     /**
      * Performs the actual card drawing. Gets the canvas element and draws each component.
-     * @param iconImage The icon image that has been loaded and will be drawn.
      * @param borderImage The card background image that has been loaded and will be drawn.
      */
-    private DrawCard(iconImage: HTMLImageElement, borderImage: HTMLImageElement) {
-        var itemOffset: number = this.itemAreaDefaultOffset * this.cardRatio;
-        var itemAreaSize: number = this.itemAreaDefaultSize * this.cardRatio;
+    private DrawCard(borderImage: HTMLImageElement) {
         var canvas = this.refs.cardCanvas as HTMLCanvasElement;
         var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
         ctx.drawImage(borderImage, 0, 0, this.cardWidth, this.cardHeight);
-        // ctx.drawImage(iconImage, itemOffset, itemOffset, itemAreaSize, itemAreaSize);
     }
 
     /**
