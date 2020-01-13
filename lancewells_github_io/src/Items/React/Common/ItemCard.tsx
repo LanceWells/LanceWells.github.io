@@ -18,6 +18,7 @@ interface IItemCardState {
 export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     readonly cardWidth: number = 194;
     readonly cardHeight: number = 256;
+    readonly cardDefaultMargin: number = 6;
     
     // DO NOT CHANGE. The card's icon size is 128. This gives us a scaling raito for everything else.
     readonly cardRatio: number = this.cardHeight / 128;
@@ -27,13 +28,13 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     readonly itemAreaDefaultSize: number = 64;
     
     // Title measurements.
-    readonly titleDefaultTopOffset: number = 12;
+    readonly titleDefaultTopOffset: number = 6;
     readonly titleDefaultFontSize: number = 12;
     readonly titleWidth: number = this.cardWidth * 0.65;
-    readonly titleDefaultLeftOffset: number = 2;
+    readonly titleDefaultLeftOffset: number = 1;
     
     // Item description measurements.
-    readonly descAreaDefaultOffset: number = 88;
+    readonly descAreaDefaultOffset: number = 82;
     readonly descAreaDefaultSize: number = 44;
 
     // Attack Icon measurements.
@@ -41,49 +42,19 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
 
     // Icon measurements.
     readonly iconDefaultSize: number = 16;
-    readonly iconDefaultLeftOffset: number = 87;
-    readonly iconDefaultTopOffset: number = 23;
+    readonly iconDefaultLeftOffset: number = 81;
+    readonly iconDefaultTopOffset: number = 17;
 
     // Coin measurements.
     readonly coinDefaultSize: number = 16;
-    readonly coinDefaultLeftOffset: number = 7;
-    readonly coinDefaultTopOffset: number = 23;
+    readonly coinDefaultLeftOffset: number = 1;
+    readonly coinDefaultTopOffset: number = 17;
 
     constructor(props: IItemCardProps) {
         super(props);
         this.state = {
             titleFontSize: this.titleDefaultFontSize
         };
-    }
-
-    /**
-     * Gets the icon source for an attack icon.
-     * @param diceType 
-     */
-    private GetAttackDiceIconSource(diceType: number): string {
-        var source: string;
-        switch (diceType) {
-            case 4:
-                source = './images/Item_Shop/ItemCards/Icons/Damage4.png';
-                break;
-            case 6:
-                source = './images/Item_Shop/ItemCards/Icons/Damage6.png';
-                break;
-            case 8:
-                source = './images/Item_Shop/ItemCards/Icons/Damage8.png';
-                break;
-            case 12:
-                source = './images/Item_Shop/ItemCards/Icons/Damage12.png';
-                break;
-            case 20:
-                source = './images/Item_Shop/ItemCards/Icons/Damage20.png';
-                break;
-            default:
-                source = './images/Item_Shop/ItemCards/Icons/Damage4.png';
-                break;
-        }
-
-        return source;
     }
 
     private GetCardBackSource() {
@@ -117,24 +88,26 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                 let attacks: TAttack[] = element[1];
                 let attackIndicators: JSX.Element[] = attacks.map(attack => {
                     return (
-                        <img
-                            src={this.GetAttackDiceIconSource(attack.diceSize)}
-                            style = {{
-                                margin: "0 2px 0 2px",
-                                width: `${this.attackIconDefaultSize * this.cardRatio}px`,
-                                height: `${this.attackIconDefaultSize * this.cardRatio}px`
-                            }}
-                            className={`icon-color-${attack.damageType.toLowerCase()}`}
-                        />
+                        <div
+                            className={`card-attack-row badge badge-color-${attack.damageType.toLowerCase()}`}
+                            style={{
+                            width: "100%"
+                        }}>
+                            {`${attack.diceCount}d${attack.diceSize}${attack.modifier > 0 ? `+${attack.modifier}` : ''}`}
+                        </div>
                     );
                 });
 
                 return (
-                    <Button className="attack-button" variant="dark">
-                        <div>
+                    <Button
+                        className="card-attack-button"
+                        variant="dark">
+                        <div className="card-attack-indicators">
                             {attackIndicators}
                         </div>
-                        {name}
+                        <div className="card-attack-name">
+                            {name}
+                        </div>
                     </Button>
                 )
             });
@@ -153,23 +126,128 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     private GetCardIcons(): JSX.Element[] {
         var itemDetails: IItem = this.props.itemDetails;
         var icons: JSX.Element[] = [];
+        var iconDimensions: number = this.iconDefaultSize * this.cardRatio;
 
         if (itemDetails.requiresAttunement) {
             icons.push(CardIcon({
                 iconSource: './images/Item_Shop/ItemCards/Icons/Attunement.png',
                 tooltipText: 'This item requires attunement.',
-                width: (this.iconDefaultSize * this.cardRatio),
-                height: (this.iconDefaultSize * this.cardRatio),
+                width: (iconDimensions),
+                height: (iconDimensions),
             }));
         }
 
         if (IItemIsItemPotion(itemDetails) && itemDetails.withdrawalEffect) {
             icons.push(CardIcon({
                 iconSource: './images/Item_Shop/ItemCards/Icons/Withdrawal.png',
-                tooltipText: 'Using this potion will grant a withdrawal effect.',
-                width: (this.iconDefaultSize * this.cardRatio),
-                height: (this.iconDefaultSize * this.cardRatio),
+                tooltipText: 'Using this potion will result in a withdrawal effect.',
+                width: (iconDimensions),
+                height: (iconDimensions),
             }));
+        }
+        else if (IItemIsItemWeapon(itemDetails)) {
+            itemDetails.properties.forEach(property => {
+                switch (property) {
+                    case "Ammunition":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Ammunition.png',
+                            tooltipText: 'This item uses ammunition for ranged attacks.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Finesse":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Finesse.png',
+                            tooltipText: 'This item requires finesse. Attacks and damage with this item may use STR or DEX.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Heavy":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Heavy.png',
+                            tooltipText: 'This item is abnormally heavy. Small creatures will have a difficult time using this item.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Improvised":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Improvised.png',
+                            tooltipText: 'This is an improvised weapon.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Light":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Light.png',
+                            tooltipText: 'This item is unusually light and may be used with another weapon.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Loading":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Loading.png',
+                            tooltipText: 'This item requires manually loading and is limited to one attack per action.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Reach":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Reach.png',
+                            tooltipText: 'This item has extended reach.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Silver":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Silver.png',
+                            tooltipText: 'This item has been plated in silver.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Special":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Special.png',
+                            tooltipText: 'This item has some special usage.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Thrown":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Thrown.png',
+                            tooltipText: 'This item may be thrown without reducing its damage.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "TwoHanded":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/TwoHanded.png',
+                            tooltipText: 'This item is unwieldy and requires two hands to utilize.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    case "Versatile":
+                        icons.push(CardIcon({
+                            iconSource: './images/Item_Shop/ItemCards/Icons/Versatile.png',
+                            tooltipText: 'This item is versatile and may be used with one or two hands.',
+                            width: (iconDimensions),
+                            height: (iconDimensions),
+                        }));
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
 
         return icons;
@@ -225,7 +303,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
         ctx.drawImage(borderImage, 0, 0, this.cardWidth, this.cardHeight);
-        ctx.drawImage(iconImage, itemOffset, itemOffset, itemAreaSize, itemAreaSize);
+        // ctx.drawImage(iconImage, itemOffset, itemOffset, itemAreaSize, itemAreaSize);
     }
 
     /**
@@ -272,7 +350,10 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         return (
             <div
                 className="item-card"
-                ref="card">
+                ref="card"
+                style={{
+                    margin: `${this.cardDefaultMargin * this.cardRatio}px`
+                }}>
                 <Button
                     variant="link"
                     className="card-details-button"
@@ -336,7 +417,24 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     }}>
                     {this.GetAdditionalCardContent()}
                 </div>
-                <canvas className="card-canvas" ref="cardCanvas" width={this.cardWidth} height={this.cardHeight} />
+                <img
+                    className="card-item-image"
+                    src={this.props.itemDetails.iconSource}
+                    height={this.itemAreaDefaultSize * this.cardRatio}
+                    width={this.itemAreaDefaultSize * this.cardRatio}
+                    style={{
+                        top: `${this.itemAreaDefaultOffset * this.cardRatio}px`,
+                        left: `${this.itemAreaDefaultOffset * this.cardRatio}px`,
+                        height: `${this.itemAreaDefaultSize * this.cardRatio}px`,
+                        width: `${this.itemAreaDefaultSize * this.cardRatio}px`,
+                    }}
+                />
+                <canvas
+                    className="card-canvas"
+                    ref="cardCanvas"
+                    width={this.cardWidth}
+                    height={this.cardHeight}
+                    />
             </div>
         )
     }

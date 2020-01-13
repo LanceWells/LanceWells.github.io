@@ -65,10 +65,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Club',
         title: 'Club',
         description: 'A stout bludgeoning weapon made of oak.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light]',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Light"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -87,10 +92,17 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Dagger',
         title: 'Dagger',
         description: 'A small piercing weapon.',
-        details: 'Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Light, Thrown (range 20/60)]',
+        details: 'Attacks with this weapon deal 1d4 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Light",
+            "Finesse",
+            "Thrown"
+        ],
         itemCost: 2,
         type: "Weapon",
         attacks: {
@@ -109,10 +121,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Greatclub',
         title: 'Greatclub',
         description: 'A massive bludgeoning weapon.',
-        details: 'Attacks with this weapon deal 1d8 bludgeoning damage. [Properties: Two-handed]',
+        details: 'Attacks with this weapon deal 1d8 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "TwoHanded"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -131,10 +148,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Handaxe',
         title: 'Handaxe',
         description: 'A small throwing axe.',
-        details: 'Attacks with this weapon deal 1d6 slashing damage. [Properties: Light, Thrown (range 20/60)]',
+        details: 'Attacks with this weapon deal 1d6 slashing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Light",
+            "Thrown"
+        ],
         itemCost: 5,
         type: "Weapon",
         attacks: {
@@ -153,10 +176,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Javelin',
         title: 'Javelin',
         description: 'A long, pointed, throwing weapon.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 30/120)]',
+        details: 'Attacks with this weapon deal 1d6 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 30,
+        longRange: 120,
+        properties: [
+            "Thrown"
+        ],
         itemCost: 5,
         type: "Weapon",
         attacks: {
@@ -175,10 +203,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'LightHammer',
         title: 'Light Hammer',
         description: 'A small bludgeoning weapon.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Light, Thrown (range 20/60)]',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Light",
+            "Thrown"
+        ],
         itemCost: 2,
         type: "Weapon",
         attacks: {
@@ -201,6 +235,10 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+        ],
         itemCost: 5,
         type: "Weapon",
         attacks: {
@@ -219,10 +257,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Quarterstaff',
         title: 'Quarterstaff',
         description: 'A long, bludgeoning weapon made of oak.',
-        details: 'Attacks with this weapon deal 1d6 bludgeoning damage. [Properties: Versatile (1d8)]',
+        details: 'Attacks with this weapon deal 1d6 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Versatile"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -250,10 +293,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Sickle',
         title: 'Sickle',
         description: 'A curved weapon made of steel.',
-        details: 'Attacks with this weapon deal 1d4 slashing damage. [Properties: Light]',
+        details: 'Attacks with this weapon deal 1d4 slashing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Light"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -272,10 +320,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Spear',
         title: 'Spear',
         description: 'A long, pointed weapon.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Thrown (range 20/60), Versatile (1d8)]',
+        details: 'Attacks with this weapon deal 1d6 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Thrown",
+            "Versatile"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -303,10 +357,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Shortsword',
         title: 'Shortsword',
         description: 'A short, pointed weapon.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Finesse, Light]',
+        details: 'Attacks with this weapon deal 1d6 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Finesse",
+            "Light"
+        ],
         itemCost: 10,
         type: "Weapon",
         attacks: {
@@ -324,11 +384,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
     {
         key: 'SnakeStaff',
         title: 'Snake Staff',
-        description: 'A long oaken staff.',
-        details: 'The staff is wrapped by the likeness of a clay snake. Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
+        description: 'The staff is wrapped by the likeness of a clay snake.',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage and 1d4 poison damage.',
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: "Homebrew",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "TwoHanded"
+        ],
         itemCost: 100,
         type: "Weapon",
         attacks: {
@@ -353,10 +418,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Darts',
         title: 'Darts',
         description: 'A small thrown weapon. 20 darts line a leather pouch.',
-        details: 'Attacks with this weapon deal 1d4 piercing damage. [Properties: Finesse, Thrown (range 20/60)]',
+        details: 'Attacks with this weapon deal 1d4 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Finesse",
+            "Thrown"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -375,10 +446,17 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'LightCrossbow',
         title: 'Light Crossbow',
         description: 'A light, mechanical device used for firing arrows across large distances.',
-        details: 'Attacks with this weapon deal 1d8 piercing damage. [Properties: Ammunition (range 80/320), Loading, Two-handed]',
+        details: 'Attacks with this weapon deal 1d8 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 80,
+        longRange: 230,
+        properties: [
+            "Ammunition",
+            "Loading",
+            "TwoHanded"
+        ],
         itemCost: 25,
         type: "Weapon",
         attacks: {
@@ -397,10 +475,16 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Shortbow',
         title: 'Shortbow',
         description: 'A long, curved piece of wood held taut by a length of wire.',
-        details: 'Attacks with this weapon deal 1d6 piercing damage. [Properties: Ammunition (range 80/320), Two-handed]',
+        details: 'Attacks with this weapon deal 1d6 piercing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 80,
+        longRange: 230,
+        properties: [
+            "Ammunition",
+            "TwoHanded"
+        ],
         itemCost: 25,
         type: "Weapon",
         attacks: {
@@ -419,10 +503,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Sling',
         title: 'Sling',
         description: 'A small pocket held by two lengths of rope. When spun quickly, it can hurl projectiles at lethal speed.',
-        details: 'Attacks with this weapon deal 1d4 bludgeoning damage. [Properties: Ammunition (range 30/120)]',
+        details: 'Attacks with this weapon deal 1d4 bludgeoning damage.',
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 30,
+        longRange: 120,
+        properties: [
+            "Ammunition"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -441,10 +530,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Battleaxe',
         title: 'Battleaxe',
         description: 'A large, double-bladed axe.',
-        details: 'Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+        details: 'Attacks with this weapon deal 1d8 slashing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Versatile"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -472,10 +566,17 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Glaive',
         title: 'Glaive',
         description: 'A long polearm with a menacing length of steel at one end.',
-        details: 'Attacks with this weapon deal 1d10 slashing damage. [Properties: Heavy, Reach, Two-handed]',
+        details: 'Attacks with this weapon deal 1d10 slashing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Heavy",
+            "Reach",
+            "TwoHanded"
+        ],
         itemCost: 1,
         type: "Weapon",
         attacks: {
@@ -494,10 +595,15 @@ const ItemMap_Weapons: Array<ItemWeapon> =
         key: 'Longsword',
         title: 'Longsword',
         description: 'A large, double-bladed axe.',
-        details: 'Attacks with this weapon deal 1d8 slashing damage. [Properties: Versatile (1d10)]',
+        details: 'Attacks with this weapon deal 1d8 slashing damage.',
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: "Official",
         requiresAttunement: false,
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Versatile"
+        ],
         itemCost: 15,
         type: "Weapon",
         attacks: {
