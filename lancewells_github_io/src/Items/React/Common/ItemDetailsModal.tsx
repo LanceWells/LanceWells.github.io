@@ -75,6 +75,7 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
     }
 
     render() {
+        // https://codesandbox.io/s/qqn6nxjp9
         const handleInventoryButton: () => void = () => {
             this.setState({
                 showAlert: true

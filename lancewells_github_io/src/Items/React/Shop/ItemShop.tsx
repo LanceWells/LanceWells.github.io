@@ -9,7 +9,7 @@ import { InventoryStorage } from '../../Classes/InventoryStorage';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { AttackRollModal } from '../Common/AttackRollModal';
 import { TAttack } from '../../Types/TAttack';
-import { TAttackClick } from '../Common/ItemCard';
+import { TAttackClick, TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
 
 /**
@@ -133,7 +133,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Gets a list of bazaar carpets for display.
      * @param onItemClick The click event-handler for item clicks.
      */
-    getBazaarCarpets(onItemClick: Function, onAttackClick: TAttackClick) {
+    getBazaarCarpets(onItemClick: TItemClick, onAttackClick: TAttackClick) {
         return CarpetMaps.map((carpet) => {
             return (
                 <BazaarCarpet
@@ -155,7 +155,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
 
-        const handleItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
+        const handleItemClick: TItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
 
         const hideDetailsModal = () => {
             this.setState({
@@ -174,21 +174,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             this.setState({
                 showAttackRoll: false
             })
-        };
-
-        // https://codesandbox.io/s/qqn6nxjp9
-        const addItem = () => {
-            this.setState({
-                showAddedAlert: true
-            }, () => {
-                window.setTimeout(() => {
-                    this.setState({
-                        showAddedAlert: false
-                    })
-                }, 3000)
-            })
-
-            InventoryStorage.getInstance().AddItem(item.key, item.type);
         };
 
         const inventoryButtonCallback = () => {

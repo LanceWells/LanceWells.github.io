@@ -1,6 +1,6 @@
 import React from 'react';
 import { CarpetMap } from './CarpetMap';
-import { ItemCard } from '../Common/ItemCard';
+import { ItemCard, TItemClick } from '../Common/ItemCard';
 import { TAttack } from '../../Types/TAttack';
 
 /**
@@ -11,7 +11,7 @@ import { TAttack } from '../../Types/TAttack';
  */
 interface IBazaarCarpetProps {
     carpetMap: CarpetMap;
-    onItemClick: Function;
+    onItemClick: TItemClick;
     onAttackClick: (attackName: string, attackRolls: TAttack[]) => void;
 }
 

@@ -1,5 +1,5 @@
 import { ItemSource } from "../../Classes/ItemSource";
-import { IItemJson, IItem } from "../../Interfaces/IItem";
+import { IItem } from "../../Interfaces/IItem";
 import { TItemType } from "../../Types/TItemType";
 
 /**
@@ -15,7 +15,7 @@ export class CarpetMap {
     /**
      * @description The items that are contained within the rug.
      */
-    items: IItemJson[] = [];
+    items: IItem[] = [];
 
     /**
      * @description The border source image to display around the rug. The syntax for this should be:

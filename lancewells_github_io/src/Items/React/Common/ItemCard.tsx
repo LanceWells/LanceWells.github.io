@@ -1,5 +1,5 @@
 import React from 'react';
-import { IItemJson } from '../../Interfaces/IItem';
+import { IItemJson, IItem } from '../../Interfaces/IItem';
 import { IItemIsItemWeapon } from '../../Classes/ItemWeapon';
 import { TAttack } from '../../Types/TAttack';
 import { Button } from 'react-bootstrap';
@@ -7,10 +7,11 @@ import { CardIcon } from './CardIcon';
 import { IItemIsItemPotion } from '../../Classes/ItemPotion';
 
 export type TAttackClick = (attackName: string, attackRolls: TAttack[]) => void;
+export type TItemClick = (itemJson: IItem) => void;
 
 interface IItemCardProps {
-    itemDetails: IItemJson;
-    onItemClick: Function; // TODO: Figure out a function signature for this.
+    itemDetails: IItem;
+    onItemClick: TItemClick;
     onAttackClick: TAttackClick;
 }
 
