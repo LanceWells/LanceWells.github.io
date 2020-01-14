@@ -1,3 +1,7 @@
+h1, h2, h3, h4, h5 {
+    font-family: "Press Start 2P";
+}
+
 .ItemShop {
     flex: 50%;
     position: absolute;
@@ -144,6 +148,28 @@
     100% {
         transform: translateY(0px);
         filter: drop-shadow(0px 6px 3px rgba(0, 0, 0, 0.8));
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeAndGrow {
+    0% {
+        opacity: 0.0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1.0;
+        transform: scale(1.0);
     }
 }
 
@@ -469,22 +495,57 @@ canvas, img {
     justify-content: center;
 }
 
-.roll-window-title {
-    font-family: 'Press Start 2P';
+.roll-window-attack {
+    display: flex;
+    width: 100%;
+    font-family: "Press Start 2P";
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    font-size: xx-large;
 }
 
-.roll-window-roll-area {
-    display: flex;
+.roll-window-damage {
+    width: 100%;
+    font-family: "Press Start 2P";
+    text-align: center;
+}
+
+.roll-window-attack-die {
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    animation: spin 5s infinite linear;
+}
+
+.roll-window-attack-number {
+    position: absolute;
+    z-index: 2;
+}
+
+/* .roll-window-title {
+    font-family: 'Press Start 2P';
 }
 
 .roll-window-attack-roll {
     font-family: 'Press Start 2P';
     text-align: center;
-    flex: 50%;
+    font-size: xx-large;
+    display: flex;
+    position: relative;
+}
+
+.roll-window-attack-roll-number {
+    position: absolute;
+    z-index: 2;
+}
+
+.roll-window-attack-roll-die {
+    position: absolute;
+    z-index: 1;
 }
 
 .roll-window-damage-roll {
     font-family: 'Press Start 2P';
     text-align: center;
-    flex: 50%;
-}
+} */
