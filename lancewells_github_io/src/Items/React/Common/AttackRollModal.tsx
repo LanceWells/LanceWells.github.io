@@ -25,6 +25,8 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     /**
      * Generating a bunch of random numbers on the fly, in quick succession, is somewhat expensive, so 
      * intead use some pre-generated lists of numbers to flash at someone as the dice is being rolled.
+     * 
+     * TODO: I really don't like relying on these arrays being the exact size as the timing array. Fix this.
      */
     private randomRollNumbers: number[][] = [
         [8, 17, 4, 7, 2, 6, 11, 16, 1, 12, 15, 10, 18, 19, 5, 3, 14, 9, 13, 20],
