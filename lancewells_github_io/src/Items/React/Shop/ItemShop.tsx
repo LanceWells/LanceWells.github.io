@@ -9,8 +9,11 @@ import { InventoryStorage } from '../../Classes/InventoryStorage';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { AttackRollModal } from '../Common/AttackRollModal';
 import { TAttack } from '../../Types/TAttack';
-import { TAttackClick, TItemClick } from '../Common/ItemCard';
+import { TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
+import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
+import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
+import { TItemType } from '../../Types/TItemType';
 
 /**
  * @description
@@ -133,11 +136,12 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Gets a list of bazaar carpets for display.
      * @param onItemClick The click event-handler for item clicks.
      */
-    getBazaarCarpets(onItemClick: TItemClick, onAttackClick: TAttackClick) {
+    getBazaarCarpets(onItemClick: TItemClick, onAttackClick: TAttackClick, onItemPurchase: TPurchaseClick) {
         return CarpetMaps.map((carpet) => {
             return (
                 <BazaarCarpet
                     onAttackClick={onAttackClick}
+                    onPurchaseClick={onItemPurchase}
                     carpetMap={carpet}
                     onItemClick={onItemClick}
                 />
@@ -178,6 +182,10 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             })
         };
 
+        const handlePurchaseItem: TPurchaseClick = (key: string, type: TItemType, cost: number) => {
+            InventoryStorage.getInstance().AddItem(key, type);
+        }
+
         const inventoryButtonCallback = () => {
             InventoryStorage.getInstance().AddItem(item.key, item.type);
         }
@@ -191,7 +199,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
-                    {this.getBazaarCarpets(handleItemClick, showAttackModal)}
+                    {this.getBazaarCarpets(handleItemClick, showAttackModal, handlePurchaseItem)}
                 </div>
                 <AttackRollModal
                     show={this.state.showAttackRoll}

@@ -1,18 +1,23 @@
 import React from 'react';
 import { IItemJson, IItem } from '../../Interfaces/IItem';
 import { IItemIsItemWeapon } from '../../Classes/ItemWeapon';
-import { TAttack } from '../../Types/TAttack';
 import { Button } from 'react-bootstrap';
 import { CardIcon } from './CardIcon';
 import { IItemIsItemPotion } from '../../Classes/ItemPotion';
+import { AttackButton } from './CardButtons/AttackButton';
+import { PurchaseButton } from './CardButtons/PurchaseButton';
+import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
+import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 
-export type TAttackClick = (attackName: string, attackRolls: TAttack[]) => void;
 export type TItemClick = (itemJson: IItem) => void;
+export type TCardInteractions =  "Purchase" | "Gather" | "Use";
 
 interface IItemCardProps {
     itemDetails: IItem;
     onItemClick: TItemClick;
-    onAttackClick: TAttackClick;
+    onAttackButton: TAttackClick | undefined;
+    onPurchaseButton: TPurchaseClick | undefined;
+    cardInteractions: TCardInteractions[];
 }
 
 interface IItemCardState {
@@ -81,51 +86,47 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     /**
      * Gets any additional content that should appear on the card. Includes attack buttons, etc.
      */
-    private GetAdditionalCardContent() {
+    private GetCardButtons(): JSX.Element[] {
+        var buttons: JSX.Element[] = [];
         var itemDetails: IItemJson = this.props.itemDetails;
 
-        // This uses a type guard to enforce that itemDetails must be a specific type.
-        // https://medium.com/ovrsea/checking-the-type-of-an-object-in-typescript-the-type-guards-24d98d9119b0
-        if (IItemIsItemWeapon(itemDetails)) {
-            return Object.entries(itemDetails.attacks).flatMap(element => {
-                let name: string = element[0];
-                let damageRolls: TAttack[] = element[1];
-                let attackIndicators: JSX.Element[] = damageRolls.map(roll => {
-                    return (
-                        <div
-                            className={`card-attack-row badge badge-color-${roll.damageType.toLowerCase()}`}
-                            style={{
-                            width: "100%"
-                        }}>
-                            {`${roll.diceCount}d${roll.diceSize}${roll.modifier > 0 ? `+${roll.modifier}` : ''}`}
-                        </div>
-                    );
-                });
+        if (this.props.cardInteractions.some(interaction => interaction == "Use")) {
+            // This uses a type guard to enforce that itemDetails must be a specific type.
+            // https://medium.com/ovrsea/checking-the-type-of-an-object-in-typescript-the-type-guards-24d98d9119b0
+            if (IItemIsItemWeapon(itemDetails) && this.props.onAttackButton !== undefined) {
+                var attackButtons: JSX.Element[] = Object.entries(itemDetails.attacks).flatMap((attack) => {
+                    var name = attack[0];
+                    var attacks = attack[1];
 
-                return (
-                    <Button
-                        className="card-attack-button"
-                        variant="dark"
-                        onClick={() => {this.props.onAttackClick(name, damageRolls)}}>
-                        <div className="card-attack-indicators">
-                            {attackIndicators}
-                        </div>
-                        <div className="card-attack-name">
-                            {name}
-                        </div>
-                    </Button>
-                )
-            });
+                    return (
+                        <AttackButton
+                            cardIconSize={this.iconDefaultSize * this.cardRatio}
+                            attackName={name}
+                            attacks={attacks}
+                            callbackFunction={this.props.onAttackButton as TAttackClick}
+                        />
+                    )
+                })
+
+                buttons = buttons.concat(attackButtons);
+            }
         }
-        else {
-            return (
-                <div style={{
-                    width:"100%"
-                }}>
-                    {this.props.itemDetails.description}
-                </div>
-            );
+
+        if (this.props.cardInteractions.some(interaction => interaction == "Purchase") && this.props.onPurchaseButton !== undefined) {
+            var purchaseButton: JSX.Element = (
+                <PurchaseButton
+                    itemKey={itemDetails.key}
+                    itemType={itemDetails.type}
+                    itemPrice={itemDetails.itemCost}
+                    cardIconSize={this.iconDefaultSize * this.cardRatio}
+                    callbackFunction={this.props.onPurchaseButton as TPurchaseClick}
+                />
+            )
+
+            buttons = buttons.concat(purchaseButton);
         }
+
+        return buttons;
     }
 
     private GetCardIcons(): JSX.Element[] {
@@ -136,6 +137,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         if (itemDetails.requiresAttunement) {
             icons.push(CardIcon({
                 iconSource: './images/Item_Shop/ItemCards/Icons/Attunement.png',
+                tooltipTitle: "Attunement",
                 tooltipText: 'This item requires attunement.',
                 width: (iconDimensions),
                 height: (iconDimensions),
@@ -145,6 +147,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         if (IItemIsItemPotion(itemDetails) && itemDetails.hasWithdrawalEffect) {
             icons.push(CardIcon({
                 iconSource: './images/Item_Shop/ItemCards/Icons/Withdrawal.png',
+                tooltipTitle: "Withdrawal",
                 tooltipText: 'Using this potion will result in a withdrawal effect.',
                 width: (iconDimensions),
                 height: (iconDimensions),
@@ -156,6 +159,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Ammunition":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Ammunition.png',
+                            tooltipTitle: "Ammunition",
                             tooltipText: 'This item uses ammunition for ranged attacks.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -164,6 +168,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Finesse":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Finesse.png',
+                            tooltipTitle: "Finesse",
                             tooltipText: 'This item requires finesse. Attacks and damage with this item may use STR or DEX.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -172,6 +177,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Heavy":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Heavy.png',
+                            tooltipTitle: "Heavy",
                             tooltipText: 'This item is abnormally heavy. Small creatures will have a difficult time using this item.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -180,6 +186,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Improvised":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Improvised.png',
+                            tooltipTitle: "Improvised",
                             tooltipText: 'This is an improvised weapon.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -188,6 +195,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Light":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Light.png',
+                            tooltipTitle: "Light",
                             tooltipText: 'This item is unusually light and may be used with another weapon.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -196,6 +204,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Loading":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Loading.png',
+                            tooltipTitle: "Loading",
                             tooltipText: 'This item requires manually loading and is limited to one attack per action.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -204,6 +213,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Reach":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Reach.png',
+                            tooltipTitle: "Reach",
                             tooltipText: 'This item has extended reach.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -212,6 +222,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Silver":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Silver.png',
+                            tooltipTitle: "Silver",
                             tooltipText: 'This item has been plated in silver.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -220,7 +231,8 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Special":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Special.png',
-                            tooltipText: 'This item has some special usage.',
+                            tooltipTitle: "Special",
+                            tooltipText: 'This item has some special usage. Refer to the card details for more information.',
                             width: (iconDimensions),
                             height: (iconDimensions),
                         }));
@@ -228,6 +240,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Thrown":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Thrown.png',
+                            tooltipTitle: "Thrown",
                             tooltipText: 'This item may be thrown without reducing its damage.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -236,6 +249,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "TwoHanded":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/TwoHanded.png',
+                            tooltipTitle: "Two-Handed",
                             tooltipText: 'This item is unwieldy and requires two hands to utilize.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -244,6 +258,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     case "Versatile":
                         icons.push(CardIcon({
                             iconSource: './images/Item_Shop/ItemCards/Icons/Versatile.png',
+                            tooltipTitle: "Versatile",
                             tooltipText: 'This item is versatile and may be used with one or two hands.',
                             width: (iconDimensions),
                             height: (iconDimensions),
@@ -349,93 +364,100 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
      */
     render() {
         return (
-            <div
-                className="item-card"
-                ref="card"
-                style={{
-                    margin: `${this.cardDefaultMargin * this.cardRatio}px`
-                }}>
-                <Button
-                    variant="link"
-                    className="card-details-button"
-                    onClick={() => this.props.onItemClick(this.props.itemDetails)}
-                    style={{
-                        width: `${this.cardWidth}px`,
-                        height: `${this.cardHeight - (this.descAreaDefaultSize * this.cardRatio)}px`
-                    }}
-                />
-                <span
-                    ref="title"
-                    className="card-title"
-                    style={{
-                        fontSize: `${this.state.titleFontSize}px`,
-                        height: `${this.titleDefaultFontSize}px`,
-                        top: `${this.titleDefaultTopOffset * this.cardRatio}px`,
-                    }}>
-                    {this.props.itemDetails.title}
-                </span>
+            <div className="card-display">
                 <div
-                    className="card-cost"
+                    className="item-card"
+                    ref="card"
                     style={{
-                        top: `${this.coinDefaultTopOffset * this.cardRatio}px`,
-                        left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
+                        margin: `${this.cardDefaultMargin * this.cardRatio}px`
                     }}>
-                    <img
+                    <Button
+                        variant="link"
+                        className="card-details-button"
+                        onClick={() => this.props.onItemClick(this.props.itemDetails)}
                         style={{
+                            width: `${this.cardWidth}px`,
+                            height: `${this.cardHeight - (this.descAreaDefaultSize * this.cardRatio)}px`
+                        }}
+                    />
+                    <span
+                        ref="title"
+                        className="card-title"
+                        style={{
+                            fontSize: `${this.state.titleFontSize}px`,
+                            height: `${this.titleDefaultFontSize}px`,
+                            top: `${this.titleDefaultTopOffset * this.cardRatio}px`,
+                        }}>
+                        {this.props.itemDetails.title}
+                    </span>
+                    <div
+                        className="card-cost"
+                        style={{
+                            top: `${this.coinDefaultTopOffset * this.cardRatio}px`,
+                            left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
+                        }}>
+                        <img
+                            style={{
+                                width: `${this.coinDefaultSize * this.cardRatio}px`,
+                                height: `${this.coinDefaultSize * this.cardRatio}px`,
+                            }}
+                            src="./images/Item_Shop/itemCoinStill.png"
+                        />
+                    </div>
+                    <span
+                        className="card-cost-text"
+                        style={{
+                            top: `${this.coinDefaultTopOffset * this.cardRatio + (this.coinDefaultSize * this.cardRatio * 0.25)}px`,
+                            left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
                             width: `${this.coinDefaultSize * this.cardRatio}px`,
                             height: `${this.coinDefaultSize * this.cardRatio}px`,
                         }}
-                        src="./images/Item_Shop/itemCoinStill.png"
+                    >
+                        {this.props.itemDetails.itemCost}
+                    </span>
+                    <div
+                        className="card-icons"
+                        style={{
+                            top: `${this.iconDefaultTopOffset * this.cardRatio}px`,
+                            left: `${this.iconDefaultLeftOffset * this.cardRatio}px`,
+                            maxWidth: `${this.iconDefaultSize * this.cardRatio}px`,
+                            height: `${this.iconDefaultSize * this.cardRatio * 4}px`
+                        }}>
+                        {this.GetCardIcons()}
+                    </div>
+                    <div
+                        className="card-info"
+                        style={{
+                            top: `${this.descAreaDefaultOffset * this.cardRatio}px`,
+                            maxHeight: `${this.descAreaDefaultSize * this.cardRatio}px`,
+                            minHeight: `${this.descAreaDefaultSize * this.cardRatio}px`,
+                        }}>
+                        <div style={{ width: "100%" }}>
+                            {this.props.itemDetails.description}
+                        </div>
+                    </div>
+                    <img
+                        className="card-item-image"
+                        src={this.props.itemDetails.iconSource}
+                        height={this.itemAreaDefaultSize * this.cardRatio}
+                        width={this.itemAreaDefaultSize * this.cardRatio}
+                        style={{
+                            top: `${this.itemAreaDefaultOffset * this.cardRatio}px`,
+                            left: `${this.itemAreaDefaultOffset * this.cardRatio}px`,
+                            height: `${this.itemAreaDefaultSize * this.cardRatio}px`,
+                            width: `${this.itemAreaDefaultSize * this.cardRatio}px`,
+                        }}
+                    />
+                    <canvas
+                        className="card-canvas"
+                        ref="cardCanvas"
+                        width={this.cardWidth}
+                        height={this.cardHeight}
                     />
                 </div>
-                <span
-                    className="card-cost-text"
-                    style={{
-                        top: `${this.coinDefaultTopOffset * this.cardRatio + (this.coinDefaultSize * this.cardRatio * 0.25)}px`,
-                        left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
-                        width: `${this.coinDefaultSize * this.cardRatio}px`,
-                        height: `${this.coinDefaultSize * this.cardRatio}px`,
-                    }}
-                >
-                    {this.props.itemDetails.itemCost}
-                </span>
-                <div
-                    className="card-icons"
-                    style={{
-                        top: `${this.iconDefaultTopOffset * this.cardRatio}px`,
-                        left: `${this.iconDefaultLeftOffset * this.cardRatio}px`,
-                        maxWidth: `${this.iconDefaultSize * this.cardRatio}px`,
-                        height: `${this.iconDefaultSize * this.cardRatio * 4}px`
-                    }}>
-                    {this.GetCardIcons()}
+                <div className="card-actions">
+                    {this.GetCardButtons()}
                 </div>
-                <div
-                    className="card-info"
-                    style={{
-                        top: `${this.descAreaDefaultOffset * this.cardRatio}px`,
-                        maxHeight: `${this.descAreaDefaultSize * this.cardRatio}px`,
-                        minHeight: `${this.descAreaDefaultSize * this.cardRatio}px`,
-                    }}>
-                    {this.GetAdditionalCardContent()}
-                </div>
-                <img
-                    className="card-item-image"
-                    src={this.props.itemDetails.iconSource}
-                    height={this.itemAreaDefaultSize * this.cardRatio}
-                    width={this.itemAreaDefaultSize * this.cardRatio}
-                    style={{
-                        top: `${this.itemAreaDefaultOffset * this.cardRatio}px`,
-                        left: `${this.itemAreaDefaultOffset * this.cardRatio}px`,
-                        height: `${this.itemAreaDefaultSize * this.cardRatio}px`,
-                        width: `${this.itemAreaDefaultSize * this.cardRatio}px`,
-                    }}
-                />
-                <canvas
-                    className="card-canvas"
-                    ref="cardCanvas"
-                    width={this.cardWidth}
-                    height={this.cardHeight}
-                    />
             </div>
         )
     }

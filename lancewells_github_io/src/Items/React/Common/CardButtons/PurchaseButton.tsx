@@ -1,0 +1,93 @@
+import React from 'react';
+import { TPurchaseClick } from '../../../Types/CardButtonCallbackTypes/TPurchaseClick';
+import { TItemType } from '../../../Types/TItemType';
+
+interface IPurchaseButtonProps {
+    itemKey: string;
+    itemType: TItemType;
+    itemPrice: number;
+    cardIconSize: number;
+    callbackFunction: TPurchaseClick;
+}
+
+interface IPurchaseButtonState {
+    canPurchase: boolean;
+}
+
+export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurchaseButtonState> {
+    constructor(props: IPurchaseButtonProps) {
+        super(props)
+        this.state = {
+            canPurchase: true
+        };
+    }
+
+    private GetCustomButtonProperties(): React.CSSProperties {
+        var properties: React.CSSProperties = {};
+        if (!this.state.canPurchase) {
+            properties = {
+                background: "#33984b",
+                cursor: "default"
+            }
+        }
+
+        return properties;
+    }
+
+    private GetPurchaseStateText(): string {
+        return this.state.canPurchase ? "Purchase" : "Purchased!";
+    }
+
+    public render() {
+        const handleButtonClick = () => {
+            if (this.state.canPurchase) {
+                this.setState({
+                    canPurchase: false
+                },
+                () => {
+                    window.setTimeout(() => {
+                        this.setState({
+                            canPurchase: true
+                        })
+                    }, 2500)
+                });
+                this.props.callbackFunction(this.props.itemKey, this.props.itemType, this.props.itemPrice);
+            }
+        }
+
+        return (
+            <div
+                className="card-button"
+                style={this.GetCustomButtonProperties()}
+                onClick={handleButtonClick}>
+                <img
+                    className="card-button-icon"
+                    src='./images/Item_Shop/ItemCards/Icons/Button_Purchase.png'
+                    width={this.props.cardIconSize}
+                    height={this.props.cardIconSize}
+                    style={{
+                        left: `-${this.props.cardIconSize / 2}px`
+                    }} />
+                <div className="card-button-name" ref="purchase-text">
+                    {this.GetPurchaseStateText()}
+            </div>
+                <div className="card-button-stats-container">
+                    <div className="card-button-stat"
+                        style={{
+                            color: "rgb(19, 19, 19)",
+                            textShadow: "0 0 2px #fff",
+                            boxShadow: "none"
+                        }}>
+                        {this.props.itemPrice}
+                    </div>
+                    <img
+                        className="card-button-stat-icon"
+                        width={this.props.cardIconSize}
+                        height={this.props.cardIconSize}
+                        src='./images/Item_Shop/itemCoinStill.png' />
+                </div>
+            </div>
+        )
+    }
+}
+ 

@@ -89,6 +89,15 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
             this.props.inventoryButtonCallback(this.props.itemDetails);
         }
 
+        // Temporarily removed. The card button is much nicer. May add this back later.
+        // <Button
+        //     variant='dark'
+        //     onClick={handleInventoryButton}
+        //     disabled={this.state.showAlert}
+        //     style={this.state.showAlert ? { cursor: "default" } : { cursor: "pointer" }}>
+        //     {this.props.inventoryButtonText}
+        // </Button>
+
         return (
             <Modal
                 show={this.props.show}
@@ -126,13 +135,6 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                     {this.props.itemDetails.RenderItemDescription()}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button
-                        variant='dark'
-                        onClick={handleInventoryButton}
-                        disabled={this.state.showAlert}
-                        style={this.state.showAlert ? { cursor: "default" } : { cursor: "pointer" }}>
-                        {this.props.inventoryButtonText}
-                        </Button>
                     <Button variant='dark' onClick={this.props.hideModal}>Close</Button>
                 </Modal.Footer>
             </Modal>

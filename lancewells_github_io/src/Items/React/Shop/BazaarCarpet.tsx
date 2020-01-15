@@ -2,6 +2,8 @@ import React from 'react';
 import { CarpetMap } from './CarpetMap';
 import { ItemCard, TItemClick } from '../Common/ItemCard';
 import { TAttack } from '../../Types/TAttack';
+import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
+import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 
 /**
  * @description An interface used to represent the properties required to display this class.
@@ -12,13 +14,12 @@ import { TAttack } from '../../Types/TAttack';
 interface IBazaarCarpetProps {
     carpetMap: CarpetMap;
     onItemClick: TItemClick;
-    onAttackClick: (attackName: string, attackRolls: TAttack[]) => void;
+    onAttackClick: TAttackClick;
+    onPurchaseClick: TPurchaseClick;
 }
 
 interface IBazaarCarpetState {
 }
-
-
 
 /**
  * @description Returns an instance of this component, BazaarCarpet.
@@ -38,7 +39,9 @@ export class BazaarCarpet extends React.Component<IBazaarCarpetProps, IBazaarCar
                 <ItemCard
                     itemDetails={item}
                     onItemClick={this.props.onItemClick}
-                    onAttackClick={this.props.onAttackClick}
+                    onAttackButton={this.props.onAttackClick}
+                    onPurchaseButton={this.props.onPurchaseClick}
+                    cardInteractions={["Purchase", "Use"]}
                 />
             );
         });

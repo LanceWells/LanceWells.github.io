@@ -3,6 +3,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface ICardIconProps {
     iconSource: string;
+    tooltipTitle: string;
     tooltipText: string;
     width: number;
     height: number;
@@ -15,15 +16,21 @@ export function CardIcon(props: ICardIconProps) {
             delay={{ show: 0, hide: 400 }}
             overlay={
                 <Tooltip id="card-tooltip">
+                    <span style={{fontWeight: "bold"}}>
+                        {props.tooltipTitle}
+                    </span>
+                    <br />
                     {props.tooltipText}
                 </Tooltip>
             }>
-            <img
-                src={props.iconSource}
-                style={{
-                    width: `${props.width}px`,
-                    height: `${props.height}px`,
-                }} />
+            <div className="card-icon">
+                <img
+                    src={props.iconSource}
+                    style={{
+                        width: `${props.width}px`,
+                        height: `${props.height}px`,
+                    }} />
+            </div>
         </OverlayTrigger>
     )
 }
