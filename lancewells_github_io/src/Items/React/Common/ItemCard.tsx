@@ -390,31 +390,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                         }}>
                         {this.props.itemDetails.title}
                     </span>
-                    <div
-                        className="card-cost"
-                        style={{
-                            top: `${this.coinDefaultTopOffset * this.cardRatio}px`,
-                            left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
-                        }}>
-                        <img
-                            style={{
-                                width: `${this.coinDefaultSize * this.cardRatio}px`,
-                                height: `${this.coinDefaultSize * this.cardRatio}px`,
-                            }}
-                            src="./images/Item_Shop/itemCoinStill.png"
-                        />
-                    </div>
-                    <span
-                        className="card-cost-text"
-                        style={{
-                            top: `${this.coinDefaultTopOffset * this.cardRatio + (this.coinDefaultSize * this.cardRatio * 0.25)}px`,
-                            left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
-                            width: `${this.coinDefaultSize * this.cardRatio}px`,
-                            height: `${this.coinDefaultSize * this.cardRatio}px`,
-                        }}
-                    >
-                        {this.props.itemDetails.itemCost}
-                    </span>
+
                     <div
                         className="card-icons"
                         style={{
@@ -462,3 +438,31 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         )
     }
 }
+
+// May add the card cost back later.
+
+// <div
+//     className="card-cost"
+//     style={{
+//         top: `${this.coinDefaultTopOffset * this.cardRatio}px`,
+//         left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
+//     }}>
+//     <img
+//         style={{
+//             width: `${this.coinDefaultSize * this.cardRatio}px`,
+//             height: `${this.coinDefaultSize * this.cardRatio}px`,
+//         }}
+//         src="./images/Item_Shop/itemCoinStill.png"
+//     />
+// </div>
+//     <span
+//         className="card-cost-text"
+//         style={{
+//             top: `${this.coinDefaultTopOffset * this.cardRatio + (this.coinDefaultSize * this.cardRatio * 0.25)}px`,
+//             left: `${this.coinDefaultLeftOffset * this.cardRatio}px`,
+//             width: `${this.coinDefaultSize * this.cardRatio}px`,
+//             height: `${this.coinDefaultSize * this.cardRatio}px`,
+//         }}
+//     >
+//         {this.props.itemDetails.itemCost}
+//     </span>
