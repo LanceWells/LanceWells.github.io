@@ -74,8 +74,6 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
                 <div className="card-button-stats-container">
                     <div className="card-button-stat"
                         style={{
-                            color: "rgb(19, 19, 19)",
-                            textShadow: "0 0 2px #fff",
                             boxShadow: "none"
                         }}>
                         {this.props.itemPrice}

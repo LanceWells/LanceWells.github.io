@@ -4,6 +4,7 @@ import { ItemArmor, IItemArmorJson, IItemIsItemArmor } from './ItemArmor';
 import { ItemWondrous, IItemWondrousJson, IItemIsItemWondrous } from './ItemWondrous';
 import { TItemType } from "../Types/TItemType";
 import { IItemJson, IItem } from "../Interfaces/IItem";
+import * as AWS from 'aws-sdk';
 
 /**
  * @description A class used to fetch items based on a specific index and call.
@@ -12,6 +13,45 @@ import { IItemJson, IItem } from "../Interfaces/IItem";
  * https://basarat.gitbooks.io/typescript/docs/tips/staticConstructor.html
  */
 export class ItemSource {
+    private static instance: ItemSource;
+
+    private DynamoDb: AWS.DynamoDB;
+
+    private constructor() {
+        AWS.config.update({
+            region: 'us-east-2',
+            accessKeyId: process.env.REACT_APP_DYNAMO_KEY,
+            secretAccessKey: process.env.REACT_APP_DYNAMODB_SECRET_KEY
+        })
+
+        this.DynamoDb = new AWS.DynamoDB();
+
+        var putItemParams = {
+            TableName: 'LantsPants.Items',
+            Item: {
+                'ItemType': { S: "Potion" },
+                'key': { S: "TestItem" },
+                'data': { S: '{"key":"DarkContract","title":"Potion of the Dark Contract","description":"A dark, bubbling brew.","details":"Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.","iconSource":"./images/Item_Shop/Items/Potions/DarkContractPotion.png","source":"Homebrew","requiresAttunement":false,"hasWithdrawalEffect":false,"itemCost":100,"type":"Potion"    }' }
+            }
+        }
+
+        this.DynamoDb.putItem(putItemParams, function(err, data) {
+            if (err) {
+                console.error("AWS Error", err);
+            } else {
+                console.log("AWS Success", data);
+            }
+        });
+    }
+
+    public static GetInstance() {
+        if (!ItemSource.instance) {
+            ItemSource.instance = new ItemSource();
+        }
+
+        return ItemSource.instance;
+    }
+
     /**
      * @description Finds the item under the specified index, and returns that item. If the item cannot be
      * found, returns undefined instead. This function returns undefined such that a caller can determine how

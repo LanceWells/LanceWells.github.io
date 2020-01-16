@@ -14,6 +14,7 @@ import { ItemDetailsModal } from '../Common/ItemDetailsModal';
 import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 import { TItemType } from '../../Types/TItemType';
+import { ItemSource } from '../../Classes/ItemSource';
 
 /**
  * @description
@@ -57,6 +58,8 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             attackName: "",
             attackRolls: []
         };
+        // console.log(process.env.REACT_APP_TEST_KEY);
+        ItemSource.GetInstance();
     }
 
     /**
@@ -183,11 +186,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         };
 
         const handlePurchaseItem: TPurchaseClick = (key: string, type: TItemType, cost: number) => {
-            InventoryStorage.getInstance().AddItem(key, type);
+            InventoryStorage.GetInstance().AddItem(key, type);
         }
 
         const inventoryButtonCallback = () => {
-            InventoryStorage.getInstance().AddItem(item.key, item.type);
+            InventoryStorage.GetInstance().AddItem(item.key, item.type);
         }
 
         return (

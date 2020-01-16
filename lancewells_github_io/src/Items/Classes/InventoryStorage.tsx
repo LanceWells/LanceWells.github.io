@@ -104,7 +104,7 @@ export class InventoryStorage {
     /**
      * @description Provides the single instance of this class.
      */
-    public static getInstance() {
+    public static GetInstance() {
         if (!InventoryStorage.instance) {
             InventoryStorage.instance = new InventoryStorage();
         }

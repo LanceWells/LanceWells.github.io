@@ -57,10 +57,10 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
     private updateFromInventory() {
         this.setState({
-            armorItems: InventoryStorage.getInstance().GetItemsOfType("Armor"),
-            potionItems: InventoryStorage.getInstance().GetItemsOfType("Potion"),
-            weaponItems: InventoryStorage.getInstance().GetItemsOfType("Weapon"),
-            wondrousItems: InventoryStorage.getInstance().GetItemsOfType("Wondrous"),
+            armorItems: InventoryStorage.GetInstance().GetItemsOfType("Armor"),
+            potionItems: InventoryStorage.GetInstance().GetItemsOfType("Potion"),
+            weaponItems: InventoryStorage.GetInstance().GetItemsOfType("Weapon"),
+            wondrousItems: InventoryStorage.GetInstance().GetItemsOfType("Wondrous"),
         });
     }
 
@@ -85,7 +85,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     public render() {
         return (
             <div>
-                <h1>{InventoryStorage.getInstance().CharacterName}</h1>
+                <h1>{InventoryStorage.GetInstance().CharacterName}</h1>
                 <h1>Armor</h1>
                 {this.getArmor()}
                 <h1>Potions</h1>

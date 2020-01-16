@@ -333,7 +333,7 @@ h1, h2, h3, h4, h5 {
     font-size: larger;
     box-shadow: 1px 1px 1px rgb(19, 19, 19);
     z-index: 2;
-    text-shadow: 0 0 2px rgb(19, 19, 19);
+    text-shadow: 0 0 5px rgb(19, 19, 19);
 }
 
 .card-button-stat-icon {
