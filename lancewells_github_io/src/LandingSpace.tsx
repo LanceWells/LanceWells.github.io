@@ -10,6 +10,8 @@ import {
 import {CharacterCreator} from './CharacterCreator/React/CharacterCreator';
 import {ItemShop} from './Items/React/Shop/ItemShop';
 import {Inventory} from './Items/React/Inventory/Inventory';
+import {LoginPage} from './Login/React/LoginPage';
+import { ProtectedRoute } from './Login/React/ProtectedRoute';
 
 interface ILandingSpaceProps {
 };
@@ -25,9 +27,10 @@ export default function LandingSpace() {
             <Router>
                 <Switch>
                     <Route exact path="/" children={<Home />} />
+                    <Route exact path="/login" children={<LoginPage />} />
                     <Route path="/creatorPage" children={<CharacterCreator />} />
-                    <Route path="/itemShop" children={<ItemShop />} />
-                    <Route path="/inventory" children={<Inventory />} />
+                    <ProtectedRoute path="/itemShop" children={<ItemShop />} />
+                    <ProtectedRoute path="/inventory" children={<Inventory />} />
                 </Switch>
             </Router>
         </div>
@@ -38,6 +41,11 @@ function Home() {
     return (
         <div className="nav-bar">
             <h1>Here Be Links</h1>
+            <h2 className="nav-entry">
+                <Link to="/login">
+                    &gt;&gt;&gt; Login Page &lt;&lt;&lt;
+                </Link>
+            </h2>
             <h2 className="nav-entry">
                 <Link to="/creatorPage">
                     &gt;&gt;&gt; DnD Character Creator &lt;&lt;&lt;

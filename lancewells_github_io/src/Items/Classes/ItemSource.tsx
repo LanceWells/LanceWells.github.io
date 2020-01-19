@@ -13,6 +13,8 @@ import * as AWS from 'aws-sdk';
  * https://basarat.gitbooks.io/typescript/docs/tips/staticConstructor.html
  */
 export class ItemSource {
+    private readonly _tableName: string = 'LantsPants.Items'
+
     private static instance: ItemSource;
 
     private DynamoDb: AWS.DynamoDB;
@@ -26,22 +28,94 @@ export class ItemSource {
 
         this.DynamoDb = new AWS.DynamoDB();
 
-        var putItemParams = {
-            TableName: 'LantsPants.Items',
-            Item: {
-                'ItemType': { S: "Potion" },
-                'key': { S: "TestItem" },
-                'data': { S: '{"key":"DarkContract","title":"Potion of the Dark Contract","description":"A dark, bubbling brew.","details":"Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.","iconSource":"./images/Item_Shop/Items/Potions/DarkContractPotion.png","source":"Homebrew","requiresAttunement":false,"hasWithdrawalEffect":false,"itemCost":100,"type":"Potion"    }' }
-            }
-        }
 
-        this.DynamoDb.putItem(putItemParams, function(err, data) {
-            if (err) {
-                console.error("AWS Error", err);
-            } else {
-                console.log("AWS Success", data);
-            }
-        });
+
+
+
+        // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property
+        // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html
+        // This is how to insert a single item!!
+        // var putItemParams = {
+        //     TableName: this._tableName,
+        //     Item: {
+        //         'ItemType': { S: "Potion" },
+        //         'key': { S: "TestItem" },
+        //         'itemJsonData': { S: '{"key":"DarkContract","title":"Potion of the Dark Contract","description":"A dark, bubbling brew.","details":"Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.","iconSource":"./images/Item_Shop/Items/Potions/DarkContractPotion.png","source":"Homebrew","requiresAttunement":false,"hasWithdrawalEffect":false,"itemCost":100,"type":"Potion"    }' }
+        //     }
+        // }
+
+        // this.DynamoDb.putItem(putItemParams, function(err, data) {
+        //     if (err) {
+        //         console.error("AWS Error", err);
+        //     } else {
+        //         console.log("AWS Success", data);
+        //     }
+        // });
+
+
+
+
+
+        // This is how to get a single item!!
+        // var getItemParams = {
+        //     TableName: this._tableName,
+        //     Key: {
+        //         'ItemType': {S: 'Weapon'},
+        //         'key': {S: 'SnakeStaff'}
+        //     },
+        //     ProjectionExpression: 'itemJsonData'
+        // };
+
+        // var item: ItemWeapon;
+        // this.DynamoDb.getItem(getItemParams, function(err, data) {
+        //     if (err) {
+        //         console.error("AWS Error", err);
+        //     } else {
+        //         console.log("AWS Success", data.Item);
+        //         if (data.Item !== undefined) { // If the items are right, but we didn't get anything, this will return undefined.
+        //             var itemContent: string = data.Item.itemJsonData.S as string; // If the projected expression wasn't found as an attribute, but the item was found, then itemJsonData will be undefined.
+        //             console.log(itemContent);
+        //             var parsedJson = JSON.parse(itemContent);
+        //             console.log(parsedJson);
+        //             var typedJson = parsedJson as IItemWeaponJson;
+        //             console.log(typedJson);
+        //             item = ItemWeapon.fromJson(typedJson);
+        //             console.log(item);
+        //         }
+        //     }
+        // });
+
+        // var getItemParams = {
+        //     TableName: this._tableName,
+        //     Key: {
+        //         'ItemType': { S: 'Weapon'},
+        //         'key': {S: 'SnakeStaff'}
+        //     },
+        //     ProjectionExpression: 'expressionthatdoesnotexist'
+        // };
+
+        // var item: ItemWeapon;
+        // this.DynamoDb.getItem(getItemParams, function(err, data) {
+        //     if (err) {
+        //         console.error("AWS Error", err);
+        //     } else {
+        //         console.log("AWS Success", data.Item); 
+        //         if (data.Item !== undefined) {
+        //             var itemContent: string = data.Item.itemJsonData.S as string;
+        //             console.log(itemContent);
+        //             var parsedJson = JSON.parse(itemContent);
+        //             console.log(parsedJson);
+        //             var typedJson = parsedJson as IItemWeaponJson;
+        //             console.log(typedJson);
+        //             item = ItemWeapon.fromJson(typedJson);
+        //             console.log(item);
+        //         }
+        //     }
+        // });
+
+
+
+
     }
 
     public static GetInstance() {

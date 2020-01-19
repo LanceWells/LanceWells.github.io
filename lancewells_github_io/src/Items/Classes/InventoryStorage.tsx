@@ -21,7 +21,7 @@ export class InventoryStorage {
     private _characterName: string;
 
     // https://regex101.com/r/AJU90m/1
-    private readonly _validCharnameCharacters: RegExp = /^[a-z0-9 ]+$/i;
+    private readonly _validCharnameCharacters: RegExp = /^[a-z0-9 ]{1,}$/i;
 
     /**
      * @description Stores the current character's name. Calling the setter for this name will force the
@@ -240,9 +240,7 @@ export class InventoryStorage {
         var cacheItems: {[key: string]: string[]} = {};
 
         for(let [key, value] of this._items) {
-            console.log(`cacheItems: ${JSON.stringify(cacheItems)}`);
             cacheItems[key] = value.map((item) => item.key);
-            console.log(`cacheItems: ${JSON.stringify(cacheItems)}`);
         }
 
         var inventoryModel: TInventoryModel = {
