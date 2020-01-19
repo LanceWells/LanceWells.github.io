@@ -1,4 +1,4 @@
-import React, { FormEventHandler, FormEvent, ChangeEvent } from 'react';
+import React, { FormEvent, ChangeEvent } from 'react';
 import './LoginPage.css'
 import { UserDataAuth, CreateUserResponse } from '../Classes/UserDataAuth';
 import { Redirect } from 'react-router-dom';

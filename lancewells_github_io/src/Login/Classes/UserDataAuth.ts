@@ -14,23 +14,25 @@ export interface CreateUserResponse {
 
 export class UserDataAuth {
     private static _instance: UserDataAuth;
-
     private _isAuthenticated: boolean;
-
-    private static readonly usernameIndex: string = "username";
-    private static readonly passHashIndex: string = "passhash";
-    private static readonly userDataIndex: string = "userdata";
-    private static readonly userTableName: string = "LantsPants.UserStorage";
-
-    private static readonly saltRounds: number = 10;
-
-    // private _username: string | null;
-    // private _passwordHash: string | null;
+    private static readonly tempAuthTableIndex: string = "tempauthtoken";
+    private static readonly usernameTableIndex: string = "username";
+    private static readonly tempAuthIndex: string = "TempAuthToken";
+    private static readonly usernameIndex: string = "Username";
+    private static readonly userTableName: string = "LantsPants.UserDataStorage";
+    private salt: string;
     private _userData: LantsPantsUserData | undefined;
-
     private _username: string = "";
-
     private DynamoDb: AWS.DynamoDB;
+
+    private GenerateTempAuth(username: string): string  {
+        var today = new Date();
+        var dateString: string = `${today.getHours()}${today.getMinutes}${today.getSeconds}${today.getMilliseconds}`;
+        var authStringToEncode: string = username + dateString;
+
+        var tempAuthToken: string = BCrypt.hashSync(authStringToEncode, this.salt);
+        return tempAuthToken;
+    }
 
     /**
      * 
@@ -64,25 +66,6 @@ export class UserDataAuth {
         )
 
         return userExists;
-
-        // return new Promise<boolean>((resolve, reject) => {
-        //     let userDoesExist: boolean = true;
-
-        //     this.DynamoDb.query(queryItemParams, function(err, data) {
-        //         if (err) {
-        //             console.error(err);
-        //             reject(err);
-        //         } else {
-        //             if (data.Items == undefined) {
-        //                 userDoesExist = false;
-        //             }
-        //             else {
-        //                 userDoesExist = true;
-        //             }
-        //             resolve(userDoesExist);
-        //         }
-        //     })
-        // })
     }
 
     /**
@@ -129,7 +112,7 @@ export class UserDataAuth {
             ExpressionAttributeValues: {
                 ':givenUsername': { S: username }
             },
-            KeyConditionExpression: 'username = :givenUsername',
+            KeyConditionExpression: `${UserDataAuth.usernameTableIndex} = :givenUsername`,
         }
 
         var queryResult = await this.DynamoDb.query(queryItemParams).promise();
@@ -153,6 +136,94 @@ export class UserDataAuth {
                     AuthData: userData,
                     UserValid: true
                 }
+            }
+        }
+
+        if (authResponse.UserValid) {
+            var tempAuthToken: string = this.GenerateTempAuth(username);
+
+            var updateItemParams: AWS.DynamoDB.UpdateItemInput = {
+                TableName: UserDataAuth.userTableName,
+                ExpressionAttributeValues: {
+                    ':auth': { S:  tempAuthToken}
+                },
+                Key: {
+                    "username": { S: username }
+                },
+                UpdateExpression: `set ${UserDataAuth.tempAuthTableIndex} = :auth`
+            }
+
+            // var updateResult = await this.DynamoDb.updateItem(updateItemParams).promise();
+            var updateResult = await this.DynamoDb.updateItem(updateItemParams, function(err, data) {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log(data);
+                }
+            })
+
+            // If the result isn't undefined, assume that we had a succesful run.
+            if (updateResult !== undefined) {
+                localStorage.setItem(UserDataAuth.tempAuthIndex, tempAuthToken);
+                localStorage.setItem(UserDataAuth.usernameIndex, username);
+            }
+        }
+
+
+        return authResponse;
+    }
+
+    /**
+     * 
+     * @param username 
+     * @param authToken 
+     */
+    private async SignInUsingTempAuthToken(username: string, authToken: string): Promise<AuthResponse> {
+        var authResponse: AuthResponse = {
+            AuthData: "",
+            UserValid: false
+        };
+
+        // var queryItemParams: AWS.DynamoDB.QueryInput = {
+        //     TableName: UserDataAuth.userTableName,
+        //     ExpressionAttributeValues: {
+        //         ':givenUsername': { S: username }
+        //     },
+        //     KeyConditionExpression: 'username = :givenUsername',
+        // }
+
+        var queryItemParams: AWS.DynamoDB.QueryInput = {
+            TableName: UserDataAuth.userTableName,
+            ExpressionAttributeValues: {
+                ':givenUsername': { S: username },
+            },
+            KeyConditionExpression: `${UserDataAuth.usernameTableIndex} = :givenUsername`,
+        }
+
+        // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.03.html
+        var queryResult = await this.DynamoDb.query(queryItemParams, function(err, data) {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(data);
+            }
+        }).promise();
+        
+        if (   queryResult !== undefined
+            && queryResult.Count !== undefined
+            && queryResult.Count === 1
+            && queryResult.Items !== undefined)
+        {
+            var userData: string | undefined = undefined;
+            var userDataAttribute = queryResult.Items[0].userdata;
+
+            if (userDataAttribute !== undefined) {
+                userData = queryResult.Items[0].userdata.S as string | undefined;
+            }
+
+            authResponse = {
+                AuthData: userData,
+                UserValid: true
             }
         }
 
@@ -190,12 +261,7 @@ export class UserDataAuth {
             secretAccessKey: process.env.REACT_APP_DYNAMODB_SECRET_KEY
         });
 
-        // var username: string | null = localStorage.getItem(UserDataAuth.usernameIndex);
-        // var passhash: string | null = localStorage.getItem(UserDataAuth.passHashIndex);
-
-        // if (username !== null && passhash !== null) {
-        //     this.SignInUsingCredentials(username, passhash);
-        // }
+        this.salt = BCrypt.genSaltSync();
     }
 
     /**
@@ -206,10 +272,22 @@ export class UserDataAuth {
         this._isAuthenticated = false;
 
         // Delete local credentials
+        localStorage.removeItem(UserDataAuth.tempAuthIndex);
         localStorage.removeItem(UserDataAuth.usernameIndex);
-        localStorage.removeItem(UserDataAuth.passHashIndex);
     }
 
+    private GetUserDataFromJson(json: string | undefined): LantsPantsUserData {
+        var userData: LantsPantsUserData = new LantsPantsUserData();
+
+        // If the response contained auth data, that means that this person has something
+        // saved. Update what their user data should be.
+        if (json !== undefined) {
+            var parsedJson = JSON.parse(json);
+            Object.assign(userData, parsedJson);
+        }
+
+        return userData;
+    }
 
     /**
      * 
@@ -220,20 +298,7 @@ export class UserDataAuth {
         var response: AuthResponse = await this.SignInUsingCredentials(username, password);
 
         if (response.UserValid) {
-            // // Save those credentials to local storage. This should help persist the last
-            // // logged-in user between visits.
-            // localStorage.setItem(UserDataAuth.usernameIndex, username);
-            // localStorage.setItem(UserDataAuth.passHashIndex, passwordHash);
-
-            let userData: LantsPantsUserData = new LantsPantsUserData();
-
-            // If the response contained auth data, that means that this person has something
-            // saved. Update what their user data should be.
-            if (response.AuthData !== undefined) {
-                var parsedJson = JSON.parse(response.AuthData);
-                Object.assign(userData, parsedJson);
-            }
-
+            let userData: LantsPantsUserData = this.GetUserDataFromJson(response.AuthData);
             this._userData = userData;
             this._username = username;
             this._isAuthenticated = true;
@@ -242,17 +307,35 @@ export class UserDataAuth {
         return response.UserValid;
     }
 
-    // public async LoginUsingStoredCredentials(): Promise<boolean> {
-    //     var username: string | null = localStorage.getItem(UserDataAuth.usernameIndex);
-    //     var passhash: string | null = localStorage.getItem(UserDataAuth.passHashIndex);
+    /**
+     * 
+     */
+    public async LoginUsingStoredCredentials(): Promise<boolean> {
+        var tempAuthToken: string | null = localStorage.getItem(UserDataAuth.tempAuthIndex);
+        var username: string | null = localStorage.getItem(UserDataAuth.usernameIndex);
 
-    //     var didLogin: boolean = false;
-    //     if (username && passhash) {
-    //         didLogin = await this.Login(username, passhash);
-    //     }
+        var response: AuthResponse = {
+            AuthData: "",
+            UserValid: false
+        };
 
-    //     return didLogin;
-    // }
+        if (tempAuthToken && username) {
+            response = await this.SignInUsingTempAuthToken(username, tempAuthToken);
+            if (response.UserValid) {
+                let userData: LantsPantsUserData = this.GetUserDataFromJson(response.AuthData);
+                this._userData = userData;
+                this._username = username;
+                this._isAuthenticated = true;
+            }
+            else {
+                // It didn't work. Just remove this data; don't let other things try any longer.
+                localStorage.removeItem(UserDataAuth.tempAuthIndex);
+                localStorage.removeItem(UserDataAuth.usernameIndex);
+            }
+        }
+
+        return response.UserValid;
+    }
 
 
     /**
@@ -264,7 +347,7 @@ export class UserDataAuth {
             Errors: []
         };
 
-        var passwordHash: string = BCrypt.hashSync(password, UserDataAuth.saltRounds);
+        var passwordHash: string = BCrypt.hashSync(password, this.salt);
         var passwordsMatch: boolean = BCrypt.compareSync(passwordDupe, passwordHash);
 
         // Validate that the passwords match.
@@ -280,7 +363,7 @@ export class UserDataAuth {
         if (createResponse.Errors.length === 0) {
             await this.CreateUser(username, passwordHash);
 
-            var didLogin: boolean = await this.Login(username, passwordHash);
+            var didLogin: boolean = await this.Login(username, password);
             createResponse.DidCreate = didLogin;
         }
 
