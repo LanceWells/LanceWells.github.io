@@ -40,18 +40,22 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         event.preventDefault();
 
         // Attempt to log in using UserDataAuth.
-        UserDataAuth.GetInstance().Login(this.currentUsername, this.currentPassword);
+        var loginPromise: Promise<boolean> = UserDataAuth.GetInstance().Login(this.currentUsername, this.currentPassword);
 
-        if (UserDataAuth.GetInstance().IsAuthenticated) {
-            this.setState({
-                pageState: "LoggedIn"
-            });
-        }
-        else {
-            this.setState({
-                errorMessages: ["That username and password was not valid. Please try again."]
-            });
-        }
+        loginPromise.then(
+            loggedIn => {
+                if (loggedIn) {
+                    this.setState({
+                        pageState: "LoggedIn"
+                    });
+                }
+                else {
+                    this.setState({
+                        errorMessages: ["That username and password was not valid. Please try again."]
+                    });
+                }
+            }
+        )
     }
 
     private submitLogout() {
@@ -67,21 +71,27 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     private submitCreateAccount(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        var response: CreateUserResponse = UserDataAuth.GetInstance().CreateAccount(
+        var response: Promise<CreateUserResponse> = UserDataAuth.GetInstance().CreateAccount(
             this.currentUsername,
             this.currentPassword,
             this.currentPassDupe);
 
-        // Always set the error list to whatever we got. This way it clears when we have no errors.
-        this.setState({
-            errorMessages: response.Errors
-        });
+        response.then(
+            onResolve => {
+                // Always set the error list to whatever we got. This way it clears when we have no errors.
+                this.setState({
+                    errorMessages: onResolve.Errors
+                });
 
-        if (response.DidCreate) {
-            this.setState({
-                pageState: "LoggedIn"
-            });
-        }
+                if (onResolve.DidCreate) {
+                    this.setState({
+                        pageState: "LoggedIn"
+                    });
+                }
+            },  onReject => {
+                console.error("Failed to create a user account.");
+            }
+        )
     }
 
     private submitGoToCreateAccount() {
@@ -171,11 +181,11 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <h2 className="login-header">
                             Logged In
                         </h2>
-                        <h3>You are logged in as {UserDataAuth.GetInstance().UserData?.username}</h3>
-                        <form className="login-form" action="/" method="POST">
-                            <br /><br />
-                            <input className="login-button" type="submit" value="Log Out" onClick={this.submitLogout.bind(this)} />
-                        </form>
+                        <h3>You are logged in as {UserDataAuth.GetInstance().Username}</h3>
+                        <br /><br />
+                        <button className="login-button" onClick={this.submitLogout.bind(this)}>
+                            Log Out
+                        </button>
                     </div>
                 )
             }

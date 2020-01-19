@@ -4,7 +4,7 @@ import * as BCrypt from 'bcryptjs';
 
 interface AuthResponse {
     AuthData: string | undefined;
-    UserExists: boolean;
+    UserValid: boolean;
 }
 
 export interface CreateUserResponse {
@@ -28,13 +28,17 @@ export class UserDataAuth {
     // private _passwordHash: string | null;
     private _userData: LantsPantsUserData | undefined;
 
+    private _username: string = "";
+
     private DynamoDb: AWS.DynamoDB;
 
     /**
      * 
      * @param username 
      */
-    private CheckForExistingUser(username: string): Promise<boolean> {
+    private async CheckForExistingUser(username: string): Promise<boolean> {
+        var userExists: boolean = true;
+
         var queryItemParams: AWS.DynamoDB.QueryInput = {
             TableName: UserDataAuth.userTableName,
             ExpressionAttributeValues: {
@@ -43,47 +47,41 @@ export class UserDataAuth {
             KeyConditionExpression: 'username = :givenUsername'
         }
 
-        return new Promise<boolean>((resolve, reject) => {
-            let userDoesExist: boolean = false;
+        var queryPromise = this.DynamoDb.query(queryItemParams).promise();
 
-            this.DynamoDb.query(queryItemParams, function(err, data) {
-                if (err) {
-                    console.error(err);
-                    reject(err);
-                } else {
-                    if (data.Items == undefined) {
-                        userDoesExist = false;
-                    }
-                    else {
-                        userDoesExist = true;
-                    }
-                    resolve(userDoesExist);
+        await queryPromise.then(
+            onResolve => {
+                console.log("CheckForUserResults", onResolve);
+                if (onResolve.Items === undefined || onResolve.Count === undefined || onResolve.Count !== 0) {
+                    userExists = true;
                 }
-            })
-        })
+                else {
+                    userExists = false;
+                }
+            }, onReject => {
+                console.error("Failed DB check for existing user.");
+            }
+        )
 
-        // var getItemParams = {
-        //     TableName: UserDataAuth.userTableName,
-        //     Key: {
-        //         username: { S: username },
-        //     }
-        // };
+        return userExists;
 
         // return new Promise<boolean>((resolve, reject) => {
-        //     let userDoesExist: boolean = false;
+        //     let userDoesExist: boolean = true;
 
-        //     this.DynamoDb.getItem(getItemParams, function (err, data) {
+        //     this.DynamoDb.query(queryItemParams, function(err, data) {
         //         if (err) {
         //             console.error(err);
-        //             reject(data);
+        //             reject(err);
         //         } else {
-        //             console.log(data);
-        //             if (data.Item !== undefined) {
+        //             if (data.Items == undefined) {
+        //                 userDoesExist = false;
+        //             }
+        //             else {
         //                 userDoesExist = true;
         //             }
         //             resolve(userDoesExist);
         //         }
-        //     });
+        //     })
         // })
     }
 
@@ -91,9 +89,8 @@ export class UserDataAuth {
      * 
      * @param username 
      * @param passwordHash 
-     * @param createResponse 
      */
-    private CreateUser(username: string, passwordHash: string, createResponse: CreateUserResponse) {
+    private CreateUser(username: string, passwordHash: string): Promise<void> {
         var putItemParams = {
             TableName: UserDataAuth.userTableName,
             Item: {
@@ -103,7 +100,7 @@ export class UserDataAuth {
         }
 
         // Try to create a user account.
-        var putItemPromise = new Promise<void>((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.DynamoDb.putItem(putItemParams, function(err, data) {
                 if (err) {
                     console.log(err);
@@ -114,21 +111,6 @@ export class UserDataAuth {
                 }
             })
         })
-
-        // The server didn't complain, but let's just try logging in to be sure that nothing went awry.
-        putItemPromise.then(() => {
-            this.SignInUsingCredentials(username, passwordHash);
-            if (this._isAuthenticated) {
-                createResponse.DidCreate = true;
-            }
-            else {
-                createResponse.Errors.push("There was an unexpected error when creating the user. Please try again.");
-            }
-        });
-
-        putItemPromise.catch(() => {
-            createResponse.Errors.push("The server was very unhappy when it got a request to create a user account. You should tell Lance aobut this.");
-        });
     }
 
     /**
@@ -136,97 +118,45 @@ export class UserDataAuth {
      * @param username 
      * @param passwordHash 
      */
-    private SignInUsingCredentials(username: string, passwordHash: string) {
-        var getItemParams = {
-            TableName: UserDataAuth.userTableName,
-            Key: {
-                username: { S: username },
-                passhash: { S: passwordHash }
-            },
-            ProjectionExpression: UserDataAuth.userDataIndex
+    private async SignInUsingCredentials(username: string, password: string): Promise<AuthResponse> {
+        var authResponse: AuthResponse = {
+            AuthData: "",
+            UserValid: false
         };
 
-        // var userExists: boolean = false;
-        // var serverCachedData: undefined | string = undefined;
-        // var getItemPromise: Promise<AuthResponse>;
+        var queryItemParams: AWS.DynamoDB.QueryInput = {
+            TableName: UserDataAuth.userTableName,
+            ExpressionAttributeValues: {
+                ':givenUsername': { S: username }
+            },
+            KeyConditionExpression: 'username = :givenUsername',
+        }
 
-        // this.DynamoDb.getItem(getItemParams, function (err, data) {
-        //     if (err) {
-        //         console.error("There was an error getting the user's data.", data);
-        //     } else {
-        //         if (data.Item !== undefined) {
-        //             console.log("User exists. Getting data from response.");
-        //             userExists = true;
-        //             if (data.Item.userdata !== undefined) {
-        //                 serverCachedData = data.Item.userdata.S as string;
-        //             }
-        //         }
-        //     }
-        // });
+        var queryResult = await this.DynamoDb.query(queryItemParams).promise();
+        if (    queryResult !== undefined
+             && queryResult.Count !== undefined
+             && queryResult.Count === 1
+             && queryResult.Items !== undefined) {
 
-        var getItemPromise = new Promise<AuthResponse>((resolve, reject) =>  {
-            let serverCachedData: undefined | string = undefined;
-            let userDoesExist: boolean = false;
+            var userPassHash = queryResult.Items[0].passhash.S as string;
+            var passwordMatchesHash = BCrypt.compareSync(password, userPassHash);
 
-            this.DynamoDb.getItem(getItemParams, function (err, data) {
-                if (err) {
-                    console.error(err);
-                    reject(data);
-                } else {
-                    console.log(data);
-                    if (data.Item !== undefined) {
-                        userDoesExist = true;
-                        if (data.Item.userdata !== undefined) {
-                            serverCachedData = data.Item.userdata.S as string;
-                        }
-                    }
-                    resolve({AuthData: serverCachedData, UserExists: userDoesExist});
-                }
-            });
-        })
+            if (passwordMatchesHash) {
+                var userData: string | undefined = undefined;
+                var userDataAttribute = queryResult.Items[0].userdata;
 
-        getItemPromise.then(value => {
-            if (value.UserExists) {
-                this._isAuthenticated = true;
-
-                // Save those credentials to local storage. This should help persist the last
-                // logged-in user between visits.
-                localStorage.setItem(UserDataAuth.usernameIndex, username);
-                localStorage.setItem(UserDataAuth.passHashIndex, passwordHash);
-
-                let userData: LantsPantsUserData = new LantsPantsUserData();
-
-                // If the response contained auth data, that means that this person has something
-                // saved. Update what their user data should be.
-                if (value.AuthData !== undefined) {
-                    var parsedJson = JSON.parse(value.AuthData);
-                    Object.assign(userData, parsedJson);
+                if (userDataAttribute !== undefined) {
+                    userData = queryResult.Items[0].userdata.S as string | undefined;
                 }
 
-                this._userData = userData;
+                authResponse = {
+                    AuthData: userData,
+                    UserValid: true
+                }
             }
-        });
+        }
 
-        getItemPromise.catch(value => {
-            console.error("There was an error getting the user's data", value)
-        });
-        
-        // if (userExists) {
-        //     let userData: LantsPantsUserData = new LantsPantsUserData();
-            
-        //     if (serverCachedData !== undefined) {
-        //         var parsedJson = JSON.parse(serverCachedData);
-        //         Object.assign(userData, parsedJson)
-        //     }
-            
-        //     this._userData = userData;
-        //     this._isAuthenticated = true;
-
-        //     // Save those credentials to local storage. This should help persist the last
-        //     // logged-in user between visits.
-        //     localStorage.setItem(UserDataAuth.usernameIndex, username);
-        //     localStorage.setItem(UserDataAuth.passHashIndex, passwordHash);
-        // }
+        return authResponse;
     }
 
     /**
@@ -243,6 +173,10 @@ export class UserDataAuth {
         return this._userData;
     }
 
+    public get Username(): string {
+        return this._username;
+    }
+
     /**
      * 
      */
@@ -256,28 +190,12 @@ export class UserDataAuth {
             secretAccessKey: process.env.REACT_APP_DYNAMODB_SECRET_KEY
         });
 
-        // AWS.config.update({
-        //     // region: 'us-east-2',
-        //     accessKeyId: process.env.REACT_APP_DYNAMO_KEY,
-        //     secretAccessKey: process.env.REACT_APP_DYNAMODB_SECRET_KEY
-        // })
+        // var username: string | null = localStorage.getItem(UserDataAuth.usernameIndex);
+        // var passhash: string | null = localStorage.getItem(UserDataAuth.passHashIndex);
 
-        var username: string | null = localStorage.getItem(UserDataAuth.usernameIndex);
-        var passhash: string | null = localStorage.getItem(UserDataAuth.passHashIndex);
-
-        if (username !== null && passhash !== null) {
-            this.SignInUsingCredentials(username, passhash);
-        }
-    }
-
-    /**
-     * 
-     * @param username 
-     * @param password 
-     */
-    public Login(username: string, password: string): void {
-        var passwordHash: string = BCrypt.hashSync(password, UserDataAuth.saltRounds);
-        this.SignInUsingCredentials(username, passwordHash);
+        // if (username !== null && passhash !== null) {
+        //     this.SignInUsingCredentials(username, passhash);
+        // }
     }
 
     /**
@@ -292,10 +210,55 @@ export class UserDataAuth {
         localStorage.removeItem(UserDataAuth.passHashIndex);
     }
 
+
+    /**
+     * 
+     * @param username 
+     * @param password 
+     */
+    public async Login(username: string, password: string): Promise<boolean> {
+        var response: AuthResponse = await this.SignInUsingCredentials(username, password);
+
+        if (response.UserValid) {
+            // // Save those credentials to local storage. This should help persist the last
+            // // logged-in user between visits.
+            // localStorage.setItem(UserDataAuth.usernameIndex, username);
+            // localStorage.setItem(UserDataAuth.passHashIndex, passwordHash);
+
+            let userData: LantsPantsUserData = new LantsPantsUserData();
+
+            // If the response contained auth data, that means that this person has something
+            // saved. Update what their user data should be.
+            if (response.AuthData !== undefined) {
+                var parsedJson = JSON.parse(response.AuthData);
+                Object.assign(userData, parsedJson);
+            }
+
+            this._userData = userData;
+            this._username = username;
+            this._isAuthenticated = true;
+        }
+
+        return response.UserValid;
+    }
+
+    // public async LoginUsingStoredCredentials(): Promise<boolean> {
+    //     var username: string | null = localStorage.getItem(UserDataAuth.usernameIndex);
+    //     var passhash: string | null = localStorage.getItem(UserDataAuth.passHashIndex);
+
+    //     var didLogin: boolean = false;
+    //     if (username && passhash) {
+    //         didLogin = await this.Login(username, passhash);
+    //     }
+
+    //     return didLogin;
+    // }
+
+
     /**
      * 
      */
-    public CreateAccount(username: string, password: string, passwordDupe: string): CreateUserResponse {
+    public async CreateAccount(username: string, password: string, passwordDupe: string): Promise<CreateUserResponse> {
         var createResponse: CreateUserResponse = {
             DidCreate: false,
             Errors: []
@@ -309,21 +272,20 @@ export class UserDataAuth {
             createResponse.Errors.push("Your passwords did not match.");
         }
 
-        // Validate that their username of choice hasn't already been taken by someone else.
-        var checkForUserPromise = this.CheckForExistingUser(username);
-        checkForUserPromise.then(userAlreadyExists => {
-            if (userAlreadyExists) {
-                createResponse.Errors.push(`The username '${username}' has already been taken :(.`);
-            }
-        });
-
-        checkForUserPromise.catch(reason => {
-            console.log(reason);
-            createResponse.Errors.push("The server disliked creating an account. You should tell Lance.");
-        })
+        var userAlreadyExists: boolean = await this.CheckForExistingUser(username);
+        if (userAlreadyExists) {
+            createResponse.Errors.push(`The username '${username}' has already been taken :(.`);
+        }
 
         if (createResponse.Errors.length === 0) {
-            this.CreateUser(username, passwordHash, createResponse);
+            await this.CreateUser(username, passwordHash);
+
+            var didLogin: boolean = await this.Login(username, passwordHash);
+            createResponse.DidCreate = didLogin;
+        }
+
+        if (!createResponse.DidCreate) {
+            createResponse.Errors.push("There was a problem when creating this account. Please try again.");
         }
 
         return createResponse;
