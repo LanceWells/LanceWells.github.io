@@ -1,9 +1,9 @@
 import React, { FormEvent, ChangeEvent } from 'react';
 import './LoginPage.css'
-import { UserDataAuth, CreateUserResponse } from '../Classes/UserDataAuth';
-import { Redirect } from 'react-router-dom';
+import { UserDataAuth, CreateUserResponse, LoginResponse } from '../Classes/UserDataAuth';
+import { Redirect, Link } from 'react-router-dom';
 
-type LoginPageState = "Login" | "LoggingIn" | "LoggedIn" | "LoggingOut" | "CreateAnAccount";
+type LoginPageState = "CheckingCredentials" | "Login" | "LoggingIn" | "LoggedIn" | "LoggingOut" | "CreateAnAccount";
 
 interface ILoginPageProps {
 };
@@ -25,8 +25,8 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         this.currentPassword = "";
         this.currentPassDupe = "";
 
-        var loginState: LoginPageState = "Login";
-        if (UserDataAuth.GetInstance().IsAuthenticated) {
+        var loginState: LoginPageState = "CheckingCredentials";
+        if (UserDataAuth.GetInstance().CheckForAccess()) {
             loginState = "LoggedIn";
         }
 
@@ -36,15 +36,33 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         };
     }
 
+    componentDidMount() {
+        UserDataAuth.GetInstance().CheckForAccess().then(granted => {
+            if (granted) {
+                this.setState({
+                    pageState: "LoggedIn"
+                });
+            } else {
+                this.setState({
+                    pageState: "Login"
+                })
+            }
+        }, onRejected => {
+            this.setState({
+                pageState: "Login"
+            })
+        })
+    }
+
     private submitLogin(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         // Attempt to log in using UserDataAuth.
-        var loginPromise: Promise<boolean> = UserDataAuth.GetInstance().Login(this.currentUsername, this.currentPassword);
+        var loginPromise: Promise<LoginResponse> = UserDataAuth.GetInstance().Login(this.currentUsername, this.currentPassword);
 
         loginPromise.then(
             loggedIn => {
-                if (loggedIn) {
+                if (loggedIn.DidLogin) {
                     this.setState({
                         pageState: "LoggedIn"
                     });
@@ -131,7 +149,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         return (
             this.state.errorMessages.map( e => {
                 return(
-                    <span>{e}</span>
+                    <p>{e}</p>
                 )
             })
         )
@@ -152,9 +170,9 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         </p>
                         <form className="login-form" action="/" method="POST" onSubmit={this.submitLogin.bind(this)}>
                             <br /> <br />
-                            <span>Username:</span>
+                            <span>Email:</span>
                             <br />
-                            <input type="text" name="username" onChange={this.handleUsernameInput.bind(this)} />
+                            <input type="text" name="email" onChange={this.handleUsernameInput.bind(this)} />
                             <br /> <br />
                             <span>Password:</span>
                             <br />
@@ -186,6 +204,9 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <button className="login-button" onClick={this.submitLogout.bind(this)}>
                             Log Out
                         </button>
+                        <Link to="/">
+                            Back to Main Page
+                        </Link>
                     </div>
                 )
             }
@@ -205,9 +226,9 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         </p>
                         <form className="login-form" action="/" method="POST" onSubmit={this.submitCreateAccount.bind(this)}>
                             <br /> <br />
-                            <span>Username:</span>
+                            <span>Email:</span>
                             <br />
-                            <input type="text" name="username" onChange={this.handleUsernameInput.bind(this)} />
+                            <input type="text" name="email" onChange={this.handleUsernameInput.bind(this)} />
                             <br /> <br />
                             <span>Password:</span>
                             <br />
@@ -224,6 +245,13 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                             onClick={this.submitBackToLogin.bind(this)}>
                             Back To Login
                         </button>
+                    </div>
+                )
+            }
+            case "CheckingCredentials": {
+                return (
+                    <div>
+                        <h2>Checking login credentials . . . </h2>
                     </div>
                 )
             }

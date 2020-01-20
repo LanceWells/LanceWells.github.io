@@ -23,22 +23,13 @@ export class ProtectedRoute extends React.Component<IProtectedRouteProps, IProte
         }
     }
 
-    private async CheckForAccess(): Promise<boolean> {
-        var isAuthenticated: boolean = UserDataAuth.GetInstance().IsAuthenticated;
-
-        if (!isAuthenticated) {
-            isAuthenticated = await UserDataAuth.GetInstance().LoginUsingStoredCredentials();
-        }
-
-        return isAuthenticated;
-    }
-
     componentDidMount() {
         this.GetComponentToRender();
     }
 
     private GetComponentToRender(): void {
-        this.CheckForAccess().then(granted => {
+        // this.CheckForAccess().then(granted => {
+        UserDataAuth.GetInstance().CheckForAccess().then(granted => {
             if (granted) {
                 this.setState({
                     routeStatus: "Granted"
