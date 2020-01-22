@@ -1,6 +1,7 @@
 import './Inventory.css';
 import React from 'react';
-import { InventoryStorage } from '../../Classes/InventoryStorage';
+// import { InventoryStorage } from '../../Classes/InventoryStorage';
+import { CharacterState } from '../../Classes/CharacterState';
 import { ItemArmor } from '../../Classes/ItemArmor';
 import { ItemPotion } from '../../Classes/ItemPotion';
 import { ItemWeapon } from "../../Classes/ItemWeapon";
@@ -57,10 +58,10 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
     private updateFromInventory() {
         this.setState({
-            armorItems: InventoryStorage.GetInstance().GetItemsOfType("Armor"),
-            potionItems: InventoryStorage.GetInstance().GetItemsOfType("Potion"),
-            weaponItems: InventoryStorage.GetInstance().GetItemsOfType("Weapon"),
-            wondrousItems: InventoryStorage.GetInstance().GetItemsOfType("Wondrous"),
+            armorItems: CharacterState.GetInstance().GetCurrentItemsOfType("Armor"),
+            potionItems: CharacterState.GetInstance().GetCurrentItemsOfType("Potion"),
+            weaponItems: CharacterState.GetInstance().GetCurrentItemsOfType("Weapon"),
+            wondrousItems: CharacterState.GetInstance().GetCurrentItemsOfType("Wondrous"),
         });
     }
 
@@ -73,19 +74,25 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             wondrousItems: []
         }
 
-        // https://stackoverflow.com/questions/43313372/how-to-listen-to-localstorage-in-react-js
-        this.handleStorageChange = this.handleStorageChange.bind(this);
+        // // https://stackoverflow.com/questions/43313372/how-to-listen-to-localstorage-in-react-js
+        // this.handleStorageChange = this.handleStorageChange.bind(this);
+
+        const handleChange = this.handleStorageChange;
+        CharacterState.GetInstance().onInventoryChanged(handleChange.bind(this))
     }
 
     componentDidMount() {
         this.updateFromInventory();
-        window.addEventListener("storage", this.handleStorageChange);
+
+        // const handleChange = this.handleStorageChange;
+        // CharacterState.GetInstance().onInventoryChanged(handleChange.bind(this))
+        // window.addEventListener("storage", this.handleStorageChange);
     }
 
     public render() {
         return (
             <div>
-                <h1>{InventoryStorage.GetInstance().CharacterName}</h1>
+                <h1>{CharacterState.GetInstance().CurrentCharacter}</h1>
                 <h1>Armor</h1>
                 {this.getArmor()}
                 <h1>Potions</h1>

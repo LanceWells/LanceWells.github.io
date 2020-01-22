@@ -1,8 +1,11 @@
 import { UserDataAuth } from '../../Login/Classes/UserDataAuth'
 import { CharacterData } from '../Interfaces/CharacterData';
 import { IItem } from '../Interfaces/IItem';
+import { TItemType } from '../Types/TItemType';
 
 export class CharacterState {
+    // https://regex101.com/r/AJU90m/1
+    private readonly _validCharnameCharacters: RegExp = /^[a-z0-9 ]{1,}$/i;
     private static _instance: CharacterState
     private onInventoryChanged_listeners: (() => void)[] = [];
     private allCharactersData: CharacterData[] = [];
@@ -31,7 +34,10 @@ export class CharacterState {
 
             // If no character name is defined, grab the first character that we can find, and use that
             // instead of no name at all.
-            if (this._currentCharacter === "" && this.allCharactersData.length > 0) {
+            if (this.allCharactersData.length <= 0) {
+                this.AddCharacter();
+            }
+            else if (this._currentCharacter === "") {
 
                 var firstCharacterInList = this.allCharactersData.find(c => c.characterName !== "");
 
@@ -40,6 +46,70 @@ export class CharacterState {
                 }
             }
         })
+    }
+
+    /**
+     * @description Adds a character to the list of characters in the inventory. New characters will start
+     * with an empty inventory.
+     */
+    public AddCharacter() {
+        var nameIsValid: boolean = false;
+        var charName: string = "";
+        var userHitCancel: Boolean = false;
+        var userUsedInvalidCharacters: Boolean = false;
+        var userEnteredExistingName: Boolean = false;
+
+        var atLeastOneValidNameExists: Boolean = this.allCharactersData.length > 0;
+
+        // Keep asking the user to display a name until they have some valid input, or until they hit cancel.
+        // Note that a user can only continue by hitting cancel if they have at least one valid name.
+        while (!nameIsValid && !(userHitCancel && atLeastOneValidNameExists)) {
+            let userPrompt: string = "Please enter a character name.";
+
+            if (userHitCancel && !atLeastOneValidNameExists) {
+                userPrompt = userPrompt + " Use of the inventory system requires at least one character.";
+            }
+            if (userUsedInvalidCharacters) {
+                userPrompt = userPrompt + " Valid characters are alphanumerics and spaces.";
+            }
+            if (userEnteredExistingName) {
+                userPrompt = userPrompt + " Please enter a new, unused character name.";
+            }
+
+            let input = prompt(userPrompt, "Hurdy Gurdy");
+
+            userHitCancel = input === null;
+
+            if (!userHitCancel) {
+                // They didn't hit cancel, so unless something else went wrong, this is fine.
+
+                nameIsValid = true;
+                let stringInput: string = input as string;
+
+                if (!this._validCharnameCharacters.test(stringInput)) {
+                    nameIsValid = false;
+                    userUsedInvalidCharacters = true;
+                }
+                if (this.allCharactersData.some(c => c.characterName === stringInput)) {
+                    nameIsValid = false;
+                    userEnteredExistingName = true;
+                }
+                if (nameIsValid) {
+                    charName = stringInput;
+                }
+            }
+        }
+
+        // Save this as a new character.
+        var newCharData: CharacterData = new CharacterData();
+        newCharData.characterName = charName;
+        this.allCharactersData.push(newCharData);
+
+        // Switch to using the new character.
+        this._currentCharacter = charName;
+
+        // Save the new character to the database!
+        UserDataAuth.GetInstance().UpdateCharacterData(this.allCharactersData);
     }
 
     /**
@@ -170,6 +240,32 @@ export class CharacterState {
         }
 
         return didRemove;
+    }
+
+    /**
+     * Gets a series of items from the currently-selected character.
+     * @param itemType The type of item that we need to get from the current character.
+     */
+    public GetCurrentItemsOfType(itemType: TItemType): IItem[] {
+        return this.GetItemsOfType(this._currentCharacter, itemType);
+    }
+
+    /**
+     * Gets items of the specified type from the specified character.
+     * @param charName The character whose inventory we need to search.
+     * @param itemType The type of item that we need to get from the character.
+     */
+    public GetItemsOfType(charName: string, itemType: TItemType): IItem[] {
+        var items: IItem[] = [];
+
+        var charData: CharacterData | undefined = this.allCharactersData.find(
+            data => data.characterName === charName);
+
+        if (charData !== undefined) {
+            items = charData.itemData.filter(item => item.type === itemType);
+        }
+
+        return items;
     }
 
     /**

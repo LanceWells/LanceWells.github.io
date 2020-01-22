@@ -126,7 +126,9 @@ export class UserDataAuth {
             var docData = docSnapshot.data();
             if (docData !== undefined) {
                 var serializedData: string[] = docData.characterData;
-                charData = serializedData.map(s => CharacterData.DeSerialize(s));
+                if (serializedData) {
+                    charData = serializedData.map(s => CharacterData.DeSerialize(s));
+                }
             }
         }
 
