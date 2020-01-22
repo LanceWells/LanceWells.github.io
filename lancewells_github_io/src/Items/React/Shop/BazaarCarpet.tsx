@@ -1,7 +1,6 @@
 import React from 'react';
 import { CarpetMap } from './CarpetMap';
 import { ItemCard, TItemClick } from '../Common/ItemCard';
-import { TAttack } from '../../Types/TAttack';
 import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 

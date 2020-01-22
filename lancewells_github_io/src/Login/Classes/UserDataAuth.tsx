@@ -1,23 +1,7 @@
-// import * as AWS from 'aws-sdk';
 import { LantsPantsUserData } from './LantsPantsUserData';
 import * as BCrypt from 'bcryptjs';
 import firebase from 'firebase';
-
-/**
- * Describes a response from authorization against the database.
- */
-interface AuthResponse {
-    /**
-     * Describes the user data, after being authorized. This is undefined unless the user has provided
-     * valid credentials, either thorugh a saved temp auth token or through user input.
-     */
-    AuthData: string | undefined;
-
-    /**
-     * True if the user is valid, and has access to the user data in the database.
-     */
-    UserValid: boolean;
-}
+import { CharacterData } from '../../Items/Interfaces/CharacterData';
 
 export interface LoginResponse {
     DidLogin: boolean;
@@ -50,38 +34,10 @@ export class UserDataAuth {
      */
     private static _instance: UserDataAuth;
 
-    // /**
-    //  * True if the user has been authenticated and is able to access protected resources.
-    //  */
-    // private _isAuthenticated: boolean;
-
+    /**
+     * Describes the current authorization state for user authorization.
+     */
     private _authState: TAuthState;
-
-    /**
-     * The database table index for the temporary auth token attribute on a given user data.
-     */
-    private static readonly tempAuthTableIndex: string = "tempauthtoken";
-
-    /**
-     * The database table inde4x for the username attribute on a given user data.
-     */
-    private static readonly usernameTableIndex: string = "username";
-
-    /**
-     * The local storage index for a user's temporary auth token.
-     */
-    private static readonly tempAuthStorageIndex: string = "TempAuthToken";
-
-    /**
-     * The local storage index for a user's username.
-     */
-    private static readonly usernameStorageIndex: string = "Username";
-
-    /**
-     * The name of the table that the user data is being stored in.
-     */
-    private static readonly userTableName: string = "LantsPants.UserDataStorage";
-
 
     /**
      * A salt used for BCrypt encryption whenever evaluating user passwords.
@@ -98,236 +54,16 @@ export class UserDataAuth {
      */
     private _username: string = "";
 
-    // private RefreshCredentials(): void {
-    //     this.DynamoDb.config.update({
-    //         region: 'us-east-2',
-    //         accessKeyId: process.env.REACT_APP_DYNAMO_KEY,
-    //         secretAccessKey: process.env.REACT_APP_DYNAMODB_SECRET_KEY
-    //     });
-    // }
-
-    /**
-     * Generates a temporary auth token based on a username and the current time.
-     * @param username The username that an auth token is being generated for.
-     */
-    private GenerateTempAuth(username: string): string  {
-        var today = new Date();
-        var dateString: string = `${today.getHours()}${today.getMinutes()}${today.getSeconds()}`;
-        var authStringToEncode: string = username + dateString;
-
-        var tempAuthToken: string = BCrypt.hashSync(authStringToEncode, this.salt);
-        return tempAuthToken;
-    }
-
-    /**
-     * Checks for an existing user. Returns a promise indicating (true) if the user already exists,
-     * otherwise (false).
-     * @param username The username that is being checked for.
-     */
-    private async CheckForExistingUser(username: string): Promise<boolean> {
-
-        var userExists: boolean = true;
-
-        // var queryItemParams: AWS.DynamoDB.QueryInput = {
-        //     TableName: UserDataAuth.userTableName,
-        //     ExpressionAttributeValues: {
-        //         ':givenUsername': {S: username}
-        //     },
-        //     KeyConditionExpression: 'username = :givenUsername'
-        // }
-
-        // var queryPromise = this.DocClient.query(queryItemParams).promise();
-
-        // await queryPromise.then(
-        //     onResolve => {
-        //         console.log("CheckForUserResults", onResolve);
-        //         if (onResolve.Items === undefined || onResolve.Count === undefined || onResolve.Count !== 0) {
-        //             userExists = true;
-        //         }
-        //         else {
-        //             userExists = false;
-        //         }
-        //     }, onReject => {
-        //         console.error("Failed DB check for existing user.");
-        //     }
-        // )
-
-        return userExists;
-    }
-
-    /**
-     * Attempts to create a user with the given username and password hash.
-     * @param username The username to create the user with.
-     * @param passwordHash The password to create the user with.
-     */
-    private async CreateUser(username: string, passwordHash: string): Promise<void> {
-        // var putItemParams = {
-        //     TableName: UserDataAuth.userTableName,
-        //     Item: {
-        //         username: { S: username },
-        //         passhash: { S: passwordHash }
-        //     }
-        // }
-
-        // // Try to create a user account.
-        // return new Promise<void>((resolve, reject) => {
-        //     this.DocClient.put(putItemParams, function(err, data) {
-        //         if (err) {
-        //             console.log(err);
-        //             reject(data);
-        //         } else {
-        //             console.log(data);
-        //             resolve();
-        //         }
-        //     })
-        // })
-    }
-
-    /**
-     * Attempts to sign in using user-provided credentials.
-     * @param usernameInput The username to attempt the sign-in with.
-     * @param passwordHash The password that the user is attempting to sign-in with.
-     */
-    private async SignInUsingCredentials(usernameInput: string, passwordInput: string): Promise<AuthResponse> {
-        var authResponse: AuthResponse = {
-            AuthData: "",
-            UserValid: false
-        };
-
-        // // Don't strongly type this. There's a potential bug with the way that the doc client observes
-        // // types where any strongly typed parameters given to doc client functions will claim that the
-        // // provided key does not match the table schema.
-        // //
-        // // Something interesting to note: It's fine to use the strongly typed variant but ONLY if the
-        // // input vars are provided as string literals, and NOT as variables.
-        // var getItemParams = {
-        //     TableName: UserDataAuth.userTableName,
-        //     Key: {"username": usernameInput}
-        // }
-
-        // // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.03.html
-        // var getResult = await this.DocClient.get(getItemParams, function(err, data) {
-        //     if (err) {
-        //         console.error(err);
-        //     } else {
-        //         console.log(data);
-        //     }
-        // }).promise();
-
-        // if (getResult !== undefined
-        //     && getResult.Item !== undefined
-        //     && getResult.Item.passhash !== undefined) {
-
-        //     var userPassHash = getResult.Item.passhash as string;
-        //     var passwordMatchesHash = BCrypt.compareSync(passwordInput, userPassHash);
-
-        //     if (passwordMatchesHash) {
-        //         var userData: string | undefined = undefined;
-        //         var userDataAttribute = getResult.Item.userdata;
-
-        //         if (userDataAttribute !== undefined) {
-        //             userData = getResult.Item.userdata as string | undefined;
-        //         }
-
-        //         authResponse = {
-        //             AuthData: userData,
-        //             UserValid: true
-        //         }
-        //     }
-        // }
-
-        // if (authResponse.UserValid) {
-        //     var tempAuthToken: string = this.GenerateTempAuth(usernameInput);
-
-        //     var updateParams = {
-        //         TableName: UserDataAuth.userTableName,
-        //         Key: { "username": usernameInput },
-        //         UpdateExpression: `set ${UserDataAuth.tempAuthTableIndex} = :auth`,
-        //         ExpressionAttributeValues: {
-        //             ":auth": tempAuthToken
-        //         },
-        //         ReturnValues:"UPDATED_NEW"
-        //     }
-
-        //     var updateResult = await this.DocClient.update(updateParams, function(err, data){
-        //         if (err) {
-        //             console.error(err);
-        //         } else {
-        //             console.log(data);
-        //         }
-        //     }).promise();
-
-        //     // If the result isn't undefined, assume that we had a succesful run.
-        //     if (updateResult !== undefined) {
-        //         localStorage.setItem(UserDataAuth.tempAuthStorageIndex, tempAuthToken);
-        //         localStorage.setItem(UserDataAuth.usernameStorageIndex, usernameInput);
-        //     }
-        // }
-
-        return authResponse;
-    }
-
-    /**
-     * Attempts to sing in using a saved temporary authorization token. This should be stored inside a
-     * user's local storage, and not entered manually.
-     * @param username The username that is used to sign in with.
-     * @param authToken The temporary authorization token that the user is attempting to sign in with.
-     */
-    private async SignInUsingTempAuthToken(username: string, authToken: string): Promise<AuthResponse> {
-        var authResponse: AuthResponse = {
-            AuthData: "",
-            UserValid: false
-        };
-
-        // var getItemParams = {
-        //     TableName: UserDataAuth.userTableName,
-        //     Key: { "username": username }
-        // }
-
-        // // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.03.html
-        // var queryResult = await this.DocClient.get(getItemParams, function(err, data) {
-        //     if (err) {
-        //         console.error(err);
-        //     } else {
-        //         console.log(data);
-        //     }
-        // }).promise();
-        
-        // if (   queryResult !== undefined
-        //     && queryResult.Item !== undefined)
-        // {
-        //     var dbAuthTokenAttribute = queryResult.Item.tempauthtoken;
-
-        //     if (dbAuthTokenAttribute !== undefined && dbAuthTokenAttribute === authToken) {
-        //         var userData: string | undefined = undefined;
-        //         var userDataAttribute = queryResult.Item.userdata;
-
-        //         if (userDataAttribute !== undefined) {
-        //             userData = queryResult.Item.userdata as string | undefined;
-        //         }
-
-        //         authResponse = {
-        //             AuthData: userData,
-        //             UserValid: true
-        //         }
-        //     }
-        // }
-
-        return authResponse;
-    }
-
     /**
      * The maximum length of allowed passwords.
      */
     public static readonly MaxPasswordLength = 60;
+    private static readonly collection_UserWritable = "userWritable";
+    private _snapshotListener: () => void = () => {};
 
-    // /**
-    //  * 
-    //  */
-    // public get IsAuthenticated(): boolean {
-    //     return this._isAuthenticated;
-    // }
-
+    /**
+     * Gets the current authorization state for user authorization.
+     */
     public get AuthState(): TAuthState {
         return this._authState;
     }
@@ -344,10 +80,9 @@ export class UserDataAuth {
     }
 
     /**
-     * 
+     * Creates a new instance of this object.
      */
     private constructor() {
-        // this._isAuthenticated = false;
         this._authState = "Checking";
         this._userData = undefined;
         this.salt = BCrypt.genSaltSync();
@@ -369,49 +104,109 @@ export class UserDataAuth {
         firebase.analytics()
 
         // Add a listener for auth state changing.
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                UserDataAuth.GetInstance()._authState = "Authorized";
-                console.log("User " + user.uid + " has logged in.")
+        firebase.auth().onAuthStateChanged(this.HandleAuthStateChanged);
+    }
+
+    private GetUid(): string | undefined {
+        var uid = firebase.auth().currentUser?.uid;
+        if (!uid) {
+            uid = undefined;
+        }
+        return uid;
+    }
+
+
+    /**
+     * Deserialize the data snapshot that is returned form the firestore.
+     */
+    private DeserializeCharData(docSnapshot: firebase.firestore.DocumentSnapshot): CharacterData[] {
+        var charData: CharacterData[] = [];
+
+        if (docSnapshot.exists) {
+            var docData = docSnapshot.data();
+            if (docData !== undefined) {
+                var serializedData: string[] = docData.characterData;
+                charData = serializedData.map(s => CharacterData.DeSerialize(s));
             }
-            else {
-                // This means that either the auth has initialized, or that someone has logged out.
-                UserDataAuth.GetInstance()._authState = "Unauthorized";
-                console.log("User has logged out.")
-            }
-        });
+        }
+
+        return charData;
+    }
+
+    private InitializeAfterAuth(): void {
+        var uid = this.GetUid();
+
+        // Add a listener for specific documents that change on the remote.
+        // https://firebase.google.com/docs/firestore/query-data/listen
+        firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .onSnapshot((doc: firebase.firestore.DocumentSnapshot) => {
+                var charData: CharacterData[] = this.DeserializeCharData(doc);
+                console.log("Snapshot data: " + charData);
+                this.onUserDataChanged_notify(charData);
+            });
     }
 
     /**
      * 
+     * @param user 
+     */
+    private HandleAuthStateChanged(user: firebase.User | null): void {
+        if (user) {
+            UserDataAuth.GetInstance()._authState = "Authorized";
+            console.log("User " + user.uid + " has logged in.")
+
+            UserDataAuth.GetInstance().InitializeAfterAuth();
+
+
+            // var uid = user.uid;
+            
+            // // Add a listener for specific documents that change on the remote.
+            // // https://firebase.google.com/docs/firestore/query-data/listen
+            // firebase
+            //     .firestore()
+            //     .collection(UserDataAuth.collection_UserWritable)
+            //     .doc(uid)
+            //     .onSnapshot(function(doc) {
+            //         console.log("Doc data snapshot:" + doc.data());
+            //     })
+
+            // // Add a listener for specific documents that change on the remote.
+            // // https://firebase.google.com/docs/firestore/query-data/listen
+            // firebase
+            //     .firestore()
+            //     .collection(UserDataAuth.collection_UserWritable)
+            //     .doc(uid)
+            //     .onSnapshot(function (doc) => {
+            //         console.log("Received data from the server.");
+            //         var charData = this.DeserializeCharData(doc);
+            //         console.log("Data received: " + charData);
+            //         this.onUserDataChanged_notify(charData);
+            //     });
+        }
+        else {
+            // This means that either the auth has initialized, or that someone has logged out.
+            UserDataAuth.GetInstance()._authState = "Unauthorized";
+            console.log("User has logged out.")
+
+            // Calling this listener will unsubscribe from this event.
+            this._snapshotListener();
+        }
+    }
+
+    /**
+     * Logs out from any current user instances.
      */
     public Logout(): void {
         firebase.auth().signOut();
-        // // Set auth to false
-        // this._isAuthenticated = false;
-
-        // // Delete local credentials
-        // localStorage.removeItem(UserDataAuth.tempAuthStorageIndex);
-        // localStorage.removeItem(UserDataAuth.usernameStorageIndex);
-    }
-
-    private GetUserDataFromJson(json: string | undefined): LantsPantsUserData {
-        var userData: LantsPantsUserData = new LantsPantsUserData();
-
-        // If the response contained auth data, that means that this person has something
-        // saved. Update what their user data should be.
-        if (json !== undefined) {
-            var parsedJson = JSON.parse(json);
-            Object.assign(userData, parsedJson);
-        }
-
-        return userData;
     }
 
     /**
-     * 
-     * @param email 
-     * @param password 
+     * Logs into a user instance using an email-password combination.
+     * @param email The email of the user to login.
+     * @param password The password of the user to login.
      */
     public async Login(email: string, password: string): Promise<LoginResponse> {
         var loginResponse: LoginResponse = {
@@ -419,99 +214,34 @@ export class UserDataAuth {
             Errors: []
         };
 
-        // var response: AuthResponse = await this.SignInUsingCredentials(email, password);
         var username: string | null | undefined = null;
+
         await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-            .then(function() {
-                return firebase.auth().signInWithEmailAndPassword(email, password)
-                    .then(function (credentials: firebase.auth.UserCredential) {
-                        loginResponse.DidLogin = true;
-                        username = credentials.additionalUserInfo?.username;
-                    })
-                    .catch(function (error) {
-                        var errorMessage = error.message;
-                        console.error(errorMessage);
-                        loginResponse.Errors.push(errorMessage);
-                    });
-            })
-            .catch(function(error) {
+            .catch(function (error) {
                 var errorMessage = error.message;
                 console.error(errorMessage);
                 loginResponse.Errors.push(errorMessage);
             });
         
-        // if (loginResponse.Errors.length <= 0) {
-        //     await firebase.auth().signInWithEmailAndPassword(email, password)
-        //         .then(function(credentials: firebase.auth.UserCredential) {
-        //             loginResponse.DidLogin = true;
-        //             username = credentials.additionalUserInfo?.username;
-        //         })
-        //         .catch(function(error) {
-        //             var errorMessage = error.message;
-        //             console.error(errorMessage);
-        //             loginResponse.Errors.push(errorMessage);
-        //         });
-        // }
-        // // if (credentials.user)
-
-        // if (credentials.user) {
-        //     response.UserValid = true;
-        // }
-
-        // if (response.UserValid) {
-        //     let userData: LantsPantsUserData = this.GetUserDataFromJson(response.AuthData);
-        //     this._userData = userData;
-        //     this._username = email;
-        //     this._isAuthenticated = true;
-        // }
-
-        // if (loginResponse.DidLogin) {
-        //     this = true;
-        // }
-
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(function (credentials: firebase.auth.UserCredential) {
+                loginResponse.DidLogin = true;
+                username = credentials.additionalUserInfo?.username;
+            })
+            .catch(function (error) {
+                var errorMessage = error.message;
+                console.error(errorMessage);
+                loginResponse.Errors.push(errorMessage);
+            });
+        
         return loginResponse;
     }
 
-    // /**
-    //  * 
-    //  */
-    // public async LoginUsingStoredCredentials(): Promise<boolean> {
-    //     // var tempAuthToken: string | null = localStorage.getItem(UserDataAuth.tempAuthStorageIndex);
-    //     // var username: string | null = localStorage.getItem(UserDataAuth.usernameStorageIndex);
-
-    //     // var response: AuthResponse = {
-    //     //     AuthData: "",
-    //     //     UserValid: false
-    //     // };
-
-    //     // firebase.auth().app.auth.
-
-    //     // var currentUser = firebase.auth().currentUser;
-    //     // if (currentUser) {
-    //     //     response.UserValid = true;
-    //     // }
-
-    //     // if (tempAuthToken && username) {
-    //     //     response = await this.SignInUsingTempAuthToken(username, tempAuthToken);
-    //     //     if (response.UserValid) {
-    //     //         let userData: LantsPantsUserData = this.GetUserDataFromJson(response.AuthData);
-    //     //         this._userData = userData;
-    //     //         this._username = username;
-    //     //         this._isAuthenticated = true;
-    //     //     }
-    //     //     else {
-    //     //         // It didn't work. Just remove this data; don't let other things try any longer.
-    //     //         localStorage.removeItem(UserDataAuth.tempAuthStorageIndex);
-    //     //         localStorage.removeItem(UserDataAuth.usernameStorageIndex);
-    //     //     }
-    //     // }
-
-    //     return response.UserValid;
-    // }
-
-
     /**
-     * 
+     * Creates a new user asynchronously.
+     * @param email The email of the new user to create.
+     * @param password The password for the new user.
+     * @param passwordDupe A duplicate of the password that the user has provided.
      */
     public async CreateAccount(email: string, password: string, passwordDupe: string): Promise<CreateUserResponse> {
         var createResponse: CreateUserResponse = {
@@ -519,6 +249,8 @@ export class UserDataAuth {
             Errors: []
         };
 
+        // This may be a little overkill, but don't compare plaintext passwords, use something more robust
+        // like BCrypt to compare.
         var passwordHash: string = BCrypt.hashSync(password, this.salt);
         var passwordsMatch: boolean = BCrypt.compareSync(passwordDupe, passwordHash);
 
@@ -549,11 +281,14 @@ export class UserDataAuth {
         return createResponse;
     }
 
+    /**
+     * Checks for access being granted to the user.
+     */
     public async CheckForAccess(): Promise<boolean> {
         if (this._authState === "Checking") {
             await new Promise<void>((resolve, reject) => {
-                // Reject the promise if we wait > 5 seconds before getting a response.
-                var timeoutWaiting = setTimeout(() => reject(), 5000);
+                // Reject the promise if we wait > X seconds before getting a response.
+                var timeoutWaiting = setTimeout(() => reject(), 10000);
 
                 firebase.auth().onAuthStateChanged(function(user) {
                     // If we got an answer, don't reject.
@@ -567,7 +302,44 @@ export class UserDataAuth {
     }
 
     /**
-     * 
+     * Updates the backend with the character data that we need to update.
+     */
+    public async UpdateCharacterData(charData: CharacterData[]): Promise<void> {
+        var uid = this.GetUid();
+        var serializedData: string[] = charData.map(i => i.Serialize());
+
+        return firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .set({
+                characterData: serializedData
+            }).then(resolved => {
+                console.log("Successfully wrote character data.\n" + serializedData);
+            }).catch(reason => {
+                console.error("Failed to write character data.\n" + reason);
+            });
+    }
+
+    /**
+     * Fetches new character data from the backend.
+     */
+    public async FetchCharacterData(): Promise<CharacterData[]> {
+        var uid = this.GetUid();
+
+        var docSnapshot = await firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .get();
+
+        var charData = this.DeserializeCharData(docSnapshot);
+
+        return charData;
+    }
+
+    /**
+     * Gets the singleton instance of this object.
      */
     public static GetInstance(): UserDataAuth {
         if (!this._instance) {
@@ -575,5 +347,15 @@ export class UserDataAuth {
         }
 
         return this._instance;
+    }
+
+    private onUserDataChanged_listeners: ((userdata: CharacterData[]) => void)[] = [];
+
+    private onUserDataChanged_notify(userData: CharacterData[]) {
+        this.onUserDataChanged_listeners.forEach(e => e(userData));
+    }
+
+    public onUserDataChanged(e: (userdata: CharacterData[]) => void) {
+        this.onUserDataChanged_listeners.push(e);
     }
 }

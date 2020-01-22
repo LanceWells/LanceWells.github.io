@@ -1,0 +1,33 @@
+var charData: CharacterData[] = [];
+
+var item1: IItem = new ItemWeapon();
+item1.key = "Glaive";
+
+var item2: IItem = new ItemWeapon();
+item2.key = "Longsword";
+
+var item3: IItem = new ItemPotion();
+item3.key = "SmallHealing";
+
+var char1: CharacterData = new CharacterData();
+char1.characterName = "Hurdy Gurdy";
+char1.itemData.push(item1, item2, item3);
+
+charData.push(char1);
+
+UserDataAuth.GetInstance().UpdateCharacterData(charData).then(fulfilled => {
+    console.log("Updated user data");
+    UserDataAuth.GetInstance().FetchCharacterData();
+
+
+
+
+
+}, rejected => {
+    console.error("Failed to update user data" + rejected);
+});
+
+
+
+
+

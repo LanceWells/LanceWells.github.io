@@ -1,5 +1,5 @@
-import { ICharacters } from '../../Items/Interfaces/ICharacters';
+import { CharacterData } from '../../Items/Interfaces/CharacterData';
 
 export class LantsPantsUserData {
-    characterData: ICharacters = {};
+    charData: CharacterData[] = [];
 }

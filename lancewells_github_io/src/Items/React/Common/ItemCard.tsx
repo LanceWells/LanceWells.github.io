@@ -115,9 +115,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         if (this.props.cardInteractions.some(interaction => interaction == "Purchase") && this.props.onPurchaseButton !== undefined) {
             var purchaseButton: JSX.Element = (
                 <PurchaseButton
-                    itemKey={itemDetails.key}
-                    itemType={itemDetails.type}
-                    itemPrice={itemDetails.itemCost}
+                    item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
                     callbackFunction={this.props.onPurchaseButton as TPurchaseClick}
                 />

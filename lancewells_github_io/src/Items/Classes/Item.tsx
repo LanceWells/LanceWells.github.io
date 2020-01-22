@@ -1,5 +1,6 @@
 import React from 'react';
-import { IItem } from '../Interfaces/IItem';
+import { IItem, IItemJson } from '../Interfaces/IItem';
+import { TItemModifications } from '../Types/TCardModifications';
 
 export abstract class Item implements IItem {
     RenderItemDescription(): JSX.Element {
@@ -18,6 +19,10 @@ export abstract class Item implements IItem {
             </div>
         );
     }
+
+    GetEqualityString(): string {
+        return (JSON.stringify(this as IItemJson));
+    }
     
     key: string = "";
     title: string = "";
@@ -27,6 +32,7 @@ export abstract class Item implements IItem {
     source: import("../Types/TSourceType").TSourceType = "Homebrew";
     itemCost: number = 0;
     requiresAttunement: boolean = false;
+    modifications: TItemModifications[] = [];
     type: import("../Types/TItemType").TItemType = "Wondrous";
 
     protected readonly paragraphMargins: string = "0 15px 0 15px";

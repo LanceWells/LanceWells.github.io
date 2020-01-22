@@ -13,8 +13,8 @@ import { TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
 import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
-import { TItemType } from '../../Types/TItemType';
 import { ItemSource } from '../../Classes/ItemSource';
+import { CharacterState } from '../../Classes/CharacterState';
 
 /**
  * @description
@@ -152,12 +152,14 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         });
     }
 
+    componentDidMount() {
+        CharacterState.GetInstance();
+    }
+
     /**
      * @description Renders an instance of this class.
      */
     render() {
-        var item: IItem = this.state.itemDetails;
-
         /* Keep these as consts because if we were to use a function callback when closing the Modal,
          * that would result in an exception (because we're then in a state that doesn't recognize)
          * ItemShop as 'this'. */
@@ -185,12 +187,13 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             })
         };
 
-        const handlePurchaseItem: TPurchaseClick = (key: string, type: TItemType, cost: number) => {
-            InventoryStorage.GetInstance().AddItem(key, type);
+        const handlePurchaseItem: TPurchaseClick = (item: IItem) => {
+            // InventoryStorage.GetInstance().AddItem(key, type);
+            CharacterState.GetInstance().AddItemToCurrentCharacter(item);
         }
 
         const inventoryButtonCallback = () => {
-            InventoryStorage.GetInstance().AddItem(item.key, item.type);
+            // InventoryStorage.GetInstance().AddItem(item.key, item.type);
         }
 
         return (

@@ -4,7 +4,6 @@ import { ItemArmor, IItemArmorJson, IItemIsItemArmor } from './ItemArmor';
 import { ItemWondrous, IItemWondrousJson, IItemIsItemWondrous } from './ItemWondrous';
 import { TItemType } from "../Types/TItemType";
 import { IItemJson, IItem } from "../Interfaces/IItem";
-import * as AWS from 'aws-sdk';
 
 /**
  * @description A class used to fetch items based on a specific index and call.
@@ -17,106 +16,7 @@ export class ItemSource {
 
     private static instance: ItemSource;
 
-    private DynamoDb: AWS.DynamoDB;
-
-    private constructor() {
-        AWS.config.update({
-            region: 'us-east-2',
-            accessKeyId: process.env.REACT_APP_DYNAMO_KEY,
-            secretAccessKey: process.env.REACT_APP_DYNAMODB_SECRET_KEY
-        })
-
-        this.DynamoDb = new AWS.DynamoDB();
-
-
-
-
-
-        // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property
-        // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html
-        // This is how to insert a single item!!
-        // var putItemParams = {
-        //     TableName: this._tableName,
-        //     Item: {
-        //         'ItemType': { S: "Potion" },
-        //         'key': { S: "TestItem" },
-        //         'itemJsonData': { S: '{"key":"DarkContract","title":"Potion of the Dark Contract","description":"A dark, bubbling brew.","details":"Light that enters the bottle does not return. On consuming this potion, take 2d4 necrotic damage. Your next attack gains bonus damage equal to twice the necrotic damage that you have taken.","iconSource":"./images/Item_Shop/Items/Potions/DarkContractPotion.png","source":"Homebrew","requiresAttunement":false,"hasWithdrawalEffect":false,"itemCost":100,"type":"Potion"    }' }
-        //     }
-        // }
-
-        // this.DynamoDb.putItem(putItemParams, function(err, data) {
-        //     if (err) {
-        //         console.error("AWS Error", err);
-        //     } else {
-        //         console.log("AWS Success", data);
-        //     }
-        // });
-
-
-
-
-
-        // This is how to get a single item!!
-        // var getItemParams = {
-        //     TableName: this._tableName,
-        //     Key: {
-        //         'ItemType': {S: 'Weapon'},
-        //         'key': {S: 'SnakeStaff'}
-        //     },
-        //     ProjectionExpression: 'itemJsonData'
-        // };
-
-        // var item: ItemWeapon;
-        // this.DynamoDb.getItem(getItemParams, function(err, data) {
-        //     if (err) {
-        //         console.error("AWS Error", err);
-        //     } else {
-        //         console.log("AWS Success", data.Item);
-        //         if (data.Item !== undefined) { // If the items are right, but we didn't get anything, this will return undefined.
-        //             var itemContent: string = data.Item.itemJsonData.S as string; // If the projected expression wasn't found as an attribute, but the item was found, then itemJsonData will be undefined.
-        //             console.log(itemContent);
-        //             var parsedJson = JSON.parse(itemContent);
-        //             console.log(parsedJson);
-        //             var typedJson = parsedJson as IItemWeaponJson;
-        //             console.log(typedJson);
-        //             item = ItemWeapon.fromJson(typedJson);
-        //             console.log(item);
-        //         }
-        //     }
-        // });
-
-        // var getItemParams = {
-        //     TableName: this._tableName,
-        //     Key: {
-        //         'ItemType': { S: 'Weapon'},
-        //         'key': {S: 'SnakeStaff'}
-        //     },
-        //     ProjectionExpression: 'expressionthatdoesnotexist'
-        // };
-
-        // var item: ItemWeapon;
-        // this.DynamoDb.getItem(getItemParams, function(err, data) {
-        //     if (err) {
-        //         console.error("AWS Error", err);
-        //     } else {
-        //         console.log("AWS Success", data.Item); 
-        //         if (data.Item !== undefined) {
-        //             var itemContent: string = data.Item.itemJsonData.S as string;
-        //             console.log(itemContent);
-        //             var parsedJson = JSON.parse(itemContent);
-        //             console.log(parsedJson);
-        //             var typedJson = parsedJson as IItemWeaponJson;
-        //             console.log(typedJson);
-        //             item = ItemWeapon.fromJson(typedJson);
-        //             console.log(item);
-        //         }
-        //     }
-        // });
-
-
-
-
-    }
+    private constructor() { }
 
     public static GetInstance() {
         if (!ItemSource.instance) {
@@ -199,6 +99,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -226,6 +127,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -255,6 +157,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -282,6 +185,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -310,6 +214,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 30,
         longRange: 120,
         properties: [
@@ -337,6 +242,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -365,6 +271,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -391,6 +298,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -427,6 +335,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -454,6 +363,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -491,6 +401,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -519,6 +430,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -552,6 +464,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -580,6 +493,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 80,
         longRange: 230,
         properties: [
@@ -609,6 +523,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 80,
         longRange: 230,
         properties: [
@@ -637,6 +552,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 30,
         longRange: 120,
         properties: [
@@ -664,6 +580,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -700,6 +617,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -729,6 +647,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -769,6 +688,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
         source: "Official",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 50,
         type: "Potion",
@@ -781,6 +701,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: true,
         itemCost: 100,
         type: "Potion",
@@ -793,6 +714,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
@@ -805,6 +727,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: true,
         itemCost: 100,
         type: "Potion",
@@ -817,6 +740,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/poison.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
@@ -829,6 +753,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
@@ -841,6 +766,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
         type: "Potion",
@@ -853,6 +779,7 @@ const ItemMap_Potions: Array<IItemPotionJson> =
         iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
         source: "Homebrew",
         requiresAttunement: false,
+        modifications: [],
         hasWithdrawalEffect: true,
         itemCost: 250,
         type: "Potion",
@@ -871,6 +798,7 @@ const ItemMap_Wondrous: Array<IItemWondrousJson> =
         iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
         source: "Homebrew",
         requiresAttunement: true,
+        modifications: [],
         itemCost: 100,
         type: "Wondrous",
     },
@@ -882,6 +810,7 @@ const ItemMap_Wondrous: Array<IItemWondrousJson> =
         iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
         source: "Homebrew",
         requiresAttunement: true,
+        modifications: [],
         itemCost: 100,
         type: "Wondrous",
     },
@@ -893,6 +822,7 @@ const ItemMap_Wondrous: Array<IItemWondrousJson> =
         iconSource: './images/Item_Shop/Items/Rings/Ring Floral.png',
         source: "Homebrew",
         requiresAttunement: true,
+        modifications: [],
         itemCost: 50,
         type: "Wondrous",
     },

@@ -2,6 +2,10 @@ import React, { FormEvent, ChangeEvent } from 'react';
 import './LoginPage.css'
 import { UserDataAuth, CreateUserResponse, LoginResponse } from '../Classes/UserDataAuth';
 import { Redirect, Link } from 'react-router-dom';
+import { CharacterData } from '../../Items/Interfaces/CharacterData';
+import { IItem } from '../../Items/Interfaces/IItem';
+import { ItemWeapon } from '../../Items/Classes/ItemWeapon';
+import { ItemPotion } from '../../Items/Classes/ItemPotion';
 
 type LoginPageState = "CheckingCredentials" | "Login" | "LoggingIn" | "LoggedIn" | "LoggingOut" | "CreateAnAccount";
 
@@ -59,7 +63,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
 
         // Attempt to log in using UserDataAuth.
         var loginPromise: Promise<LoginResponse> = UserDataAuth.GetInstance().Login(this.currentUsername, this.currentPassword);
-
+        
         loginPromise.then(
             loggedIn => {
                 if (loggedIn.DidLogin) {

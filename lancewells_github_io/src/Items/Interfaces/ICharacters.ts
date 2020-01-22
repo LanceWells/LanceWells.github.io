@@ -1,5 +1,5 @@
-import { ICharacterData } from './ICharacterData';
+import { CharacterData } from './CharacterData';
 
 export interface ICharacters {
-    [index: string]: ICharacterData[];
+    [index: string]: CharacterData[];
 }
