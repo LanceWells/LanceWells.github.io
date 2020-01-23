@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { UserDataAuth } from '../Classes/UserDataAuth';
 
 export interface IProtectedRouteState {

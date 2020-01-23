@@ -17,6 +17,25 @@ body {
     padding: 30px;
 }
 
+@media screen and (min-width: 1280px) {
+    .login-container {
+        min-width: 50%;
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 1279px) {
+    .login-container {
+        min-width: 95%;
+        max-width: 95%;
+    }
+}
+
+.login-button-container {
+    display: inline-block;
+    flex-wrap: wrap;
+}
+
 .login-header {
     width: 100%;
 }
@@ -31,6 +50,7 @@ body {
     font-family: "Press Start 2P";
     padding: 5px 15px;
     margin: 10px 5px;
+    display: block;
 }
 
 .login-error-messages {
@@ -44,3 +64,4 @@ body {
     text-align: center;
     display: inline-block;
 }
+

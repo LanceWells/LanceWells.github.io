@@ -25,6 +25,7 @@ export function CardIcon(props: ICardIconProps) {
             }>
             <div className="card-icon">
                 <img
+                    alt="Card Icon"
                     src={props.iconSource}
                     style={{
                         width: `${props.width}px`,

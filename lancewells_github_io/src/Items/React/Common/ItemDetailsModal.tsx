@@ -75,29 +75,6 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
     }
 
     render() {
-        // https://codesandbox.io/s/qqn6nxjp9
-        const handleInventoryButton: () => void = () => {
-            this.setState({
-                showAlert: true
-            }, () => {
-                window.setTimeout(() => {
-                    this.setState({
-                        showAlert: false
-                    })
-                }, 3000)
-            })
-            this.props.inventoryButtonCallback(this.props.itemDetails);
-        }
-
-        // Temporarily removed. The card button is much nicer. May add this back later.
-        // <Button
-        //     variant='dark'
-        //     onClick={handleInventoryButton}
-        //     disabled={this.state.showAlert}
-        //     style={this.state.showAlert ? { cursor: "default" } : { cursor: "pointer" }}>
-        //     {this.props.inventoryButtonText}
-        // </Button>
-
         return (
             <Modal
                 show={this.props.show}

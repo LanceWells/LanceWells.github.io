@@ -55,7 +55,6 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     }
 
     private RollAttack(): void {
-        var timesRolled: number = 0;
         var randomNumberList: number = Math.floor(Math.random() * this.randomRollNumbers.length);
 
         for (let i: number = 0; i < this.rollDelay.length; i++) {
@@ -70,10 +69,10 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             this.setState({
                 attackRoll: this.GetDieValue(20)
             })
-            if (this.state.attackRoll == 20) {
+            if (this.state.attackRoll === 20) {
                 this.roll20Audio.play();
             }
-            else if (this.state.attackRoll == 1) {
+            else if (this.state.attackRoll === 1) {
                 this.roll1Audio.play();
             }
         }, this.rollDelay[this.rollDelay.length - 1] + 350)
@@ -153,7 +152,10 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                 </Modal.Header>
                 <Modal.Body>
                     <div className="roll-window-image">
-                        <img src="./images/Item_Shop/RollImage.png" />
+                        <img
+                            alt="Dice Rolling"
+                            src="./images/Item_Shop/RollImage.png"
+                        />
                     </div>
                     <hr className='white-hr' />
                     <h5>Attack</h5>

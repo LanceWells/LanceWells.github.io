@@ -2,10 +2,6 @@ import React, { FormEvent, ChangeEvent } from 'react';
 import './LoginPage.css'
 import { UserDataAuth, CreateUserResponse, LoginResponse } from '../Classes/UserDataAuth';
 import { Redirect, Link } from 'react-router-dom';
-import { CharacterData } from '../../Items/Interfaces/CharacterData';
-import { IItem } from '../../Items/Interfaces/IItem';
-import { ItemWeapon } from '../../Items/Classes/ItemWeapon';
-import { ItemPotion } from '../../Items/Classes/ItemPotion';
 
 type LoginPageState = "CheckingCredentials" | "Login" | "LoggingIn" | "LoggedIn" | "LoggingOut" | "CreateAnAccount";
 
@@ -169,9 +165,9 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <h2 className="login-header">
                             Login
                         </h2>
-                        <p className="login-error-messages">
+                        <div className="login-error-messages">
                             {this.getErrorMessages()}
-                        </p>
+                        </div>
                         <form className="login-form" action="/" method="POST" onSubmit={this.submitLogin.bind(this)}>
                             <br /> <br />
                             <span>Email:</span>
@@ -182,13 +178,24 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                             <br />
                             <input type="password" name="password" onChange={this.handlePasswordInput.bind(this)} />
                             <br /> <br />
-                            <input className="login-button" type="submit" value="Log In" />
+                            <input
+                                className="login-button"
+                                style={{ display: "initial" }}
+                                type="submit"
+                                value="Log In" />
                         </form>
-                        <button
-                            className="login-button"
-                            onClick={this.submitGoToCreateAccount.bind(this)}>
-                            Create An Account
-                        </button>
+                        <div className="login-button-container">
+                            <button
+                                className="login-button"
+                                onClick={this.submitGoToCreateAccount.bind(this)}>
+                                Create An Account
+                            </button>
+                            <Link to="/">
+                                <button className="login-button">
+                                    Back to Main Page
+                            </button>
+                            </Link>
+                        </div>
                     </div>
                 );
             }
@@ -208,9 +215,13 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <button className="login-button" onClick={this.submitLogout.bind(this)}>
                             Log Out
                         </button>
-                        <Link to="/">
-                            Back to Main Page
-                        </Link>
+                        <div>
+                            <Link to="/">
+                                <button className="login-button">
+                                    Back to Main Page
+                            </button>
+                            </Link>
+                        </div>
                     </div>
                 )
             }
@@ -225,9 +236,9 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <h2 className="login-header">
                             Create An Account
                         </h2>
-                        <p className="login-error-messages">
+                        <div className="login-error-messages">
                             {this.getErrorMessages()}
-                        </p>
+                        </div>
                         <form className="login-form" action="/" method="POST" onSubmit={this.submitCreateAccount.bind(this)}>
                             <br /> <br />
                             <span>Email:</span>
@@ -242,13 +253,19 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                             <br />
                             <input type="password" name="passwordDupe" onChange={this.handlePassDupeInput.bind(this)} />
                             <br /> <br />
-                            <input className="login-button" type="submit" value="Create Account" />
+                            <input
+                                className="login-button"
+                                type="submit"
+                                style={{ display: "initial" }}
+                                value="Create Account" />
                         </form>
-                        <button
-                            className="login-button"
-                            onClick={this.submitBackToLogin.bind(this)}>
-                            Back To Login
+                        <div>
+                            <button
+                                className="login-button"
+                                onClick={this.submitBackToLogin.bind(this)}>
+                                Back To Login
                         </button>
+                        </div>
                     </div>
                 )
             }
@@ -265,6 +282,13 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <h2 className="login-header">
                             Login Page
                         </h2>
+                        <div>
+                            <Link to="/">
+                                <button className="login-button">
+                                    Back to Main Page
+                            </button>
+                            </Link>
+                        </div>
                     </div>
                 )
             }

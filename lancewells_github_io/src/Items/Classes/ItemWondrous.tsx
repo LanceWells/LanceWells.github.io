@@ -1,4 +1,3 @@
-import React from 'react';
 import { IItemJson } from '../Interfaces/IItem';
 import { Item } from './Item';
 import { TSourceType } from "../Types/TSourceType";

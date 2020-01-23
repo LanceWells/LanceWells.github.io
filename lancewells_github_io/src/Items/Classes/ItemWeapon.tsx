@@ -146,7 +146,7 @@ export function IItemIsItemWeapon(item: IItemJson): item is ItemWeapon {
     var isType: boolean = true;
 
     isType = isType && (item as ItemWeapon).type === "Weapon";
-    isType = isType && (item as ItemWeapon).attacks != undefined;
+    isType = isType && (item as ItemWeapon).attacks !== undefined;
 
     return isType;
 }

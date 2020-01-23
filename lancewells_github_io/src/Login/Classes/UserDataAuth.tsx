@@ -149,6 +149,16 @@ export class UserDataAuth {
                 console.log("Snapshot data: " + charData);
                 this.onUserDataChanged_notify(charData);
             });
+
+        var email = firebase.auth().currentUser?.email;
+        if (email && email !== undefined) {
+            this._username = email;
+        }
+    }
+    
+    private UnsubscribeSnapshotListener(): void {
+        // Calling this listener will unsubscribe from this event.
+        this._snapshotListener();
     }
 
     /**
@@ -161,40 +171,13 @@ export class UserDataAuth {
             console.log("User " + user.uid + " has logged in.")
 
             UserDataAuth.GetInstance().InitializeAfterAuth();
-
-
-            // var uid = user.uid;
-            
-            // // Add a listener for specific documents that change on the remote.
-            // // https://firebase.google.com/docs/firestore/query-data/listen
-            // firebase
-            //     .firestore()
-            //     .collection(UserDataAuth.collection_UserWritable)
-            //     .doc(uid)
-            //     .onSnapshot(function(doc) {
-            //         console.log("Doc data snapshot:" + doc.data());
-            //     })
-
-            // // Add a listener for specific documents that change on the remote.
-            // // https://firebase.google.com/docs/firestore/query-data/listen
-            // firebase
-            //     .firestore()
-            //     .collection(UserDataAuth.collection_UserWritable)
-            //     .doc(uid)
-            //     .onSnapshot(function (doc) => {
-            //         console.log("Received data from the server.");
-            //         var charData = this.DeserializeCharData(doc);
-            //         console.log("Data received: " + charData);
-            //         this.onUserDataChanged_notify(charData);
-            //     });
         }
         else {
             // This means that either the auth has initialized, or that someone has logged out.
             UserDataAuth.GetInstance()._authState = "Unauthorized";
             console.log("User has logged out.")
 
-            // Calling this listener will unsubscribe from this event.
-            this._snapshotListener();
+            UserDataAuth.GetInstance().UnsubscribeSnapshotListener();
         }
     }
 
@@ -216,8 +199,6 @@ export class UserDataAuth {
             Errors: []
         };
 
-        var username: string | null | undefined = null;
-
         await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
             .catch(function (error) {
                 var errorMessage = error.message;
@@ -228,7 +209,6 @@ export class UserDataAuth {
         await firebase.auth().signInWithEmailAndPassword(email, password)
             .then(function (credentials: firebase.auth.UserCredential) {
                 loginResponse.DidLogin = true;
-                username = credentials.additionalUserInfo?.username;
             })
             .catch(function (error) {
                 var errorMessage = error.message;

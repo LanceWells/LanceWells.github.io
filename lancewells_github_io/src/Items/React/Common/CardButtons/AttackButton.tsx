@@ -33,6 +33,7 @@ export function AttackButton(props: IAttackButtonProps) {
             className="card-button"
             onClick={() => { props.callbackFunction(props.attackName, props.attacks) }}>
             <img
+                alt="Attack Button"
                 className="card-button-icon"
                 src='./images/Item_Shop/ItemCards/Icons/Button_Attack.png'
                 width={props.cardIconSize}

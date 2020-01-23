@@ -1,12 +1,8 @@
 import React from 'react';
 import { TPurchaseClick } from '../../../Types/CardButtonCallbackTypes/TPurchaseClick';
-import { TItemType } from '../../../Types/TItemType';
 import { IItem } from '../../../Interfaces/IItem';
 
 interface IPurchaseButtonProps {
-    // itemKey: string;
-    // itemType: TItemType;
-    // itemPrice: number;
     item: IItem;
     cardIconSize: number;
     callbackFunction: TPurchaseClick;
@@ -63,6 +59,7 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
                 style={this.GetCustomButtonProperties()}
                 onClick={handleButtonClick}>
                 <img
+                    alt="card purchase button"
                     className="card-button-icon"
                     src='./images/Item_Shop/ItemCards/Icons/Button_Purchase.png'
                     width={this.props.cardIconSize}
@@ -81,6 +78,7 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
                         {this.props.item.itemCost}
                     </div>
                     <img
+                        alt="coin icon"
                         className="card-button-stat-icon"
                         width={this.props.cardIconSize}
                         height={this.props.cardIconSize}

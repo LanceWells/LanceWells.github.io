@@ -1,11 +1,7 @@
 import './Inventory.css';
 import React from 'react';
-// import { InventoryStorage } from '../../Classes/InventoryStorage';
 import { CharacterState } from '../../Classes/CharacterState';
-import { ItemArmor } from '../../Classes/ItemArmor';
-import { ItemPotion } from '../../Classes/ItemPotion';
 import { ItemWeapon } from "../../Classes/ItemWeapon";
-import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { IItemJson } from '../../Interfaces/IItem';
 
 interface IInventoryProps {

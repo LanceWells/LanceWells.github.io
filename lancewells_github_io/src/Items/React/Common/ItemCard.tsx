@@ -90,7 +90,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         var buttons: JSX.Element[] = [];
         var itemDetails: IItemJson = this.props.itemDetails;
 
-        if (this.props.cardInteractions.some(interaction => interaction == "Use")) {
+        if (this.props.cardInteractions.some(interaction => interaction === "Use")) {
             // This uses a type guard to enforce that itemDetails must be a specific type.
             // https://medium.com/ovrsea/checking-the-type-of-an-object-in-typescript-the-type-guards-24d98d9119b0
             if (IItemIsItemWeapon(itemDetails) && this.props.onAttackButton !== undefined) {
@@ -112,7 +112,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             }
         }
 
-        if (this.props.cardInteractions.some(interaction => interaction == "Purchase") && this.props.onPurchaseButton !== undefined) {
+        if (this.props.cardInteractions.some(interaction => interaction === "Purchase") && this.props.onPurchaseButton !== undefined) {
             var purchaseButton: JSX.Element = (
                 <PurchaseButton
                     item={this.props.itemDetails}
@@ -411,6 +411,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                         </div>
                     </div>
                     <img
+                        alt="card item"
                         className="card-item-image"
                         src={this.props.itemDetails.iconSource}
                         height={this.itemAreaDefaultSize * this.cardRatio}

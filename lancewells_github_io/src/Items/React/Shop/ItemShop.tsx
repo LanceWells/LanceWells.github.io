@@ -5,7 +5,6 @@ import { IItemJson, IItem } from "../../Interfaces/IItem";
 import { TSourceType } from "../../Types/TSourceType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
-import { InventoryStorage } from '../../Classes/InventoryStorage';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { AttackRollModal } from '../Common/AttackRollModal';
 import { TAttack } from '../../Types/TAttack';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IItemJson } from '../Interfaces/IItem';
 import { Item } from './Item';
 import { TSourceType } from "../Types/TSourceType";
@@ -36,8 +35,8 @@ export function IItemIsItemArmor(item: IItemJson) : item is ItemArmor {
     var isType: boolean = true;
 
     isType = isType && (item as ItemArmor).type === "Armor";
-    isType = isType && (item as ItemArmor).addDex != undefined;
-    isType = isType && (item as ItemArmor).stealthDisadvantage != undefined;
+    isType = isType && (item as ItemArmor).addDex !== undefined;
+    isType = isType && (item as ItemArmor).stealthDisadvantage !== undefined;
 
     return isType;
 }
