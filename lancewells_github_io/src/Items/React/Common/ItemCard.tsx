@@ -375,7 +375,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                         onClick={() => this.props.onItemClick(this.props.itemDetails)}
                         style={{
                             width: `${this.cardWidth}px`,
-                            height: `${this.cardHeight - (this.descAreaDefaultSize * this.cardRatio)}px`
+                            height: `${this.cardHeight}px`
                         }}
                     />
                     <span
