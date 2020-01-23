@@ -32,8 +32,10 @@ body {
 }
 
 .login-button-container {
-    display: inline-block;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
 }
 
 .login-header {

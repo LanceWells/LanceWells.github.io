@@ -212,14 +212,14 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         </h2>
                         <h3>You are logged in as {UserDataAuth.GetInstance().Username}</h3>
                         <br /><br />
-                        <button className="login-button" onClick={this.submitLogout.bind(this)}>
-                            Log Out
-                        </button>
-                        <div>
+                        <div className="login-button-container">
+                            <button className="login-button" onClick={this.submitLogout.bind(this)}>
+                                Log Out
+                            </button>
                             <Link to="/">
                                 <button className="login-button">
                                     Back to Main Page
-                            </button>
+                                </button>
                             </Link>
                         </div>
                     </div>
@@ -259,7 +259,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                                 style={{ display: "initial" }}
                                 value="Create Account" />
                         </form>
-                        <div>
+                        <div className="login-button-container">
                             <button
                                 className="login-button"
                                 onClick={this.submitBackToLogin.bind(this)}>
@@ -282,7 +282,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <h2 className="login-header">
                             Login Page
                         </h2>
-                        <div>
+                        <div className="login-button-container">
                             <Link to="/">
                                 <button className="login-button">
                                     Back to Main Page

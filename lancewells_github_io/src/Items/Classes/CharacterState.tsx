@@ -45,6 +45,8 @@ export class CharacterState {
                     this._currentCharacter = firstCharacterInList.characterName;
                 }
             }
+
+            this.UpdateInventory(charData);
         })
     }
 
