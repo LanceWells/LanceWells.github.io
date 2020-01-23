@@ -14,7 +14,7 @@ export type TCardInteractions =  "Purchase" | "Gather" | "Use";
 
 interface IItemCardProps {
     itemDetails: IItem;
-    onItemClick: TItemClick;
+    onItemClick: TItemClick | undefined;
     onAttackButton: TAttackClick | undefined;
     onPurchaseButton: TPurchaseClick | undefined;
     cardInteractions: TCardInteractions[];
@@ -372,7 +372,11 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     <Button
                         variant="link"
                         className="card-details-button"
-                        onClick={() => this.props.onItemClick(this.props.itemDetails)}
+                        onClick={() =>{
+                            if (this.props.onItemClick !== undefined) {
+                                this.props.onItemClick(this.props.itemDetails)
+                            }
+                        }}
                         style={{
                             width: `${this.cardWidth}px`,
                             height: `${this.cardHeight}px`

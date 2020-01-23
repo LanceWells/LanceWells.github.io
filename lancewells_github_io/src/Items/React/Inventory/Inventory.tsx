@@ -2,23 +2,30 @@ import './Inventory.css';
 import React from 'react';
 import { CharacterState } from '../../Classes/CharacterState';
 import { ItemWeapon } from "../../Classes/ItemWeapon";
-import { IItemJson } from '../../Interfaces/IItem';
+import { IItem } from '../../Interfaces/IItem';
+import { ItemCard } from '../Common/ItemCard';
 
 interface IInventoryProps {
 }
 
 interface IInventoryState {
-    armorItems: Array<IItemJson>;
-    potionItems: Array<IItemJson>;
-    weaponItems: Array<IItemJson>;
-    wondrousItems: Array<IItemJson>;
+    armorItems: Array<IItem>;
+    potionItems: Array<IItem>;
+    weaponItems: Array<IItem>;
+    wondrousItems: Array<IItem>;
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {
     private getArmor() {
         return this.state.armorItems.map((item) => {
             return (
-                <span>{item.title}</span>
+                <ItemCard
+                    itemDetails={item}
+                    onItemClick={undefined}
+                    onAttackButton={undefined}
+                    onPurchaseButton={undefined}
+                    cardInteractions={["Use"]}
+                />
             );
         });
     }
@@ -26,7 +33,13 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     private getPotions() {
         return this.state.potionItems.map((item) => {
             return (
-                <span>{item.title}</span>
+                <ItemCard
+                    itemDetails={item}
+                    onItemClick={undefined}
+                    onAttackButton={undefined}
+                    onPurchaseButton={undefined}
+                    cardInteractions={["Use"]}
+                />
             );
         });
     }
@@ -35,7 +48,13 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         return this.state.weaponItems.map((item) => {
             var weapon: ItemWeapon = item as ItemWeapon;
             return (
-                <span>{weapon.title + Object.keys(weapon.attacks)[0]}</span>
+                <ItemCard
+                    itemDetails={item}
+                    onItemClick={undefined}
+                    onAttackButton={undefined}
+                    onPurchaseButton={undefined}
+                    cardInteractions={["Use"]}
+                />
             );
         });
     }
@@ -43,7 +62,13 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     private getWondrous() {
         return this.state.wondrousItems.map((item) => {
             return (
-                <span>{item.title}</span>
+                <ItemCard
+                    itemDetails={item}
+                    onItemClick={undefined}
+                    onAttackButton={undefined}
+                    onPurchaseButton={undefined}
+                    cardInteractions={["Use"]}
+                />
             );
         });
     }
@@ -87,16 +112,44 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
     public render() {
         return (
-            <div>
-                <h1>{CharacterState.GetInstance().CurrentCharacter}</h1>
-                <h1>Armor</h1>
-                {this.getArmor()}
-                <h1>Potions</h1>
-                {this.getPotions()}
-                <h1>Weapons</h1>
-                {this.getWeapons()}
-                <h1>Wondrous Items</h1>
-                {this.getWondrous()}
+            <div className="inventory-container">
+                <div className="inventory-title-container">
+                    <h2 className="inventory-title-underlined">
+                        {CharacterState.GetInstance().CurrentCharacter}
+                    </h2>
+                </div>
+                <div className="inventory-card-container">
+                    <div className="inventory-card-container-title">
+                        Armor
+                    </div>
+                    <div className="inventory-cards">
+                        {this.getArmor()}
+                    </div>
+                </div>
+                <div className="inventory-card-container">
+                    <div className="inventory-card-container-title">
+                        Potions
+                    </div>
+                    <div className="inventory-cards">
+                        {this.getPotions()}
+                    </div>
+                </div>
+                <div className="inventory-card-container">
+                    <div className="inventory-card-container-title">
+                        Weapons
+                    </div>
+                    <div className="inventory-cards">
+                        {this.getWeapons()}
+                    </div>
+                </div>
+                <div className="inventory-card-container">
+                    <div className="inventory-card-container-title">
+                        Wondrous Items
+                    </div>
+                    <div className="inventory-cards">
+                        {this.getWondrous()}
+                    </div>
+                </div>
             </div>
         );
     }
