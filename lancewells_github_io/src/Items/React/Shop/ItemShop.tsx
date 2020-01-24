@@ -6,11 +6,9 @@ import { TSourceType } from "../../Types/TSourceType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
-import { AttackRollModal } from '../Common/AttackRollModal';
 import { TAttack } from '../../Types/TAttack';
 import { TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
-import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 import { ItemSource } from '../../Classes/ItemSource';
 import { CharacterState } from '../../Classes/CharacterState';
@@ -31,11 +29,7 @@ interface IItemShopProps {
  */
 interface IItemShopState {
     showItemDialog: boolean;
-    showAddedAlert: boolean;
     itemDetails: IItem;
-    showAttackRoll: boolean;
-    attackName: string;
-    attackRolls: TAttack[];
 };
 
 /**
@@ -51,11 +45,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         super(props);
         this.state = {
             showItemDialog: false,
-            showAddedAlert: false,
             itemDetails: new ItemWondrous(),
-            showAttackRoll: false,
-            attackName: "",
-            attackRolls: []
         };
         // console.log(process.env.REACT_APP_TEST_KEY);
         ItemSource.GetInstance();
@@ -69,7 +59,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     setModalVisiblity(show: boolean) {
         this.setState({
             showItemDialog: show,
-            showAddedAlert: this.state.showAddedAlert && !show
         });
     }
 
@@ -138,11 +127,10 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Gets a list of bazaar carpets for display.
      * @param onItemClick The click event-handler for item clicks.
      */
-    getBazaarCarpets(onItemClick: TItemClick, onAttackClick: TAttackClick, onItemPurchase: TPurchaseClick) {
+    getBazaarCarpets(onItemClick: TItemClick, onItemPurchase: TPurchaseClick) {
         return CarpetMaps.map((carpet) => {
             return (
                 <BazaarCarpet
-                    onAttackClick={onAttackClick}
                     onPurchaseClick={onItemPurchase}
                     carpetMap={carpet}
                     onItemClick={onItemClick}
@@ -168,31 +156,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         const hideDetailsModal = () => {
             this.setState({
                 showItemDialog: false,
-                showAddedAlert: false
             });
         };
 
-        const showAttackModal: TAttackClick = (attackName: string, attackRolls: TAttack[]) => {
-                this.setState({
-                    showAttackRoll: true,
-                    attackName: attackName,
-                    attackRolls: attackRolls
-                });
-            };
-
-        const hideAttackModal = () => {
-            this.setState({
-                showAttackRoll: false
-            })
-        };
-
         const handlePurchaseItem: TPurchaseClick = (item: IItem) => {
-            // InventoryStorage.GetInstance().AddItem(key, type);
             CharacterState.GetInstance().AddItemToCurrentCharacter(item);
-        }
-
-        const inventoryButtonCallback = () => {
-            // InventoryStorage.GetInstance().AddItem(item.key, item.type);
         }
 
         return (
@@ -204,21 +172,12 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
-                    {this.getBazaarCarpets(handleItemClick, showAttackModal, handlePurchaseItem)}
+                    {this.getBazaarCarpets(handleItemClick, handlePurchaseItem)}
                 </div>
-                <AttackRollModal
-                    show={this.state.showAttackRoll}
-                    onHide={hideAttackModal}
-                    attackName={this.state.attackName}
-                    attacks={this.state.attackRolls} />
                 <ItemDetailsModal
                     show={this.state.showItemDialog}
                     hideModal={hideDetailsModal}
-                    itemDetails={this.state.itemDetails}
-                    inventoryButtonCallback={inventoryButtonCallback}
-                    inventoryButtonText="Add to inventory"
-                    inventoryAlertText="Item added to inventory!"
-                    inventoryAlertStyle="success" />
+                    itemDetails={this.state.itemDetails} />
             </div>
         );
     }

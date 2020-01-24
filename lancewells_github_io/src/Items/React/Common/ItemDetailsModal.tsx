@@ -11,11 +11,6 @@ interface IItemDetailsModalProps {
     show: boolean;
     hideModal: () => void;
     itemDetails: IItem;
-
-    inventoryButtonCallback: (item: IItem) => void;
-    inventoryButtonText: string;
-    inventoryAlertText: string;
-    inventoryAlertStyle: AlertProps["variant"];
 }
 
 export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, IItemDetailsModalState> {
@@ -86,12 +81,6 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Alert
-                        variant={this.props.inventoryAlertStyle}
-                        show={this.state.showAlert}>
-                        <Spinner animation="grow" variant={this.props.inventoryAlertStyle} />
-                        Added item to inventory!
-                </Alert>
                     <div className='item-preview'>
                         <img src={this.props.itemDetails.iconSource} width={128} height={128} alt="item preview" />
                     </div>
@@ -118,3 +107,43 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
         );
     }
 }
+
+// <Modal
+//     show={this.props.show}
+//     onHide={this.props.hideModal}
+//     centered={true}>
+//     <Modal.Header>
+//         <Modal.Title className="pixel-font">
+//             {this.props.itemDetails.title}
+//         </Modal.Title>
+//     </Modal.Header>
+//     <Modal.Body>
+//         <Alert
+//             variant={this.props.inventoryAlertStyle}
+//             show={this.state.showAlert}>
+//             <Spinner animation="grow" variant={this.props.inventoryAlertStyle} />
+//             Added item to inventory!
+//                 </Alert>
+//         <div className='item-preview'>
+//             <img src={this.props.itemDetails.iconSource} width={128} height={128} alt="item preview" />
+//         </div>
+//         <hr className='white-hr' />
+//         <div className='item-details pixel-font'>
+//             <div className='item-tag'>
+//                 {this.getSourceText(this.props.itemDetails.source)}
+//             </div>
+//             <div className='item-tag'>
+//                 {`${this.props.itemDetails.itemCost}x`}
+//                 <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
+//             </div>
+//             <div className='item-tag'>
+//                 {this.getTypeDisplay(this.props.itemDetails)}
+//             </div>
+//         </div>
+//         <hr className='white-hr' />
+//         {this.props.itemDetails.RenderItemDescription()}
+//     </Modal.Body>
+//     <Modal.Footer>
+//         <Button variant='dark' onClick={this.props.hideModal}>Close</Button>
+//     </Modal.Footer>
+// </Modal>

@@ -2,6 +2,7 @@ import { UserDataAuth } from '../../Login/Classes/UserDataAuth'
 import { CharacterData } from '../Interfaces/CharacterData';
 import { IItem } from '../Interfaces/IItem';
 import { TItemType } from '../Types/TItemType';
+import { Item } from './Item';
 
 export class CharacterState {
     // https://regex101.com/r/AJU90m/1
@@ -220,7 +221,7 @@ export class CharacterState {
      */
     public RemoveItem(charName: string, itemData: IItem): boolean {
         var didRemove: boolean = false;
-        var serializedItem: string = itemData.GetEqualityString();
+        var serializedItem: string =  itemData.GetEqualityString();
         
         var charData: CharacterData | undefined = this.allCharactersData.find(
             data => data.characterName === charName);
@@ -236,10 +237,12 @@ export class CharacterState {
             }
 
             if (foundMatch) {
-                charData.itemData = charData.itemData.splice(i);
+                charData.itemData.splice(i, 1);
                 didRemove = true;
             }
         }
+
+        UserDataAuth.GetInstance().UpdateCharacterData(this.allCharactersData);
 
         return didRemove;
     }

@@ -6,17 +6,20 @@ import { CardIcon } from './CardIcon';
 import { IItemIsItemPotion } from '../../Classes/ItemPotion';
 import { AttackButton } from './CardButtons/AttackButton';
 import { PurchaseButton } from './CardButtons/PurchaseButton';
+import { RemoveButton } from './CardButtons/RemoveButton';
 import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
+import { TRemoveClick } from '../../Types/CardButtonCallbackTypes/TRemoveClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 
 export type TItemClick = (itemJson: IItem) => void;
-export type TCardInteractions =  "Purchase" | "Gather" | "Use";
+export type TCardInteractions =  "Purchase" | "Remove" | "Gather" | "Use";
 
 interface IItemCardProps {
     itemDetails: IItem;
     onItemClick: TItemClick | undefined;
     onAttackButton: TAttackClick | undefined;
     onPurchaseButton: TPurchaseClick | undefined;
+    onRemoveButton: TRemoveClick | undefined;
     cardInteractions: TCardInteractions[];
 }
 
@@ -112,16 +115,30 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             }
         }
 
-        if (this.props.cardInteractions.some(interaction => interaction === "Purchase") && this.props.onPurchaseButton !== undefined) {
+        if (this.props.cardInteractions.some(interaction => interaction === "Purchase")
+         && this.props.onPurchaseButton !== undefined) {
             var purchaseButton: JSX.Element = (
                 <PurchaseButton
                     item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
-                    callbackFunction={this.props.onPurchaseButton as TPurchaseClick}
+                    callbackFunction={this.props.onPurchaseButton}
                 />
             )
 
             buttons = buttons.concat(purchaseButton);
+        }
+
+        if (this.props.cardInteractions.some(interaction => interaction === "Remove")
+         && this.props.onRemoveButton !== undefined) {
+             var removeButton: JSX.Element = (
+                 <RemoveButton
+                    item={this.props.itemDetails}
+                    cardIconSize={this.iconDefaultSize * this.cardRatio}
+                    callbackFunction={this.props.onRemoveButton}
+                 />
+             )
+
+            buttons = buttons.concat(removeButton);
         }
 
         return buttons;

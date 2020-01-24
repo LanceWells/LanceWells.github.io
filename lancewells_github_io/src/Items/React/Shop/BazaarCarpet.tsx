@@ -1,7 +1,6 @@
 import React from 'react';
 import { CarpetMap } from './CarpetMap';
 import { ItemCard, TItemClick } from '../Common/ItemCard';
-import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 
 /**
@@ -13,7 +12,6 @@ import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseCli
 interface IBazaarCarpetProps {
     carpetMap: CarpetMap;
     onItemClick: TItemClick;
-    onAttackClick: TAttackClick;
     onPurchaseClick: TPurchaseClick;
 }
 
@@ -38,9 +36,10 @@ export class BazaarCarpet extends React.Component<IBazaarCarpetProps, IBazaarCar
                 <ItemCard
                     itemDetails={item}
                     onItemClick={this.props.onItemClick}
-                    onAttackButton={this.props.onAttackClick}
+                    onAttackButton={undefined}
                     onPurchaseButton={this.props.onPurchaseClick}
-                    cardInteractions={["Purchase", "Use"]}
+                    onRemoveButton={undefined}
+                    cardInteractions={["Purchase"]}
                 />
             );
         });
