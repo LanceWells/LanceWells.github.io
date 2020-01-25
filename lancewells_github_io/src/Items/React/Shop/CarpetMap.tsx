@@ -57,7 +57,7 @@ export class CarpetMap {
  * purposes, and will be removed eventually.
  */
 export const CarpetMaps: CarpetMap[] = [
-    new CarpetMap("Simple Weapons", "url(/images/Item_Shop/Items/Rugs/purplerug.png)", "Weapon", ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "LightHammer", "SnakeStaff", "Quarterstaff", "Spear", "Shortsword", "Shortbow"]),
+    new CarpetMap("Simple Weapons", "url(/images/Item_Shop/Items/Rugs/purplerug.png)", "Weapon", ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "LightHammer", "SnakeStaff", "Quarterstaff", "Spear", "Shortsword", "Shortbow", "BrutalLongsword"]),
     new CarpetMap("Potions", "url(/images/Item_Shop/Items/Rugs/greenrug.png)", "Potion", ["SmallHealth", "SmallMana", "DarkContract", "TiamatBrew", "Angelic", "MiasmaBurning"]),
     new CarpetMap("Wondrous Items", "url(/images/Item_Shop/Items/Rugs/bluerug.png)", "Wondrous", ["RedRing", "BlueRing", "FloralRing"]),
 ]

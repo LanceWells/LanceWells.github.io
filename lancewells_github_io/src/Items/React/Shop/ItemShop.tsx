@@ -6,7 +6,6 @@ import { TSourceType } from "../../Types/TSourceType";
 import { BazaarCarpet } from './BazaarCarpet';
 import { CarpetMaps } from './CarpetMap';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
-import { TAttack } from '../../Types/TAttack';
 import { TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';

@@ -1,7 +1,6 @@
 import './Inventory.css';
 import React from 'react';
 import { CharacterState } from '../../Classes/CharacterState';
-import { ItemWeapon } from "../../Classes/ItemWeapon";
 import { IItem } from '../../Interfaces/IItem';
 import { ItemCard, TItemClick } from '../Common/ItemCard';
 import { TRemoveClick } from '../../Types/CardButtonCallbackTypes/TRemoveClick';

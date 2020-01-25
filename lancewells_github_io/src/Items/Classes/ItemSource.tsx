@@ -642,7 +642,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
     {
         key: 'Longsword',
         title: 'Longsword',
-        description: 'A large, double-bladed axe.',
+        description: 'A long . . . sword.',
         details: '',
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: "Official",
@@ -674,7 +674,44 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
                         damageType: "Slashing"
                     }
                 ]
-        }
+        },
+    },
+    {
+        key: 'BrutalLongsword',
+        title: 'Brutal Longsword',
+        description: 'A viciously long . . . sword.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
+        source: "Official",
+        requiresAttunement: false,
+        modifications: [],
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            "Versatile"
+        ],
+        itemCost: 15,
+        type: "Weapon",
+        attacks: {
+            "Slash (1h)":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 8,
+                        modifier: 1,
+                        damageType: "Slashing"
+                    }
+                ],
+            "Slash (2h)":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 10,
+                        modifier: 1,
+                        damageType: "Slashing"
+                    }
+                ]
+        },
     },
 ]
 
