@@ -2,7 +2,6 @@ import { UserDataAuth } from '../../Login/Classes/UserDataAuth'
 import { CharacterData } from '../Interfaces/CharacterData';
 import { IItem } from '../Interfaces/IItem';
 import { TItemType } from '../Types/TItemType';
-import { Item } from './Item';
 
 export class CharacterState {
     // https://regex101.com/r/AJU90m/1
@@ -178,7 +177,7 @@ export class CharacterState {
             data => data.characterName === charName);
 
         if (charData !== undefined && itemData !== undefined) {
-            charData.itemData.push(itemData);
+            charData.inventory.push(itemData);
             didAdd = true;
         }
 
@@ -229,15 +228,15 @@ export class CharacterState {
         if (charData !== undefined) {
             var foundMatch: boolean = false;
             var i = 0;
-            for(i = 0; i < charData.itemData.length; i++) {
-                if (charData.itemData[i].GetEqualityString() === serializedItem) {
+            for(i = 0; i < charData.inventory.length; i++) {
+                if (charData.inventory[i].GetEqualityString() === serializedItem) {
                     foundMatch = true;
                     break;
                 }
             }
 
             if (foundMatch) {
-                charData.itemData.splice(i, 1);
+                charData.inventory.splice(i, 1);
                 didRemove = true;
             }
         }
@@ -267,7 +266,7 @@ export class CharacterState {
             data => data.characterName === charName);
 
         if (charData !== undefined) {
-            items = charData.itemData.filter(item => item.type === itemType);
+            items = charData.inventory.filter(item => item.type === itemType);
         }
 
         return items;

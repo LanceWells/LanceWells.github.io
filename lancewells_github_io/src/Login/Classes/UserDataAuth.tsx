@@ -2,6 +2,10 @@ import { LantsPantsUserData } from './LantsPantsUserData';
 import * as BCrypt from 'bcryptjs';
 import firebase from 'firebase';
 import { CharacterData } from '../../Items/Interfaces/CharacterData';
+import { IUserProfile } from '../../GamePage/Interfaces/IUserProfile';
+import { ProfileIsPlayer, IPlayerProfile } from '../../GamePage/Interfaces/IPlayerProfile';
+import { ProfileIsDM, IDMProfile } from '../../GamePage/Interfaces/IDMProfile';
+import { TUserProfileType } from '../../GamePage/Types/TUserProfileType';
 
 export interface LoginResponse {
     DidLogin: boolean;
@@ -59,6 +63,7 @@ export class UserDataAuth {
      */
     public static readonly MaxPasswordLength = 60;
     private static readonly collection_UserWritable = "userWritable";
+    private static readonly collection_Profiles = "profiles";
     private _snapshotListener: () => void = () => {};
 
     /**
@@ -113,52 +118,6 @@ export class UserDataAuth {
             uid = undefined;
         }
         return uid;
-    }
-
-
-    /**
-     * Deserialize the data snapshot that is returned form the firestore.
-     */
-    private DeserializeCharData(docSnapshot: firebase.firestore.DocumentSnapshot): CharacterData[] {
-        var charData: CharacterData[] = [];
-
-        if (docSnapshot.exists) {
-            var docData = docSnapshot.data();
-            if (docData !== undefined) {
-                var serializedData: string[] = docData.characterData;
-                if (serializedData) {
-                    charData = serializedData.map(s => CharacterData.DeSerialize(s));
-                }
-            }
-        }
-
-        return charData;
-    }
-
-    private InitializeAfterAuth(): void {
-        var uid = this.GetUid();
-
-        // Add a listener for specific documents that change on the remote.
-        // https://firebase.google.com/docs/firestore/query-data/listen
-        firebase
-            .firestore()
-            .collection(UserDataAuth.collection_UserWritable)
-            .doc(uid)
-            .onSnapshot((doc: firebase.firestore.DocumentSnapshot) => {
-                var charData: CharacterData[] = this.DeserializeCharData(doc);
-                console.log("Snapshot data: " + charData);
-                this.onUserDataChanged_notify(charData);
-            });
-
-        var email = firebase.auth().currentUser?.email;
-        if (email && email !== undefined) {
-            this._username = email;
-        }
-    }
-    
-    private UnsubscribeSnapshotListener(): void {
-        // Calling this listener will unsubscribe from this event.
-        this._snapshotListener();
     }
 
     /**
@@ -284,6 +243,213 @@ export class UserDataAuth {
     }
 
     /**
+     * Gets the singleton instance of this object.
+     */
+    public static GetInstance(): UserDataAuth {
+        if (!this._instance) {
+            this._instance = new UserDataAuth();
+        }
+
+        return this._instance;
+    }
+
+    /**
+     * Creates a new user profile to store in the database. Will not add a profile if one already exists
+     * that uses the same name.
+     * @param profile The new profile to create and store in the database.
+     */
+    public async CreateNewProfile(profile: IUserProfile): Promise<void> {
+        var uid = this.GetUid();
+
+        var docSnapshot: firebase.firestore.DocumentSnapshot = await firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .get();
+
+        var profiles: string[] = [];
+        
+        // First, get a list of the profiles that the server knows about; we don't want a user to make
+        // two profiles with the same name, that would delete the other profile entirely.
+        if (docSnapshot.exists) {
+            var docData = docSnapshot.data();
+            if (docData !== undefined) {
+                var serverProfileList: string[] | null = docData.profileList;
+                if (serverProfileList) {
+                    profiles = serverProfileList;
+                }
+            }
+        }
+
+        // The new profile name isn't already in our saved list. It's safe to add!
+        if (!profiles.some(p => p === profile.ProfileName)) {
+            var updateProfileList = this.UpdateProfileList(profiles);
+            var setProfileData = this.SetProfileData(profile);
+
+            await updateProfileList;
+            await setProfileData;
+        }
+        else {
+            console.error("User profile " + profile.ProfileName + " already exists.");
+        }
+    }
+
+    /**
+     * Updates the list of profiles stored on the server. Should only be called when adding or removing
+     * any given profile. Using a list that is separate from all of the documents should save over
+     * querying every user profile in both data transmission as well as the number of reads to the
+     * database. The unfortunate side-effect is that we have to double the number of places data is
+     * stored for user profile names.
+     * 
+     * @param profiles The list of profiles to use as the new profile list.
+     */
+    private async UpdateProfileList(profiles: string[]): Promise<void> {
+        var uid = this.GetUid();
+
+        await firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .update({
+                profileList: profiles
+            });
+    }
+
+    /**
+     * Gets the list of profiles for this user.
+     */
+    public async FetchProfileList(): Promise<string[] | undefined> {
+        var uid = this.GetUid();
+
+        var docSnapshot = await firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .get();
+
+        var profiles: string[] | undefined = undefined;
+
+        if (docSnapshot.exists) {
+            var docData = docSnapshot.data();
+            if (docData !== undefined) {
+                var serverProfiles: string[] | undefined = docData.profileList;
+                if (serverProfiles !== undefined) {
+                    profiles = serverProfiles;
+                }
+            }
+        }
+
+        return profiles;
+    }
+
+    /**
+     * Sets (creates/updates) the profoile information for a given user.
+     * @param profile The profile to set for a given user.
+     */
+    public async SetProfileData(profile: IUserProfile): Promise<void> {
+        var uid = this.GetUid();
+        
+        var docData: firebase.firestore.DocumentData = {
+            ProfileType: profile.ProfileType,
+            GameId: profile.GameID,
+            ProfileImage: profile.ProfileImage,
+        }
+        
+        // When specific profiles have specific fields, use those instead.
+        var profileIsKnown: boolean = false;
+        if (!profileIsKnown && ProfileIsPlayer(profile)) {
+            docData = {
+                ProfileType: profile.ProfileType,
+                GameId: profile.GameID,
+                ProfileImage: profile.ProfileImage,
+                CharData: profile.CharData.Serialize()
+            }
+
+            profileIsKnown = true;
+        }
+        
+        if (profileIsKnown) {
+            await firebase
+                .firestore()
+                .collection(UserDataAuth.collection_UserWritable)
+                .doc(uid)
+                .collection(UserDataAuth.collection_Profiles)
+                .doc(profile.ProfileName)
+                .set(docData);
+        }
+    }
+
+    /**
+     * Fetches the profile data for the given profile name for the current user.
+     * @param profileName The name of the profile to fetch.
+     */
+    public async FetchProfileData(profileName: string): Promise<IUserProfile | undefined> {
+        var uid = this.GetUid();
+
+        var docSnapshot = await firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .collection(UserDataAuth.collection_Profiles)
+            .doc(profileName)
+            .get();
+
+        var userProfile: IUserProfile | undefined = undefined;
+        if (docSnapshot.exists) {
+            var docData = docSnapshot.data();
+            if (docData !== undefined) {
+                // It's not great to just go through one-by-one to get each field name. If we end up
+                // with more fields, or unique fields, this can become a problem. TODO: Get a better
+                // option for this behavior.
+
+                // Regular fields. These NEED to be included.
+                var gameId: string | null | undefined = docData.GameId;
+                var profileImage: string | undefined = docData.ProfileImage;
+                var profileType: TUserProfileType | undefined = docData.ProfileType;
+
+                // Character-specific fields. These only need to be included for character profiles.
+                var charData: string | undefined = docData.CharData;
+
+                if (gameId !== undefined && profileImage !== undefined && profileType !== undefined) {
+
+                    // Go through every profile type, and verify that they have the data they need. If
+                    // they have it, go ahead and create the profile we'll return.
+                    switch(profileType) {
+                        case "Player" : {
+                            if (charData !== undefined) {
+                                var playerProfile: IPlayerProfile = {
+                                    ProfileType: "Player",
+                                    ProfileImage: profileImage,
+                                    ProfileName: profileName,
+                                    GameID: gameId,
+                                    CharData: CharacterData.DeSerialize(charData)
+                                };
+
+                                userProfile = playerProfile;
+                            }
+                        }
+                        break;
+                        case "DM" : {
+                            var dmProfile: IDMProfile = {
+                                ProfileType: "DM",
+                                ProfileImage: profileImage,
+                                ProfileName: profileName,
+                                GameID: gameId
+                            }
+
+                            userProfile = dmProfile;
+                        }
+                        break;
+                        default: {}
+                    }
+                }
+            }
+        }
+
+        return userProfile;
+    }
+
+    /**
      * Updates the backend with the character data that we need to update.
      */
     public async UpdateCharacterData(charData: CharacterData[]): Promise<void> {
@@ -320,17 +486,6 @@ export class UserDataAuth {
         return charData;
     }
 
-    /**
-     * Gets the singleton instance of this object.
-     */
-    public static GetInstance(): UserDataAuth {
-        if (!this._instance) {
-            this._instance = new UserDataAuth();
-        }
-
-        return this._instance;
-    }
-
     private onUserDataChanged_listeners: ((userdata: CharacterData[]) => void)[] = [];
 
     private onUserDataChanged_notify(userData: CharacterData[]) {
@@ -339,5 +494,50 @@ export class UserDataAuth {
 
     public onUserDataChanged(e: (userdata: CharacterData[]) => void) {
         this.onUserDataChanged_listeners.push(e);
+    }
+
+    /**
+     * Deserialize the data snapshot that is returned form the firestore.
+     */
+    private DeserializeCharData(docSnapshot: firebase.firestore.DocumentSnapshot): CharacterData[] {
+        var charData: CharacterData[] = [];
+
+        if (docSnapshot.exists) {
+            var docData = docSnapshot.data();
+            if (docData !== undefined) {
+                var serializedData: string[] = docData.characterData;
+                if (serializedData) {
+                    charData = serializedData.map(s => CharacterData.DeSerialize(s));
+                }
+            }
+        }
+
+        return charData;
+    }
+
+    private InitializeAfterAuth(): void {
+        var uid = this.GetUid();
+
+        // Add a listener for specific documents that change on the remote.
+        // https://firebase.google.com/docs/firestore/query-data/listen
+        firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .onSnapshot((doc: firebase.firestore.DocumentSnapshot) => {
+                var charData: CharacterData[] = this.DeserializeCharData(doc);
+                console.log("Snapshot data: " + charData);
+                this.onUserDataChanged_notify(charData);
+            });
+
+        var email = firebase.auth().currentUser?.email;
+        if (email && email !== undefined) {
+            this._username = email;
+        }
+    }
+
+    private UnsubscribeSnapshotListener(): void {
+        // Calling this listener will unsubscribe from this event.
+        this._snapshotListener();
     }
 }

@@ -9,6 +9,9 @@ import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TAttack } from '../../Types/TAttack';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
+import { UserDataAuth } from '../../../Login/Classes/UserDataAuth';
+import { IPlayerProfile } from '../../../GamePage/Interfaces/IPlayerProfile';
+import { CharacterData } from '../../Interfaces/CharacterData';
 
 interface IInventoryProps {
 }
@@ -121,6 +124,17 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
     componentDidMount() {
         this.updateFromInventory();
+
+        // var profile: IPlayerProfile = {
+        //     ProfileType: "Player",
+        //     ProfileImage: "img.src",
+        //     ProfileName: "FirstProfile",
+        //     GameID: null,
+        //     CharData: new CharacterData()
+        // };
+
+        // UserDataAuth.GetInstance().CreateNewProfile(profile);
+        // UserDataAuth.GetInstance().FetchProfileData("FirstProfile");
     }
 
     public render() {
