@@ -15,13 +15,13 @@ interface IGamePageProps {
 
 interface IGamePageState {
     // _pageDisplay: TDisplayStatus;
-    _profileType: TUserProfileType;
+    // _profileType: TUserProfileType;
     _userProfiles: string[];
     _currentProfile: IUserProfile | undefined;
     _gameTabs: GameTab[];
 }
 
-type TDisplayStatus = TUserProfileType | "GettingInfo" | "Error" | "NewProfile";
+// type TDisplayStatus = TUserProfileType | "GettingInfo" | "Error" | "NewProfile";
 
 export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     private readonly storage_lastChosenProfile: string = "LastChosenProfile";
@@ -95,9 +95,10 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
      */
     private GetNoProfileTabs(): GameTab[] {
         var handleFinishedCreation: Callback_CreationFinished = (profile: IUserProfile) => {
-            this.setState({
-                _profileType: profile.ProfileType
-            });
+            this.SwitchToProfile(profile.ProfileName);
+            // this.setState({
+            //     // _profileType: profile.ProfileType
+            // });
         }
 
         var noProfileTab: GameTab = new GameTab({
@@ -143,7 +144,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         if (profile !== undefined) {
             this.setState({
                 _currentProfile: profile,
-                _profileType: profile.ProfileType
+                // _profileType: profile.ProfileType
             })
             
             localStorage.setItem(this.storage_lastChosenProfile, profileName);
@@ -221,7 +222,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         // site yet under this login (or that their data has DISAPPEARED).
         else if (availableProfiles === undefined || availableProfiles.length <= 0) {
             this.setState({
-                _profileType: "None",
+                // _profileType: "None",
                 _gameTabs: this.GetNoProfileTabs()
             })
         }
@@ -234,7 +235,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     public constructor(props: IGamePageProps) {
         super(props);
         this.state = {
-            _profileType: "None",
+            // _profileType: "None",
             // _pageDisplay: "GettingInfo",
             _userProfiles: [],
             _currentProfile: undefined,
