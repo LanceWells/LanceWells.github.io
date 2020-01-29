@@ -12,6 +12,11 @@ export interface LoginResponse {
     Errors: string[];
 }
 
+export interface CreateProfileResponse {
+    DidCreate: boolean;
+    Errors: string[];
+}
+
 export type TAuthState = "Authorized" | "Unauthorized" | "Checking";
 
 /**
@@ -258,40 +263,37 @@ export class UserDataAuth {
      * that uses the same name.
      * @param profile The new profile to create and store in the database.
      */
-    public async CreateNewProfile(profile: IUserProfile): Promise<void> {
-        var uid = this.GetUid();
+    public async CreateNewProfile(profile: IUserProfile): Promise<CreateProfileResponse> {
+        var response: CreateProfileResponse = {
+            DidCreate: false,
+            Errors: []
+        };
 
-        var docSnapshot: firebase.firestore.DocumentSnapshot = await firebase
-            .firestore()
-            .collection(UserDataAuth.collection_UserWritable)
-            .doc(uid)
-            .get();
-
-        var profiles: string[] = [];
-        
-        // First, get a list of the profiles that the server knows about; we don't want a user to make
-        // two profiles with the same name, that would delete the other profile entirely.
-        if (docSnapshot.exists) {
-            var docData = docSnapshot.data();
-            if (docData !== undefined) {
-                var serverProfileList: string[] | null = docData.profileList;
-                if (serverProfileList) {
-                    profiles = serverProfileList;
-                }
-            }
-        }
+        var profiles = await this.FetchProfileList();
 
         // The new profile name isn't already in our saved list. It's safe to add!
-        if (!profiles.some(p => p === profile.ProfileName)) {
+        if (profiles === undefined || !profiles.some(p => p === profile.ProfileName)) {
+            if (profiles === undefined) {
+                profiles = [];
+            }
+
+            profiles.push(profile.ProfileName);
+
             var updateProfileList = this.UpdateProfileList(profiles);
             var setProfileData = this.SetProfileData(profile);
+
+            response.DidCreate = true;
 
             await updateProfileList;
             await setProfileData;
         }
         else {
-            console.error("User profile " + profile.ProfileName + " already exists.");
+            var errorMessage: string = "User profile " + profile.ProfileName + " already exists."
+            response.Errors.push(errorMessage);
+            console.error(errorMessage);
         }
+
+        return response;
     }
 
     /**
@@ -312,6 +314,12 @@ export class UserDataAuth {
             .doc(uid)
             .update({
                 profileList: profiles
+            })
+            .then(() => {
+                console.log("Successfully updated profile list.");
+            })
+            .catch(reason => {
+                console.error("Failed to update profile list. " + reason);
             });
     }
 
@@ -349,6 +357,8 @@ export class UserDataAuth {
     public async SetProfileData(profile: IUserProfile): Promise<void> {
         var uid = this.GetUid();
         
+        // Just use some generic data at first. Any specific roles with extra stuff are fine to be
+        // initialized as empty.
         var docData: firebase.firestore.DocumentData = {
             ProfileType: profile.ProfileType,
             GameId: profile.GameID,
@@ -356,27 +366,22 @@ export class UserDataAuth {
         }
         
         // When specific profiles have specific fields, use those instead.
-        var profileIsKnown: boolean = false;
-        if (!profileIsKnown && ProfileIsPlayer(profile)) {
+        if (ProfileIsPlayer(profile)) {
             docData = {
                 ProfileType: profile.ProfileType,
                 GameId: profile.GameID,
                 ProfileImage: profile.ProfileImage,
                 CharData: profile.CharData.Serialize()
             }
-
-            profileIsKnown = true;
         }
         
-        if (profileIsKnown) {
-            await firebase
-                .firestore()
-                .collection(UserDataAuth.collection_UserWritable)
-                .doc(uid)
-                .collection(UserDataAuth.collection_Profiles)
-                .doc(profile.ProfileName)
-                .set(docData);
-        }
+        await firebase
+            .firestore()
+            .collection(UserDataAuth.collection_UserWritable)
+            .doc(uid)
+            .collection(UserDataAuth.collection_Profiles)
+            .doc(profile.ProfileName)
+            .set(docData);
     }
 
     /**

@@ -1,5 +1,4 @@
 export type TUserProfileType =
-        "DM"
-    |   "Player"
-    |   "None"
-    |   "Error";
+      "DM"
+    | "Player"
+    | "None";

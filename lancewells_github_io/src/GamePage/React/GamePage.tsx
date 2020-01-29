@@ -1,44 +1,176 @@
+import './GamePage.css';
 import React from 'react';
 import { TUserProfileType } from '../Types/TUserProfileType';
 import { IUserProfile } from '../Interfaces/IUserProfile';
 import { UserDataAuth } from '../../Login/Classes/UserDataAuth';
+import { ProfileCreation, Callback_CreationFinished } from './ProfileCreation';
+import { GameTab } from './GameTab';
+import { GameTabContainer } from './GameTabContainer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Inventory } from '../../Items/React/Inventory/Inventory';
+import { ItemShop } from '../../Items/React/Shop/ItemShop';
 
 interface IGamePageProps {
 }
 
 interface IGamePageState {
+    // _pageDisplay: TDisplayStatus;
     _profileType: TUserProfileType;
     _userProfiles: string[];
     _currentProfile: IUserProfile | undefined;
+    _gameTabs: GameTab[];
 }
+
+type TDisplayStatus = TUserProfileType | "GettingInfo" | "Error" | "NewProfile";
 
 export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     private readonly storage_lastChosenProfile: string = "LastChosenProfile";
 
     /**
+     * Gets the tabs that will be displayed to a player by default. These tabs should never be removed unless
+     * the user is switching profiles.
+     */
+    private GetDefaultPlayerTabs(): GameTab[] {
+        var testTab: GameTab = new GameTab({
+            tabName: "Test Player Tab",
+            tabIndex: "0",
+            wrappedComponent: (
+                <h1>Using this page as player {this.state._currentProfile?.ProfileName}.</h1>
+        )});
+
+        var anotherTestTab: GameTab = new GameTab({
+            tabName: "Another Player Tab",
+            tabIndex: "1",
+            wrappedComponent: (
+            <h2>Here's another player tab!</h2>
+        )});
+
+        var inventoryTab: GameTab = new GameTab({
+            tabName: "Inventory Tab",
+            tabIndex: "2",
+            wrappedComponent: (
+                <Inventory />
+        )});
+
+        var shopTab: GameTab = new GameTab({
+            tabName: "Item Shop",
+            tabIndex: "3",
+            wrappedComponent: (
+                <ItemShop />
+            )
+        });
+
+        // TODO: Stat Page tab.
+        // TODO: Inventory tab.
+
+        var tabs: GameTab[] = [];
+        tabs.push(testTab);
+        tabs.push(anotherTestTab);
+        tabs.push(inventoryTab);
+        tabs.push(shopTab);
+        return tabs;
+    }
+
+    /**
+     * Gets the tab that will be displayed to a DM by default. These tabs should never be removed unless the
+     * user is switching profiles.
+     */
+    private GetDefaultDMTabs(): GameTab[] {
+        var testTab: GameTab = new GameTab({
+            tabName: "Test DM Tab",
+            tabIndex: "0",
+            wrappedComponent: (
+            <h1>Using this page as DM {this.state._currentProfile?.ProfileName}.</h1>
+        )});
+
+        // TODO: DM Screen.
+
+        var tabs: GameTab[] = [];
+        tabs.push(testTab);
+        return tabs;
+    }
+
+    /**
+     * Gets the tabs that will be displayed when a user has yet to create any profiles.
+     */
+    private GetNoProfileTabs(): GameTab[] {
+        var handleFinishedCreation: Callback_CreationFinished = (profile: IUserProfile) => {
+            this.setState({
+                _profileType: profile.ProfileType
+            });
+        }
+
+        var noProfileTab: GameTab = new GameTab({
+            tabName: "New Profile",
+            tabIndex: "0",
+            wrappedComponent: (
+            <ProfileCreation
+                OnCreationFinished={handleFinishedCreation}
+            />
+        )});
+
+        var tabs: GameTab[] = [];
+        tabs.push(noProfileTab);
+        return tabs;
+    }
+
+    /**
+     * Gets the tabs that will be displayed when there was a terrible, awful, no-good, very-bad error!
+     */
+    private GetErrorMessageTabs(): GameTab[] {
+        var errorMessageTab: GameTab = new GameTab({
+            tabName: "Error!",
+            tabIndex: "0",
+            wrappedComponent: (
+            <div>
+                <h2>There was a terrible error! You should tell Lance that this happened and how you got here.</h2>
+            </div>
+        )});
+
+        var tabs: GameTab[] = [];
+        tabs.push(errorMessageTab);
+        return tabs;
+    }
+
+    /**
      * Switches to a different profile based on the name. Switches to "Error" state if this fails.
      * @param profileName The name of the profile to switch to.
      */
-    private SwitchToProfile(profileName: string): boolean {
+    private async SwitchToProfile(profileName: string): Promise<boolean> {
         var didSwitch: boolean = false;
 
-        UserDataAuth.GetInstance().FetchProfileData(profileName)
-            .then(profile => {
-                if (profile !== undefined) {
-                    this.setState({
-                        _currentProfile: profile,
-                        _profileType: profile.ProfileType
-                    });
-
-                    // If we were successful when looking up this profile, then it's valid and we should save
-                    // it for the next login.
-                    localStorage.setItem(this.storage_lastChosenProfile, profileName);
-                    didSwitch = true;
-                }
+        var profile = await UserDataAuth.GetInstance().FetchProfileData(profileName);
+        if (profile !== undefined) {
+            this.setState({
+                _currentProfile: profile,
+                _profileType: profile.ProfileType
             })
-            .catch(reason => {
-                console.error("Failed to lookup profile info." + reason);
-            });
+            
+            localStorage.setItem(this.storage_lastChosenProfile, profileName);
+
+            switch(profile.ProfileType) {
+                case "Player": {
+                    this.setState({
+                        _gameTabs: this.GetDefaultPlayerTabs()
+                    });
+                    break;
+                }
+                case "DM": {
+                    this.setState({
+                        _gameTabs: this.GetDefaultDMTabs()
+                    });
+                    break;
+                }
+                default: {
+                    this.setState({
+                        _gameTabs: this.GetErrorMessageTabs()
+                    });
+                    break;
+                }
+            }
+
+            didSwitch = true;
+        }
 
         return didSwitch;
     }
@@ -55,7 +187,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         var lastChosenIsValid: boolean = false;
 
         if (lastChosenProfile) {
-            lastChosenIsValid = this.SwitchToProfile(lastChosenProfile);
+            lastChosenIsValid = await this.SwitchToProfile(lastChosenProfile);
         }
 
         var availableProfiles = await availableProfilesPromise;
@@ -69,69 +201,30 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         // them.
         if (!lastChosenIsValid && (availableProfiles !== undefined && availableProfiles.length > 0)) {
 
-            // Try to use the first item in the list that we got back from our lookup instead.
-            var firstProfile: string = availableProfiles[0];
-            var firstProfileIsValid: boolean = this.SwitchToProfile(firstProfile);
+            for (let i = 0; i < availableProfiles.length; i++) {
+                // Try to use the nth item in the list that we got back from our lookup instead.
+                var profile: string = availableProfiles[i];
+                var profileIsValid: boolean = await this.SwitchToProfile(profile);
 
-            // That's not good. Neither the last chosen profile nor the first one in the list is valid. For now,
-            // just give the user an error message and let Lance figure out their data on the backend.
-            // TODO: make this try every profile instead of just the first.
-            if (!lastChosenIsValid && !firstProfileIsValid) {
-                this.setState({
-                    _profileType: "Error"
-                });
+                // That's not good. Neither the last chosen profile nor the first one in the list is valid. For now,
+                // just give the user an error message and let Lance figure out their data on the backend.
+                // TODO: make this try every profile instead of just the first.
+                if (!lastChosenIsValid && !profileIsValid) {
+                    this.setState({
+                        _gameTabs: this.GetErrorMessageTabs()
+                    });
+                }
             }
+
         }
         // The user didn't have any available profiles to pick from, that means that they haven't used this
         // site yet under this login (or that their data has DISAPPEARED).
         else if (availableProfiles === undefined || availableProfiles.length <= 0) {
             this.setState({
-                _profileType: "None"
+                _profileType: "None",
+                _gameTabs: this.GetNoProfileTabs()
             })
         }
-    }
-
-    /**
-     * Renders the tabulated component that depends on 
-     */
-    private RenderTabComponent(): JSX.Element {
-        switch (this.state._profileType) {
-            case "Player": return this.RenderPlayerProfile();
-            case "DM": return this.RenderDMProfile();
-            case "None": return this.RenderNoProfile();
-            default: return this.RenderNoProfile();
-        }
-    }
-
-    /**
-     * Returns a visual component for when the user is actively using a player profile.
-     */
-    private RenderPlayerProfile(): JSX.Element {
-        return (
-            <div>
-            </div>
-        )
-    }
-
-    /**
-     * Returns a visual component for when the user is actively using a DM profile.
-     */
-    private RenderDMProfile(): JSX.Element {
-        return (
-            <div>
-            </div>
-        )
-    }
-
-    /**
-     * Returns a visual component for when the user has not yet created a profile.
-     */
-    private RenderNoProfile(): JSX.Element {
-        return (
-            <div>
-                <h2>It looks like you don't have a profile setup yet. Press this button to make one.</h2>
-            </div>
-        )
     }
 
     /**
@@ -142,8 +235,10 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         super(props);
         this.state = {
             _profileType: "None",
+            // _pageDisplay: "GettingInfo",
             _userProfiles: [],
-            _currentProfile: undefined
+            _currentProfile: undefined,
+            _gameTabs: []
         };
     }
 
@@ -153,8 +248,11 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     public render() {
         return(
             <div className="game">
-                <div className="game-usertab-container">
-                    {this.RenderTabComponent()}
+                <div className="game-play-area">
+                    <GameTabContainer
+                        tabs={this.state._gameTabs}
+                        tabsId="game-tab-container"
+                    />
                 </div>
                 <div className="game-chat-container">
                 </div>
