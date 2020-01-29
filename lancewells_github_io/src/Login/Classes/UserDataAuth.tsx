@@ -465,7 +465,7 @@ export class UserDataAuth {
             .firestore()
             .collection(UserDataAuth.collection_UserWritable)
             .doc(uid)
-            .set({
+            .update({
                 characterData: serializedData
             }).then(resolved => {
                 console.log("Successfully wrote character data.\n" + serializedData);
