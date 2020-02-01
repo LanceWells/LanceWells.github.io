@@ -267,6 +267,10 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         };
     }
 
+    /**
+     * Renders the game tabs present in the game tab state field. The purpose of this is to guarantee
+     * a name for each tab that is intentional.
+     */
     private RenderTabs(): JSX.Element[] {
         var renderableTabs: JSX.Element[] = [];
 
