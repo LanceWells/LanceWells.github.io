@@ -1,10 +1,10 @@
 import './GamePage.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import React from 'react';
 import { IUserProfile } from '../Interfaces/IUserProfile';
 import { UserDataAuth } from '../../Login/Classes/UserDataAuth';
 import { ProfileCreation, Callback_CreationFinished } from './ProfileCreation';
-import { GameTabContainer } from './GameTabContainer';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Inventory } from '../../Items/React/Inventory/Inventory';
 import { ItemShop } from '../../Items/React/Shop/ItemShop';
 import { IItem } from '../../Items/Interfaces/IItem';
@@ -44,14 +44,11 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             }
 
             if (foundMatch) {
+                // playerProfile is a reference to the stateful current profile.
                 playerProfile.CharData.inventory.splice(i, 1);
-                // this.state._currentProfile = playerProfile;
-                
-                // this.setState({
-                //     _currentProfile: playerProfile
-                // });
-                
+
                 this.UpdateUserTabs();
+                UserDataAuth.GetInstance().SetProfileData(playerProfile);
             }
         }
     }
@@ -63,12 +60,11 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     private HandlePurchaseItem(item: IItem): void {
         var playerProfile: IUserProfile | undefined = this.state._currentProfile;
         if (ProfileIsPlayer(playerProfile)) {
+            // playerProfile is a reference to the stateful current profile.
             playerProfile.CharData.inventory.push(item);
 
             this.UpdateUserTabs();
-            // this.setState({
-            //     _currentProfile: playerProfile
-            // });
+            UserDataAuth.GetInstance().SetProfileData(playerProfile);
         }
     }
 
@@ -87,43 +83,8 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             this.HandlePurchaseItem(item);
         }
 
-        // var testTab: GameTab = new GameTab({
-        //     tabName: "Test Player Tab",
-        //     wrappedComponent: (new Div
-        //         <h1>Using this page as player {this.state._currentProfile?.ProfileName}.</h1>
-        // )});
-        // tabs.push(testTab);
-
-        // var anotherTestTab: GameTab = new GameTab({
-        //     tabName: "Another Player Tab",
-        //     wrappedComponent: (
-        //     <h2>Here's another player tab!</h2>
-        // )});
-        // tabs.push(anotherTestTab);
-
         var playerProfile: IUserProfile | undefined = this.state._currentProfile;
         if (ProfileIsPlayer(playerProfile)) {
-            // var inventoryTab: GameTab = new GameTab({
-            //     tabName: "Inventory Tab",
-            //     wrappedComponent: (new Inventory({
-            //         userProfile: playerProfile,
-            //         removeCallback: handleRemoveItem
-            //     }))
-            // });
-            // tabs.push(inventoryTab);
-
-            // var shopTab: GameTab = new GameTab({
-            //     tabName: "Item Shop",
-            //     wrappedComponent: (new ItemShop({
-            //         userProfile: playerProfile,
-            //         purchaseCallback: handlePurchaseItem
-            //     })
-            //         // <ItemShop
-            //         //     userProfile={playerProfile}
-            //         //     purchaseCallback={handlePurchaseItem}
-            //         // />
-            //     )
-            // });
 
             tabs.set("Inventory", (
                 <Inventory
@@ -140,7 +101,6 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         }
 
         // TODO: Stat Page tab.
-        // TODO: Inventory tab.
 
         return tabs;
     }
@@ -152,13 +112,9 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     private GetDefaultDMTabs(): Map<string, JSX.Element> {
         var tabs: Map<string, JSX.Element> = new Map();
 
-        // var testTab: GameTab = new GameTab({
-        //     tabName: "Test DM Tab",
-        //     wrappedComponent: (
-        //     <h1>Using this page as DM {this.state._currentProfile?.ProfileName}.</h1>
-        // )});
-        // tabs.push(testTab);
-
+        tabs.set("DM Screen", (
+            <h1>Using this page as DM {this.state._currentProfile?.ProfileName}.</h1>
+        ));
         // TODO: DM Screen.
 
         return tabs;
@@ -174,22 +130,12 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             this.SwitchToProfile(profile.ProfileName);
         }
 
-        // var noProfileTab: GameTab = new GameTab({
-        //     tabName: "New Profile",
-        //     wrappedComponent: (new ProfileCreation({
-        //         OnCreationFinished: handleFinishedCreation
-        //     })
-        //     // <ProfileCreation
-        //     //     OnCreationFinished={handleFinishedCreation}
-        //     // />
-        // )});
-
-        // tabs.push(noProfileTab);
         tabs.set("New Profile", (
             <ProfileCreation
-                OnCreationFinished={handleFinishedCreation}
+                OnCreationFinished={handleFinishedCreation.bind(this)}
             />
         ))
+
         return tabs;
     }
 
@@ -198,16 +144,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
      */
     private GetErrorMessageTabs(): Map<string, JSX.Element> {
         var tabs: Map<string, JSX.Element> = new Map();
-        // var errorMessageTab: GameTab = new GameTab({
-        //     tabName: "Error!",
-        //     wrappedComponent: (
-        //     <div>
-        //         <h2>There was a terrible error! You should tell Lance that this happened and how you got here.</h2>
-        //     </div>
-        // )});
-        // tabs.push(errorMessageTab);
 
-        // var tabs: GameTab[] = [];
         tabs.set("Error!", (
             <div>
                 <h2>There was a terrible error! You should tell Lance that this happened and how you got here.</h2>
@@ -231,26 +168,6 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             
             localStorage.setItem(this.storage_lastChosenProfile, profileName);
             this.UpdateUserTabs();
-            // switch(profile.ProfileType) {
-            //     case "Player": {
-            //         this.setState({
-            //             _gameTabs: this.GetDefaultPlayerTabs()
-            //         });
-            //         break;
-            //     }
-            //     case "DM": {
-            //         this.setState({
-            //             _gameTabs: this.GetDefaultDMTabs()
-            //         });
-            //         break;
-            //     }
-            //     default: {
-            //         this.setState({
-            //             _gameTabs: this.GetErrorMessageTabs()
-            //         });
-            //         break;
-            //     }
-            // }
 
             didSwitch = true;
         }
@@ -258,6 +175,9 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         return didSwitch;
     }
 
+    /**
+     * Updates the user's tabs based on the current state.
+     */
     private UpdateUserTabs(): void {
         var profile: IUserProfile | undefined = this.state._currentProfile;
         var gameTabs: Map<string, JSX.Element> = new Map();
