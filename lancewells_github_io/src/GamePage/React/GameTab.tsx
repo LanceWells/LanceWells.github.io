@@ -2,9 +2,8 @@ import React, { ReactNode } from 'react';
 import Tab from 'react-bootstrap/Tab';
 
 export interface IGameTabProps {
-    tabIndex: string;
     tabName: string;
-    wrappedComponent: JSX.Element;
+    wrappedComponent: React.Component;
 }
 
 export class GameTab extends React.Component<IGameTabProps> {
@@ -13,8 +12,8 @@ export class GameTab extends React.Component<IGameTabProps> {
             <Tab
                 className="game-tab" 
                 title={this.props.tabName}
-                eventKey={this.props.tabIndex}>
-                {this.props.wrappedComponent}
+                eventKey={this.props.tabName}>
+                {this.props.wrappedComponent.render()}
             </Tab>
         )
     }

@@ -16,11 +16,11 @@ export class CharacterState {
      * Creates a new instance of this class.
      */
     private constructor() {
-        const handleUpdatedInventory = (userData: CharacterData[]) => {
+        const handleUpdatedInventory = (userData: CharacterData) => {
             this.UpdateInventory(userData);
         };
 
-        UserDataAuth.GetInstance().onUserDataChanged(handleUpdatedInventory.bind(this));
+        UserDataAuth.GetInstance().onCharacterDataChanged(handleUpdatedInventory.bind(this));
 
         var storedCharName: string | null;
         storedCharName = localStorage.getItem(CharacterState.currentCharacterStorage);
@@ -30,8 +30,6 @@ export class CharacterState {
         }
 
         UserDataAuth.GetInstance().FetchCharacterData().then(charData => {
-            this.allCharactersData = charData;
-
             // If no character name is defined, grab the first character that we can find, and use that
             // instead of no name at all.
             if (this.allCharactersData.length <= 0) {
@@ -48,95 +46,6 @@ export class CharacterState {
 
             this.UpdateInventory(charData);
         })
-    }
-
-    /**
-     * @description Adds a character to the list of characters in the inventory. New characters will start
-     * with an empty inventory.
-     */
-    public AddCharacter() {
-        var nameIsValid: boolean = false;
-        var charName: string = "";
-        var userHitCancel: Boolean = false;
-        var userUsedInvalidCharacters: Boolean = false;
-        var userEnteredExistingName: Boolean = false;
-
-        var atLeastOneValidNameExists: Boolean = this.allCharactersData.length > 0;
-
-        // Keep asking the user to display a name until they have some valid input, or until they hit cancel.
-        // Note that a user can only continue by hitting cancel if they have at least one valid name.
-        while (!nameIsValid && !(userHitCancel && atLeastOneValidNameExists)) {
-            let userPrompt: string = "Please enter a character name.";
-
-            if (userHitCancel && !atLeastOneValidNameExists) {
-                userPrompt = userPrompt + " Use of the inventory system requires at least one character.";
-            }
-            if (userUsedInvalidCharacters) {
-                userPrompt = userPrompt + " Valid characters are alphanumerics and spaces.";
-            }
-            if (userEnteredExistingName) {
-                userPrompt = userPrompt + " Please enter a new, unused character name.";
-            }
-
-            let input = prompt(userPrompt, "Hurdy Gurdy");
-
-            userHitCancel = input === null;
-
-            if (!userHitCancel) {
-                // They didn't hit cancel, so unless something else went wrong, this is fine.
-
-                nameIsValid = true;
-                let stringInput: string = input as string;
-
-                if (!this._validCharnameCharacters.test(stringInput)) {
-                    nameIsValid = false;
-                    userUsedInvalidCharacters = true;
-                }
-                if (this.allCharactersData.some(c => c.characterName === stringInput)) {
-                    nameIsValid = false;
-                    userEnteredExistingName = true;
-                }
-                if (nameIsValid) {
-                    charName = stringInput;
-                }
-            }
-        }
-
-        // Save this as a new character.
-        var newCharData: CharacterData = new CharacterData();
-        newCharData.characterName = charName;
-        this.allCharactersData.push(newCharData);
-
-        // Switch to using the new character.
-        this._currentCharacter = charName;
-
-        // Save the new character to the database!
-        UserDataAuth.GetInstance().UpdateCharacterData(this.allCharactersData);
-    }
-
-    /**
-     * Gets the name of the currently selected character.
-     */
-    public get CurrentCharacter(): string {
-        return this._currentCharacter;
-    }
-
-    /**
-     * Sets the name for the currently selected character.
-     */
-    public set CurrentCharacter(newCharName: string) {
-        this._currentCharacter = newCharName;
-
-        // If the current character doesn't already exist, go ahead and give it some new information.
-        // This should behave similar to dictionaries in C#.
-        if (!this.allCharactersData.some(c => c.characterName === newCharName)) {
-            var newCharData = new CharacterData();
-            newCharData.characterName = newCharName;
-
-            this.allCharactersData.push(newCharData);
-        }
-
-        localStorage.setItem(CharacterState.currentCharacterStorage, this._currentCharacter);
     }
 
     /**
@@ -285,7 +194,7 @@ export class CharacterState {
      * has been updated and applied.
      * @param userData The user data that this class will provide a newly-updated inventory for.
      */
-    private UpdateInventory(userData: CharacterData[]): void {
+    private UpdateInventory(userData: CharacterData): void {
         this.allCharactersData = userData;
 
         // Notify listeners that we've CHAAAAANGED.

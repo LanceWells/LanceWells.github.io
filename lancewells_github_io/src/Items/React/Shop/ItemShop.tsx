@@ -10,13 +10,15 @@ import { TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 import { ItemSource } from '../../Classes/ItemSource';
-import { CharacterState } from '../../Classes/CharacterState';
+import { IPlayerProfile } from '../../../GamePage/Interfaces/IPlayerProfile';
 
 /**
  * @description
  * Describes the properties that are passed into this class.
  */
 interface IItemShopProps {
+    userProfile: IPlayerProfile;
+    purchaseCallback: TPurchaseClick;
 };
 
 /**
@@ -139,7 +141,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     }
 
     componentDidMount() {
-        CharacterState.GetInstance();
+        // CharacterState.GetInstance();
     }
 
     /**
@@ -158,9 +160,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             });
         };
 
-        const handlePurchaseItem: TPurchaseClick = (item: IItem) => {
-            CharacterState.GetInstance().AddItemToCurrentCharacter(item);
-        }
+        // const handlePurchaseItem: TPurchaseClick = (item: IItem) => {
+        //     CharacterState.GetInstance().AddItemToCurrentCharacter(item);
+        // }
 
         return (
             <div className="ItemShop">
@@ -171,7 +173,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
-                    {this.getBazaarCarpets(handleItemClick, handlePurchaseItem)}
+                    {this.getBazaarCarpets(handleItemClick, this.props.purchaseCallback)}
                 </div>
                 <ItemDetailsModal
                     show={this.state.showItemDialog}

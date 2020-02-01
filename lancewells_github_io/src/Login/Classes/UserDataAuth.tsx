@@ -141,7 +141,7 @@ export class UserDataAuth {
             UserDataAuth.GetInstance()._authState = "Unauthorized";
             console.log("User has logged out.")
 
-            UserDataAuth.GetInstance().UnsubscribeSnapshotListener();
+            // UserDataAuth.GetInstance().UnsubscribeSnapshotListener();
         }
     }
 
@@ -455,18 +455,22 @@ export class UserDataAuth {
     }
 
     /**
-     * Updates the backend with the character data that we need to update.
+     * Updates the given profile for a character with the provided character data.
+     * @param profileName The name of the profile that will be updated.
+     * @param charData The data for the character that needs to be update.
      */
-    public async UpdateCharacterData(charData: CharacterData[]): Promise<void> {
+    public async UpdateCharacterData(profileName: string, charData: CharacterData): Promise<void> {
         var uid = this.GetUid();
-        var serializedData: string[] = charData.map(i => i.Serialize());
+        var serializedData: string = charData.Serialize();
 
-        return firebase
+        await firebase
             .firestore()
             .collection(UserDataAuth.collection_UserWritable)
             .doc(uid)
+            .collection(UserDataAuth.collection_Profiles)
+            .doc(profileName)
             .update({
-                characterData: serializedData
+                CharData: serializedData
             }).then(resolved => {
                 console.log("Successfully wrote character data.\n" + serializedData);
             }).catch(reason => {
@@ -477,42 +481,25 @@ export class UserDataAuth {
     /**
      * Fetches new character data from the backend.
      */
-    public async FetchCharacterData(): Promise<CharacterData[]> {
+    public async FetchCharacterData(profileName: string): Promise<CharacterData | undefined> {
         var uid = this.GetUid();
 
         var docSnapshot = await firebase
             .firestore()
             .collection(UserDataAuth.collection_UserWritable)
             .doc(uid)
+            .collection(UserDataAuth.collection_Profiles)
+            .doc(profileName)
             .get();
 
-        var charData = this.DeserializeCharData(docSnapshot);
-
-        return charData;
-    }
-
-    private onUserDataChanged_listeners: ((userdata: CharacterData[]) => void)[] = [];
-
-    private onUserDataChanged_notify(userData: CharacterData[]) {
-        this.onUserDataChanged_listeners.forEach(e => e(userData));
-    }
-
-    public onUserDataChanged(e: (userdata: CharacterData[]) => void) {
-        this.onUserDataChanged_listeners.push(e);
-    }
-
-    /**
-     * Deserialize the data snapshot that is returned form the firestore.
-     */
-    private DeserializeCharData(docSnapshot: firebase.firestore.DocumentSnapshot): CharacterData[] {
-        var charData: CharacterData[] = [];
-
+        var charData: CharacterData | undefined = undefined;
+            
         if (docSnapshot.exists) {
             var docData = docSnapshot.data();
             if (docData !== undefined) {
-                var serializedData: string[] = docData.characterData;
+                var serializedData: string = docData.characterData;
                 if (serializedData) {
-                    charData = serializedData.map(s => CharacterData.DeSerialize(s));
+                    charData = CharacterData.DeSerialize(serializedData);
                 }
             }
         }
@@ -523,17 +510,17 @@ export class UserDataAuth {
     private InitializeAfterAuth(): void {
         var uid = this.GetUid();
 
-        // Add a listener for specific documents that change on the remote.
-        // https://firebase.google.com/docs/firestore/query-data/listen
-        firebase
-            .firestore()
-            .collection(UserDataAuth.collection_UserWritable)
-            .doc(uid)
-            .onSnapshot((doc: firebase.firestore.DocumentSnapshot) => {
-                var charData: CharacterData[] = this.DeserializeCharData(doc);
-                console.log("Snapshot data: " + charData);
-                this.onUserDataChanged_notify(charData);
-            });
+        // // Add a listener for specific documents that change on the remote.
+        // // https://firebase.google.com/docs/firestore/query-data/listen
+        // firebase
+        //     .firestore()
+        //     .collection(UserDataAuth.collection_UserWritable)
+        //     .doc(uid)
+        //     .onSnapshot((doc: firebase.firestore.DocumentSnapshot) => {
+        //         var charData: CharacterData[] = this.DeserializeCharData(doc);
+        //         console.log("Snapshot data: " + charData);
+        //         this.onUserDataChanged_notify(charData);
+        //     });
 
         var email = firebase.auth().currentUser?.email;
         if (email && email !== undefined) {
@@ -541,8 +528,86 @@ export class UserDataAuth {
         }
     }
 
-    private UnsubscribeSnapshotListener(): void {
-        // Calling this listener will unsubscribe from this event.
-        this._snapshotListener();
-    }
+    // private onCharDataChanged_listeners: ((userdata: CharacterData) => void)[] = [];
+
+    // private onCharacterDataChanged_notify(userData: CharacterData) {
+    //     this.onCharDataChanged_listeners.forEach(e => e(userData));
+    // }
+
+    // public onCharacterDataChanged(e: (userdata: CharacterData) => void) {
+    //     this.onCharDataChanged_listeners.push(e);
+    // }
+
+    // /**
+    //  * Updates the backend with the character data that we need to update.
+    //  */
+    // public async UpdateCharacterData(charData: CharacterData[]): Promise<void> {
+    //     var uid = this.GetUid();
+    //     var serializedData: string[] = charData.map(i => i.Serialize());
+
+    //     return firebase
+    //         .firestore()
+    //         .collection(UserDataAuth.collection_UserWritable)
+    //         .doc(uid)
+    //         .update({
+    //             characterData: serializedData
+    //         }).then(resolved => {
+    //             console.log("Successfully wrote character data.\n" + serializedData);
+    //         }).catch(reason => {
+    //             console.error("Failed to write character data.\n" + reason);
+    //         });
+    // }
+
+    // /**
+    //  * Fetches new character data from the backend.
+    //  */
+    // public async FetchCharacterData(): Promise<CharacterData[]> {
+    //     var uid = this.GetUid();
+
+    //     var docSnapshot = await firebase
+    //         .firestore()
+    //         .collection(UserDataAuth.collection_UserWritable)
+    //         .doc(uid)
+    //         .get();
+
+    //     var charData = this.DeserializeCharData(docSnapshot);
+
+    //     return charData;
+    // }
+
+    // private onUserDataChanged_listeners: ((userdata: CharacterData[]) => void)[] = [];
+
+    // private onUserDataChanged_notify(userData: CharacterData[]) {
+    //     this.onUserDataChanged_listeners.forEach(e => e(userData));
+    // }
+
+    // public onUserDataChanged(e: (userdata: CharacterData[]) => void) {
+    //     this.onUserDataChanged_listeners.push(e);
+    // }
+
+    // /**
+    //  * Deserialize the data snapshot that is returned form the firestore.
+    //  */
+    // private DeserializeCharData(docSnapshot: firebase.firestore.DocumentSnapshot): CharacterData[] {
+    //     var charData: CharacterData[] = [];
+
+    //     if (docSnapshot.exists) {
+    //         var docData = docSnapshot.data();
+    //         if (docData !== undefined) {
+    //             var serializedData: string[] = docData.characterData;
+    //             if (serializedData) {
+    //                 charData = serializedData.map(s => CharacterData.DeSerialize(s));
+    //             }
+    //         }
+    //     }
+
+    //     return charData;
+    // }
+
+
+
+    // private UnsubscribeSnapshotListener(): void {
+    //     // Calling this listener will unsubscribe from this event.
+    //     this._snapshotListener();
+    // }
 }

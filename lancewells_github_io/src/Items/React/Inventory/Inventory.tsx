@@ -1,6 +1,5 @@
 import './Inventory.css';
 import React from 'react';
-import { CharacterState } from '../../Classes/CharacterState';
 import { IItem } from '../../Interfaces/IItem';
 import { ItemCard, TItemClick } from '../Common/ItemCard';
 import { TRemoveClick } from '../../Types/CardButtonCallbackTypes/TRemoveClick';
@@ -9,11 +8,15 @@ import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
 import { TAttack } from '../../Types/TAttack';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
-import { UserDataAuth } from '../../../Login/Classes/UserDataAuth';
 import { IPlayerProfile } from '../../../GamePage/Interfaces/IPlayerProfile';
-import { CharacterData } from '../../Interfaces/CharacterData';
+import { TItemType } from '../../Types/TItemType';
+import { ItemArmor } from '../../Classes/ItemArmor';
+import { ItemPotion } from '../../Classes/ItemPotion';
+import { ItemWeapon } from '../../Classes/ItemWeapon';
 
 interface IInventoryProps {
+    userProfile: IPlayerProfile;
+    removeCallback: TRemoveClick;
 }
 
 interface IInventoryState {
@@ -31,8 +34,8 @@ interface IInventoryState {
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {
-    private getArmor(itemClick: TItemClick, removeCallback: TRemoveClick) {
-        return this.state.armorItems.map((item) => {
+    private getArmor(items: IItem[], itemClick: TItemClick, removeCallback: TRemoveClick) {
+        return items.map((item) => {
             return (
                 <ItemCard
                     itemDetails={item}
@@ -46,8 +49,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         });
     }
 
-    private getPotions(itemClick: TItemClick, removeCallback: TRemoveClick) {
-        return this.state.potionItems.map((item) => {
+    private getPotions(items: IItem[], itemClick: TItemClick, removeCallback: TRemoveClick) {
+        return items.map((item) => {
             return (
                 <ItemCard
                     itemDetails={item}
@@ -61,8 +64,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         });
     }
 
-    private getWeapons(itemClick: TItemClick, removeCallback: TRemoveClick, attackCallback: TAttackClick) {
-        return this.state.weaponItems.map((item) => {
+    private getWeapons(items: IItem[], itemClick: TItemClick, removeCallback: TRemoveClick, attackCallback: TAttackClick) {
+        return items.map((item) => {
             return (
                 <ItemCard
                     itemDetails={item}
@@ -76,8 +79,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         });
     }
 
-    private getWondrous(itemClick: TItemClick, removeCallback: TRemoveClick) {
-        return this.state.wondrousItems.map((item) => {
+    private getWondrous(items: IItem[], itemClick: TItemClick, removeCallback: TRemoveClick) {
+        return items.map((item) => {
             return (
                 <ItemCard
                     itemDetails={item}
@@ -91,17 +94,26 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         });
     }
 
-    private handleStorageChange() {
-        this.updateFromInventory();
-    }
+    // private handleStorageChange() {
+    //     this.updateFromInventory();
+    // }
 
-    private updateFromInventory() {
-        this.setState({
-            armorItems: CharacterState.GetInstance().GetCurrentItemsOfType("Armor"),
-            potionItems: CharacterState.GetInstance().GetCurrentItemsOfType("Potion"),
-            weaponItems: CharacterState.GetInstance().GetCurrentItemsOfType("Weapon"),
-            wondrousItems: CharacterState.GetInstance().GetCurrentItemsOfType("Wondrous"),
-        });
+    // private updateFromInventory() {
+    //     this.setState({
+    //         armorItems: this.GetItemsOfType("Armor"),
+    //         potionItems: this.GetItemsOfType("Potion"),
+    //         weaponItems: this.GetItemsOfType("Weapon"),
+    //         wondrousItems: this.GetItemsOfType("Wondrous"),
+    //     });
+    // }
+
+    private GetItemsOfType(type: TItemType) {
+        return this
+            .props
+            .userProfile
+            .CharData
+            .inventory
+            .filter(i => i.type == type);
     }
 
     public constructor(props: IInventoryProps) {
@@ -118,29 +130,39 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             itemDetails: new ItemWondrous(),
         }
 
-        const handleChange = this.handleStorageChange;
-        CharacterState.GetInstance().onInventoryChanged(handleChange.bind(this))
+        // const handleChange = this.handleStorageChange;
+        // CharacterState.GetInstance().onInventoryChanged(handleChange.bind(this))
     }
 
+    // componentDidMount() {
+    //     // this.updateFromInventory();
+
+    //     // var profile: IPlayerProfile = {
+    //     //     ProfileType: "Player",
+    //     //     ProfileImage: "img.src",
+    //     //     ProfileName: "FirstProfile",
+    //     //     GameID: null,
+    //     //     CharData: new CharacterData()
+    //     // };
+
+    //     // UserDataAuth.GetInstance().CreateNewProfile(profile);
+    //     // UserDataAuth.GetInstance().FetchProfileData("FirstProfile");
+    // }
+
     componentDidMount() {
-        this.updateFromInventory();
-
-        // var profile: IPlayerProfile = {
-        //     ProfileType: "Player",
-        //     ProfileImage: "img.src",
-        //     ProfileName: "FirstProfile",
-        //     GameID: null,
-        //     CharData: new CharacterData()
-        // };
-
-        // UserDataAuth.GetInstance().CreateNewProfile(profile);
-        // UserDataAuth.GetInstance().FetchProfileData("FirstProfile");
+        console.log("MOUNT");
     }
 
     public render() {
-        const removeButton = (item: IItem) => {
-            CharacterState.GetInstance().RemoveItemFromCurrentCharacter(item);
-        }
+        // const removeButton = (item: IItem) => {
+        //     CharacterState.GetInstance().RemoveItemFromCurrentCharacter(item);
+        // }
+        // this.updateFromInventory();
+
+        var armor = this.GetItemsOfType("Armor");
+        var weapons = this.GetItemsOfType("Weapon");
+        var potions = this.GetItemsOfType("Potion");
+        var wondrous = this.GetItemsOfType("Wondrous");
 
         const handleItemClick: TItemClick = (item: IItem) => {
             this.setState({
@@ -169,6 +191,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             })
         };
 
+        // {CharacterState.GetInstance().CurrentCharacter}
+
         return (
             <div className="inventory-container">
                 <AttackRollModal
@@ -182,7 +206,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     itemDetails={this.state.itemDetails} />
                 <div className="inventory-title-container">
                     <h2 className="inventory-title-underlined">
-                        {CharacterState.GetInstance().CurrentCharacter}
+                        {this.props.userProfile.ProfileName}
                     </h2>
                 </div>
                 <div className="inventory-card-container">
@@ -190,7 +214,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                         Armor
                     </div>
                     <div className="inventory-cards">
-                        {this.getArmor(handleItemClick, removeButton)}
+                        {this.getArmor(armor, handleItemClick, this.props.removeCallback)}
                     </div>
                 </div>
                 <div className="inventory-card-container">
@@ -198,7 +222,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                         Potions
                     </div>
                     <div className="inventory-cards">
-                        {this.getPotions(handleItemClick, removeButton)}
+                        {this.getPotions(potions, handleItemClick, this.props.removeCallback)}
                     </div>
                 </div>
                 <div className="inventory-card-container">
@@ -206,7 +230,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                         Weapons
                     </div>
                     <div className="inventory-cards">
-                        {this.getWeapons(handleItemClick, removeButton, showAttackModal)}
+                        {this.getWeapons(weapons, handleItemClick, this.props.removeCallback, showAttackModal)}
                     </div>
                 </div>
                 <div className="inventory-card-container">
@@ -214,7 +238,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                         Wondrous Items
                     </div>
                     <div className="inventory-cards">
-                        {this.getWondrous(handleItemClick, removeButton)}
+                        {this.getWondrous(wondrous, handleItemClick, this.props.removeCallback)}
                     </div>
                 </div>
             </div>

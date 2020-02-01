@@ -5,7 +5,7 @@ import { SelectCallback } from 'react-bootstrap/helpers';
 
 interface IGameTabContainerProps {
     tabsId: string;
-    tabs: GameTab[];
+    tabs: Map<string, JSX.Element>;
 }
 
 interface IGameTabContainerState {
@@ -21,7 +21,20 @@ export class GameTabContainer extends React.Component<IGameTabContainerProps, IG
     }
 
     private RenderTabs(): JSX.Element[] {
-        return this.props.tabs.map(tab => tab.render());
+        var renderableTabs: JSX.Element[] = [];
+
+        this.props.tabs.forEach((value: JSX.Element, key: string) => {
+            renderableTabs.push(
+                <Tab
+                    className="game-tab"
+                    title={key}
+                    eventKey={key}>
+                    {value}
+                </Tab>
+            )
+        });
+
+        return renderableTabs;
     }
 
     render() {
