@@ -27,6 +27,7 @@ export default function LandingSpace() {
         <div className="page-nav">
             <Router>
                 <Switch>
+                    <Route exact path="/login" children={<LoginPage />} />
                     <ProtectedRoute path="/" children={<GamePage />} />
                 </Switch>
             </Router>

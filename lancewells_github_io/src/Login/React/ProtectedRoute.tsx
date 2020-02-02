@@ -27,6 +27,12 @@ export class ProtectedRoute extends React.Component<IProtectedRouteProps, IProte
         this.GetComponentToRender();
     }
 
+    // componentDidUpdate(prevProps: IProtectedRouteProps, prevState: IProtectedRouteState) {
+    //     if (this.props !== prevProps || this.state !== prevState) {
+    //         this.GetComponentToRender();
+    //     }
+    // }
+
     private GetComponentToRender(): void {
         // this.CheckForAccess().then(granted => {
         UserDataAuth.GetInstance().CheckForAccess().then(granted => {
@@ -44,6 +50,7 @@ export class ProtectedRoute extends React.Component<IProtectedRouteProps, IProte
     }
 
     public render() {
+        // this.GetComponentToRender();
         switch(this.state.routeStatus) {
             case "Granted": {
                 return (

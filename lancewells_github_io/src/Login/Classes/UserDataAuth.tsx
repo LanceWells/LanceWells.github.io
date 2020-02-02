@@ -69,21 +69,6 @@ export class UserDataAuth {
     public static readonly MaxPasswordLength = 60;
     private static readonly collection_UserWritable = "userWritable";
     private static readonly collection_Profiles = "profiles";
-    private _snapshotListener: () => void = () => {};
-
-    /**
-     * Gets the current authorization state for user authorization.
-     */
-    public get AuthState(): TAuthState {
-        return this._authState;
-    }
-
-    /**
-     * 
-     */
-    public get UserData(): LantsPantsUserData | undefined {
-        return this._userData;
-    }
 
     public get Username(): string {
         return this._username;
@@ -117,7 +102,7 @@ export class UserDataAuth {
         firebase.auth().onAuthStateChanged(this.HandleAuthStateChanged);
     }
 
-    private GetUid(): string | undefined {
+    public GetUid(): string | undefined {
         var uid = firebase.auth().currentUser?.uid;
         if (!uid) {
             uid = undefined;
@@ -149,6 +134,7 @@ export class UserDataAuth {
      * Logs out from any current user instances.
      */
     public Logout(): void {
+        this._authState = "Unauthorized";
         firebase.auth().signOut();
     }
 
@@ -345,6 +331,16 @@ export class UserDataAuth {
                     profiles = serverProfiles;
                 }
             }
+        }
+        else {
+            // There is no saved uid doc for this user! Make one now.
+            await firebase
+                .firestore()
+                .collection(UserDataAuth.collection_UserWritable)
+                .doc(uid)
+                .set({
+                    profileList: []
+                })
         }
 
         return profiles;

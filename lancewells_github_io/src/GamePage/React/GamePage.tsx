@@ -12,6 +12,11 @@ import { ProfileIsPlayer } from '../Interfaces/IPlayerProfile';
 import { TRemoveClick } from '../../Items/Types/CardButtonCallbackTypes/TRemoveClick';
 import { TPurchaseClick } from '../../Items/Types/CardButtonCallbackTypes/TPurchaseClick';
 import { Tab, Tabs } from 'react-bootstrap';
+import { GameRoomDisplay } from './GameRoomDisplay';
+import { IGameRoom } from '../Interfaces/IGameRoom';
+import { GameRoomService } from '../Classes/GameRoomService';
+import { DMGameRoom } from '../Classes/DMGameRoom';
+import { resolve } from 'url';
 
 interface IGamePageProps {
 }
@@ -19,6 +24,7 @@ interface IGamePageProps {
 interface IGamePageState {
     _userProfiles: string[];
     _currentProfile: IUserProfile | undefined;
+    _gameRoom: IGameRoom | undefined;
     _gameTabs: Map<string, JSX.Element>;
 }
 
@@ -65,6 +71,54 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
 
             this.UpdateUserTabs();
             UserDataAuth.GetInstance().SetProfileData(playerProfile);
+        }
+    }
+
+    /**
+     * Handles the creation of a new game room. Uses the user's profile name. This will be the profile
+     * name for the DM.
+     */
+    private HandleCreateRoom(): void {
+        if (this.state._currentProfile != undefined) {
+            var roomName: string;
+            roomName = this.state._currentProfile.ProfileName;
+            
+            GameRoomService.MakeGameRoom(roomName)
+            .then(resolved => {
+                var gameRoom: DMGameRoom | undefined = resolved;
+
+                // Because this is in a then call, technically _currentProfile could become undefined
+                // between calling MakeGameRoom and now. The compiler thinks this at least.
+                if (gameRoom !== undefined && this.state._currentProfile !== undefined) {
+
+                    // Grab a reference to the profile, update it, and call setState so that this and all
+                    // child components update and re-render.
+                    var currentProfile = this.state._currentProfile;
+                    currentProfile.GameID = gameRoom.RoomId;
+
+                    // Save this game ID to the DB.
+                    UserDataAuth.GetInstance().SetProfileData(currentProfile)
+                    .then(resolve => {
+                        // Set the game room here. It may not be preferable to do that here, since it
+                        // means that we're tying in the "say what your game room is" logic with our
+                        // "did we set the profile data?" logic. That said, if there's a problem with
+                        // saving profile data, we're having an error regardless, and this saves us from
+                        // setting the state twice and causing an unnecessary re-render.
+                        this.setState({
+                            _gameRoom: gameRoom,
+                            _currentProfile: currentProfile
+                        });
+                    })
+                    .catch(reason => {
+                        console.error("Failed to save updated profile info to the DB.");
+                    });
+                }
+            })
+            .catch(reason => {
+                console.error("Failed to create a game room." + reason);
+            });
+        } else {
+            console.error("This.state._currentProfile is undefined when trying to make a new game room.");
         }
     }
 
@@ -162,10 +216,17 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
 
         var profile = await UserDataAuth.GetInstance().FetchProfileData(profileName);
         if (profile !== undefined) {
+
+            var gameRoom: IGameRoom | undefined = this.state._gameRoom;
+            if (profile.GameID && profile.GameID !== "") {
+                gameRoom = await GameRoomService.GetGameRoom(profile.GameID, profile.ProfileType);
+            };
+
             this.setState({
                 _currentProfile: profile,
-            })
-            
+                _gameRoom: gameRoom
+            });
+
             localStorage.setItem(this.storage_lastChosenProfile, profileName);
             this.UpdateUserTabs();
 
@@ -263,7 +324,8 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         this.state = {
             _userProfiles: [],
             _currentProfile: undefined,
-            _gameTabs: new Map()
+            _gameRoom: undefined,
+            _gameTabs: new Map(),
         };
     }
 
@@ -292,6 +354,10 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
      * Returns the render-able output from this class.
      */
     public render() {
+        const handleRoomCreate = () => {
+            this.HandleCreateRoom();
+        }
+
         return(
             <div className="game">
                 <div className="game-play-area">
@@ -300,6 +366,11 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
                     </Tabs>
                 </div>
                 <div className="game-chat-container">
+                    <GameRoomDisplay
+                        _createRoomCallback={handleRoomCreate.bind(this)}
+                        _gameRoom={this.state._gameRoom}
+                        _profile={this.state._currentProfile}
+                    />
                 </div>
             </div>
         )
