@@ -66,31 +66,48 @@ export class GameRoomService {
         var gameRef = firebase.database().ref('Games/' + roomId);
         var charRef = firebase.database().ref('Games/' + roomId + '/Characters/' + uid);
 
+        var gameRoomExists: boolean = false;
         var successfullyJoined: boolean = false;
 
-        // First, try to join the game room.
-        await charRef.set({
-            Name: playerName
-        })
+        // Before anything else, check and see that the room exists.
+        await gameRef.once('value')
         .then(resolved => {
-            console.log("Successfully joined game room." + resolved);
-            successfullyJoined = true;
+            console.log("Successfully found a room while joining." + resolved);
+            gameRoomExists = resolved.exists();
         })
         .catch(reason => {
-            console.error("Failed to join game room: " + reason);
-            successfullyJoined = false;
-        });
+            console.error("There was an error trying to find the room to join." + reason);
+        })
 
-        // Afterwards, see if we can get the game room; provided that we joined, that is.
-        if (successfullyJoined) {
-            await gameRef.once("value")
+        // It exists! Now try to join it.
+        if (gameRoomExists) {
+
+            // Try to join the game room.
+            await charRef.set({
+                Name: playerName
+            })
             .then(resolved => {
-                console.log("Got game room: " + resolved);
-                gameRoom = GameRoomService.GetPlayerRoom(roomId, resolved);
+                console.log("Successfully joined game room." + resolved);
+                successfullyJoined = true;
             })
             .catch(reason => {
-                console.error("Failed to get game room: " + reason);
+                console.error("Failed to join game room: " + reason);
+                successfullyJoined = false;
             });
+
+            // If we joined, then get the room data again. Techincally we've done this already, but it's
+            // much better to get data after our character is an official part of it. Joining a room is
+            // also a low-frequency task, so this isn't a major concern.
+            if (successfullyJoined) {
+                await gameRef.once("value")
+                .then(resolved => {
+                    console.log("Got game room: " + resolved);
+                    gameRoom = GameRoomService.GetPlayerRoom(roomId, resolved);
+                })
+                .catch(reason => {
+                    console.error("Failed to get game room: " + reason);
+                });
+            }
         }
 
         return gameRoom;

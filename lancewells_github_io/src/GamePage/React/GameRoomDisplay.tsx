@@ -9,6 +9,7 @@ type GameRoomState = "NoProfile" | "CreateRoom" | "JoinRoom" | "ShowPlayers" | "
 interface IGameRoomDisplayProps {
     _gameRoom: IGameRoom | undefined;
     _profile: IUserProfile | undefined;
+    _externalRoomErrors: string[];
     _createRoomCallback: () => void;
     _joinRoomCallback: (roomId: string) => void;
 }
@@ -82,7 +83,12 @@ export class GameRoomDisplay extends React.Component<IGameRoomDisplayProps, IGam
      * Renders this component.
      */
     public render() {
-        return this.GetRenderableSpace();
+        return (
+            <div>
+                <h4>{this.props._externalRoomErrors.join(" ")}</h4>
+                {this.GetRenderableSpace()}
+            </div>
+        );
     }
 
     /**

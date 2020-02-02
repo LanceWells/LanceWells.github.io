@@ -16,7 +16,6 @@ import { GameRoomDisplay } from './GameRoomDisplay';
 import { IGameRoom } from '../Interfaces/IGameRoom';
 import { GameRoomService } from '../Classes/GameRoomService';
 import { DMGameRoom } from '../Classes/DMGameRoom';
-import { resolve } from 'url';
 import { PlayerGameRoom } from '../Classes/PlayerGameRoom';
 
 interface IGamePageProps {
@@ -27,6 +26,7 @@ interface IGamePageState {
     _currentProfile: IUserProfile | undefined;
     _gameRoom: IGameRoom | undefined;
     _gameTabs: Map<string, JSX.Element>;
+    _gameRoomErrors: string[];
 }
 
 export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
@@ -111,18 +111,40 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
                         });
                     })
                     .catch(reason => {
-                        console.error("Failed to save updated profile info to the DB.");
+                        console.error("Failed to save updated profile info to the DB." + reason);
+
+                        var roomErrors = this.state._gameRoomErrors;
+                        roomErrors.push("There was an error creating the room. Please try again.");
+                        this.setState({
+                            _gameRoomErrors: roomErrors
+                        });
                     });
                 }
             })
             .catch(reason => {
                 console.error("Failed to create a game room." + reason);
+
+                var roomErrors = this.state._gameRoomErrors;
+                roomErrors.push("There was an error creating the room. Please try again.");
+                this.setState({
+                    _gameRoomErrors: roomErrors
+                });
             });
         } else {
             console.error("This.state._currentProfile is undefined when trying to make a new game room.");
+
+            var roomErrors = this.state._gameRoomErrors;
+            roomErrors.push("There was an error creating the room. Please try again.");
+            this.setState({
+                _gameRoomErrors: roomErrors
+            });
         }
     }
 
+    /**
+     * Handles a request to join a specific room based on the specified room ID.
+     * @param roomId The ID of the room to join.
+     */
     private HandleJoinRoom(roomId: string): void {
         if (this.state._currentProfile !== undefined) {
             GameRoomService.JoinGameRoom(roomId, this.state._currentProfile.ProfileName)
@@ -143,15 +165,32 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
                             })
                             .catch(reason => {
                                 console.error("Failed to join a room due to an error when setting profile data for the user." + reason);
+
+                                var roomErrors = this.state._gameRoomErrors;
+                                roomErrors.push("There was an error joining the room. Please try again.");
+                                this.setState({
+                                    _gameRoomErrors: roomErrors
+                                });
                             });
                     }
                     else {
-                        // TODO: Make this error feed back to the user.
-                        console.error("While trying to join a room, got back 'undefined'.")
+                        console.error("While trying to join a room, got back 'undefined'.");
+
+                        var roomErrors = this.state._gameRoomErrors;
+                        roomErrors.push("There was an error joining the room. Please verify that the room ID matches what your GM sent you.");
+                        this.setState({
+                            _gameRoomErrors: roomErrors
+                        });
                     }
                 })
                 .catch(reason => {
-                    console.error("Failed to join the room due to a networking issue." + reason)
+                    console.error("Failed to join the room due to a networking issue." + reason);
+
+                    var roomErrors = this.state._gameRoomErrors;
+                    roomErrors.push("There was an error joining the room. Please try again.");
+                    this.setState({
+                        _gameRoomErrors: roomErrors
+                    });
                 });
         }
     }
@@ -360,6 +399,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             _currentProfile: undefined,
             _gameRoom: undefined,
             _gameTabs: new Map(),
+            _gameRoomErrors: []
         };
     }
 
@@ -408,6 +448,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
                         _createRoomCallback={handleRoomCreate.bind(this)}
                         _joinRoomCallback={handleRoomJoin.bind(this)}
                         _gameRoom={this.state._gameRoom}
+                        _externalRoomErrors={this.state._gameRoomErrors}
                         _profile={this.state._currentProfile}
                     />
                 </div>
