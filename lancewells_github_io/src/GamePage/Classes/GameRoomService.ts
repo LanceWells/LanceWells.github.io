@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import { IGameRoom } from '../Interfaces/IGameRoom';
-import { IDMProfile } from '../Interfaces/IDMProfile';
 import { UserDataAuth } from '../../Login/Classes/UserDataAuth';
 import { DMGameRoom } from './DMGameRoom';
 import { PlayerGameRoom } from './PlayerGameRoom';
@@ -56,14 +55,54 @@ export class GameRoomService {
     }
 
     /**
+     * Joins the specified game room. Returns the game room if it was joined without error; otherwise
+     * returns undefined.
+     * @param roomId The ID of the room to join.
+     */
+    public static async JoinGameRoom(roomId: string, playerName: string): Promise<PlayerGameRoom | undefined> {
+        var uid = UserDataAuth.GetInstance().GetUid();
+        var gameRoom: PlayerGameRoom | undefined = undefined;
+
+        var gameRef = firebase.database().ref('Games/' + roomId);
+        var charRef = firebase.database().ref('Games/' + roomId + '/Characters/' + uid);
+
+        var successfullyJoined: boolean = false;
+
+        // First, try to join the game room.
+        await charRef.set({
+            Name: playerName
+        })
+        .then(resolved => {
+            console.log("Successfully joined game room." + resolved);
+            successfullyJoined = true;
+        })
+        .catch(reason => {
+            console.error("Failed to join game room: " + reason);
+            successfullyJoined = false;
+        });
+
+        // Afterwards, see if we can get the game room; provided that we joined, that is.
+        if (successfullyJoined) {
+            await gameRef.once("value")
+            .then(resolved => {
+                console.log("Got game room: " + resolved);
+                gameRoom = GameRoomService.GetPlayerRoom(roomId, resolved);
+            })
+            .catch(reason => {
+                console.error("Failed to get game room: " + reason);
+            });
+        }
+
+        return gameRoom;
+    }
+
+    /**
      * Gets information about the specified game room.
      * @param roomId The ID for the room that needs to be fetched from the realtime database.
      */
     public static async GetGameRoom(roomId: string, roomType: TUserProfileType): Promise<IGameRoom | undefined> {
         // TODO: Add listeners for the room data here? --> do in a different call, actually.
         var gameRoom: IGameRoom | undefined = undefined;
-
-        var uid = UserDataAuth.GetInstance().GetUid();
         var gameRef = firebase.database().ref("Games/" + roomId);
 
         await gameRef.once('value')
@@ -79,7 +118,7 @@ export class GameRoomService {
             })
             .catch(reason => {
                 console.error("Failed to get game room: " + reason);
-            })
+            });
 
         return gameRoom;
     }
@@ -110,7 +149,7 @@ export class GameRoomService {
                 gameRoomDecor = snapshot.val().GameRoomDecor;
             }
             if (snapshot.val().Characters) {
-                // TODO
+                characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
             }
             if (snapshot.val().Shops) {
                 // TODO
@@ -144,7 +183,7 @@ export class GameRoomService {
 
         if (snapshot.val()) {
             console.log(snapshot.val());
-            
+
             var roomName: string = ""
             var gameRoomDecor: TRoomDecor = "None";
             var characterDisplay: TCharacterDisplay[] = [];
@@ -159,7 +198,7 @@ export class GameRoomService {
                 gameRoomDecor = snapshot.val().GameRoomDecor;
             }
             if (snapshot.val().Characters) {
-                // TODO
+                characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
             }
             if (snapshot.val().Shops) {
                 // TODO
@@ -180,5 +219,34 @@ export class GameRoomService {
         }
 
         return room;
+    }
+
+    /**
+     * Gets the game room's storage about the list of currently-displayed characters.
+     * @param roomCharData The data taken from the snapshot event.
+     */
+    private static GetCharDataFromRoom(roomCharData: any): TCharacterDisplay[] {
+        var charData: TCharacterDisplay[] = [];
+
+        var descriptors = Object.getOwnPropertyDescriptors(roomCharData)
+        Object.entries(descriptors).map(d => {
+            // The first item should be a user's UID.
+            // The second item should be the character data.
+            var charDataObject = d[1];
+            if (charDataObject
+                && charDataObject !== undefined
+                && charDataObject.value
+                && charDataObject.value !== undefined) {
+                var charDisplay: TCharacterDisplay = {
+                    Name: "",
+                    Emotion: "None",
+                    Image: []
+                };
+                Object.assign(charDisplay, charDataObject.value);
+                charData.push(charDisplay);
+            }
+        });
+
+        return charData;
     }
 }

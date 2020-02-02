@@ -17,6 +17,7 @@ import { IGameRoom } from '../Interfaces/IGameRoom';
 import { GameRoomService } from '../Classes/GameRoomService';
 import { DMGameRoom } from '../Classes/DMGameRoom';
 import { resolve } from 'url';
+import { PlayerGameRoom } from '../Classes/PlayerGameRoom';
 
 interface IGamePageProps {
 }
@@ -79,7 +80,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
      * name for the DM.
      */
     private HandleCreateRoom(): void {
-        if (this.state._currentProfile != undefined) {
+        if (this.state._currentProfile !== undefined) {
             var roomName: string;
             roomName = this.state._currentProfile.ProfileName;
             
@@ -119,6 +120,39 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             });
         } else {
             console.error("This.state._currentProfile is undefined when trying to make a new game room.");
+        }
+    }
+
+    private HandleJoinRoom(roomId: string): void {
+        if (this.state._currentProfile !== undefined) {
+            GameRoomService.JoinGameRoom(roomId, this.state._currentProfile.ProfileName)
+                .then(resolved => {
+                    var gameRoom: PlayerGameRoom | undefined = resolved;
+                    if (gameRoom !== undefined && this.state._currentProfile !== undefined) {
+                        console.log("Successfully joined room and got information back from the DB.");
+                        
+                        var currentProfile = this.state._currentProfile;
+                        currentProfile.GameID = gameRoom.RoomId;
+
+                        UserDataAuth.GetInstance().SetProfileData(currentProfile)
+                            .then(resolved => {
+                                this.setState({
+                                    _gameRoom: gameRoom,
+                                    _currentProfile: currentProfile
+                                });
+                            })
+                            .catch(reason => {
+                                console.error("Failed to join a room due to an error when setting profile data for the user." + reason);
+                            });
+                    }
+                    else {
+                        // TODO: Make this error feed back to the user.
+                        console.error("While trying to join a room, got back 'undefined'.")
+                    }
+                })
+                .catch(reason => {
+                    console.error("Failed to join the room due to a networking issue." + reason)
+                });
         }
     }
 
@@ -358,6 +392,10 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             this.HandleCreateRoom();
         }
 
+        const handleRoomJoin = (roomId: string) => {
+            this.HandleJoinRoom(roomId);
+        }
+
         return(
             <div className="game">
                 <div className="game-play-area">
@@ -368,6 +406,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
                 <div className="game-chat-container">
                     <GameRoomDisplay
                         _createRoomCallback={handleRoomCreate.bind(this)}
+                        _joinRoomCallback={handleRoomJoin.bind(this)}
                         _gameRoom={this.state._gameRoom}
                         _profile={this.state._currentProfile}
                     />

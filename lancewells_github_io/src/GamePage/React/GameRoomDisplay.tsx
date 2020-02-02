@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import { IGameRoom } from '../Interfaces/IGameRoom';
 import { IUserProfile } from '../Interfaces/IUserProfile';
 import { ProfileIsDM } from '../Interfaces/IDMProfile';
@@ -10,6 +10,7 @@ interface IGameRoomDisplayProps {
     _gameRoom: IGameRoom | undefined;
     _profile: IUserProfile | undefined;
     _createRoomCallback: () => void;
+    _joinRoomCallback: (roomId: string) => void;
 }
 
 interface IGameRoomDisplayState {
@@ -20,6 +21,8 @@ interface IGameRoomDisplayState {
  * Displays the game room details on the right-hand pane.
  */
 export class GameRoomDisplay extends React.Component<IGameRoomDisplayProps, IGameRoomDisplayState> {
+    private roomIdInput: string = "";
+
     public constructor (props: IGameRoomDisplayProps) {
         super(props);
         this.state = {
@@ -111,9 +114,26 @@ export class GameRoomDisplay extends React.Component<IGameRoomDisplayProps, IGam
                 break;
             }
             case "JoinRoom": {
+                var handleJoinRoom = (event: FormEvent<HTMLFormElement>) => {
+                    event.preventDefault();
+                    var roomid = this.roomIdInput;
+                    this.props._joinRoomCallback(roomid);
+                }
+
+                var handleRoomIdInput = (event: ChangeEvent<HTMLInputElement>) => {
+                    var input = event.target?.value;
+                    if (input) {
+                        this.roomIdInput = input;
+                    }
+                };
+
                 return (
                     <div>
-                        <h2>Hello Player! Click here to join a room.</h2>
+                        <h2>Hello Player! You'll need to join a room in order to play with others.</h2>
+                        <form method="POST" onSubmit={handleJoinRoom.bind(this)}>
+                            <input type="text" name="roomid" onChange={handleRoomIdInput.bind(this)} />
+                            <input type="submit" value="Join Room"/>
+                        </form>
                     </div>
                 );
                 break;
