@@ -1,16 +1,15 @@
 import './ItemShop.css';
 import React from 'react';
 
-import { IItemJson, IItem } from "../../Interfaces/IItem";
-import { TSourceType } from "../../Types/TSourceType";
+import { IItem } from "../../Interfaces/IItem";
 import { BazaarCarpet } from './BazaarCarpet';
-import { CarpetMaps } from './CarpetMap';
 import { ItemWondrous } from '../../Classes/ItemWondrous';
 import { TItemClick } from '../Common/ItemCard';
 import { ItemDetailsModal } from '../Common/ItemDetailsModal';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 import { ItemSource } from '../../Classes/ItemSource';
 import { IPlayerProfile } from '../../../GamePage/Interfaces/IPlayerProfile';
+import { CarpetMap, CarpetBorder } from './CarpetMap';
 
 /**
  * @description
@@ -19,6 +18,7 @@ import { IPlayerProfile } from '../../../GamePage/Interfaces/IPlayerProfile';
 interface IItemShopProps {
     userProfile: IPlayerProfile;
     purchaseCallback: TPurchaseClick;
+    items: IItem[];
 };
 
 /**
@@ -48,7 +48,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             showItemDialog: false,
             itemDetails: new ItemWondrous(),
         };
-        // console.log(process.env.REACT_APP_TEST_KEY);
         ItemSource.GetInstance();
     }
 
@@ -77,71 +76,71 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     }
 
     /**
-     * @description Performs an enum-<p> lookup to get something nice and pixelated to represent the source
-     * of the item that is being displayed.
-     * @param source The source to lookup and return a <p> element that represents it.
-     */
-    getSourceText(source: TSourceType) {
-        switch (source) {
-            case "Official":
-                {
-                    return (<p style={{ color: 'rgb(255, 200, 37)' }}>Official</p>);
-                }
-            case "Homebrew":
-                {
-                    return (<p style={{ color: 'rgb(147, 56, 143)' }}>Homebrew</p>);
-                }
-        };
-    }
-
-    /**
-     * @description Performs an enum-<p> lookup to get something nice and pixelated to represent the type
-     * of the item that is being displayed.
-     * @param type The item to lookup and return a <p> element that represents it.
-     */
-    getTypeDisplay(item: IItemJson) {
-        switch (item.type) {
-            case "Weapon":
-                {
-                    return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
-                }
-            case "Armor":
-                {
-                    return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
-                }
-            case "Potion":
-                {
-                    return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
-                }
-            case "Wondrous":
-                {
-                    return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
-                }
-            default:
-                {
-                    return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
-                }
-        }
-    }
-
-    /**
      * @description Gets a list of bazaar carpets for display.
      * @param onItemClick The click event-handler for item clicks.
      */
-    getBazaarCarpets(onItemClick: TItemClick, onItemPurchase: TPurchaseClick) {
-        return CarpetMaps.map((carpet) => {
-            return (
+    getBazaarCarpets(onItemClick: TItemClick, onItemPurchase: TPurchaseClick): JSX.Element[] {
+        var carpetArmorItems     : IItem[] = [];
+        var carpetPotionsItems   : IItem[] = [];
+        var carpetWeaponsItems   : IItem[] = [];
+        var carpetWondrousItems  : IItem[] = [];
+
+        this.props.items.forEach(item => {
+            switch(item.type) {
+                case "Armor"    : carpetArmorItems.push(item);       break;
+                case "Potion"   : carpetPotionsItems.push(item);     break;
+                case "Weapon"   : carpetWeaponsItems.push(item);     break;
+                case "Wondrous" : carpetWondrousItems.push(item);    break;
+                default         : carpetWondrousItems.push(item);    break;
+            }
+        });
+
+        // It's not the prettiest, but there's an advantage to the JSX method below. It reduces the number
+        // of individual objects we have to track the item types. There's already a bit of an overhead to
+        // to using a one-to-one mapping from item type to carpet, so this helps mitigate that pain.
+
+        var carpets: JSX.Element[] = [];
+        if (carpetArmorItems.length > 0) {
+            carpets.push(
                 <BazaarCarpet
                     onPurchaseClick={onItemPurchase}
-                    carpetMap={carpet}
+                    carpetMap={new CarpetMap(CarpetBorder.Green, "Armor", carpetArmorItems)}
                     onItemClick={onItemClick}
                 />
-            );
-        });
-    }
+            )
+        }
 
-    componentDidMount() {
-        // CharacterState.GetInstance();
+        if (carpetPotionsItems.length > 0) {
+            carpets.push(
+                <BazaarCarpet
+                    onPurchaseClick={onItemPurchase}
+                    carpetMap={new CarpetMap(CarpetBorder.Green, "Consumables", carpetPotionsItems)}
+                    onItemClick={onItemClick}
+                />
+            )
+        }
+
+        if (carpetWeaponsItems.length > 0) {
+            carpets.push(
+                <BazaarCarpet
+                    onPurchaseClick={onItemPurchase}
+                    carpetMap={new CarpetMap(CarpetBorder.Purple, "Weapons", carpetWeaponsItems)}
+                    onItemClick={onItemClick}
+                />
+            )
+        }
+
+        if (carpetWondrousItems.length > 0) {
+            carpets.push(
+                <BazaarCarpet
+                    onPurchaseClick={onItemPurchase}
+                    carpetMap={new CarpetMap(CarpetBorder.Blue, "Wondrous Items", carpetWondrousItems)}
+                    onItemClick={onItemClick}
+                />
+            )
+        }
+
+        return carpets;
     }
 
     /**
@@ -159,10 +158,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 showItemDialog: false,
             });
         };
-
-        // const handlePurchaseItem: TPurchaseClick = (item: IItem) => {
-        //     CharacterState.GetInstance().AddItemToCurrentCharacter(item);
-        // }
 
         return (
             <div className="ItemShop">

@@ -17,6 +17,7 @@ import { IGameRoom } from '../Interfaces/IGameRoom';
 import { GameRoomService } from '../Classes/GameRoomService';
 import { DMGameRoom } from '../Classes/DMGameRoom';
 import { PlayerGameRoom } from '../Classes/PlayerGameRoom';
+import { ItemSource } from '../../Items/Classes/ItemSource';
 
 interface IGamePageProps {
 }
@@ -221,6 +222,13 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
             ));
             tabs.set("Item Shop", (
                 <ItemShop
+                    items={[
+                        ItemSource.GetItem("BrutalLongsword", "Weapon") as IItem,
+                        ItemSource.GetItem("Longsword", "Weapon") as IItem,
+                        ItemSource.GetItem("Glaive", "Weapon") as IItem,
+                        ItemSource.GetItem("SmallHealing", "Potion") as IItem,
+                        ItemSource.GetItem("FloralRing", "Wondrous") as IItem,
+                    ]}
                     userProfile={playerProfile}
                     purchaseCallback={handlePurchaseItem.bind(this)}
                 />
