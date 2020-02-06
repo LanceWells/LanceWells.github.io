@@ -42,3 +42,12 @@ export class DMGameRoom implements IGameRoom {
      */
     readonly Chests: TChestTab[] = [];
 }
+
+export function RoomIsDm(gameRoom: IGameRoom | undefined): gameRoom is DMGameRoom {
+    var isType: boolean = true;
+
+    isType = isType && gameRoom !== undefined;
+    isType = isType && (gameRoom as DMGameRoom).PlayerInfo !== undefined;
+
+    return isType;
+}

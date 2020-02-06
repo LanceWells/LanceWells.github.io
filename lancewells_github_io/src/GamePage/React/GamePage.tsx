@@ -15,9 +15,10 @@ import { Tab, Tabs } from 'react-bootstrap';
 import { GameRoomDisplay } from './GameRoomDisplay';
 import { IGameRoom } from '../Interfaces/IGameRoom';
 import { GameRoomService } from '../Classes/GameRoomService';
-import { DMGameRoom } from '../Classes/DMGameRoom';
+import { DMGameRoom, RoomIsDm } from '../Classes/DMGameRoom';
 import { PlayerGameRoom } from '../Classes/PlayerGameRoom';
 import { ItemSource } from '../../Items/Classes/ItemSource';
+import { ItemShopManager } from './DM Pages/ItemShopManager';
 
 interface IGamePageProps {
 }
@@ -247,9 +248,34 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
     private GetDefaultDMTabs(): Map<string, JSX.Element> {
         var tabs: Map<string, JSX.Element> = new Map();
 
+        var room: IGameRoom | undefined = this.state._gameRoom;
+
+        if (RoomIsDm(room))
+        {
+            room.Shops.push({
+                ID: "f897f897f",
+                Name: "A test shop!",
+                ShopKeeper: "Indigo",
+                Items: [
+                    ItemSource.GetItem("BrutalLongsword", "Weapon") as IItem,
+                    ItemSource.GetItem("Longsword", "Weapon") as IItem,
+                    ItemSource.GetItem("Glaive", "Weapon") as IItem,
+                    ItemSource.GetItem("SmallHealing", "Potion") as IItem,
+                    ItemSource.GetItem("FloralRing", "Wondrous") as IItem,
+                ]
+            });
+
+            tabs.set("Item Shops", (
+                <ItemShopManager
+                    _dmGameRoom={room}
+                />
+            ));
+        }
+
         tabs.set("DM Screen", (
             <h1>Using this page as DM {this.state._currentProfile?.ProfileName}.</h1>
         ));
+
         // TODO: DM Screen.
 
         return tabs;

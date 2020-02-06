@@ -17,14 +17,14 @@ export class PlayerGameRoom implements IGameRoom {
     readonly RoomName: string = "";
 
     /**
-     * A list of characters and their relevant visible media.
-     */
-    readonly Characters: TCharacterDisplay[] = [];
-
-    /**
      * Describes any current decorations in the game room display.
      */
     GameRoomDecor: TRoomDecor = "None";
+
+    /**
+     * A list of characters and their relevant visible media.
+     */
+    readonly Characters: TCharacterDisplay[] = [];
 
     /**
      * Includes public (all-user) and personal shop tabs.
