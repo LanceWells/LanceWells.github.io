@@ -48,7 +48,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             showItemDialog: false,
             itemDetails: new ItemWondrous(),
         };
-        ItemSource.GetInstance();
     }
 
     /**

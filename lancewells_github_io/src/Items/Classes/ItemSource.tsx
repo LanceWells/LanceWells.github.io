@@ -12,20 +12,6 @@ import { IItemJson, IItem } from "../Interfaces/IItem";
  * https://basarat.gitbooks.io/typescript/docs/tips/staticConstructor.html
  */
 export class ItemSource {
-    private readonly _tableName: string = 'LantsPants.Items'
-
-    private static instance: ItemSource;
-
-    private constructor() { }
-
-    public static GetInstance() {
-        if (!ItemSource.instance) {
-            ItemSource.instance = new ItemSource();
-        }
-
-        return ItemSource.instance;
-    }
-
     /**
      * @description Finds the item under the specified index, and returns that item. If the item cannot be
      * found, returns undefined instead. This function returns undefined such that a caller can determine how
@@ -33,7 +19,7 @@ export class ItemSource {
      * @param index The index to search for the item.
      * @param type The type of item to search for.
      */
-    static GetItem(index: string, type: TItemType): IItem | undefined {
+    public static GetItem(index: string, type: TItemType): IItem | undefined {
         var item: IItemJson | undefined = undefined;
         var listToSearch: IItemJson[] | undefined = undefined;
         var constructedItem: IItem | undefined = undefined;
@@ -67,21 +53,98 @@ export class ItemSource {
         }
 
         if (item !== undefined) {
-            if (IItemIsItemWeapon(item)) {
-                constructedItem = ItemWeapon.fromJson(item)
-            }
-            else if (IItemIsItemArmor(item)) {
-                constructedItem = ItemArmor.fromJson(item);
-            }
-            else if (IItemIsItemPotion(item)) {
-                constructedItem = ItemPotion.fromJson(item);
-            }
-            else if (IItemIsItemWondrous(item)) {
-                constructedItem = ItemWondrous.fromJson(item);
-            }
+            constructedItem = this.ConvertJsonToItem(item);
         }
 
         return constructedItem;
+    }
+
+    /**
+     * Searches the list of all available items for those that match a set of specific keywords. Enables
+     * search functionality through all known items.
+     * @param keywords The list of keywords to compare against all items.
+     */
+    public static SearchItems(keywords: string[]): IItem[] {
+        var masterList: IItemJson[] = [];
+        var matchingItems: IItem[] = [];
+
+        masterList.concat(ItemMap_Armor);
+        masterList.concat(ItemMap_Potions);
+        masterList.concat(ItemMap_Weapons);
+        masterList.concat(ItemMap_Wondrous);
+
+        keywords.forEach(k => {
+            var filteredItems = masterList.filter(item => this.ContainsKeyword(k, item));
+
+            // Verify that the item isn't already in the matching items list.
+            filteredItems.forEach(f => {
+                // Convert the item first. We need this to access the equality string.
+                var converted = this.ConvertJsonToItem(f);
+
+                // If the item can be converted, and the list of existing items does not already include this
+                // item, then add it.
+                if (converted !== undefined && !matchingItems.some(m => converted?.GetEqualityString() !== m.GetEqualityString())) {
+                    matchingItems.push(converted);
+                }
+            });
+        });
+
+        return matchingItems;
+    }
+
+    /**
+     * Converts a json-able item into an item.
+     * @param item The json item to be converted to an item.
+     */
+    private static ConvertJsonToItem(item: IItemJson): IItem | undefined {
+        var constructedItem: IItem | undefined = undefined;
+
+        if (IItemIsItemWeapon(item)) {
+            constructedItem = ItemWeapon.fromJson(item)
+        }
+        else if (IItemIsItemArmor(item)) {
+            constructedItem = ItemArmor.fromJson(item);
+        }
+        else if (IItemIsItemPotion(item)) {
+            constructedItem = ItemPotion.fromJson(item);
+        }
+        else if (IItemIsItemWondrous(item)) {
+            constructedItem = ItemWondrous.fromJson(item);
+        }
+
+        return constructedItem;
+    }
+
+    /**
+     * Returns true if the keyword is contained in the specified item.
+     * @param keyword The keyword to evaluate. 
+     * @param item The item to evaluate.
+     */
+    private static ContainsKeyword(keyword: string, item: IItemJson): boolean {
+        var doesMatch: boolean = false;
+        
+        doesMatch = doesMatch || item.key.includes(keyword);
+        doesMatch = doesMatch || item.title.includes(keyword);
+        doesMatch = doesMatch || item.description.includes(keyword);
+        doesMatch = doesMatch || item.details.includes(keyword);
+        
+        doesMatch = doesMatch || this.IsMatch(keyword, /attunement/i) && item.requiresAttunement;
+
+        return doesMatch;
+    }
+
+    /**
+     * Returns true if the provided regex matches the provided keyword.
+     * @param phrase The keyword to match against.
+     * @param regex The regular expression to compare against.
+     */
+    private static IsMatch(phrase: string, regex: RegExp): boolean {
+        var isMatch: boolean = false;
+
+        var match: RegExpMatchArray | null = phrase.match(regex);
+        isMatch = isMatch || (match != null && match.length > 0);
+
+        return isMatch;
     }
 }
 
@@ -89,7 +152,7 @@ export class ItemSource {
  * The purpose of the following classes and constants is to act as a proxy for a server. This will likely all
  * go away if/when this software switches to use AWS or something similar.
  */
-const ItemMap_Weapons: Array<IItemWeaponJson> =
+const ItemMap_Weapons: IItemWeaponJson[] =
 [
     {
         key: 'Club',
@@ -715,7 +778,7 @@ const ItemMap_Weapons: Array<IItemWeaponJson> =
     },
 ]
 
-const ItemMap_Potions: Array<IItemPotionJson> =
+const ItemMap_Potions: IItemPotionJson[] =
 [
     {
         key: 'SmallHealing',
@@ -823,9 +886,9 @@ const ItemMap_Potions: Array<IItemPotionJson> =
     },
 ]
 
-const ItemMap_Armor: Array<IItemArmorJson> = [];
+const ItemMap_Armor: IItemArmorJson[] = [];
 
-const ItemMap_Wondrous: Array<IItemWondrousJson> =
+const ItemMap_Wondrous: IItemWondrousJson[] =
 [
     {
         key: 'FireyRing',

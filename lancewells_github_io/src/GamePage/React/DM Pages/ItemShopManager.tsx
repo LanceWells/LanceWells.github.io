@@ -5,6 +5,7 @@ import { IItem } from '../../../Items/Interfaces/IItem';
 
 interface IItemShopManagerProps {
     _dmGameRoom: DMGameRoom;
+    // AddNewShopCallback
 }
 
 interface IItemShopManagerState {
