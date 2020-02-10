@@ -21,8 +21,8 @@ interface IItemShopManagerState {
 type ShopManagementState = "Viewing" | "Creating";
 
 export class ItemShopManager extends React.Component<IItemShopManagerProps, IItemShopManagerState> {
-    private _iconWidth: number = 64;
-    private _iconHeight: number = 64;
+    private _iconWidth: number = 128;
+    private _iconHeight: number = 128;
     private _maxItemsDesc: number = 4;
     private _shopName: string = "";
 
@@ -83,7 +83,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
             case "Viewing":
                 {
                     return (
-                        <div className="shopmgr-create-container">
+                        <div className="shopmgr-view-container">
                             <div className="shopmgr-create-controls">
                                 <ManagerButton
                                     HandleButtonCallback={this.HandleCreateShop.bind(this)}

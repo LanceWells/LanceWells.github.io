@@ -28,8 +28,9 @@ export function ItemShopIcon(props: IItemShopIcon) {
                         {GetTooltipText(props._shopTab, props._maxItemsInTooltip)}
                     </Tooltip>
                 }>
-                <div className="shopmgr-icon">
+                <div className="shopmgr-icon-bg">
                     <img
+                        className="shopmgr-icon"
                         alt="Shop Icon"
                         src={shopIconLocation}
                         style={{

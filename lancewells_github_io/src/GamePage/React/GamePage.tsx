@@ -198,11 +198,30 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         }
     }
 
+    /**
+     * Creates the new shop in the DB.
+     * @param newShop The new shop to create and store in the DB.
+     */
     private HandleCreateNewShop(newShop: TShopTab): void {
         var gameId = this.state._currentProfile?.GameID;
         
         if (gameId !== null && gameId !== undefined) {
-            GameRoomService.AddShop(gameId, newShop);
+            GameRoomService.AddShop(gameId, newShop)
+            .then(result => {
+                var gameRoom = this.state._gameRoom;
+                if (RoomIsDm(gameRoom)) {
+                    gameRoom.Shops.push(result);
+
+                    // Update the state so that it reflects in our GUI.
+                    this.setState({
+                        _gameRoom: gameRoom
+                    });
+                    this.UpdateUserTabs();
+                }
+            })
+            .catch(reason => {
+                console.error("Failed to create a new shop.\n" + reason);
+            });
         }
     }
 

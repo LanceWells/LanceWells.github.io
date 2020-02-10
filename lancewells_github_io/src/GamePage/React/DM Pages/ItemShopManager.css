@@ -16,8 +16,11 @@ body {
 
 .shopmgr-icon {
     height: auto;
+}
+
+.shopmgr-icon-bg {
     background-color: rgb(42, 47, 78);
-    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
+    box-shadow: 2px 2px 2px 1px rgb(0, 0, 0);
     padding: 16px;
     border-radius: 100%;
 }
