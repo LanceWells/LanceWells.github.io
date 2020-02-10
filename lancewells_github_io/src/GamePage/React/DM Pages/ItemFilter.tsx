@@ -24,8 +24,14 @@ export class ItemFilter extends React.Component<IItemFilterProps, IItemFilterSta
     public render() {
         return (
             <div className="item-filter-container">
+                <h2 className='mgr-title'>Available Items</h2>
                 <div className="item-filter-search">
-                    <input type="text" name="item filter" onChange={this.HandleSearchInput.bind(this)} />
+                    <h5>Filter:</h5>
+                    <input
+                        type="text"
+                        className='item-filter'
+                        name="item filter"
+                        onChange={this.HandleSearchInput.bind(this)} />
                 </div>
                 <div className="item-filter-available">
                     {this.GetCards()}

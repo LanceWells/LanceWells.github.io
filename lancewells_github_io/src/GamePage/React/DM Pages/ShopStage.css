@@ -1,0 +1,12 @@
+.shop-stage {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #3b1443;
+    border-radius: 16px;
+    margin: 16px;
+    padding: 16px;
+    box-shadow: 2px 2px 2px 1px black;
+}

@@ -29,3 +29,18 @@ body {
     padding: 16px;
     border-radius: 100%;
 }
+
+.shopmgr-create-container {
+    display: flex;
+}
+
+.mgr-title {
+    text-align: center;
+    width: 100%;
+    padding: 16px;
+}
+
+.shopmgr-create-buttons {
+    width: 100%;
+    text-align: center;
+}
