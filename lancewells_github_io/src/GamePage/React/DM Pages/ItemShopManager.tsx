@@ -33,7 +33,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
     public constructor(props: IItemShopManagerProps) {
         super(props);
         this.state = {
-            _currentView: "Creating",
+            _currentView: "Viewing",
             _stagedItemsToAdd: [],
             _nameErrors: []
         }
@@ -83,13 +83,17 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
             case "Viewing":
                 {
                     return (
-                        <div className="shopmgr-shops">
-                            <ManagerButton
-                                HandleButtonCallback={this.HandleCreateShop.bind(this)}
-                                ButtonTitle="Create A New Shop"
-                                ButtonColor="#1e6f50"
-                            />
-                            {this.GetShopIcons()}
+                        <div className="shopmgr-create-container">
+                            <div className="shopmgr-create-controls">
+                                <ManagerButton
+                                    HandleButtonCallback={this.HandleCreateShop.bind(this)}
+                                    ButtonTitle="Create A New Shop"
+                                    ButtonColor="#1e6f50"
+                                />
+                            </div>
+                            <div className="shopmgr-shops">
+                                {this.GetShopIcons()}
+                            </div>
                         </div>
                     );
                 }
@@ -155,6 +159,10 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                 ShopKeeper: "Indigo",
                 Items: this.state._stagedItemsToAdd
             }
+
+            this.setState({
+                _currentView: "Viewing"
+            });
 
             this.props.AddNewShopCallback(newShop);
         }

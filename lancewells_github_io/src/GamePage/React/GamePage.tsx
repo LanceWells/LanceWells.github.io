@@ -261,19 +261,6 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
 
         if (RoomIsDm(room))
         {
-            room.Shops.push({
-                ID: "f897f897f",
-                Name: "A test shop!",
-                ShopKeeper: "Indigo",
-                Items: [
-                    ItemSource.GetItem("BrutalLongsword", "Weapon") as IItem,
-                    ItemSource.GetItem("Longsword", "Weapon") as IItem,
-                    ItemSource.GetItem("Glaive", "Weapon") as IItem,
-                    ItemSource.GetItem("SmallHealing", "Potion") as IItem,
-                    ItemSource.GetItem("FloralRing", "Wondrous") as IItem,
-                ]
-            });
-
             tabs.set("Item Shops", (
                 <ItemShopManager
                     DmGameRoom={room}

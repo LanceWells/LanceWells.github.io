@@ -9,7 +9,8 @@ import { TRoomDecor } from '../Types/TRoomDecor';
 import { TShopTab } from '../Types/TShopTab';
 import { TChestTab } from '../Types/TChestTab';
 import { TPlayerInfo } from '../Types/TPlayerInfo';
-import { IItemJson, IItemKey } from '../../Items/Interfaces/IItem';
+import { IItemJson, IItemKey, IItem } from '../../Items/Interfaces/IItem';
+import { ItemSource } from '../../Items/Classes/ItemSource';
 
 /**
  * A class used to handle game room creation and handling with the firebase realtime database. Note that
@@ -177,6 +178,25 @@ export class GameRoomService {
         return updatedShopTab;
     }
 
+    // public static async FetchShops(roomId: string): Promise<TShopTab[]> {
+    //     var gamesRef = firebase.database().ref('Games/' + roomId + '/Shops/');
+    //     var shops: TShopTab[] = [];
+
+    //     await gamesRef.once('value')
+    //     .then(response => {
+    //         console.log("Got shops for game room.\n" + response);
+    //         if (response.val()) {
+    //             console.log(response.val());
+
+    //         }
+    //     })
+    //     .catch(reason => {
+    //         console.error("Failed to get shops for game room.\n" + reason);
+    //     })
+
+    //     return shops;
+    // }
+
     /**
      * Interprets a response from the realtime database about a game room into an object that can be read
      * and manipulated in memory.
@@ -255,7 +275,7 @@ export class GameRoomService {
                 characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
             }
             if (snapshot.val().Shops) {
-                // TODO
+                shops = GameRoomService.GetShopDataFromRoom(snapshot.val().Shops);
             }
             if (snapshot.val().Chests) {
                 // TODO
@@ -282,7 +302,7 @@ export class GameRoomService {
     private static GetCharDataFromRoom(roomCharData: any): TCharacterDisplay[] {
         var charData: TCharacterDisplay[] = [];
 
-        var descriptors = Object.getOwnPropertyDescriptors(roomCharData)
+        var descriptors = Object.getOwnPropertyDescriptors(roomCharData);
         Object.entries(descriptors).map(d => {
             // The first item should be a user's UID.
             // The second item should be the character data.
@@ -302,5 +322,75 @@ export class GameRoomService {
         });
 
         return charData;
+    }
+
+    private static GetShopDataFromRoom(shopData: any): TShopTab[] {
+        var shops: TShopTab[] = [];
+        var descriptors = Object.getOwnPropertyDescriptors(shopData);
+        
+        // Each descriptor should be a different shop.
+        Object.entries(descriptors).map(d => {
+            console.log(d);
+            
+            var newShop: TShopTab = {
+                ID: "",
+                Name: "",
+                ShopKeeper: "Indigo",
+                Items: []
+            };
+
+            // The first item should be a shop ID.
+            var shopId = d[0];
+            if (shopId !== null && shopId !== undefined) {
+
+                newShop.ID = shopId
+            }
+
+            // The second item sohuld be the individual shop's data.
+            // We have to grab each item individually because we store a JSON-ified array of a complex data
+            // type in here. If we try to do an Object.Assign, it leaves us with assigning a string to the
+            // complex array.
+            var shopDataObject = d[1];
+            if (shopDataObject 
+                && shopDataObject !== undefined
+                && shopDataObject.value
+                && shopDataObject.value !== undefined) {
+                
+                // Try to get the name if we can.
+                if (shopDataObject.value.Name
+                    && shopDataObject.value.Name !== undefined) {
+                    newShop.Name = shopDataObject.value.Name;
+                }
+
+                // And the shopkeeper.
+                if (shopDataObject.value.ShopKeeper
+                    && shopDataObject.value.ShopKeeper !== undefined) {
+                    newShop.ShopKeeper = shopDataObject.value.ShopKeeper;
+                }
+
+                // Now, see if we can deserialize the list of items.
+                if (shopDataObject.value.Items
+                    && shopDataObject.value.Items !== undefined) {
+
+                    var parsedItems: IItemKey[] = JSON.parse(shopDataObject.value.Items);
+                    if (parsedItems !== undefined && parsedItems as IItemKey[] != undefined) {
+
+                        var providedItems: (IItem | undefined)[] = parsedItems.map(item => {
+                            return ItemSource.GetItem(item.key, item.type);
+                        });
+
+                        var definedItems: IItem[] = providedItems
+                            .filter(item => item !== undefined)
+                            .map(item => item as IItem);
+                        
+                        newShop.Items = definedItems;
+                    }
+                }
+
+                shops.push(newShop);
+            }
+        });
+
+        return shops;
     }
 }
