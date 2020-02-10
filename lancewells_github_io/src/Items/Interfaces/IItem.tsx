@@ -2,8 +2,12 @@ import { TSourceType } from "../Types/TSourceType";
 import { TItemType } from "../Types/TItemType";
 import { TItemModifications } from "../Types/TCardModifications";
 
-export interface IItemJson {
+export interface IItemKey {
     key: string;
+    readonly type: TItemType;
+}
+
+export interface IItemJson extends IItemKey{
     title: string;
     description: string;
     details: string;
@@ -12,7 +16,6 @@ export interface IItemJson {
     itemCost: number;
     requiresAttunement: boolean;
     modifications: TItemModifications[];
-    readonly type: TItemType;
 }
 
 export interface IItem extends IItemJson {

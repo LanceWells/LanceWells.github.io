@@ -9,6 +9,7 @@ import { TRoomDecor } from '../Types/TRoomDecor';
 import { TShopTab } from '../Types/TShopTab';
 import { TChestTab } from '../Types/TChestTab';
 import { TPlayerInfo } from '../Types/TPlayerInfo';
+import { IItemJson, IItemKey } from '../../Items/Interfaces/IItem';
 
 /**
  * A class used to handle game room creation and handling with the firebase realtime database. Note that
@@ -138,6 +139,42 @@ export class GameRoomService {
             });
 
         return gameRoom;
+    }
+
+    /**
+     * Adds a new shop to the current game room.
+     * @param roomId The ID of the room to add a game shop to.
+     * @param shop The shop details that will be added. The ID for this will be modified and returned.
+     */
+    public static async AddShop(roomId: string, shop: TShopTab): Promise<TShopTab> {
+        var gamesRef = firebase.database().ref('Games/' + roomId + "/Shops/");
+        var updatedShopTab: TShopTab = shop;
+        var itemsJson: IItemKey[] = shop.Items.map(i => {
+            let minimalItem = {
+                key: i.key,
+                type: i.type
+            }
+            return minimalItem;
+        });
+        
+        await gamesRef.push({
+            Name: shop.Name,
+            ShopKeeper: shop.ShopKeeper,
+            Items: JSON.stringify(itemsJson)
+        })
+        .then(response => {
+            console.log("Successfully added a new shop.\n" + response);
+            var pushResponse: firebase.database.Reference = response;
+
+            if (pushResponse.key) {
+                updatedShopTab.ID = pushResponse.key;
+            }
+        })
+        .catch(reason => {
+            console.error("Failed to create a new shop.\n" + reason);
+        });
+
+        return updatedShopTab;
     }
 
     /**

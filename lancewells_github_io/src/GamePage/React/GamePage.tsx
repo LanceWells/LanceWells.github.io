@@ -19,6 +19,7 @@ import { DMGameRoom, RoomIsDm } from '../Classes/DMGameRoom';
 import { PlayerGameRoom } from '../Classes/PlayerGameRoom';
 import { ItemSource } from '../../Items/Classes/ItemSource';
 import { ItemShopManager } from './DM Pages/ItemShopManager';
+import { TShopTab } from '../Types/TShopTab';
 
 interface IGamePageProps {
 }
@@ -197,6 +198,14 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         }
     }
 
+    private HandleCreateNewShop(newShop: TShopTab): void {
+        var gameId = this.state._currentProfile?.GameID;
+        
+        if (gameId !== null && gameId !== undefined) {
+            GameRoomService.AddShop(gameId, newShop);
+        }
+    }
+
     /**
      * Gets the tabs that will be displayed to a player by default. These tabs should never be removed unless
      * the user is switching profiles.
@@ -267,7 +276,8 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
 
             tabs.set("Item Shops", (
                 <ItemShopManager
-                    _dmGameRoom={room}
+                    DmGameRoom={room}
+                    AddNewShopCallback={this.HandleCreateNewShop.bind(this)}
                 />
             ));
         }

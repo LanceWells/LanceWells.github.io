@@ -44,3 +44,22 @@ body {
     width: 100%;
     text-align: center;
 }
+
+.shopmgr-name-container {
+    width: 100%;
+    text-align: center;
+    margin: 16px 0px;
+}
+
+.shopmgr-name {
+    width: 90%;
+    font-size: x-large;
+    text-align: center;
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+.shopmgr-name-errors {
+    color: #c42430;
+}

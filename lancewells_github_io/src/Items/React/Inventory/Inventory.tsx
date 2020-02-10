@@ -98,19 +98,6 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         });
     }
 
-    // private handleStorageChange() {
-    //     this.updateFromInventory();
-    // }
-
-    // private updateFromInventory() {
-    //     this.setState({
-    //         armorItems: this.GetItemsOfType("Armor"),
-    //         potionItems: this.GetItemsOfType("Potion"),
-    //         weaponItems: this.GetItemsOfType("Weapon"),
-    //         wondrousItems: this.GetItemsOfType("Wondrous"),
-    //     });
-    // }
-
     private GetItemsOfType(type: TItemType) {
         return this
             .props
@@ -133,32 +120,9 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             showItemDialog: false,
             itemDetails: new ItemWondrous(),
         }
-
-        // const handleChange = this.handleStorageChange;
-        // CharacterState.GetInstance().onInventoryChanged(handleChange.bind(this))
     }
 
-    // componentDidMount() {
-    //     // this.updateFromInventory();
-
-    //     // var profile: IPlayerProfile = {
-    //     //     ProfileType: "Player",
-    //     //     ProfileImage: "img.src",
-    //     //     ProfileName: "FirstProfile",
-    //     //     GameID: null,
-    //     //     CharData: new CharacterData()
-    //     // };
-
-    //     // UserDataAuth.GetInstance().CreateNewProfile(profile);
-    //     // UserDataAuth.GetInstance().FetchProfileData("FirstProfile");
-    // }
-
     public render() {
-        // const removeButton = (item: IItem) => {
-        //     CharacterState.GetInstance().RemoveItemFromCurrentCharacter(item);
-        // }
-        // this.updateFromInventory();
-
         var armor = this.GetItemsOfType("Armor");
         var weapons = this.GetItemsOfType("Weapon");
         var potions = this.GetItemsOfType("Potion");
@@ -190,8 +154,6 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                 showAttackRoll: false
             })
         };
-
-        // {CharacterState.GetInstance().CurrentCharacter}
 
         return (
             <div className="inventory-container">
