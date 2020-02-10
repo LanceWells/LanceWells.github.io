@@ -1,29 +1,29 @@
 import React from 'react';
-import { TRemoveClick } from '../../../Types/CardButtonCallbackTypes/TRemoveClick';
+import { TAddClick } from '../../../Types/CardButtonCallbackTypes/TAddClick';
 import { IItem } from '../../../Interfaces/IItem';
 
-interface IRemoveButtonProps {
+interface IAddButtonProps {
     item: IItem;
     cardIconSize: number;
-    callbackFunction: TRemoveClick;
+    callbackFunction: TAddClick;
 }
 
-export function RemoveButton(props: IRemoveButtonProps) {
+export function AddButton(props: IAddButtonProps) {
     return (
         <div
             className="card-button"
             onClick={() => { props.callbackFunction(props.item) }}>
             <img
-                alt="Remove Button"
+                alt="Add Button"
                 className="card-button-icon"
-                src='./images/Item_Shop/ItemCards/Icons/Button_Remove.png'
+                src='./images/Item_Shop/ItemCards/Icons/Button_Add.png'
                 width={props.cardIconSize}
                 height={props.cardIconSize}
                 style={{
                     left: `-${props.cardIconSize / 2}px`
                 }} />
             <div className="card-button-name">
-                Drop Item
+                Stage Item
             </div>
         </div>
     )

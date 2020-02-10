@@ -2,6 +2,7 @@ import React from 'react';
 import { DMGameRoom } from '../../Classes/DMGameRoom';
 import { ItemShopIcon } from './ItemShopIcon';
 import { ItemFilter } from './ItemFilter';
+import { IItem } from '../../../Items/Interfaces/IItem';
 
 interface IItemShopManagerProps {
     _dmGameRoom: DMGameRoom;
@@ -10,6 +11,7 @@ interface IItemShopManagerProps {
 
 interface IItemShopManagerState {
     currentView: ShopManagementState;
+    stagedItemsToAdd: IItem[];
 }
 
 type ShopManagementState = "Viewing" | "Creating";
@@ -23,7 +25,8 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
     public constructor(props: IItemShopManagerProps) {
         super(props);
         this.state = {
-            currentView: "Creating"
+            currentView: "Creating",
+            stagedItemsToAdd: []
         }
     }
 
@@ -51,11 +54,17 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                         <div className="shopmgr-create-container">
                             <div className="shopmgr-create-selected">
                             </div>
-                            <ItemFilter />
+                            <ItemFilter
+                                _addItemCallback={this.HandleStageItem.bind(this)}
+                            />
                         </div>
                     );
                 }
         }
+    }
+
+    private HandleStageItem(item: IItem): void {
+        this.state.stagedItemsToAdd.push(item);
     }
 
     private GetShopIcons(): JSX.Element[] {

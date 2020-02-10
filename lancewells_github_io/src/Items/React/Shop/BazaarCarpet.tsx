@@ -39,6 +39,7 @@ export class BazaarCarpet extends React.Component<IBazaarCarpetProps, IBazaarCar
                     onAttackButton={undefined}
                     onPurchaseButton={this.props.onPurchaseClick}
                     onRemoveButton={undefined}
+                    onAddButton={undefined}
                     cardInteractions={["Purchase"]}
                 />
             );

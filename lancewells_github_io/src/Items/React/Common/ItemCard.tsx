@@ -7,14 +7,16 @@ import { Button } from 'react-bootstrap';
 import { CardIcon } from './CardIcon';
 import { IItemIsItemPotion } from '../../Classes/ItemPotion';
 import { AttackButton } from './CardButtons/AttackButton';
+import { AddButton } from './CardButtons/AddButton';
 import { PurchaseButton } from './CardButtons/PurchaseButton';
 import { RemoveButton } from './CardButtons/RemoveButton';
 import { TAttackClick } from '../../Types/CardButtonCallbackTypes/TAttackClick';
+import { TAddClick } from '../../Types/CardButtonCallbackTypes/TAddClick';
 import { TRemoveClick } from '../../Types/CardButtonCallbackTypes/TRemoveClick';
 import { TPurchaseClick } from '../../Types/CardButtonCallbackTypes/TPurchaseClick';
 
 export type TItemClick = (itemJson: IItem) => void;
-export type TCardInteractions =  "Purchase" | "Remove" | "Gather" | "Use";
+export type TCardInteractions =  "Purchase" | "Remove" | "Add" | "Gather" | "Use";
 
 interface IItemCardProps {
     itemDetails: IItem;
@@ -22,6 +24,7 @@ interface IItemCardProps {
     onAttackButton: TAttackClick | undefined;
     onPurchaseButton: TPurchaseClick | undefined;
     onRemoveButton: TRemoveClick | undefined;
+    onAddButton: TAddClick | undefined;
     cardInteractions: TCardInteractions[];
 }
 
@@ -142,6 +145,20 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
 
             buttons = buttons.concat(removeButton);
         }
+
+        if (this.props.cardInteractions.some(interaction => interaction === "Add")
+         && this.props.onAddButton !== undefined) {
+             var addButton: JSX.Element = (
+                 <AddButton
+                    item={this.props.itemDetails}
+                    cardIconSize={this.iconDefaultSize * this.cardRatio}
+                    callbackFunction={this.props.onAddButton}
+                 />
+             )
+
+            buttons = buttons.concat(addButton);
+        }
+
 
         return buttons;
     }
@@ -294,12 +311,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
      * Handles when the component has mounted. This will cause the card to draw.
      */
     componentDidMount() {
-        var canvas = this.refs.cardCanvas as HTMLCanvasElement;
-        var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-        ctx.imageSmoothingEnabled = false;
-
         this.LoadCard();
-        // this.DrawTitleText();
     }
 
     /**
@@ -328,23 +340,11 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         Promise.all(loadedImagesPromises)
             .then(resolved => {
                 console.log("Successfully loaded card images" + resolved);
-                this.DrawCardBack(borderImage);
                 this.DrawTitleText();
             })
             .catch(reason => {
                 console.error("Failed to load card images" + reason);
             });
-    }
-
-    /**
-     * Performs the actual card drawing. Gets the canvas element and draws each component.
-     * @param borderImage The card background image that has been loaded and will be drawn.
-     */
-    private DrawCardBack(borderImage: HTMLImageElement) {
-        var canvas = this.refs.cardCanvas as HTMLCanvasElement;
-        var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-
-        ctx.drawImage(borderImage, 0, 0, this.cardWidth, this.cardHeight);
     }
 
     /**
@@ -454,9 +454,10 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                             width: `${this.itemAreaDefaultSize * this.cardRatio}px`,
                         }}
                     />
-                    <canvas
+                    <img
+                        alt="card back"
                         className="card-canvas"
-                        ref="cardCanvas"
+                        src={this.GetCardBackSource()}
                         width={this.cardWidth}
                         height={this.cardHeight}
                     />

@@ -79,21 +79,23 @@ export class ItemSource {
         masterList = masterList.concat(ItemMap_Weapons);
         masterList = masterList.concat(ItemMap_Wondrous);
 
-        nonEmptyKeywords.forEach(k => {
-            var filteredItems = masterList.filter(item => this.ContainsKeyword(k, item));
+        var filteredItems = masterList.filter(item => nonEmptyKeywords.every(keyword => this.ContainsKeyword(keyword, item)))
 
-            // Verify that the item isn't already in the matching items list.
-            filteredItems.forEach(f => {
-                // Convert the item first. We need this to access the equality string.
-                var converted = this.ConvertJsonToItem(f);
+        // nonEmptyKeywords.forEach(k => {
+        // var filteredItems = masterList.filter(item => this.ContainsKeyword(k, item));
 
-                // If the item can be converted, and the list of existing items does not already include this
-                // item, then add it.
-                if (converted !== undefined && !matchingItems.some(m => converted?.GetEqualityString() === m.GetEqualityString())) {
-                    matchingItems.push(converted);
-                }
-            });
+        // Verify that the item isn't already in the matching items list.
+        filteredItems.forEach(f => {
+            // Convert the item first. We need this to access the equality string.
+            var converted = this.ConvertJsonToItem(f);
+
+            // If the item can be converted, and the list of existing items does not already include this
+            // item, then add it.
+            if (converted !== undefined && !matchingItems.some(m => converted?.GetEqualityString() === m.GetEqualityString())) {
+                matchingItems.push(converted);
+            }
         });
+        // });
 
         // If the list of keywords that was provided was empty, just return everything.
         if (nonEmptyKeywords.length <= 0) {
@@ -141,6 +143,7 @@ export class ItemSource {
         var doesMatch: boolean = false;
         
         doesMatch = doesMatch || item.key.toLocaleUpperCase().includes(upperKeyword);
+        doesMatch = doesMatch || item.type.toLocaleUpperCase().includes(upperKeyword);
         doesMatch = doesMatch || item.title.toLocaleUpperCase().includes(upperKeyword);
         doesMatch = doesMatch || item.description.toLocaleUpperCase().includes(upperKeyword);
         doesMatch = doesMatch || item.details.toLocaleUpperCase().includes(upperKeyword);

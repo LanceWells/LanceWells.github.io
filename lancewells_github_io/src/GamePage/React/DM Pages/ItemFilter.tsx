@@ -3,23 +3,21 @@ import './ItemFilter.css';
 import React, { ChangeEvent } from 'react';
 import { ItemSource } from '../../../Items/Classes/ItemSource';
 import { ItemCard } from '../../../Items/React/Common/ItemCard';
+import { TAddClick } from '../../../Items/Types/CardButtonCallbackTypes/TAddClick';
 
 interface IItemFilterProps {
-    // CardClickCallback
+    _addItemCallback: TAddClick;
 }
 
 interface IItemFilterState {
-    // FilterKeywords
-    searchKeywords: string[];
+    _searchKeywords: string[];
 }
 
 export class ItemFilter extends React.Component<IItemFilterProps, IItemFilterState> {
-    // private searchInput: string = "";
-
     public constructor(props: IItemFilterProps) {
         super(props);
         this.state = {
-            searchKeywords: []
+            _searchKeywords: []
         }
     }
 
@@ -37,7 +35,7 @@ export class ItemFilter extends React.Component<IItemFilterProps, IItemFilterSta
     }
 
     public GetCards(): JSX.Element[] {
-        var items = ItemSource.SearchItems(this.state.searchKeywords);
+        var items = ItemSource.SearchItems(this.state._searchKeywords);
         return items.map(i => {
             return (
                 <ItemCard
@@ -46,10 +44,11 @@ export class ItemFilter extends React.Component<IItemFilterProps, IItemFilterSta
                     onAttackButton={undefined}
                     onPurchaseButton={undefined}
                     onRemoveButton={undefined}
-                    cardInteractions={[]}
+                    onAddButton={this.props._addItemCallback}
+                    cardInteractions={["Add"]}
                 />
             );
-        })
+        });
     }
 
     private HandleSearchInput(event: ChangeEvent<HTMLInputElement>) {
@@ -58,7 +57,7 @@ export class ItemFilter extends React.Component<IItemFilterProps, IItemFilterSta
             var keywords = input.split(' ');
 
             this.setState({
-                searchKeywords: keywords
+                _searchKeywords: keywords
             });
         }
     }

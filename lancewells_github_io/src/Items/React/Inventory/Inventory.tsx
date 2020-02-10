@@ -43,6 +43,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     onAttackButton={undefined}
                     onPurchaseButton={undefined}
                     onRemoveButton={removeCallback}
+                    onAddButton={undefined}
                     cardInteractions={["Use", "Remove"]}
                 />
             );
@@ -58,6 +59,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     onAttackButton={undefined}
                     onPurchaseButton={undefined}
                     onRemoveButton={removeCallback}
+                    onAddButton={undefined}
                     cardInteractions={["Use", "Remove"]}
                 />
             );
@@ -73,6 +75,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     onAttackButton={attackCallback}
                     onPurchaseButton={undefined}
                     onRemoveButton={removeCallback}
+                    onAddButton={undefined}
                     cardInteractions={["Use", "Remove"]}
                 />
             );
@@ -88,6 +91,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     onAttackButton={undefined}
                     onPurchaseButton={undefined}
                     onRemoveButton={removeCallback}
+                    onAddButton={undefined}
                     cardInteractions={["Use", "Remove"]}
                 />
             );
@@ -148,10 +152,6 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     //     // UserDataAuth.GetInstance().CreateNewProfile(profile);
     //     // UserDataAuth.GetInstance().FetchProfileData("FirstProfile");
     // }
-
-    componentDidMount() {
-        console.log("MOUNT");
-    }
 
     public render() {
         // const removeButton = (item: IItem) => {
