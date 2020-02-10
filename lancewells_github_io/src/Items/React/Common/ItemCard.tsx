@@ -1,3 +1,5 @@
+import './ItemCard.css';
+
 import React from 'react';
 import { IItemJson, IItem } from '../../Interfaces/IItem';
 import { IItemIsItemWeapon } from '../../Classes/ItemWeapon';
@@ -297,13 +299,13 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         ctx.imageSmoothingEnabled = false;
 
         this.LoadCard();
-        this.DrawTitleText();
+        // this.DrawTitleText();
     }
 
     /**
      * Loads all of the parts needed to render the card itself.
      */
-    private LoadCard() {
+    private LoadCard(): void {
         var imagesToLoad: HTMLImageElement[] = [];
 
         var borderImage = new Image();
@@ -323,14 +325,22 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             });
         });
 
-        Promise.all(loadedImagesPromises).then(() => this.DrawCard(borderImage));
+        Promise.all(loadedImagesPromises)
+            .then(resolved => {
+                console.log("Successfully loaded card images" + resolved);
+                this.DrawCardBack(borderImage);
+                this.DrawTitleText();
+            })
+            .catch(reason => {
+                console.error("Failed to load card images" + reason);
+            });
     }
 
     /**
      * Performs the actual card drawing. Gets the canvas element and draws each component.
      * @param borderImage The card background image that has been loaded and will be drawn.
      */
-    private DrawCard(borderImage: HTMLImageElement) {
+    private DrawCardBack(borderImage: HTMLImageElement) {
         var canvas = this.refs.cardCanvas as HTMLCanvasElement;
         var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 

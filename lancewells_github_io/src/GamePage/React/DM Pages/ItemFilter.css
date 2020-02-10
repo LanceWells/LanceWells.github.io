@@ -1,0 +1,4 @@
+.item-filter-available {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -68,12 +68,18 @@ export class ItemSource {
         var masterList: IItemJson[] = [];
         var matchingItems: IItem[] = [];
 
-        masterList.concat(ItemMap_Armor);
-        masterList.concat(ItemMap_Potions);
-        masterList.concat(ItemMap_Weapons);
-        masterList.concat(ItemMap_Wondrous);
+        // Filter out all empty keywords.
+        var nonEmptyKeywords: string[] = keywords.filter(k => !this.IsMatch(k, /\s+/) && k.length > 0);
 
-        keywords.forEach(k => {
+        // Trim off the whitespace for any keyword.
+        nonEmptyKeywords = nonEmptyKeywords.map(k => k.trim());
+
+        masterList = masterList.concat(ItemMap_Armor);
+        masterList = masterList.concat(ItemMap_Potions);
+        masterList = masterList.concat(ItemMap_Weapons);
+        masterList = masterList.concat(ItemMap_Wondrous);
+
+        nonEmptyKeywords.forEach(k => {
             var filteredItems = masterList.filter(item => this.ContainsKeyword(k, item));
 
             // Verify that the item isn't already in the matching items list.
@@ -83,11 +89,21 @@ export class ItemSource {
 
                 // If the item can be converted, and the list of existing items does not already include this
                 // item, then add it.
-                if (converted !== undefined && !matchingItems.some(m => converted?.GetEqualityString() !== m.GetEqualityString())) {
+                if (converted !== undefined && !matchingItems.some(m => converted?.GetEqualityString() === m.GetEqualityString())) {
                     matchingItems.push(converted);
                 }
             });
         });
+
+        // If the list of keywords that was provided was empty, just return everything.
+        if (nonEmptyKeywords.length <= 0) {
+            masterList.forEach(m => {
+                var converted = this.ConvertJsonToItem(m);
+                if (converted !== undefined) {
+                    matchingItems.push(converted);
+                }
+            })
+        }
 
         return matchingItems;
     }
@@ -121,14 +137,19 @@ export class ItemSource {
      * @param item The item to evaluate.
      */
     private static ContainsKeyword(keyword: string, item: IItemJson): boolean {
+        var upperKeyword = keyword.toLocaleUpperCase();
         var doesMatch: boolean = false;
         
-        doesMatch = doesMatch || item.key.includes(keyword);
-        doesMatch = doesMatch || item.title.includes(keyword);
-        doesMatch = doesMatch || item.description.includes(keyword);
-        doesMatch = doesMatch || item.details.includes(keyword);
+        doesMatch = doesMatch || item.key.toLocaleUpperCase().includes(upperKeyword);
+        doesMatch = doesMatch || item.title.toLocaleUpperCase().includes(upperKeyword);
+        doesMatch = doesMatch || item.description.toLocaleUpperCase().includes(upperKeyword);
+        doesMatch = doesMatch || item.details.toLocaleUpperCase().includes(upperKeyword);
         
-        doesMatch = doesMatch || this.IsMatch(keyword, /attunement/i) && item.requiresAttunement;
+        doesMatch = doesMatch || upperKeyword.includes("ATTUNEMENT".toLocaleUpperCase()) && item.requiresAttunement;
+
+        if (IItemIsItemWeapon(item)) {
+            doesMatch = doesMatch || item.properties.some(p => p.toLocaleUpperCase().includes(upperKeyword))
+        }
 
         return doesMatch;
     }

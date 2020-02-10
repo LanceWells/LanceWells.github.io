@@ -1,7 +1,7 @@
 import React from 'react';
 import { DMGameRoom } from '../../Classes/DMGameRoom';
 import { ItemShopIcon } from './ItemShopIcon';
-import { IItem } from '../../../Items/Interfaces/IItem';
+import { ItemFilter } from './ItemFilter';
 
 interface IItemShopManagerProps {
     _dmGameRoom: DMGameRoom;
@@ -23,7 +23,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
     public constructor(props: IItemShopManagerProps) {
         super(props);
         this.state = {
-            currentView: "Viewing"
+            currentView: "Creating"
         }
     }
 
@@ -51,8 +51,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                         <div className="shopmgr-create-container">
                             <div className="shopmgr-create-selected">
                             </div>
-                            <div className="shopmgr-create-available">
-                            </div>
+                            <ItemFilter />
                         </div>
                     );
                 }
