@@ -211,11 +211,6 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
                 var gameRoom = this.state._gameRoom;
                 if (RoomIsDm(gameRoom)) {
                     gameRoom.Shops.push(result);
-
-                    // Update the state so that it reflects in our GUI.
-                    this.setState({
-                        _gameRoom: gameRoom
-                    });
                     this.UpdateUserTabs();
                 }
             })

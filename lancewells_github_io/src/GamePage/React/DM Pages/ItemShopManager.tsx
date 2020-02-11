@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, DragEvent } from 'react';
 import { DMGameRoom } from '../../Classes/DMGameRoom';
 import { ItemShopIcon } from './ItemShopIcon';
 import { ItemFilter } from './ItemFilter';
@@ -6,6 +6,7 @@ import { IItem } from '../../../Items/Interfaces/IItem';
 import { ShopStage } from './ShopStage';
 import { ManagerButton } from './ManagerButton';
 import { TShopTab } from '../../Types/TShopTab';
+import { PlayerDropBox } from './PlayerDropBox';
 
 interface IItemShopManagerProps {
     DmGameRoom: DMGameRoom;
@@ -25,6 +26,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
     private _iconHeight: number = 128;
     private _maxItemsDesc: number = 4;
     private _shopName: string = "";
+    private _draggingShop: TShopTab | undefined = undefined;
 
     /**
      * Creates a new instance of this class.
@@ -94,6 +96,10 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                             <div className="shopmgr-shops">
                                 {this.GetShopIcons()}
                             </div>
+                            <PlayerDropBox
+                                ItemIsHeld={false}
+                                CharacterDisplay={this.props.DmGameRoom.Characters}
+                            />
                         </div>
                     );
                 }
@@ -231,16 +237,26 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
     }
 
     /**
+     * 
+     * @param shop 
+     * @reference https://www.pluralsight.com/guides/implement-drag-drop-react-component
+     */
+    private HandleShopOnDragEvent(shop: TShopTab): void {
+        this._draggingShop = shop;
+    }
+
+    /**
      * Gets a set of shop icons to display each known shop.
      */
     private GetShopIcons(): JSX.Element[] {
         return (this.props.DmGameRoom.Shops.map(shop => {
             return (
                 <ItemShopIcon
-                    _shopTab={shop}
-                    _maxItemsInTooltip={this._maxItemsDesc}
-                    _width={this._iconWidth}
-                    _height={this._iconHeight}
+                    HandleDragEvent={this.HandleShopOnDragEvent.bind(this)}
+                    ShopTab={shop}
+                    MaxItemsInTooltip={this._maxItemsDesc}
+                    Width={this._iconWidth}
+                    Height={this._iconHeight}
                 />
             )
         }));
