@@ -97,6 +97,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                                 {this.GetShopIcons()}
                             </div>
                             <PlayerDropBox
+                                HandleDropEvent={this.HandleShopOnDropEvent.bind(this)}
                                 ItemIsHeld={false}
                                 CharacterDisplay={this.props.DmGameRoom.Characters}
                             />
@@ -243,6 +244,11 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
      */
     private HandleShopOnDragEvent(shop: TShopTab): void {
         this._draggingShop = shop;
+        console.log(this._draggingShop);
+    }
+
+    private HandleShopOnDropEvent(playerUid: string): void {
+        console.log(playerUid + this._draggingShop?.ID + this.props.DmGameRoom.RoomId);
     }
 
     /**

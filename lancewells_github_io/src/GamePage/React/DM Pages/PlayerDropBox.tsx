@@ -6,6 +6,7 @@ import { PlayerDropColumn } from './PlayerDropColumn';
 
 interface IPlayerDropBoxProps {
     CharacterDisplay: TCharacterDisplay[];
+    HandleDropEvent: (playerId: string) => void;
     ItemIsHeld: boolean;
 }
 
@@ -35,6 +36,7 @@ export class PlayerDropBox extends React.Component<IPlayerDropBoxProps, IPlayerD
         return this.props.CharacterDisplay.map(char => {
             return (
                 <PlayerDropColumn
+                    HandleDropEvent={this.props.HandleDropEvent}
                     ItemIsHeld={this.props.ItemIsHeld}
                     CharacterDisplay={char}
                 />

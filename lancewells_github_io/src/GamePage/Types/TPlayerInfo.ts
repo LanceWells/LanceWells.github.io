@@ -1,5 +1,6 @@
 import { TShopTab } from "./TShopTab";
 import { TChestTab } from "./TChestTab";
+import { TCharacterDisplay } from "./TCharacterDisplay";
 
 /**
  * Information about a given player. The DM uses this object rather than the Character Display type. This
@@ -7,8 +8,7 @@ import { TChestTab } from "./TChestTab";
  * shops or chests to a specific player's game room display.
  */
 export type TPlayerInfo = {
-    Uid: string;
-    Name: string;
+    Character: TCharacterDisplay;
     ShopTabs: TShopTab[];
     ChestTabs: TChestTab[];
 }

@@ -5,6 +5,7 @@ import { TCharacterEmotion } from './TCharacterEmotion';
  * player profile in the current game room.
  */
 export type TCharacterDisplay = {
+    Uid: string;
     Name: string;
     Emotion: TCharacterEmotion;
     Image: string[];

@@ -178,24 +178,19 @@ export class GameRoomService {
         return updatedShopTab;
     }
 
-    // public static async FetchShops(roomId: string): Promise<TShopTab[]> {
-    //     var gamesRef = firebase.database().ref('Games/' + roomId + '/Shops/');
-    //     var shops: TShopTab[] = [];
+    public static async AddShopToPlayer(roomId: string, playerId: string, shopId: string): Promise<void> {
+        var gameRef = firebase.database().ref('Games/' + roomId + '/ShopTabs/' + playerId);
 
-    //     await gamesRef.once('value')
-    //     .then(response => {
-    //         console.log("Got shops for game room.\n" + response);
-    //         if (response.val()) {
-    //             console.log(response.val());
-
-    //         }
-    //     })
-    //     .catch(reason => {
-    //         console.error("Failed to get shops for game room.\n" + reason);
-    //     })
-
-    //     return shops;
-    // }
+        await gameRef.push({
+            shopId
+        })
+        .then(response => {
+            console.log("Successfully added a shop to a player.\n" + response);
+        })
+        .catch(reason => {
+            console.error("Failed to add a shop to a player.\n" + reason);
+        });
+    }
 
     /**
      * Interprets a response from the realtime database about a game room into an object that can be read
@@ -305,6 +300,8 @@ export class GameRoomService {
         var descriptors = Object.getOwnPropertyDescriptors(roomCharData);
         Object.entries(descriptors).map(d => {
             // The first item should be a user's UID.
+            var charDataId = d[0];
+
             // The second item should be the character data.
             var charDataObject = d[1];
             if (charDataObject
@@ -312,6 +309,7 @@ export class GameRoomService {
                 && charDataObject.value
                 && charDataObject.value !== undefined) {
                 var charDisplay: TCharacterDisplay = {
+                    Uid: charDataId as string,
                     Name: "",
                     Emotion: "None",
                     Image: []
@@ -324,6 +322,11 @@ export class GameRoomService {
         return charData;
     }
 
+    /**
+     * Gets the game room's storage about the data for a list of shops. This should work when evaluating
+     * all available shops as a DM, or a list of personal shops as a player.
+     * @param shopData The list of shop data obtained from a firebase realtime db snapshot.
+     */
     private static GetShopDataFromRoom(shopData: any): TShopTab[] {
         var shops: TShopTab[] = [];
         var descriptors = Object.getOwnPropertyDescriptors(shopData);
