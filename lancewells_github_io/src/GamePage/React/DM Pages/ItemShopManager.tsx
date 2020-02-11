@@ -102,7 +102,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                             <PlayerDropBox
                                 HandleDropEvent={this.HandleShopOnDropEvent.bind(this)}
                                 ItemIsHeld={this.state._isDragging}
-                                CharacterDisplay={this.props.DmGameRoom.Characters}
+                                PlayerInfo={this.props.DmGameRoom.PlayerInfo}
                             />
                         </div>
                     );

@@ -3,9 +3,10 @@ import './PlayerDrop.css';
 import React from 'react';
 import { TCharacterDisplay } from "../../Types/TCharacterDisplay";
 import { PlayerDropColumn } from './PlayerDropColumn';
+import { TPlayerInfo } from '../../Types/TPlayerInfo';
 
 interface IPlayerDropBoxProps {
-    CharacterDisplay: TCharacterDisplay[];
+    PlayerInfo: TPlayerInfo[];
     HandleDropEvent: (playerId: string) => void;
     ItemIsHeld: boolean;
 }
@@ -14,11 +15,16 @@ interface IPlayerDropBoxState {
 }
 
 export class PlayerDropBox extends React.Component<IPlayerDropBoxProps, IPlayerDropBoxState> {
-    private allPlayerIdentifier: TCharacterDisplay = {
-        Uid: "all",
-        Name: "All Players",
-        Emotion: "None",
-        Image: []
+    private allPlayerIdentifier: TPlayerInfo = {
+        Character: {
+            Uid: "all",
+            Name: "All Players",
+            Emotion: "None",
+            Image: []
+        },
+        ChestTabs: [],
+        // TODO: handle all player shop tabs.
+        ShopTabs: []
     }
 
     public constructor(props: IPlayerDropBoxProps) {
@@ -36,7 +42,7 @@ export class PlayerDropBox extends React.Component<IPlayerDropBoxProps, IPlayerD
                     <PlayerDropColumn
                         HandleDropEvent={this.props.HandleDropEvent}
                         ItemIsHeld={this.props.ItemIsHeld}
-                        CharacterDisplay={this.allPlayerIdentifier}
+                        PlayerInfo={this.allPlayerIdentifier}
                     />
                     {this.GetCharacterColumns()}
                 </div>
@@ -45,12 +51,12 @@ export class PlayerDropBox extends React.Component<IPlayerDropBoxProps, IPlayerD
     }
 
     private GetCharacterColumns(): JSX.Element[] {
-        return this.props.CharacterDisplay.map(char => {
+        return this.props.PlayerInfo.map(char => {
             return (
                 <PlayerDropColumn
                     HandleDropEvent={this.props.HandleDropEvent}
                     ItemIsHeld={this.props.ItemIsHeld}
-                    CharacterDisplay={char}
+                    PlayerInfo={char}
                 />
             )
         })

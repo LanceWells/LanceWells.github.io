@@ -1,10 +1,10 @@
 import './PlayerDrop.css';
 
 import React, { DragEvent, CSSProperties } from 'react';
-import { TCharacterDisplay } from "../../Types/TCharacterDisplay";
+import { TPlayerInfo } from '../../Types/TPlayerInfo';
 
 interface IPlayerDropColumnProps {
-    CharacterDisplay: TCharacterDisplay;
+    PlayerInfo: TPlayerInfo;
     HandleDropEvent: (playerId: string) => void;
     ItemIsHeld: boolean;
 }
@@ -26,10 +26,21 @@ export class PlayerDropColumn extends React.Component<IPlayerDropColumnProps, IP
                 onDragOver={this.HandleDragOver.bind(this)}
                 onDrop={this.HandleDrop.bind(this)}>
                 <span className="player-drop-name">
-                    {this.props.CharacterDisplay.Name}
+                    {this.props.PlayerInfo.Character.Name}
                 </span>
+                {this.GetShopNames()}
             </div>
         );
+    }
+
+    private GetShopNames(): JSX.Element[] {
+        return this.props.PlayerInfo.ShopTabs.map(tab => {
+            return (
+                <span id={tab.ID}>
+                    {tab.Name + " " + tab.Items.length}
+                </span>
+            )
+        })
     }
 
     private HandleDragOver(event: DragEvent<HTMLDivElement>) {
@@ -37,7 +48,7 @@ export class PlayerDropColumn extends React.Component<IPlayerDropColumnProps, IP
     }
 
     private HandleDrop(event: DragEvent<HTMLDivElement>) {
-        this.props.HandleDropEvent(this.props.CharacterDisplay.Uid);
+        this.props.HandleDropEvent(this.props.PlayerInfo.Character.Uid);
     }
 
     private GetDraggingClassname(): string {

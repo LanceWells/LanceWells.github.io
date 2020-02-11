@@ -270,10 +270,21 @@ export class GameRoomService {
             }
             if (snapshot.val().Characters) {
                 characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
-
+                
                 for (let char of characterDisplay) {
-                    var playerShopTabObjects = snapshot.val().ShopTabs[char.Uid];
-                    var playerShopTabs = await this.GetShopDataFromShopId(roomId, playerShopTabObjects);
+                    var playerObject = snapshot.val()
+                    var playerShopTabs: TShopTab[] = [];
+
+                    if (playerObject
+                        && playerObject !== undefined
+                        && playerObject.ShopTabs
+                        && playerObject.ShopTabs !== undefined
+                        && playerObject.ShopTabs[char.Uid]
+                        && playerObject.ShopTabs[char.Uid] !== undefined)
+                    {
+                        var playerShopTabObjects = playerObject.ShopTabs[char.Uid];
+                        playerShopTabs = await this.GetShopDataFromShopId(roomId, playerShopTabObjects);
+                    }
                     
                     playerInfo.push({
                         Character: char,
@@ -393,7 +404,7 @@ export class GameRoomService {
                 && shopDataObject.value
                 && shopDataObject.value !== undefined)
             {
-                var newShop: undefined | TShopTab = this.GetShopFromShopData(shopDataObject);
+                var newShop: undefined | TShopTab = this.GetShopFromShopData(shopDataObject.value);
                 if (newShop !== undefined) {
                     // The first item should be a shop ID.
                     var shopId = d[0];
