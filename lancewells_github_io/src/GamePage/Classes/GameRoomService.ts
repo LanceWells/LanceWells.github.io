@@ -101,14 +101,13 @@ export class GameRoomService {
             // much better to get data after our character is an official part of it. Joining a room is
             // also a low-frequency task, so this isn't a major concern.
             if (successfullyJoined) {
-                await gameRef.once("value")
-                .then(resolved => {
-                    console.log("Got game room: " + resolved);
-                    gameRoom = GameRoomService.GetPlayerRoom(roomId, resolved);
-                })
-                .catch(reason => {
-                    console.error("Failed to get game room: " + reason);
-                });
+                try {
+                    var snapshot = await gameRef.once("value")
+                    gameRoom = await this.GetPlayerRoom(roomId, snapshot);
+                }
+                catch (e) {
+                    console.error("Failed to join game room.\n" + e);
+                }
             }
         }
 
@@ -124,20 +123,18 @@ export class GameRoomService {
         var gameRoom: IGameRoom | undefined = undefined;
         var gameRef = firebase.database().ref("Games/" + roomId);
 
-        await gameRef.once('value')
-            .then(resolved => {
-                console.log("Got game room: " + resolved);
-
-                if (roomType == "DM") {
-                    gameRoom = this.GetDMRoom(roomId, resolved);
-                }
-                else if (roomType == "Player") {
-                    gameRoom = this.GetPlayerRoom(roomId, resolved);
-                }
-            })
-            .catch(reason => {
-                console.error("Failed to get game room: " + reason);
-            });
+        try {
+            var snapshot = await gameRef.once('value');
+            if (roomType == "DM") {
+                gameRoom = await this.GetDMRoom(roomId, snapshot);
+            }
+            else if (roomType = "Player") {
+                gameRoom = await this.GetPlayerRoom(roomId, snapshot);
+            }
+        }
+        catch (e) {
+            console.error("Failed to get game room.\n" + e);
+        }
 
         return gameRoom;
     }
@@ -178,12 +175,17 @@ export class GameRoomService {
         return updatedShopTab;
     }
 
+    /**
+     * 
+     * @param roomId 
+     * @param playerId 
+     * @param shopId 
+     * @reference https://stackoverflow.com/questions/39815117/add-an-item-to-a-list-in-firebase-database
+     */
     public static async AddShopToPlayer(roomId: string, playerId: string, shopId: string): Promise<void> {
-        var gameRef = firebase.database().ref('Games/' + roomId + '/ShopTabs/' + playerId);
+        var gameRef = firebase.database().ref('Games/' + roomId + '/ShopTabs/' + playerId + "/" + shopId + "/");
 
-        await gameRef.push({
-            shopId
-        })
+        await gameRef.set(true)
         .then(response => {
             console.log("Successfully added a shop to a player.\n" + response);
         })
@@ -199,7 +201,7 @@ export class GameRoomService {
      * to create a game room response.
      * @param snapshot The snapshot of the data that will be interpreted into a game room object.
      */
-    private static GetPlayerRoom(roomId: string, snapshot: firebase.database.DataSnapshot): PlayerGameRoom | undefined {
+    private static async GetPlayerRoom(roomId: string, snapshot: firebase.database.DataSnapshot): Promise<PlayerGameRoom | undefined> {
         var room: PlayerGameRoom | undefined = undefined;
 
         if (snapshot.val()) {
@@ -247,7 +249,7 @@ export class GameRoomService {
      * to create a game room response.
      * @param snapshot The snapshot of the data that will be interpreted into a game room object.
      */
-    private static GetDMRoom(roomId: string, snapshot: firebase.database.DataSnapshot): DMGameRoom | undefined {
+    private static async GetDMRoom(roomId: string, snapshot: firebase.database.DataSnapshot): Promise<DMGameRoom | undefined> {
         var room: DMGameRoom | undefined = undefined;
 
         if (snapshot.val()) {
@@ -268,6 +270,17 @@ export class GameRoomService {
             }
             if (snapshot.val().Characters) {
                 characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
+
+                for (let char of characterDisplay) {
+                    var playerShopTabObjects = snapshot.val().ShopTabs[char.Uid];
+                    var playerShopTabs = await this.GetShopDataFromShopId(roomId, playerShopTabObjects);
+                    
+                    playerInfo.push({
+                        Character: char,
+                        ShopTabs: playerShopTabs,
+                        ChestTabs: []
+                    });
+                }
             }
             if (snapshot.val().Shops) {
                 shops = GameRoomService.GetShopDataFromRoom(snapshot.val().Shops);
@@ -322,6 +335,43 @@ export class GameRoomService {
         return charData;
     }
 
+    private static async GetShopDataFromShopId(roomId: string, shopId: any): Promise<TShopTab[]> {
+        var shops: TShopTab[] = [];
+        
+        if (shopId && shopId !== undefined) {
+            var descriptors = Object.getOwnPropertyDescriptors(shopId);
+
+            var promises = Object.entries(descriptors).map(d => {
+                var shop: undefined | TShopTab = undefined;
+                var shopId = d[0];
+
+                if (shopId && shopId !== undefined) {
+                    var shopRef = firebase.database().ref('Games/' + roomId + '/Shops/' + shopId);
+                    
+                    return shopRef.once('value')
+                    .then(resolved => {
+                        var value = resolved.val();
+                        shop = this.GetShopFromShopData(value);
+
+                        if (shop !== undefined) {
+                            shops.push(shop);
+                        }
+
+                        Promise.resolve(resolved);
+                    })
+                    .catch (reason => {
+                        console.error(reason);
+                        Promise.resolve(reason);
+                    });
+                }
+            });
+
+            await Promise.all(promises);
+        }
+
+        return shops;
+    }
+
     /**
      * Gets the game room's storage about the data for a list of shops. This should work when evaluating
      * all available shops as a DM, or a list of personal shops as a player.
@@ -334,66 +384,72 @@ export class GameRoomService {
         // Each descriptor should be a different shop.
         Object.entries(descriptors).map(d => {
             console.log(d);
-            
-            var newShop: TShopTab = {
-                ID: "",
-                Name: "",
-                ShopKeeper: "Indigo",
-                Items: []
-            };
 
-            // The first item should be a shop ID.
-            var shopId = d[0];
-            if (shopId !== null && shopId !== undefined) {
-
-                newShop.ID = shopId
-            }
-
-            // The second item sohuld be the individual shop's data.
-            // We have to grab each item individually because we store a JSON-ified array of a complex data
-            // type in here. If we try to do an Object.Assign, it leaves us with assigning a string to the
-            // complex array.
+            // The second item should be the individual shop's data.
             var shopDataObject = d[1];
-            if (shopDataObject 
+
+            if (shopDataObject
                 && shopDataObject !== undefined
                 && shopDataObject.value
-                && shopDataObject.value !== undefined) {
-                
-                // Try to get the name if we can.
-                if (shopDataObject.value.Name
-                    && shopDataObject.value.Name !== undefined) {
-                    newShop.Name = shopDataObject.value.Name;
-                }
-
-                // And the shopkeeper.
-                if (shopDataObject.value.ShopKeeper
-                    && shopDataObject.value.ShopKeeper !== undefined) {
-                    newShop.ShopKeeper = shopDataObject.value.ShopKeeper;
-                }
-
-                // Now, see if we can deserialize the list of items.
-                if (shopDataObject.value.Items
-                    && shopDataObject.value.Items !== undefined) {
-
-                    var parsedItems: IItemKey[] = JSON.parse(shopDataObject.value.Items);
-                    if (parsedItems !== undefined && parsedItems as IItemKey[] != undefined) {
-
-                        var providedItems: (IItem | undefined)[] = parsedItems.map(item => {
-                            return ItemSource.GetItem(item.key, item.type);
-                        });
-
-                        var definedItems: IItem[] = providedItems
-                            .filter(item => item !== undefined)
-                            .map(item => item as IItem);
-                        
-                        newShop.Items = definedItems;
+                && shopDataObject.value !== undefined)
+            {
+                var newShop: undefined | TShopTab = this.GetShopFromShopData(shopDataObject);
+                if (newShop !== undefined) {
+                    // The first item should be a shop ID.
+                    var shopId = d[0];
+                    if (shopId !== null && shopId !== undefined) {
+                        newShop.ID = shopId
                     }
-                }
 
-                shops.push(newShop);
+                    shops.push(newShop);
+                }
             }
         });
 
         return shops;
+    }
+
+    private static GetShopFromShopData(shopDataObject: any): TShopTab | undefined {
+        var newShop: TShopTab | undefined;
+
+        newShop = {
+            ID: "",
+            Name: "",
+            ShopKeeper: "Indigo",
+            Items: []
+        };
+
+        // Try to get the name if we can.
+        if (shopDataObject.Name
+            && shopDataObject.Name !== undefined) {
+            newShop.Name = shopDataObject.Name;
+        }
+
+        // And the shopkeeper.
+        if (shopDataObject.ShopKeeper
+            && shopDataObject.ShopKeeper !== undefined) {
+            newShop.ShopKeeper = shopDataObject.ShopKeeper;
+        }
+
+        // Now, see if we can deserialize the list of items.
+        if (shopDataObject.Items
+            && shopDataObject.Items !== undefined) {
+
+            var parsedItems: IItemKey[] = JSON.parse(shopDataObject.Items);
+            if (parsedItems !== undefined && parsedItems as IItemKey[] != undefined) {
+
+                var providedItems: (IItem | undefined)[] = parsedItems.map(item => {
+                    return ItemSource.GetItem(item.key, item.type);
+                });
+
+                var definedItems: IItem[] = providedItems
+                    .filter(item => item !== undefined)
+                    .map(item => item as IItem);
+
+                newShop.Items = definedItems;
+            }
+        }
+
+        return newShop;
     }
 }

@@ -11,12 +11,14 @@ import { PlayerDropBox } from './PlayerDropBox';
 interface IItemShopManagerProps {
     DmGameRoom: DMGameRoom;
     AddNewShopCallback: (shopTab: TShopTab) => void;
+    AddShopToPlayerCallback: (roomId: string, playerId: string, shopId: string) => void;
 }
 
 interface IItemShopManagerState {
     _currentView: ShopManagementState;
     _stagedItemsToAdd: IItem[];
     _nameErrors: string[];
+    _isDragging: boolean;
 }
 
 type ShopManagementState = "Viewing" | "Creating";
@@ -37,7 +39,8 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
         this.state = {
             _currentView: "Viewing",
             _stagedItemsToAdd: [],
-            _nameErrors: []
+            _nameErrors: [],
+            _isDragging: false
         }
     }
 
@@ -98,7 +101,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
                             </div>
                             <PlayerDropBox
                                 HandleDropEvent={this.HandleShopOnDropEvent.bind(this)}
-                                ItemIsHeld={false}
+                                ItemIsHeld={this.state._isDragging}
                                 CharacterDisplay={this.props.DmGameRoom.Characters}
                             />
                         </div>
@@ -244,11 +247,22 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
      */
     private HandleShopOnDragEvent(shop: TShopTab): void {
         this._draggingShop = shop;
+        this.setState({
+            _isDragging: true
+        });
         console.log(this._draggingShop);
     }
 
+    private HandleShopEndDragEvent(): void {
+        this.setState({
+            _isDragging: false
+        });
+    }
+
     private HandleShopOnDropEvent(playerUid: string): void {
-        console.log(playerUid + this._draggingShop?.ID + this.props.DmGameRoom.RoomId);
+        if (this._draggingShop !== undefined) {
+            this.props.AddShopToPlayerCallback(this.props.DmGameRoom.RoomId, playerUid, this._draggingShop.ID);
+        }
     }
 
     /**
@@ -259,10 +273,12 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
             return (
                 <ItemShopIcon
                     HandleDragEvent={this.HandleShopOnDragEvent.bind(this)}
+                    HandleStopDragEvent={this.HandleShopEndDragEvent.bind(this)}
                     ShopTab={shop}
                     MaxItemsInTooltip={this._maxItemsDesc}
                     Width={this._iconWidth}
                     Height={this._iconHeight}
+                    IsDragging={this.state._isDragging}
                 />
             )
         }));

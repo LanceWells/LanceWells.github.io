@@ -14,6 +14,13 @@ interface IPlayerDropBoxState {
 }
 
 export class PlayerDropBox extends React.Component<IPlayerDropBoxProps, IPlayerDropBoxState> {
+    private allPlayerIdentifier: TCharacterDisplay = {
+        Uid: "all",
+        Name: "All Players",
+        Emotion: "None",
+        Image: []
+    }
+
     public constructor(props: IPlayerDropBoxProps) {
         super(props);
         this.state = {
@@ -26,6 +33,11 @@ export class PlayerDropBox extends React.Component<IPlayerDropBoxProps, IPlayerD
                 <h3>Players</h3>
                 <span>(Drag+Drop shops onto player columns to add them to a player's inventory)</span>
                 <div className="player-drop-box">
+                    <PlayerDropColumn
+                        HandleDropEvent={this.props.HandleDropEvent}
+                        ItemIsHeld={this.props.ItemIsHeld}
+                        CharacterDisplay={this.allPlayerIdentifier}
+                    />
                     {this.GetCharacterColumns()}
                 </div>
             </div>

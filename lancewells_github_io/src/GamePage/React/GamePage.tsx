@@ -220,6 +220,16 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         }
     }
 
+    private HandleAddShopToPlayer(roomId: string, playerId: string, shopId: string): void {
+        GameRoomService.AddShopToPlayer(roomId, playerId, shopId)
+        .then(result => {
+            console.log("Successfully added shop " + shopId + " to player " + playerId + ".");
+        })
+        .catch(reason => {
+            console.error("Failed to add shop " + shopId + " to player " + playerId + ".\n" + reason);
+        });
+    }
+
     /**
      * Gets the tabs that will be displayed to a player by default. These tabs should never be removed unless
      * the user is switching profiles.
@@ -277,6 +287,7 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         {
             tabs.set("Item Shops", (
                 <ItemShopManager
+                    AddShopToPlayerCallback={this.HandleAddShopToPlayer.bind(this)}
                     DmGameRoom={room}
                     AddNewShopCallback={this.HandleCreateNewShop.bind(this)}
                 />

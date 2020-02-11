@@ -1,6 +1,6 @@
 import './PlayerDrop.css';
 
-import React, { DragEvent } from 'react';
+import React, { DragEvent, CSSProperties } from 'react';
 import { TCharacterDisplay } from "../../Types/TCharacterDisplay";
 
 interface IPlayerDropColumnProps {
@@ -22,7 +22,7 @@ export class PlayerDropColumn extends React.Component<IPlayerDropColumnProps, IP
     public render() {
         return (
             <div
-                className="player-drop-column"
+                className={this.GetDraggingClassname()}
                 onDragOver={this.HandleDragOver.bind(this)}
                 onDrop={this.HandleDrop.bind(this)}>
                 <span className="player-drop-name">
@@ -38,5 +38,14 @@ export class PlayerDropColumn extends React.Component<IPlayerDropColumnProps, IP
 
     private HandleDrop(event: DragEvent<HTMLDivElement>) {
         this.props.HandleDropEvent(this.props.CharacterDisplay.Uid);
+    }
+
+    private GetDraggingClassname(): string {
+        if (this.props.ItemIsHeld) {
+            return "player-drop-column-dragging";
+        }
+        else {
+            return "player-drop-column"
+        }
     }
 }

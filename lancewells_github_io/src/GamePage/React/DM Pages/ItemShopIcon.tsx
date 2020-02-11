@@ -11,7 +11,9 @@ interface IItemShopIconProps {
     MaxItemsInTooltip: number;
     Width: number;
     Height: number;
+    IsDragging: boolean;
     HandleDragEvent: (shop: TShopTab) => void;
+    HandleStopDragEvent: () => void;
     // RemoveCallback
     // EditCallback
 }
@@ -31,7 +33,8 @@ export class ItemShopIcon extends React.Component <IItemShopIconProps, IItemShop
             <div className="shopmgr-icon-container"
                 id={this.props.ShopTab.ID}
                 draggable={true}
-                onDragStart={this.HandleOnDrag.bind(this)}>
+                onDragStart={this.HandleOnDrag.bind(this)}
+                onDragEnd={this.HandleEndDrag.bind(this)}>
                 <span>{this.props.ShopTab.Name}</span>
                 <OverlayTrigger
                     placement="top"
@@ -63,6 +66,10 @@ export class ItemShopIcon extends React.Component <IItemShopIconProps, IItemShop
      */
     private HandleOnDrag(event: DragEvent<HTMLDivElement>){
         this.props.HandleDragEvent(this.props.ShopTab);
+    }
+
+    private HandleEndDrag(event: DragEvent<HTMLDivElement>) {
+        this.props.HandleStopDragEvent();
     }
 
     private GetTooltipText(shop: TShopTab, maxItemsInTooltip: number) {
