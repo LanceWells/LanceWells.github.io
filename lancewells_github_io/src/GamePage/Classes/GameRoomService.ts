@@ -285,7 +285,7 @@ export class GameRoomService {
                         var playerShopTabObjects = playerObject.ShopTabs[char.Uid];
                         playerShopTabs = await this.GetShopDataFromShopId(roomId, playerShopTabObjects);
                     }
-                    
+
                     playerInfo.push({
                         Character: char,
                         ShopTabs: playerShopTabs,
@@ -346,6 +346,11 @@ export class GameRoomService {
         return charData;
     }
 
+    /**
+     * 
+     * @param roomId 
+     * @param shopId 
+     */
     private static async GetShopDataFromShopId(roomId: string, shopId: any): Promise<TShopTab[]> {
         var shops: TShopTab[] = [];
         

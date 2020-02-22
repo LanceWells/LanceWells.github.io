@@ -220,13 +220,20 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
         }
     }
 
-    private HandleAddShopToPlayer(roomId: string, playerId: string, shopId: string): void {
-        GameRoomService.AddShopToPlayer(roomId, playerId, shopId)
+    private HandleAddShopToPlayer(roomId: string, playerId: string, shop: TShopTab): void {
+        GameRoomService.AddShopToPlayer(roomId, playerId, shop.ID)
         .then(result => {
-            console.log("Successfully added shop " + shopId + " to player " + playerId + ".");
+            var gameRoom = this.state._gameRoom;
+            console.log("Successfully added shop " + shop.ID + " to player " + playerId + ".");
+
+            if (RoomIsDm(gameRoom)) {
+                let playerToAddRoomTo = gameRoom?.PlayerInfo.find(c => c.Character.Uid == playerId);
+                playerToAddRoomTo?.ShopTabs.push(shop)
+                this.UpdateUserTabs();
+            }
         })
         .catch(reason => {
-            console.error("Failed to add shop " + shopId + " to player " + playerId + ".\n" + reason);
+            console.error("Failed to add shop " + shop.ID + " to player " + playerId + ".\n" + reason);
         });
     }
 

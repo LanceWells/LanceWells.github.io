@@ -11,7 +11,7 @@ import { PlayerDropBox } from './PlayerDropBox';
 interface IItemShopManagerProps {
     DmGameRoom: DMGameRoom;
     AddNewShopCallback: (shopTab: TShopTab) => void;
-    AddShopToPlayerCallback: (roomId: string, playerId: string, shopId: string) => void;
+    AddShopToPlayerCallback: (roomId: string, playerId: string, shop: TShopTab) => void;
 }
 
 interface IItemShopManagerState {
@@ -261,7 +261,7 @@ export class ItemShopManager extends React.Component<IItemShopManagerProps, IIte
 
     private HandleShopOnDropEvent(playerUid: string): void {
         if (this._draggingShop !== undefined) {
-            this.props.AddShopToPlayerCallback(this.props.DmGameRoom.RoomId, playerUid, this._draggingShop.ID);
+            this.props.AddShopToPlayerCallback(this.props.DmGameRoom.RoomId, playerUid, this._draggingShop);
         }
     }
 
