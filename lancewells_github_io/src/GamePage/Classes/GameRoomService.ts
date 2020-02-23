@@ -223,7 +223,10 @@ export class GameRoomService {
                 characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
             }
             if (snapshot.val().Shops) {
-                // TODO
+                let playerId: string | undefined = UserDataAuth.GetInstance().GetUid();
+                if (playerId !== undefined) {
+                    shops = await GameRoomService.GetShopTabsForCharacter(snapshot, roomId, playerId);
+                }
             }
             if (snapshot.val().Chests) {
                 // TODO
@@ -272,23 +275,11 @@ export class GameRoomService {
                 characterDisplay = GameRoomService.GetCharDataFromRoom(snapshot.val().Characters);
                 
                 for (let char of characterDisplay) {
-                    var playerObject = snapshot.val()
-                    var playerShopTabs: TShopTab[] = [];
-
-                    if (playerObject
-                        && playerObject !== undefined
-                        && playerObject.ShopTabs
-                        && playerObject.ShopTabs !== undefined
-                        && playerObject.ShopTabs[char.Uid]
-                        && playerObject.ShopTabs[char.Uid] !== undefined)
-                    {
-                        var playerShopTabObjects = playerObject.ShopTabs[char.Uid];
-                        playerShopTabs = await this.GetShopDataFromShopId(roomId, playerShopTabObjects);
-                    }
+                    let playerShops: TShopTab[] = await GameRoomService.GetShopTabsForCharacter(snapshot, roomId, char.Uid);
 
                     playerInfo.push({
                         Character: char,
-                        ShopTabs: playerShopTabs,
+                        ShopTabs: playerShops,
                         ChestTabs: []
                     });
                 }
@@ -312,6 +303,30 @@ export class GameRoomService {
         }
 
         return room;
+    }
+
+    /**
+     * Gets the shop tabs for a given character.
+     * @param snapshot The snapshot of the room's information from the realtime db.
+     * @param roomId The ID for the room.
+     * @param charId The ID for the character.
+     */
+    private static async GetShopTabsForCharacter(snapshot: firebase.database.DataSnapshot, roomId: string, charId: string): Promise<TShopTab[]>
+    {
+        var roomObject = snapshot.val()
+        var playerShopTabs: TShopTab[] = [];
+
+        if (roomObject
+            && roomObject !== undefined
+            && roomObject.ShopTabs
+            && roomObject.ShopTabs !== undefined
+            && roomObject.ShopTabs[charId]
+            && roomObject.ShopTabs[charId] !== undefined) {
+            var playerShopTabObjects = roomObject.ShopTabs[charId];
+            playerShopTabs = await this.GetShopDataFromShopId(roomId, playerShopTabObjects);
+        }
+
+        return playerShopTabs;
     }
 
     /**

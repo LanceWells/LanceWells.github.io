@@ -8,7 +8,7 @@ import { ProfileCreation, Callback_CreationFinished } from './ProfileCreation';
 import { Inventory } from '../../Items/React/Inventory/Inventory';
 import { ItemShop } from '../../Items/React/Shop/ItemShop';
 import { IItem } from '../../Items/Interfaces/IItem';
-import { ProfileIsPlayer } from '../Interfaces/IPlayerProfile';
+import { ProfileIsPlayer, IPlayerProfile } from '../Interfaces/IPlayerProfile';
 import { TRemoveClick } from '../../Items/Types/CardButtonCallbackTypes/TRemoveClick';
 import { TPurchaseClick } from '../../Items/Types/CardButtonCallbackTypes/TPurchaseClick';
 import { Tab, Tabs } from 'react-bootstrap';
@@ -254,26 +254,30 @@ export class GamePage extends React.Component<IGamePageProps, IGamePageState> {
 
         var playerProfile: IUserProfile | undefined = this.state._currentProfile;
         if (ProfileIsPlayer(playerProfile)) {
+            // The typeguard here only works so well, after the first if-statement, the intellisense for
+            // typescript gets fuzzy. Create a new var here for us to reference instead.
+            let profile: IPlayerProfile = playerProfile;
 
             tabs.set("Inventory", (
                 <Inventory
-                    userProfile={playerProfile}
+                    userProfile={profile}
                     removeCallback={handleRemoveItem.bind(this)}
                 />
             ));
-            tabs.set("Item Shop", (
-                <ItemShop
-                    items={[
-                        ItemSource.GetItem("BrutalLongsword", "Weapon") as IItem,
-                        ItemSource.GetItem("Longsword", "Weapon") as IItem,
-                        ItemSource.GetItem("Glaive", "Weapon") as IItem,
-                        ItemSource.GetItem("SmallHealing", "Potion") as IItem,
-                        ItemSource.GetItem("FloralRing", "Wondrous") as IItem,
-                    ]}
-                    userProfile={playerProfile}
-                    purchaseCallback={handlePurchaseItem.bind(this)}
-                />
-            ));
+            
+            let playerRoom: PlayerGameRoom = this.state._gameRoom as PlayerGameRoom;
+
+            if (playerRoom  && playerRoom !== undefined) {
+                playerRoom.Shops.forEach((shop) => {
+                    tabs.set(shop.Name + " (Shop)", (
+                        <ItemShop
+                            items={shop.Items}
+                            userProfile={profile}
+                            purchaseCallback={handlePurchaseItem.bind(this)}
+                        />
+                    ));
+                });
+            }
         }
 
         // TODO: Stat Page tab.
