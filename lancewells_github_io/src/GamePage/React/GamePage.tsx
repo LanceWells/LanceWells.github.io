@@ -17,7 +17,6 @@ import { IGameRoom } from '../Interfaces/IGameRoom';
 import { GameRoomService } from '../Classes/GameRoomService';
 import { DMGameRoom, RoomIsDm } from '../Classes/DMGameRoom';
 import { PlayerGameRoom } from '../Classes/PlayerGameRoom';
-import { ItemSource } from '../../Items/Classes/ItemSource';
 import { ItemShopManager } from './DM Pages/ItemShopManager';
 import { TShopTab } from '../Types/TShopTab';
 

@@ -504,20 +504,6 @@ export class UserDataAuth {
     }
 
     private InitializeAfterAuth(): void {
-        // var uid = this.GetUid();
-
-        // // Add a listener for specific documents that change on the remote.
-        // // https://firebase.google.com/docs/firestore/query-data/listen
-        // firebase
-        //     .firestore()
-        //     .collection(UserDataAuth.collection_UserWritable)
-        //     .doc(uid)
-        //     .onSnapshot((doc: firebase.firestore.DocumentSnapshot) => {
-        //         var charData: CharacterData[] = this.DeserializeCharData(doc);
-        //         console.log("Snapshot data: " + charData);
-        //         this.onUserDataChanged_notify(charData);
-        //     });
-
         var email = firebase.auth().currentUser?.email;
         if (email && email !== undefined) {
             this._username = email;

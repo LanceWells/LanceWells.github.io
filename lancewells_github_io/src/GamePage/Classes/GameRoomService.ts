@@ -9,7 +9,7 @@ import { TRoomDecor } from '../Types/TRoomDecor';
 import { TShopTab } from '../Types/TShopTab';
 import { TChestTab } from '../Types/TChestTab';
 import { TPlayerInfo } from '../Types/TPlayerInfo';
-import { IItemJson, IItemKey, IItem } from '../../Items/Interfaces/IItem';
+import { IItemKey, IItem } from '../../Items/Interfaces/IItem';
 import { ItemSource } from '../../Items/Classes/ItemSource';
 
 /**

@@ -14,8 +14,6 @@ interface IItemShopIconProps {
     IsDragging: boolean;
     HandleDragEvent: (shop: TShopTab) => void;
     HandleStopDragEvent: () => void;
-    // RemoveCallback
-    // EditCallback
 }
 
 interface IItemShopIconState {
