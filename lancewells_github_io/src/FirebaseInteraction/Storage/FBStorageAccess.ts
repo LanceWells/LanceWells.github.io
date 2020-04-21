@@ -31,7 +31,14 @@ export class FBStorageAccess
 
         let imageReferences: firebase.storage.Reference[] = [];
 
-        for (let i: number = 0; i < characterFolders.length; i++)
+        let i: number;
+
+        for (i = 0; i < characterFolders.length; i++)
+        {
+            console.log(characterFolders[i]);
+        }
+
+        for (i = 0; i < characterFolders.length; i++)
         {
             let imageResult: storage.ListResult = await storageRef.child(characterFolders[i]).listAll();
             let folderReferences: firebase.storage.Reference[] = imageResult.items;

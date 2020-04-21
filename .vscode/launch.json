@@ -7,11 +7,30 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}\\script\\canvas.ts",
-            "outFiles": [
-                "${workspaceFolder}/**/script/js/*.js"
-            ]
-        }
+            "name": "Launch via NPM",
+            "runtimeExecutable": "${workspaceRoot}/lancewells_github_io/node_modules/.bin/react-scripts",
+            "args": [
+                "test",
+                "--runInBand",
+                "--no-cache"
+            ],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        // {
+        //     // "type": "node",
+        //     // "request": "attach",
+        //     // "name": "Launch via NPM",
+        //     // // "cwd": "${workspaceFolder}/lancewells_github_io",
+        //     // // "runtimeExecutable": "npm",
+        //     // // "runtimeArgs": [
+        //     // //     "run-script",
+        //     // //     "start",
+        //     // //     "--inspect-brk=9229"
+        //     // // ],
+        //     // "port": 9229
+        // }
     ]
 }

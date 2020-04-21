@@ -11,7 +11,8 @@ import { CharacterSize } from '../../FirebaseInteraction/Storage/CharacterSize';
 import { BodyType } from '../../FirebaseInteraction/Storage/BodyType';
 import { PartType } from '../../FirebaseInteraction/Storage/PartType';
 
-import { FBStorageAccess } from '../../FirebaseInteraction/Storage/FBStorageAccess';
+// import { FBStorageAccess } from '../../FirebaseInteraction/Storage/FBStorageAccess';
+import { CharacterImageMap } from '../Classes/CharacterImageMap';
 
 import { ImageLayer } from '../Types/ImageLayer';
 import { BodyMap } from '../Types/BodyMap';
@@ -152,7 +153,8 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
 
     private async GetImagesForSelection(charSize: CharacterSize, validBodyTypes: BodyType[], partType: PartType): Promise<JSX.Element[]> {
         let imagePaths: string[] = [];
-        imagePaths = await FBStorageAccess.GetCharacterImagePaths(charSize, validBodyTypes, partType);
+        // imagePaths = await FBStorageAccess.GetCharacterImagePaths(charSize, validBodyTypes, partType);
+        imagePaths = CharacterImageMap.GetCharacterImagePaths(charSize, validBodyTypes, partType);
 
         return(imagePaths.map(i => {
             return (
@@ -177,7 +179,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         );
     }
 
-    private componentDidMount()
+    public componentDidMount()
     {
         let charSize: CharacterSize = CharacterSize.Average;
         let bodyTypes: BodyType[] = [BodyType.HumanoidAndrogynous, BodyType.Female];

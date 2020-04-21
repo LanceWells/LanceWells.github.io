@@ -1,0 +1,18 @@
+{
+    "Size_Average": {
+        "Weapons":{
+            "Male":[
+                "test.png",
+                "test4.png"
+            ],
+            "Female":[
+                "test2.png"
+            ]
+        },
+        "Body":{
+            "Androgynous":[
+                "test3.png"
+            ]
+        }
+    }
+}
