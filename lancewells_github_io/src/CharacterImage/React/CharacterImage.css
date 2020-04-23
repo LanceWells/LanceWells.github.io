@@ -33,7 +33,31 @@
     background-color: rgb(66, 76, 110);
 }
 
-.part-type-selector {
+.btn {
+    background-color: rgb(14, 7, 27);
+    border-color: transparent;
+    font-size: larger;
+    font-family: "Press Start 2P";
+    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
+    height: 48px;
+}
+
+.btn:hover {
+    background-color: rgb(26, 25, 50);
+    border-color: transparent;
+}
+
+.dropdown-menu {
+    background-color: rgb(26, 25, 50);
+}
+
+.dropdown-item {
+    background-color: rgb(26, 25, 50);
+    font-size: large;
+    color: white;
+}
+
+/* .part-type-selector {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -51,7 +75,7 @@
     border-radius: 8px;
     font-size: larger;
     box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
-}
+} */
 
 @media (max-width: 600px) {
     .character-image {

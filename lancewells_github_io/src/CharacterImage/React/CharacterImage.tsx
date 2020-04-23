@@ -37,6 +37,9 @@ export interface ICharacterImageState {
     partLayers: ImageLayer[],
     carouselIndex: number,
     carouselDirection: "prev" | "next",
+    charSize: CharacterSize;
+    bodyTypes: BodyType[];
+    partType: PartType;
 };
 
 /**
@@ -51,6 +54,9 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             partLayers: [],
             carouselIndex: 0,
             carouselDirection: "next",
+            charSize: CharacterSize.Average,
+            bodyTypes: [BodyType.Androgynous, BodyType.Male, BodyType.Female],
+            partType: PartType.Body
         }
     }
 
@@ -111,6 +117,9 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
 
     handlePartTypeChange(partType: PartType) {
         console.log(partType);
+        this.setState({
+            partType: partType
+        });
     }
 
     /**
@@ -154,10 +163,10 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     render() {
         // const canvasImagesToRender = this.state.canvasImages;
         // const currentBodyMap = this.state.partLayers;
-        let charSize: CharacterSize = CharacterSize.Average;
-        let bodyTypes: BodyType[] = [BodyType.HumanoidAndrogynous, BodyType.Female];
-        let partType: PartType = PartType.Hair;
-        let imagePaths = CharacterImageMap.GetCharacterImagePaths(charSize, bodyTypes, partType);
+        // let charSize: CharacterSize = CharacterSize.Average;
+        // let bodyTypes: BodyType[] = [BodyType.HumanoidAndrogynous, BodyType.Female];
+        // let partType: PartType = PartType.Hair;
+        let imagePaths = CharacterImageMap.GetCharacterImagePaths(this.state.charSize, this.state.bodyTypes, this.state.partType);
         let partTypeTabSelection: PartTypeSelectionCallback = (partType: PartType) => {
             this.handlePartTypeChange(partType);
         }
@@ -170,7 +179,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
                 />
                 <PartSelector
                     partTypeSelectionCallback={partTypeTabSelection.bind(this)}
-                    partType={partType}
+                    partType={this.state.partType}
                     partOptions={imagePaths}
                 />
             </div>
