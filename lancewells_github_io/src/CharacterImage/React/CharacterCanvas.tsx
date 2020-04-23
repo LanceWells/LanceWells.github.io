@@ -13,7 +13,7 @@ interface ICanvasProps {
      * @description A list of images to render. This may be updated at-will by the parent, and this element
      * will render those new images.
      */
-    imagesToRender: Array<string>;
+    imagesToRender: string[];
 
     /**
      * @description A callback to this class' "DOWNLOAD" button. Owned by the parent.

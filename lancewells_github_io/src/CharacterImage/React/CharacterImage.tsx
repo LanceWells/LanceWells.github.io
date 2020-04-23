@@ -2,7 +2,7 @@ import React from 'react';
 import './CharacterImage.css';
 
 import { CharacterSize } from '../Enums/CharacterSize';
-import { BodyType } from '../Enums/BodyType';
+import { BodyDescription } from '../Enums/BodyDescription';
 import { PartType } from '../Enums/PartType';
 import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 
@@ -14,6 +14,8 @@ import { BodyMap } from '../Types/BodyMap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CharacterCanvas } from './CharacterCanvas';
 import { PartSelector } from './PartSelector';
+import { BodyType } from '../Enums/BodyType';
+import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
 
 /**
  * @description
@@ -38,7 +40,7 @@ export interface ICharacterImageState {
     carouselIndex: number,
     carouselDirection: "prev" | "next",
     charSize: CharacterSize;
-    bodyTypes: BodyType[];
+    bodyType: BodyType;
     partType: PartType;
 };
 
@@ -55,7 +57,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             carouselIndex: 0,
             carouselDirection: "next",
             charSize: CharacterSize.Average,
-            bodyTypes: [BodyType.Androgynous, BodyType.Male, BodyType.Female],
+            bodyType: BodyType.AverageSizedFeminine,
             partType: PartType.Body
         }
     }
@@ -115,10 +117,15 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         });
     }
 
-    handlePartTypeChange(partType: PartType) {
-        console.log(partType);
+    private handlePartTypeChange(partType: PartType) {
         this.setState({
             partType: partType
+        });
+    }
+
+    private handleBodyTypeChange(bodyType: BodyType) {
+        this.setState({
+            bodyType: bodyType
         });
     }
 
@@ -161,14 +168,14 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
      * Renders this object.
      */
     render() {
-        // const canvasImagesToRender = this.state.canvasImages;
-        // const currentBodyMap = this.state.partLayers;
-        // let charSize: CharacterSize = CharacterSize.Average;
-        // let bodyTypes: BodyType[] = [BodyType.HumanoidAndrogynous, BodyType.Female];
-        // let partType: PartType = PartType.Hair;
-        let imagePaths = CharacterImageMap.GetCharacterImagePaths(this.state.charSize, this.state.bodyTypes, this.state.partType);
+        let imagePaths = CharacterImageMap.GetCharacterImagePaths(this.state.charSize, this.state.bodyType, this.state.partType);
+        
         let partTypeTabSelection: PartTypeSelectionCallback = (partType: PartType) => {
             this.handlePartTypeChange(partType);
+        };
+
+        let bodyTypeTabSelection: BodyTypeSelectionCallback = (bodyType: BodyType) => {
+            this.handleBodyTypeChange(bodyType);
         }
 
         return (
@@ -178,6 +185,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
                     onClickDownload={this.downloadImage.bind(this)}
                 />
                 <PartSelector
+                    bodyTypeSelectionCallback={bodyTypeTabSelection.bind(this)}
                     partTypeSelectionCallback={partTypeTabSelection.bind(this)}
                     partType={this.state.partType}
                     partOptions={imagePaths}

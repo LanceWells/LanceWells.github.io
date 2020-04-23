@@ -1,6 +1,5 @@
 import React from 'react';
 import { PartType } from '../Enums/PartType';
-import { PartTypeSelectorTab } from './PartTypeSelectorTab';
 import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { Dropdown } from 'react-bootstrap';
 

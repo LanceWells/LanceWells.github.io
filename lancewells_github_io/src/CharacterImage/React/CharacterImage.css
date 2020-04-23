@@ -33,6 +33,12 @@
     background-color: rgb(66, 76, 110);
 }
 
+.part-character-selectors {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .btn {
     background-color: rgb(14, 7, 27);
     border-color: transparent;
@@ -56,26 +62,6 @@
     font-size: large;
     color: white;
 }
-
-/* .part-type-selector {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.part-type-selector-tab {
-    font-family: "Press Start 2P";
-    width: 256px;
-    height: 48px;
-    margin: 8px;
-    background-color: rgb(14, 7, 27);
-    color: white;
-    border-color: transparent;
-    border-radius: 8px;
-    font-size: larger;
-    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
-} */
 
 @media (max-width: 600px) {
     .character-image {
