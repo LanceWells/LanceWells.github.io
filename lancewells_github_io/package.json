@@ -19,7 +19,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -b master -d build",
     "start": "npm run populateManifest && react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run populateManifest && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "populateManifest": "cd tools && node generateCharacterImageMap.js"

@@ -1,20 +1,26 @@
 .page-nav {
-    background-color: #121212;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.nav-bar {
-    width:100%;
-}
-
-.nav-entry {
-    width: 100%;
+    top: 0;
+    font-family: "Press Start 2P";
+    font-size: larger;
+    height: 5%;
+    max-height: 5%;
+    background-color: rgb(19, 19, 19);
 }
 
 #root {
     height: 100%;
-    background-color: #121212;
+    background-color: rgb(27, 27, 27);
+}
+
+.landing-space {
+    height: 100%;
+    max-height: 100%;
+}
+
+.page-content {
+    height: 95%;
+    max-height: 95%;
 }

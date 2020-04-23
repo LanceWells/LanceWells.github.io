@@ -1,0 +1,60 @@
+.character-image {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    padding: 24px;
+    height: 100%;
+    max-height: 100%;
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 48px;
+    flex-shrink: 0;
+    top: 40px;
+}
+
+.part-selector {
+    flex-grow: 1;
+    padding: 24px;
+    overflow-y: scroll;
+}
+
+.part-button {
+    margin: 8px;
+    background-color: rgb(42, 47, 78);
+    border-color: transparent;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
+}
+
+.part-button:hover {
+    background-color: rgb(66, 76, 110);
+}
+
+.part-type-selector {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.part-type-selector-tab {
+    font-family: "Press Start 2P";
+    width: 256px;
+    height: 48px;
+    margin: 8px;
+    background-color: rgb(14, 7, 27);
+    color: white;
+    border-color: transparent;
+    border-radius: 8px;
+    font-size: larger;
+    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
+}
+
+@media (max-width: 600px) {
+    .character-image {
+        flex-direction: column;
+    }
+}

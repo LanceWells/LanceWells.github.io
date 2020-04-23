@@ -18,19 +18,23 @@ import { Nav } from 'react-bootstrap';
 //https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
 export default function LandingSpace() {
     return (
-        <div className="page-nav">
-        <Nav defaultActiveKey="/" className="flex-column">
-            <Nav.Link href="/#/" eventKey="/">Home</Nav.Link>
-            <Nav.Link href="/#/character_creator" eventKey="character_creator">Character Creator</Nav.Link>
-            <Nav.Link href="/#/login" eventKey="login">Login</Nav.Link>
-        </Nav>
-            <Router>
-                <Switch>
-                    <Route exact path="/login" children={<LoginPage />} />
-                    <Route exact path="/character_creator" children={<CharacterImage/>} />
-                    <ProtectedRoute path="/" children={<GamePage />} />
-                </Switch>
-            </Router>
+        <div className="landing-space">
+            <div className="page-nav">
+                <Nav defaultActiveKey="/">
+                    <Nav.Link href="/#/" eventKey="/">Home</Nav.Link>
+                    <Nav.Link href="/#/character_creator" eventKey="character_creator">Character Creator</Nav.Link>
+                    <Nav.Link href="/#/login" eventKey="login">Login</Nav.Link>
+                </Nav>
+            </div>
+            <div className="page-content">
+                <Router>
+                    <Switch>
+                        <Route exact path="/login" children={<LoginPage />} />
+                        <Route exact path="/character_creator" children={<CharacterImage />} />
+                        <ProtectedRoute path="/" children={<GamePage />} />
+                    </Switch>
+                </Router>
+            </div>
         </div>
     )
 }

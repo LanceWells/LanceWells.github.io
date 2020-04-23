@@ -1,23 +1,19 @@
-// import './CharacterImage.css';
-// import { bodyMaps, BodyMap, ImageLayer } from './BodyMap';
-
 import React from 'react';
+import './CharacterImage.css';
 
-// import {BodySelector} from './BodySelector';
-// import {PartAccordion} from './PartAccordion';
-// import {CharacterCanvas} from './CharacterCanvas';
+import { CharacterSize } from '../Enums/CharacterSize';
+import { BodyType } from '../Enums/BodyType';
+import { PartType } from '../Enums/PartType';
+import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 
-import { CharacterSize } from '../../FirebaseInteraction/Storage/CharacterSize';
-import { BodyType } from '../../FirebaseInteraction/Storage/BodyType';
-import { PartType } from '../../FirebaseInteraction/Storage/PartType';
-
-// import { FBStorageAccess } from '../../FirebaseInteraction/Storage/FBStorageAccess';
 import { CharacterImageMap } from '../Classes/CharacterImageMap';
 
 import { ImageLayer } from '../Types/ImageLayer';
 import { BodyMap } from '../Types/BodyMap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { CharacterCanvas } from './CharacterCanvas';
+import { PartSelector } from './PartSelector';
 
 /**
  * @description
@@ -41,7 +37,6 @@ export interface ICharacterImageState {
     partLayers: ImageLayer[],
     carouselIndex: number,
     carouselDirection: "prev" | "next",
-    testDebugImages: JSX.Element[]
 };
 
 /**
@@ -52,12 +47,10 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     constructor(props: ICharacterImageProps) {
         super(props);
         this.state = {
-            // Just fill the canvas images with nothing. We'll re-define it when we add to it.
             canvasImages: [],
             partLayers: [],
             carouselIndex: 0,
             carouselDirection: "next",
-            testDebugImages: []
         }
     }
 
@@ -116,6 +109,10 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         });
     }
 
+    handlePartTypeChange(partType: PartType) {
+        console.log(partType);
+    }
+
     /**
      * @description
      * Renders a series of body selectors for the user to pick from. These body selectors will modify the list
@@ -151,45 +148,33 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         });
     }
 
-    private async GetImagesForSelection(charSize: CharacterSize, validBodyTypes: BodyType[], partType: PartType): Promise<JSX.Element[]> {
-        let imagePaths: string[] = [];
-        // imagePaths = await FBStorageAccess.GetCharacterImagePaths(charSize, validBodyTypes, partType);
-        imagePaths = CharacterImageMap.GetCharacterImagePaths(charSize, validBodyTypes, partType);
-
-        return(imagePaths.map(i => {
-            return (
-                <img
-                    src={i}
-                />
-            )
-        }));
-    }
-
     /**
      * Renders this object.
      */
     render() {
-        const canvasImagesToRender = this.state.canvasImages;
-        const currentBodyMap = this.state.partLayers;
-
-        return (
-            <div className="CharacterImage">
-                {this.state.testDebugImages}
-            </div>
-        );
-    }
-
-    public componentDidMount()
-    {
+        // const canvasImagesToRender = this.state.canvasImages;
+        // const currentBodyMap = this.state.partLayers;
         let charSize: CharacterSize = CharacterSize.Average;
         let bodyTypes: BodyType[] = [BodyType.HumanoidAndrogynous, BodyType.Female];
         let partType: PartType = PartType.Hair;
+        let imagePaths = CharacterImageMap.GetCharacterImagePaths(charSize, bodyTypes, partType);
+        let partTypeTabSelection: PartTypeSelectionCallback = (partType: PartType) => {
+            this.handlePartTypeChange(partType);
+        }
 
-        this.GetImagesForSelection(charSize, bodyTypes, partType).then(images => {
-            this.setState({
-                testDebugImages: images
-            });
-        });
+        return (
+            <div className="character-image">
+                <CharacterCanvas
+                    imagesToRender={[]}
+                    onClickDownload={this.downloadImage.bind(this)}
+                />
+                <PartSelector
+                    partTypeSelectionCallback={partTypeTabSelection.bind(this)}
+                    partType={partType}
+                    partOptions={imagePaths}
+                />
+            </div>
+        );
     }
 }
 
