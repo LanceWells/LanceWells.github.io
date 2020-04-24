@@ -3,6 +3,7 @@ import { PartType } from '../Enums/PartType';
 import { PartButton } from './PartButton';
 import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
+import { PartSelectionCallback } from '../Types/PartSelectionCallback';
 import { PartTypeSelector } from './PartTypeSelector';
 import { PartBodySelector } from './PartBodySelector';
 
@@ -11,6 +12,7 @@ export interface IPartSelectorProps {
     partOptions: string[];
     partTypeSelectionCallback: PartTypeSelectionCallback;
     bodyTypeSelectionCallback: BodyTypeSelectionCallback;
+    partSelectionCallback: PartSelectionCallback;
 };
 
 export interface IPartSelectorState {
@@ -42,7 +44,9 @@ export class PartSelector extends React.Component<IPartSelectorProps, IPartSelec
     private GetPartButtons(): JSX.Element[] {
         return this.props.partOptions.map(po => 
             <PartButton
+                partType={this.props.partType}
                 imageSource={po}
+                partSelectionCallback={this.props.partSelectionCallback}
             />
         );
     }

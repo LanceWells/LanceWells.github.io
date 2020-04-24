@@ -1,27 +1,22 @@
 import React from 'react';
+import { PartSelectionCallback } from '../Types/PartSelectionCallback';
+import { PartType } from '../Enums/PartType';
+
+export interface IPartButtonProps {
+    partType: PartType;
+    imageSource: string;
+    partSelectionCallback: PartSelectionCallback;
+};
 
 const imgSize: string = "128px";
 
-export interface IPartButtonProps {
-    imageSource: string;
-};
-
-export interface IPartButtonState {
-};
-
-export class PartButton extends React.Component<IPartButtonProps, IPartButtonState> {
-    constructor(props: IPartButtonProps) {
-        super(props);
-        this.state = {
-        };
-    }
-
-    public render() {
-        return (
-            <button className="part-button">
-                <img src={this.props.imageSource}
-                    width={imgSize}/>
-            </button>
-        )
-    }
+export function PartButton(props: IPartButtonProps) {
+    return (
+        <button
+            className="part-button"
+            onClick={() => props.partSelectionCallback(props.partType, props.imageSource)}>
+            <img src={props.imageSource}
+                width={imgSize}/>
+        </button>
+    )
 }

@@ -4,6 +4,7 @@ import { BodyType } from '../Enums/BodyType';
 import { PartType } from '../Enums/PartType';
 import { CharImageStructItem } from '../Types/CharImageStructItem';
 import { BodyDescription } from '../Enums/BodyDescription';
+import { CharImageLayout } from './CharImageLayout';
 
 export class CharacterImageMap
 {
@@ -73,6 +74,71 @@ export class CharacterImageMap
                     BodyDescription.Male,
                     BodyDescription.Androgynous,
                 ]
+            ],
+        ]
+    );
+
+    private static AverageSizedFeminineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Average-Sized Feminine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Average-Sized Feminine/Body.png"
+        ]
+    ]);
+
+    private static AverageSizedMasculineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Average-Sized Masculine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Average-Sized Masculine/Body.png"
+        ]
+    ]);
+
+    private static ReptilianFeminineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Reptilian Feminine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Reptilian Feminine/Body.png"
+        ]
+    ]);
+
+    private static ReptilianMasculineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Reptilian Masculine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Reptilian Masculine/Body.png"
+        ]
+    ]);
+
+    public static DefaultBodyParts: Map<BodyType, CharImageLayout> = new Map<BodyType, CharImageLayout>(
+        [
+            [
+                BodyType.AverageSizedFeminine,
+                new CharImageLayout(CharacterImageMap.AverageSizedFeminineDefaults)
+            ],
+            [
+                BodyType.AverageSizedMasculine,
+                new CharImageLayout(CharacterImageMap.AverageSizedMasculineDefaults)
+            ],
+            [
+                BodyType.ReptilianFeminine,
+                new CharImageLayout(CharacterImageMap.ReptilianFeminineDefaults)
+            ],
+            [
+                BodyType.ReptilianMasculine,
+                new CharImageLayout(CharacterImageMap.ReptilianMasculineDefaults)
             ],
         ]
     );

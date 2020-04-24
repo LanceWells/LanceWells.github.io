@@ -4,8 +4,8 @@ import { CharacterImageMap } from './CharacterImageMap';
 export class CharImageLayout {
     private ImageSelection: Map<PartType, string> = new Map();
 
-    public CharImageLayout() {
-        this.ImageSelection = new Map();
+    public constructor(partMap: Map<PartType, string>) {
+        this.ImageSelection = partMap;
     }
 
     public SetPartImage(partType: PartType, image: string): void {
