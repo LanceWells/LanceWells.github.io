@@ -1,23 +1,21 @@
 import React from 'react';
 import './CharacterImage.css';
 
-import { CharacterSize } from '../Enums/CharacterSize';
-// import { BodyDescription } from '../Enums/BodyDescription';
-import { PartType } from '../Enums/PartType';
-import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
-
-import { CharacterImageMap } from '../Classes/CharacterImageMap';
-
-// import { ImageLayer } from '../Types/ImageLayer';
-// import { BodyMap } from '../Types/BodyMap';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { CharacterCanvas } from './CharacterCanvas';
 import { PartSelector } from './PartSelector';
-import { BodyType } from '../Enums/BodyType';
-import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
+import { CharacterImageCanvas } from './CharacterImageCanvas';
+
+import { CharacterImageMap } from '../Classes/CharacterImageMap';
 import { CharImageLayout } from '../Classes/CharImageLayout';
+
+import { CharacterSize } from '../Enums/CharacterSize';
+import { PartType } from '../Enums/PartType';
+import { BodyType } from '../Enums/BodyType';
+
+import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
+import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { PartSelectionCallback } from '../Types/PartSelectionCallback';
+import { CharImageDownloadCallback } from '../Types/CharImageDownloadCallback';
 
 /**
  * @description
@@ -37,10 +35,6 @@ export interface ICharacterImageProps {
  * that layer is drawn, and what the possible images are in that layer.
  */
 export interface ICharacterImageState {
-    // canvasImages: Array<string>,
-    // partLayers: ImageLayer[],
-    // carouselIndex: number,
-    // carouselDirection: "prev" | "next",
     charSize: CharacterSize;
     bodyType: BodyType;
     partType: PartType;
@@ -55,10 +49,6 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     constructor(props: ICharacterImageProps) {
         super(props);
         this.state = {
-            // canvasImages: [],
-            // partLayers: [],
-            // carouselIndex: 0,
-            // carouselDirection: "next",
             charSize: CharacterSize.Average,
             bodyType: BodyType.AverageSizedFeminine,
             partType: PartType.Body,
@@ -81,45 +71,6 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         link.href = downloadUrl;
         link.click();
     }
-
-    // /**
-    //  * A handler for a part selector. Replaces the image at the specified index with a new image.
-    //  * @param layerIndex The index of the layer. This is the z-layer, effectively. The higher the number, the
-    //  * more layers that it draws over.
-    //  * @param imageSource The image source. This is what gets drawn.
-    //  */
-    // handlePartSelection(layerIndex: number, imageSource: string) {
-    //     const newCanvasImages: Array<string> = this.state.canvasImages;
-
-    //     // Javascript doesn't have arrays of fixed length, so this is safe? Still getting used to this.
-    //     newCanvasImages[layerIndex] = imageSource;
-
-    //     this.setState({
-    //         canvasImages: newCanvasImages
-    //     })
-    // }
-
-    // /**
-    //  * Handles the prop-pass from the body-type selector.
-    //  * @param bodyType The type of body that this character creator should acknowledge.
-    //  */
-    // handleBodySelection(bodyMap: BodyMap) {
-    //     const newImagesToRender: Array<string> = new Array<string>(0);
-
-    //     bodyMap.layers.forEach(layer => {
-    //         layer.images.forEach(image => {
-    //             if (image.imageSource.includes('default.png'))
-    //             {
-    //                 newImagesToRender[layer.layerIndex] = image.imageSource;
-    //             }
-    //         });
-    //     });
-
-    //     this.setState({
-    //         canvasImages: newImagesToRender,
-    //         partLayers: bodyMap.layers
-    //     });
-    // }
 
     private handlePartTypeChange(partType: PartType) {
         this.setState({
@@ -149,6 +100,9 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         });
     }
 
+    private handleCanvasDownload(downloadSource: string): void {
+    }
+
     /**
      * @description
      * Renders a series of body selectors for the user to pick from. These body selectors will modify the list
@@ -158,31 +112,6 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     renderBodySelection() {
         return (<div></div>);
     }
-
-            // return bodyMaps.map((bodyMap) => {
-            //     return (
-            //         <Carousel.Item>
-            //             <BodySelector
-            //                 onClick={(body: BodyMap) => this.handleBodySelection(body)}
-            //                 bodyMap={bodyMap}
-            //             />
-            //         </Carousel.Item>
-            //     );
-            // });
-
-    // /**
-    //  * @description
-    //  * Handles a carousel selection event. Is used to ensure that the carousel cycles left when the left
-    //  * button is pressed; and the same for the right button.
-    //  * @param eventKey The event key. This is the index that the carousel is being cycled to.
-    //  * @param direction The direction that the carousel is being cycled in.
-    //  */
-    // handleCarouselSelect(eventKey: any, direction: "prev" | "next") {
-    //     this.setState({
-    //         carouselIndex: eventKey,
-    //         carouselDirection: direction
-    //     });
-    // }
 
     /**
      * Renders this object.
@@ -202,13 +131,18 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             this.handlePartSelection(partType, imgSource);
         };
 
+        let canvasDownload: CharImageDownloadCallback = (downloadSource: string) => {
+            this.handleCanvasDownload(downloadSource);
+        };
+
         let charImages: string[] = this.state.charImageLayout.GetImages();
 
         return (
             <div className="character-image">
-                <CharacterCanvas
+                <CharacterImageCanvas
                     imagesToRender={charImages}
-                    onClickDownload={this.downloadImage.bind(this)}
+                    borderColor="rgb(10, 10, 10)"
+                    downloadCallback={canvasDownload.bind(this)}
                 />
                 <PartSelector
                     partSelectionCallback={partSelection.bind(this)}
@@ -222,41 +156,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     }
 }
 
-// <Container fluid={true}>
-//     <Row>
-//         <Col lg={1} />
-//         <Col lg={4}>
-//             <div className='body-creation'>
-//                 <div className='body-selector'>
-//                     <h2>Body Selection</h2>
-//                     <p className="italics">(Each body type uses different accessories and will reset your character design)</p>
-//                     <Carousel
-//                         interval={null}
-//                         indicators={false}
-//                         onSelect={this.handleCarouselSelect.bind(this)}>
-//                         {this.renderBodySelection()}
-//                     </Carousel>
-//                 </div>
-//                 <div className='body-canvas'>
-//                     <CharacterCanvas
-//                         imagesToRender={canvasImagesToRender}
-//                         onClickDownload={(canvas: HTMLCanvasElement) => this.downloadImage(canvas)}
-//                     />
-//                 </div>
-//             </div>
-//         </Col>
-//         <Col lg={6}>
-//             <div className='acc-selector'>
-//                 <h2>Accessory Selection</h2>
-//                 <p className="italics">(You need to select a body first if this is empty)</p>
-//                 <PartAccordion
-//                     layers={currentBodyMap}
-//                     onClick={(layerName: number, imageSource: string) => this.handlePartSelection(layerName, imageSource)}
-//                 />
-//             </div>
-//         </Col>
-//         <Col lg={1} />
-//     </Row>
-// </Container>
-
-// export default CharacterImage;
+// <CharacterCanvas
+//     imagesToRender={charImages}
+//     onClickDownload={this.downloadImage.bind(this)}
+// />

@@ -1,16 +1,15 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/LandingSpace.css';
 
 import React from 'react';
 import {
     HashRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
-import {LoginPage} from './Login/React/LoginPage';
+import { LoginPage } from './Login/React/LoginPage';
 import { GamePage } from './GamePage/React/GamePage';
 import { ProtectedRoute } from './Login/React/ProtectedRoute';
-// import CharacterCreator from './CharacterCreator/React/CharacterCreator';
 import { CharacterImage } from './CharacterImage/React/CharacterImage';
 import { Nav } from 'react-bootstrap';
 

@@ -1,11 +1,13 @@
 import React from 'react';
-import { PartType } from '../Enums/PartType';
+
 import { PartButton } from './PartButton';
+import { PartTypeSelector } from './PartTypeSelector';
+import { PartBodySelector } from './PartBodySelector';
+
+import { PartType } from '../Enums/PartType';
 import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
 import { PartSelectionCallback } from '../Types/PartSelectionCallback';
-import { PartTypeSelector } from './PartTypeSelector';
-import { PartBodySelector } from './PartBodySelector';
 
 export interface IPartSelectorProps {
     partType: PartType;

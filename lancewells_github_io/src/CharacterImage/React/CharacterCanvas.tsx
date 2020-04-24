@@ -248,8 +248,20 @@ export class CharacterCanvas extends React.Component<ICanvasProps, ICanvasState>
 
         return (
             <div className="canvas-container">
-                <canvas className="character-canvas" id="characterCanvas" ref="canvas" width={this.canvasWidth} height={this.canvasHeight} />
-                <canvas style={{ backgroundImage: "linear-gradient(#131313, #ffffff)" }} id="borderCanvas" ref="borderCanvas" width={this.canvasWidth} height={this.canvasHeight} />
+                <canvas
+                    className="character-canvas"
+                    id="characterCanvas"
+                    ref="canvas"
+                    width={this.canvasWidth}
+                    height={this.canvasHeight} />
+                <canvas
+                    style={{
+                        backgroundImage: "linear-gradient(#131313, #ffffff)"
+                    }}
+                    id="borderCanvas"
+                    ref="borderCanvas"
+                    width={this.canvasWidth}
+                    height={this.canvasHeight} />
                 <Container fluid={true} className='d-flex justify-content-center'>
                     <Row>
                         <CirclePicker
