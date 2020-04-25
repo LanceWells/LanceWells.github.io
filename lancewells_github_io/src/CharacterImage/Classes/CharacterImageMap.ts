@@ -143,6 +143,8 @@ export class CharacterImageMap
         ]
     );
 
+    public static CharacterShadowSource: string = "./images/Character_Image_Details/CharacterShadow.png"
+
     private static CompareParamsToStructItem(structItem: CharImageStructItem, charSize: CharacterSize, bodyType: BodyType, partType: PartType): boolean {
         let doesMatch: boolean = true;
         let validBodyDescriptors: BodyDescription[] = [];

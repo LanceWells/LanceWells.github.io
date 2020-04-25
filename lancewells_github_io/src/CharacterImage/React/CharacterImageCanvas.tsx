@@ -1,5 +1,6 @@
 import React from 'react';
 import { CharImageDownloadCallback } from '../Types/CharImageDownloadCallback';
+import { CharacterImageMap } from '../Classes/CharacterImageMap';
 
 export interface ICharacterImageCanvasProps {
     imagesToRender: string[];
@@ -14,8 +15,12 @@ export interface ICharacterImageCanvasState {
  * @description Used to display a character image and its associated border, specified by the properties.
  */
 export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasProps, ICharacterImageCanvasState> {
-    private static canvasHeight: number = 256;
+    private static canvasHeight: number = 512;
     private static canvasWidth:  number = 256;
+
+    private static charScaleFactor: number = 4;
+    private static charPartOffset: number = 32;
+    private static shadowOffset: number = 89;
 
     /**
      * Note that the numbers stored here are effectively pairs of coordinates to offset the
@@ -95,7 +100,6 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
      */
     public componentDidUpdate() {
         this.DrawCharacterAndBorder();
-
     }
 
     /**
@@ -114,6 +118,12 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         // Create an array of html image elements. This will be populated as images are loaded.
         let imagesToDraw: HTMLImageElement[] = new Array(this.props.imagesToRender.length);
 
+        let charShadowImage: HTMLImageElement = await new Promise<HTMLImageElement>(resolve => {
+            let charShadowImage: HTMLImageElement = new Image();
+            charShadowImage.onload = () => resolve(charShadowImage);
+            charShadowImage.src = CharacterImageMap.CharacterShadowSource;
+        })
+
         let loadedImagesPromises: Promise<void>[] = this.props.imagesToRender.map((img, index) => {
             return new Promise<void>(resolve => {
                 let imageElement: HTMLImageElement = new Image();
@@ -129,10 +139,25 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         let stagingCanvasContext: CanvasRenderingContext2D = charStagingCanvas.getContext("2d") as CanvasRenderingContext2D;
 
         // First, wipe the canvas. This needs to be cleared every time we re-render and re-draw.
-        stagingCanvasContext.clearRect(0, 0, CharacterImageCanvas.canvasWidth, CharacterImageCanvas.canvasHeight);
+        stagingCanvasContext.clearRect(0, 0, charStagingCanvas.width, charStagingCanvas.height);
 
+        // Draw the shadow underneath a character's feet first. This puts it as far in the background as
+        // possible.
+        stagingCanvasContext.drawImage(
+            charShadowImage,
+            0,
+            CharacterImageCanvas.shadowOffset * CharacterImageCanvas.charScaleFactor,
+            charShadowImage.width * CharacterImageCanvas.charScaleFactor,
+            charShadowImage.height * CharacterImageCanvas.charScaleFactor);
+
+        // Now draw all of the individual character components layer-by-layer, from front to back.
         imagesToDraw.forEach(itd => {
-            stagingCanvasContext.drawImage(itd, 0, 0, CharacterImageCanvas.canvasWidth, CharacterImageCanvas.canvasHeight);
+            stagingCanvasContext.drawImage(
+                itd,
+                0,
+                CharacterImageCanvas.charPartOffset * CharacterImageCanvas.charScaleFactor,
+                itd.width * CharacterImageCanvas.charScaleFactor,
+                itd.height * CharacterImageCanvas.charScaleFactor);
         });
     }
 
@@ -151,7 +176,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         // Get the character staging image. This is our character image that is drawn layer-by-layer. We
         // 'stamp' this image 8 times in a circle to populate each pixel that we plan to use as a border.
         let charImgSrc: string = charStagingCanvas.toDataURL('image/png');
-        let charImg: HTMLImageElement = new Image(CharacterImageCanvas.canvasWidth, CharacterImageCanvas.canvasHeight);
+        let charImg: HTMLImageElement = new Image();
         charImg.src = charImgSrc;
 
         await new Promise<void>(resolve => {
@@ -159,10 +184,10 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         });
 
         // First, wipe the canvas. This needs to be cleared every time we re-render and re-draw.
-        canvasContext.clearRect(0, 0, CharacterImageCanvas.canvasWidth, CharacterImageCanvas.canvasHeight);
+        canvasContext.clearRect(0, 0, charCanvas.width, charCanvas.height);
 
         for (let i: number = 0; i < CharacterImageCanvas.borderCoordinates.length; i += 2) {
-            let thicknessScale: number = 4;
+            let thicknessScale: number = CharacterImageCanvas.charScaleFactor;
             let xCoord: number = CharacterImageCanvas.borderCoordinates[i];
             let yCoord: number = CharacterImageCanvas.borderCoordinates[i + 1];
 
