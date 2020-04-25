@@ -16,6 +16,12 @@ export interface ICharacterImageCanvasState {
 export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasProps, ICharacterImageCanvasState> {
     private static canvasHeight: number = 256;
     private static canvasWidth:  number = 256;
+
+    /**
+     * Note that the numbers stored here are effectively pairs of coordinates to offset the
+     * image stamping by, scaled by the desired thickness of the border.
+     * https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
+     */
     private static borderCoordinates: number[] =
     [
         -1, -1,
@@ -132,6 +138,10 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
 
     /**
      * @description Draws the character image, along with a 1px border using the specified color.
+     * @remarks https://stackoverflow.com/questions/28207232/draw-border-around-nontransparent-part-of-image-on-canvas
+     * Something to note about this algorith; it can only draw borders of a thickness equal to the smallest
+     * outlying pixel. So, our resolution for pixels on this canvas is '4', which means that the thickness
+     * must be 4, or else we end up with weird stamping artifacts.
      */
     private async DrawCharacterWithBorder() {
         let charStagingCanvas: HTMLCanvasElement = this.refs.characterStagingCanvas as HTMLCanvasElement;
