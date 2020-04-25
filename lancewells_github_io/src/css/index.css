@@ -6,3 +6,14 @@ html {
 body {
   background-color: #121212;
 }
+
+button {
+  background-color: rgb(42, 47, 78);
+  border-color: transparent;
+  box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
+  transition-duration: 75ms;
+}
+
+button:hover {
+  background-color: rgb(66, 76, 110);
+}

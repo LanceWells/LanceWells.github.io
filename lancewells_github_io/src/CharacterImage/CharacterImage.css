@@ -7,6 +7,23 @@
     max-height: 100%;
 }
 
+.character-drawing-area {
+    display: flex;
+    flex-direction: column;
+    font-size: larger;
+    font-style: italic;
+    align-items: center;
+}
+
+.character-image-download {
+    margin: 20px;
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    font-family: "Press Start 2P";
+    padding: 7px 0px;
+}
+
 .canvas-container {
     display: flex;
     flex-direction: column;
@@ -23,14 +40,7 @@
 
 .part-button {
     margin: 8px;
-    background-color: rgb(42, 47, 78);
-    border-color: transparent;
     border-radius: 8px;
-    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
-}
-
-.part-button:hover {
-    background-color: rgb(66, 76, 110);
 }
 
 .part-character-selectors {

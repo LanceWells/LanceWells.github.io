@@ -38,16 +38,22 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
 
     public render() {
         return (
-            <div>
+            <div className="character-drawing-area">
                 <CharacterImageCanvas
                     imagesToRender={this.props.imagesToRender}
                     borderColor={this.state.borderColor}
                 />
+                <span>
+                    Border Color
+                </span>
                 <CirclePicker
                     onChangeComplete={this.handleColorChange.bind(this)}
                     color={this.state.borderColor}
                     colors={CharacterDrawingArea.outlineColorOptions}
                 />
+                <button className="character-image-download">
+                    &gt;&gt;Download&lt;&lt;
+                </button>
             </div>
         )
     }

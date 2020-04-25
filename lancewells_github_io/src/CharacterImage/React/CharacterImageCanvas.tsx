@@ -117,7 +117,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
      */
     private async DrawCharacterAndBorder(): Promise<void> {
         await this.LoadCharacterImages();
-        await this.DrawCharacterWithBorder();
+        await this.DrawCharacterBorder();
         await this.DrawCharacterWithEffects();
     }
 
@@ -163,7 +163,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
      * outlying pixel. So, our resolution for pixels on this canvas is '4', which means that the thickness
      * must be 4, or else we end up with weird stamping artifacts.
      */
-    private async DrawCharacterWithBorder() {
+    private async DrawCharacterBorder() {
         let charStagingCanvas: HTMLCanvasElement = this.refs.characterStagingCanvas as HTMLCanvasElement;
         let charCanvas: HTMLCanvasElement = this.refs.characterCanvas as HTMLCanvasElement;
         let canvasContext: CanvasRenderingContext2D = charCanvas.getContext("2d") as CanvasRenderingContext2D;
@@ -227,6 +227,9 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
             char.onload = () => resolve(char);
             char.src = charImgSrc;
         });
+
+        // First, wipe the canvas. This needs to be cleared every time we re-render and re-draw.
+        effectsCanvasContext.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
 
         // Draw the shadow underneath a character's feet first. This puts it as far in the background as
         // possible.
