@@ -1,7 +1,6 @@
 import React from 'react';
-import './CharacterImage.css';
+import '../CharacterImage.css';
 
-import { CharacterCanvas } from './CharacterCanvas';
 import { PartSelector } from './PartSelector';
 import { CharacterImageCanvas } from './CharacterImageCanvas';
 
@@ -155,8 +154,3 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         );
     }
 }
-
-// <CharacterCanvas
-//     imagesToRender={charImages}
-//     onClickDownload={this.downloadImage.bind(this)}
-// />
