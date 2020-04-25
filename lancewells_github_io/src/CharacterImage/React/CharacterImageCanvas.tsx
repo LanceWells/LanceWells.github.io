@@ -1,11 +1,9 @@
 import React from 'react';
-import { CharImageDownloadCallback } from '../Types/CharImageDownloadCallback';
 import { CharacterImageMap } from '../Classes/CharacterImageMap';
 
 export interface ICharacterImageCanvasProps {
     imagesToRender: string[];
     borderColor: string;
-    downloadCallback: CharImageDownloadCallback;
 };
 
 export interface ICharacterImageCanvasState {
@@ -20,7 +18,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
 
     private static charScaleFactor: number = 4;
     private static charPartOffset: number = 32;
-    private static shadowOffset: number = 89;
+    private static shadowOffset: number = 90;
 
     /**
      * Note that the numbers stored here are effectively pairs of coordinates to offset the
@@ -67,6 +65,12 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
                     id='character-canvas'
                     ref='characterCanvas'
                 />
+                <canvas
+                    height={CharacterImageCanvas.canvasHeight}
+                    width={CharacterImageCanvas.canvasWidth}
+                    id='character-effects-canvas'
+                    ref='characterEffectsCanvas'
+                />
             </div>
         );
     }
@@ -78,17 +82,22 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         let charStagingCanvas: HTMLCanvasElement = this.refs.characterStagingCanvas as HTMLCanvasElement;
         let stagingCanvasContext: CanvasRenderingContext2D = charStagingCanvas.getContext("2d") as CanvasRenderingContext2D;
 
+        let charCanvas: HTMLCanvasElement = this.refs.characterCanvas as HTMLCanvasElement;
+        let charCanvasContext: CanvasRenderingContext2D = charCanvas.getContext("2d") as CanvasRenderingContext2D;
+
+        let effectsCanvas: HTMLCanvasElement = this.refs.characterEffectsCanvas as HTMLCanvasElement;
+        let effectsCanvasContext: CanvasRenderingContext2D = effectsCanvas.getContext("2d") as CanvasRenderingContext2D;
+
         // This is going around the css, but ideally we don't ever want this disply context to change. The
         // sole point of this canvas element is to get a stapled-together version of our final character
         // drawing.
         charStagingCanvas.style.display = 'none';
-
-        let charCanvas: HTMLCanvasElement = this.refs.characterCanvas as HTMLCanvasElement;
-        let charCanvasContext: CanvasRenderingContext2D = charCanvas.getContext("2d") as CanvasRenderingContext2D;
+        charCanvas.style.display = 'none';
 
         // This is all done with upsacled pixels, so absolutely no anti-aliasing.
         stagingCanvasContext.imageSmoothingEnabled = false;
         charCanvasContext.imageSmoothingEnabled = false;
+        effectsCanvasContext.imageSmoothingEnabled = false;
 
         // Draw the character and the border after the component has mounted. This is so that we have at least
         // some default character when we load the page.
@@ -109,6 +118,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
     private async DrawCharacterAndBorder(): Promise<void> {
         await this.LoadCharacterImages();
         await this.DrawCharacterWithBorder();
+        await this.DrawCharacterWithEffects();
     }
 
     /**
@@ -117,12 +127,6 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
     private async LoadCharacterImages(): Promise<void> {
         // Create an array of html image elements. This will be populated as images are loaded.
         let imagesToDraw: HTMLImageElement[] = new Array(this.props.imagesToRender.length);
-
-        let charShadowImage: HTMLImageElement = await new Promise<HTMLImageElement>(resolve => {
-            let charShadowImage: HTMLImageElement = new Image();
-            charShadowImage.onload = () => resolve(charShadowImage);
-            charShadowImage.src = CharacterImageMap.CharacterShadowSource;
-        })
 
         let loadedImagesPromises: Promise<void>[] = this.props.imagesToRender.map((img, index) => {
             return new Promise<void>(resolve => {
@@ -140,15 +144,6 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
 
         // First, wipe the canvas. This needs to be cleared every time we re-render and re-draw.
         stagingCanvasContext.clearRect(0, 0, charStagingCanvas.width, charStagingCanvas.height);
-
-        // Draw the shadow underneath a character's feet first. This puts it as far in the background as
-        // possible.
-        stagingCanvasContext.drawImage(
-            charShadowImage,
-            0,
-            CharacterImageCanvas.shadowOffset * CharacterImageCanvas.charScaleFactor,
-            charShadowImage.width * CharacterImageCanvas.charScaleFactor,
-            charShadowImage.height * CharacterImageCanvas.charScaleFactor);
 
         // Now draw all of the individual character components layer-by-layer, from front to back.
         imagesToDraw.forEach(itd => {
@@ -175,12 +170,11 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
 
         // Get the character staging image. This is our character image that is drawn layer-by-layer. We
         // 'stamp' this image 8 times in a circle to populate each pixel that we plan to use as a border.
-        let charImgSrc: string = charStagingCanvas.toDataURL('image/png');
-        let charImg: HTMLImageElement = new Image();
-        charImg.src = charImgSrc;
-
-        await new Promise<void>(resolve => {
-            charImg.onload = () => resolve()
+        let charImg: HTMLImageElement = await new Promise<HTMLImageElement>(resolve => {
+            let charImgSrc: string = charStagingCanvas.toDataURL('image/png');
+            let char: HTMLImageElement = new Image();
+            char.onload = () => resolve(char)
+            char.src = charImgSrc;
         });
 
         // First, wipe the canvas. This needs to be cleared every time we re-render and re-draw.
@@ -195,10 +189,56 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         }
 
         canvasContext.globalCompositeOperation = "source-in";
-        canvasContext.fillStyle = "rgb(0, 0, 0)";
+        canvasContext.fillStyle = this.props.borderColor;
         canvasContext.fillRect(0, 0, charCanvas.width, charCanvas.height);
-
         canvasContext.globalCompositeOperation = "source-over";
-        canvasContext.drawImage(charImg, 0, 0);
+    }
+
+    /**
+     * @description Draws the character image, along with a 1px border using the specified color.
+     * @remarks https://stackoverflow.com/questions/28207232/draw-border-around-nontransparent-part-of-image-on-canvas
+     * Something to note about this algorith; it can only draw borders of a thickness equal to the smallest
+     * outlying pixel. So, our resolution for pixels on this canvas is '4', which means that the thickness
+     * must be 4, or else we end up with weird stamping artifacts.
+     */
+    private async DrawCharacterWithEffects() {
+        let charStagingCanvas: HTMLCanvasElement = this.refs.characterStagingCanvas as HTMLCanvasElement;
+        let borderCanvas: HTMLCanvasElement = this.refs.characterCanvas as HTMLCanvasElement;
+        let effectsCanvas: HTMLCanvasElement = this.refs.characterEffectsCanvas as HTMLCanvasElement;
+        let effectsCanvasContext: CanvasRenderingContext2D = effectsCanvas.getContext("2d") as CanvasRenderingContext2D;
+
+        let shadowImg: HTMLImageElement = await new Promise<HTMLImageElement>(resolve => {
+            let shadowImgSrc: string = CharacterImageMap.CharacterShadowSource;
+            let shadow: HTMLImageElement = new Image();
+            shadow.onload = () => resolve(shadow);
+            shadow.src = shadowImgSrc;
+        });
+
+        let charBorderImg: HTMLImageElement = await new Promise<HTMLImageElement>(resolve => {
+            let charBorderImgSrc: string = borderCanvas.toDataURL('image/png');
+            let border: HTMLImageElement = new Image();
+            border.onload = () => resolve(border);
+            border.src = charBorderImgSrc;
+        });
+
+        let charImg: HTMLImageElement = await new Promise<HTMLImageElement>(resolve => {
+            let charImgSrc: string = charStagingCanvas.toDataURL('image/png');
+            let char: HTMLImageElement = new Image();
+            char.onload = () => resolve(char);
+            char.src = charImgSrc;
+        });
+
+        // Draw the shadow underneath a character's feet first. This puts it as far in the background as
+        // possible.
+        effectsCanvasContext.drawImage(
+            shadowImg,
+            0,
+            CharacterImageCanvas.shadowOffset * CharacterImageCanvas.charScaleFactor,
+            shadowImg.width * CharacterImageCanvas.charScaleFactor,
+            shadowImg.height * CharacterImageCanvas.charScaleFactor
+            );
+
+        effectsCanvasContext.drawImage(charBorderImg, 0, 0);
+        effectsCanvasContext.drawImage(charImg, 0, 0);
     }
 }

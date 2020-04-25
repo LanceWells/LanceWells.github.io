@@ -2,7 +2,7 @@ import React from 'react';
 import '../CharacterImage.css';
 
 import { PartSelector } from './PartSelector';
-import { CharacterImageCanvas } from './CharacterImageCanvas';
+import { CharacterDrawingArea } from './CharacterDrawingArea';
 
 import { CharacterImageMap } from '../Classes/CharacterImageMap';
 import { CharImageLayout } from '../Classes/CharImageLayout';
@@ -138,9 +138,8 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
 
         return (
             <div className="character-image">
-                <CharacterImageCanvas
+                <CharacterDrawingArea
                     imagesToRender={charImages}
-                    borderColor="rgb(10, 10, 10)"
                     downloadCallback={canvasDownload.bind(this)}
                 />
                 <PartSelector
