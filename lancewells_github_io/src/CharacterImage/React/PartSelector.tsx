@@ -38,7 +38,9 @@ export class PartSelector extends React.Component<IPartSelectorProps, IPartSelec
                         SelectionCallback={this.props.partTypeSelectionCallback}
                     />
                 </div>
-                {this.GetPartButtons()}
+                <div className="part-selector-buttons">
+                    {this.GetPartButtons()}
+                </div>
             </div>
         )
     }
