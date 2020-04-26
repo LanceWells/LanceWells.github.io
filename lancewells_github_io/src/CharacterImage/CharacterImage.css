@@ -37,9 +37,10 @@
     flex-grow: 1;
     overflow-y: scroll;
     border: 5px;
-    border-color: rgb(15, 15, 15);
+    border-color: rgb(19, 19, 19);
     border-style: solid;
     border-radius: 5px;
+    background-color: rgba(19, 19, 19, 0.85);
 }
 
 .part-button {
