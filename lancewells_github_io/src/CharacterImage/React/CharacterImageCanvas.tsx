@@ -75,6 +75,13 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         );
     }
 
+    public GetDownloadUrl(): string {
+        let effectsCanvas: HTMLCanvasElement = this.refs.characterEffectsCanvas as HTMLCanvasElement;
+        let downloadUrl: string = effectsCanvas.toDataURL('image/png');
+
+        return downloadUrl;
+    }
+
     /**
      * @description Handles events when the component has mounted.
      */

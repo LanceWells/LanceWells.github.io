@@ -100,6 +100,16 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     }
 
     private handleCanvasDownload(downloadSource: string): void {
+        if (downloadSource === undefined || downloadSource === "") {
+            console.error("Character image was attempted to be downloaded with an empty, unset string.");
+        }
+        else {
+            let link = document.createElement('a');
+
+            link.download = 'characterImage.png';
+            link.href = downloadSource;
+            link.click();
+        }
     }
 
     /**

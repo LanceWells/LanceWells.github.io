@@ -10,6 +10,7 @@ export interface ICharacterDrawingAreaProps {
 
 export interface ICharacterDrawingAreaState {
     borderColor: string;
+    downloadUrl: string;
 }
 
 export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaProps, ICharacterDrawingAreaState> {
@@ -26,7 +27,8 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
     public constructor(props: ICharacterDrawingAreaProps) {
         super(props);
         this.state = {
-            borderColor: "rgb(10, 10, 10)"
+            borderColor: "rgb(10, 10, 10)",
+            downloadUrl: ""
         };
     }
 
@@ -36,10 +38,18 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
         });
     }
 
+    private fetchDownloadUrl(): string {
+        let charImgCanvas: CharacterImageCanvas = this.refs.charImageCanvas as CharacterImageCanvas;
+        let downloadUrl = charImgCanvas.GetDownloadUrl();
+
+        return downloadUrl;
+    }
+
     public render() {
         return (
             <div className="character-drawing-area">
                 <CharacterImageCanvas
+                    ref="charImageCanvas"
                     imagesToRender={this.props.imagesToRender}
                     borderColor={this.state.borderColor}
                 />
@@ -51,10 +61,11 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
                     color={this.state.borderColor}
                     colors={CharacterDrawingArea.outlineColorOptions}
                 />
-                <button className="character-image-download">
+                <button className="character-image-download"
+                    onClick={() => this.props.downloadCallback(this.fetchDownloadUrl())}>
                     &gt;&gt;Download&lt;&lt;
                 </button>
             </div>
-        )
+        );
     }
 }
