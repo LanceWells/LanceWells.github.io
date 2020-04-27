@@ -41,36 +41,10 @@ export interface ICharacterImageState {
 };
 
 /**
- * The main entry point for this application. Provides all of the buttons and fun stuff needed to create a
- * character image on a canvas element.
+ * @description The main entry point for the character drawing application. Provides all of the buttons and
+ * fun stuff needed to create a character image on a canvas element.
  */
 export class CharacterImage extends React.Component<ICharacterImageProps, ICharacterImageState> {
-    constructor(props: ICharacterImageProps) {
-        super(props);
-        this.state = {
-            charSize: CharacterSize.Average,
-            bodyType: BodyType.AverageSizedFeminine,
-            partType: PartType.Body,
-            charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout
-        }
-    }
-
-    /**
-     * @description
-     * Used to download the main character image from the canvas. This is a callback that is passed down to
-     * the canvas element.
-     * @param canvas The canvas html element from the Canvas character creator class.
-     */
-    downloadImage(canvas: HTMLCanvasElement)
-    {
-        const downloadUrl = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-
-        link.download = 'characterImage.png';
-        link.href = downloadUrl;
-        link.click();
-    }
-
     private handlePartTypeChange(partType: PartType) {
         this.setState({
             partType: partType
@@ -113,19 +87,33 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     }
 
     /**
+     * @description Creates a new instance of this component.
+     * @param props Higher-order properties passed in to this component.
+     */
+    public constructor(props: ICharacterImageProps) {
+        super(props);
+        this.state = {
+            charSize: CharacterSize.Average,
+            bodyType: BodyType.AverageSizedFeminine,
+            partType: PartType.Body,
+            charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout
+        }
+    }
+
+    /**
      * @description
      * Renders a series of body selectors for the user to pick from. These body selectors will modify the list
      * of available accessories (since a tiny hat looks silly on a giant person . . . or does it?). Needs to
      * look at the BodyMap.tsx file to understand what will be populated.
      */
-    renderBodySelection() {
+    public renderBodySelection() {
         return (<div></div>);
     }
 
     /**
-     * Renders this object.
+     * @description Renders this component.
      */
-    render() {
+    public render() {
         let imagePaths = CharacterImageMap.GetCharacterImagePaths(this.state.charSize, this.state.bodyType, this.state.partType);
         
         let partTypeTabSelection: PartTypeSelectionCallback = (partType: PartType) => {

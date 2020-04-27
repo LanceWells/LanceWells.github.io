@@ -9,6 +9,14 @@ import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
 import { PartSelectionCallback } from '../Types/PartSelectionCallback';
 
+/**
+ * @description The properties provided to this component.
+ * @param partType The part type whose buttons are displayed in in this component at present.
+ * @param partOptions The list of image sources that are displayed as options.
+ * @param partTypeSelectionCallback A callback when a part type has been selected.
+ * @param bodyTypeSelectionCallback A callback when a body type has been selected.
+ * @param partSelectionCallback A callback when the type of part represented as an option changes.
+ */
 export interface IPartSelectorProps {
     partType: PartType;
     partOptions: string[];
@@ -17,16 +25,29 @@ export interface IPartSelectorProps {
     partSelectionCallback: PartSelectionCallback;
 };
 
+/**
+ * @description The state maintained by this component.
+ */
 export interface IPartSelectorState {
 };
 
+/**
+ * @description The part selector for the character creator. This provides compnonents to switch body types,
+ * part types, and parts.
+ */
 export class PartSelector extends React.Component<IPartSelectorProps, IPartSelectorState> {
+    /**
+     * @description Creates a new isntance of this component.
+     * @param props The provided properties for this class.
+     */
     constructor(props: IPartSelectorProps) {
         super(props);
         this.state = {
         };
     }
-
+    /**
+     * @description Renders this component.
+     */
     public render() {
         return (
             <div className="part-selector">

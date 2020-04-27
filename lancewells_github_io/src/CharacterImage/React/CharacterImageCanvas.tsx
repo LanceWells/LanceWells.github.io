@@ -1,11 +1,20 @@
 import React from 'react';
 import { CharacterImageMap } from '../Classes/CharacterImageMap';
 
+/**
+ * @description The properties for this class.
+ * @param imagesToRender A list of images that will be rendered in-order, in the drawing area. Note that the
+ * order of this array determines how images will be drawn.
+ * @param borderColor A css-tyle-string to be used to color the border for this character.
+ */
 export interface ICharacterImageCanvasProps {
     imagesToRender: string[];
     borderColor: string;
 };
 
+/**
+ * @description The state maintained by this component.
+ */
 export interface ICharacterImageCanvasState {
 };
 
@@ -75,6 +84,9 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         );
     }
 
+    /**
+     * @description Gets the download url for this image. This can be used to get the image via a data url.
+     */
     public GetDownloadUrl(): string {
         let effectsCanvas: HTMLCanvasElement = this.refs.characterEffectsCanvas as HTMLCanvasElement;
         let downloadUrl: string = effectsCanvas.toDataURL('image/png');

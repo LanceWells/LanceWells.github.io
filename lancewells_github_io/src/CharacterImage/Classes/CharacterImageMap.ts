@@ -6,37 +6,72 @@ import { CharImageStructItem } from '../Types/CharImageStructItem';
 import { BodyDescription } from '../Enums/BodyDescription';
 import { CharImageLayout } from './CharImageLayout';
 
+/**
+ * @description A singleton-like class used to reference constants in the character parts, body types, etc.
+ */
 export class CharacterImageMap
 {
-    public static GetCharacterImagePaths(charSize: CharacterSize, bodyType: BodyType, partType: PartType): string[]
-    {
-        let charStructItems: CharImageStructItem[] =  CharImageMap.filter(c =>
-            CharacterImageMap.CompareParamsToStructItem(c, charSize, bodyType, partType));
+    /**
+     * @description The default images to display when a user selects the "Average-Sized Feminine" body type.
+     */
+    private static AverageSizedFeminineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Average-Sized Feminine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Average-Sized Feminine/Body.png"
+        ]
+    ]);
 
-        let charImages: string[] = charStructItems.flatMap(csi => csi.Images);
+    /**
+     * @description The default images to display when a user selects the "Average-Sized Masculine" body type.
+     */
+    private static AverageSizedMasculineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Average-Sized Masculine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Average-Sized Masculine/Body.png"
+        ]
+    ]);
+    
+    /**
+     * @description The default images to display when a user selects the "Reptilian Feminine" body type.
+     */
+    private static ReptilianFeminineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Reptilian Feminine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Reptilian Feminine/Body.png"
+        ]
+    ]);
 
-        return charImages;
-    }
+    /**
+     * @description The default images to display when a user selects the "Reptilian Masculine" body type.
+     */
+    private static ReptilianMasculineDefaults: Map<PartType, string> = new Map<PartType, string>([
+        [
+            PartType.Eyes,
+            "./images/Character_Image_Defaults/Reptilian Masculine/Eyes.png"
+        ],
+        [
+            PartType.Body,
+            "./images/Character_Image_Defaults/Reptilian Masculine/Body.png"
+        ]
+    ]);
 
-    public static PartOrder: PartType[] = [
-        PartType.BackAccessory,
-        PartType.Body,
-        PartType.Bottoms,
-        PartType.Shoes,
-        PartType.LowerArmor,
-        PartType.Tops,
-        PartType.UpperArmor,
-        PartType.MidAccessory,
-        PartType.ArmArmor,
-        PartType.HandWear,
-        PartType.Hair,
-        PartType.FacialWear,
-        PartType.HeadWear,
-        PartType.Pets,
-        PartType.Weapons,
-        PartType.Eyes
-    ];
-
+    /**
+     * @description A map of body types to their respective valid part-type categories. For example, the
+     * "average-sized feminine" body type can use parts from the, "humanoid female", "humanoid androgynous",
+     * "female", and "androgynous" categories.
+     */
     private static BodyTypeMap: Map<BodyType, BodyDescription[]> = new Map<BodyType, BodyDescription[]>(
         [
             [
@@ -78,50 +113,54 @@ export class CharacterImageMap
         ]
     );
 
-    private static AverageSizedFeminineDefaults: Map<PartType, string> = new Map<PartType, string>([
-        [
-            PartType.Eyes,
-            "./images/Character_Image_Defaults/Average-Sized Feminine/Eyes.png"
-        ],
-        [
-            PartType.Body,
-            "./images/Character_Image_Defaults/Average-Sized Feminine/Body.png"
-        ]
-    ]);
+    /**
+     * @description A list of all parts that are available as options for the user to select. This also 
+     * determines the order in which parts will be rendered, from back-to-front, read top-to-bottom.
+     */
+    public static PartOrder: PartType[] = [
+        PartType.BackAccessory,
+        PartType.Body,
+        PartType.Bottoms,
+        PartType.Shoes,
+        PartType.LowerArmor,
+        PartType.Tops,
+        PartType.UpperArmor,
+        PartType.MidAccessory,
+        PartType.ArmArmor,
+        PartType.HandWear,
+        PartType.Hair,
+        PartType.FacialWear,
+        PartType.HeadWear,
+        PartType.Pets,
+        PartType.Weapons,
+        PartType.Eyes
+    ];
 
-    private static AverageSizedMasculineDefaults: Map<PartType, string> = new Map<PartType, string>([
-        [
-            PartType.Eyes,
-            "./images/Character_Image_Defaults/Average-Sized Masculine/Eyes.png"
-        ],
-        [
-            PartType.Body,
-            "./images/Character_Image_Defaults/Average-Sized Masculine/Body.png"
-        ]
-    ]);
+    /**
+     * @description The image source for the shadow for the character.
+     */
+    public static CharacterShadowSource: string = "./images/Character_Image_Details/CharacterShadow.png"
 
-    private static ReptilianFeminineDefaults: Map<PartType, string> = new Map<PartType, string>([
-        [
-            PartType.Eyes,
-            "./images/Character_Image_Defaults/Reptilian Feminine/Eyes.png"
-        ],
-        [
-            PartType.Body,
-            "./images/Character_Image_Defaults/Reptilian Feminine/Body.png"
-        ]
-    ]);
+    /**
+     * @description Gets the list of valid character images for a given series of body type categories.
+     * @param charSize The size of the character to get images for.
+     * @param bodyType The type of body to get the images for.
+     * @param partType The part type to get images for.
+     */
+    public static GetCharacterImagePaths(charSize: CharacterSize, bodyType: BodyType, partType: PartType): string[]
+    {
+        let charStructItems: CharImageStructItem[] =  CharImageMap.filter(c =>
+            CharacterImageMap.CompareParamsToStructItem(c, charSize, bodyType, partType));
 
-    private static ReptilianMasculineDefaults: Map<PartType, string> = new Map<PartType, string>([
-        [
-            PartType.Eyes,
-            "./images/Character_Image_Defaults/Reptilian Masculine/Eyes.png"
-        ],
-        [
-            PartType.Body,
-            "./images/Character_Image_Defaults/Reptilian Masculine/Body.png"
-        ]
-    ]);
+        let charImages: string[] = charStructItems.flatMap(csi => csi.Images);
 
+        return charImages;
+    }
+
+    /**
+     * @description A map of body types to their respective default images. Note that this is merely a wrapper
+     * to an internal list, this is just to reduce visual noise.
+     */
     public static DefaultBodyParts: Map<BodyType, CharImageLayout> = new Map<BodyType, CharImageLayout>(
         [
             [
@@ -143,8 +182,14 @@ export class CharacterImageMap
         ]
     );
 
-    public static CharacterShadowSource: string = "./images/Character_Image_Details/CharacterShadow.png"
-
+    /**
+     * @description Compares the body-type selection options to the character map struct, picking out items
+     * that have a valid match.
+     * @param structItem The struct item part to evaluate.
+     * @param charSize The size of the character to get images for.
+     * @param bodyType The type of body to get the images for.
+     * @param partType The part type to get images for.
+     */
     private static CompareParamsToStructItem(structItem: CharImageStructItem, charSize: CharacterSize, bodyType: BodyType, partType: PartType): boolean {
         let doesMatch: boolean = true;
         let validBodyDescriptors: BodyDescription[] = [];
