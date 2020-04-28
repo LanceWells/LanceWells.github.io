@@ -80,13 +80,15 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     public render() {
         return (
             <div className="login-container">
-                <h2 className="login-header">
-                    {this.state.pageState.toString()}
-                </h2>
-                <div className="login-error-messages">
-                    {this.getErrorMessages()}
+                <div className="login-dialog">
+                    <h2 className="login-header">
+                        {this.state.pageState.toString()}
+                    </h2>
+                    <div className="login-error-messages">
+                        {this.getErrorMessages()}
+                    </div>
+                    {this.GetInternalRenderBits()}
                 </div>
-                {this.GetInternalRenderBits()}
             </div>
         );
     }
