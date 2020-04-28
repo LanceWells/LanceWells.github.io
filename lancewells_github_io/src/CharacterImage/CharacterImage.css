@@ -5,6 +5,7 @@
     padding: 24px;
     height: 100%;
     max-height: 100%;
+    background-color: #131313;
     background-image: url("/images/Character_Image_Details/CharCreatorBg.png");
     background-repeat: no-repeat;
 }
@@ -69,6 +70,7 @@
   0px 3px 15px rgb(19, 19, 19);
   transition-duration: 75ms;
   font-family: "Press Start 2P";
+  padding: 16px 10px;
 }
 
 .btn:hover {
