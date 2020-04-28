@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     top: 0;
     font-family: "Press Start 2P";
     font-size: larger;
@@ -30,4 +31,13 @@ a.nav-link {
 .page-content {
     height: 95%;
     max-height: 95%;
+    overflow: visible;
+}
+
+@media (max-width: 600px) {
+    .page-nav {
+        font-family: "Open Sans";
+        font-size: small;
+        font-weight: 700;
+    }
 }

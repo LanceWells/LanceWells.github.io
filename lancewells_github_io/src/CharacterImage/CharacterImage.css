@@ -96,12 +96,6 @@
     color: white;
 }
 
-@media (max-width: 600px) {
-    .character-image {
-        flex-direction: column;
-    }
-}
-
 .part-button-image {
     image-rendering: optimizeSpeed;
     /* STOP SMOOTHING, GIVE ME SPEED  */
@@ -117,4 +111,50 @@
     /* CSS3 Proposed                  */
     -ms-interpolation-mode: nearest-neighbor;
     /* IE8+                           */
+}
+
+@media (max-width: 600px) {
+    .character-drawing-area {
+        flex-direction: row;
+        position: absolute;
+        top: -48px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .character-drawing-label {
+        display: none;
+    }
+    .character-image {
+        overflow: visible;
+    }
+    .part-selector {
+        position: absolute;
+        top: 384px;
+    }
+    .btn {
+        font-weight: 700;
+        padding: 8px 4px;
+        margin-bottom: 8px;
+        font-family: "Open Sans";
+    }
+    .part-character-selectors {
+        padding: 0px;
+    }
+    .character-image { 
+        padding: 0px;
+    }
+    .character-canvas-container {
+        max-width: 45%;
+    }
+    .circle-picker {
+        max-width: 33%;
+        flex-grow: 2;
+    }
+    .character-image-download { 
+        position: absolute;
+        margin: 0;
+        width: 84%;
+        margin: 0 8%;
+        top: 75%;
+    }
 }
