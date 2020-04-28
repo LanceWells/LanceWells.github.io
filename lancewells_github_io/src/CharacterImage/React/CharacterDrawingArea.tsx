@@ -63,7 +63,7 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
                     imagesToRender={this.props.imagesToRender}
                     borderColor={this.state.borderColor}
                 />
-                <span>
+                <span className="character-drawing-label">
                     Border Color
                 </span>
                 <CirclePicker

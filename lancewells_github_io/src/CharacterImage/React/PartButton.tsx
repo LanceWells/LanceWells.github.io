@@ -28,8 +28,11 @@ export function PartButton(props: IPartButtonProps) {
         <button
             className="part-button"
             onClick={() => props.partSelectionCallback(props.partType, props.imageSource)}>
-            <img src={props.imageSource}
-                width={imgSize}/>
+            <img
+                className="part-button-image"
+                src={props.imageSource}
+                width={imgSize}
+            />
         </button>
     )
 }
