@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/LandingSpace.css';
+import '../LandingSpace.css';
 
 import React from 'react';
 import {
@@ -7,10 +7,10 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import { LoginPage } from './Login/React/LoginPage';
-import { GamePage } from './GamePage/React/GamePage';
-import { ProtectedRoute } from './Login/React/ProtectedRoute';
-import { CharacterImage } from './CharacterImage/React/CharacterImage';
+import { LoginPage } from '../../LoginPage/React/LoginPage';
+// import { GamePage } from '../../GamePage/React/GamePage';
+import { ProtectedRoute } from '../../Login/React/ProtectedRoute';
+import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
 import { Nav } from 'react-bootstrap';
 
 // Use the hash router instead of a browser router so that refreshes and direct-links to pages work.
@@ -20,20 +20,21 @@ export default function LandingSpace() {
         <div className="landing-space">
             <div className="page-nav">
                 <Nav defaultActiveKey="/">
-                    <Nav.Link href="/#/" eventKey="/">Home</Nav.Link>
                     <Nav.Link href="/#/character_creator" eventKey="character_creator">Character Creator</Nav.Link>
-                    <Nav.Link href="/#/login" eventKey="login">Login</Nav.Link>
+                    <Nav.Link href="/" eventKey="login">Login</Nav.Link>
                 </Nav>
             </div>
             <div className="page-content">
                 <Router>
                     <Switch>
-                        <Route exact path="/login" children={<LoginPage />} />
+                        <Route exact path="/" children={<LoginPage />} />
                         <Route exact path="/character_creator" children={<CharacterImage />} />
-                        <ProtectedRoute path="/" children={<GamePage />} />
                     </Switch>
                 </Router>
             </div>
         </div>
     )
 }
+
+// <ProtectedRoute path="/" children={<GamePage />} />
+// <Nav.Link href="/#/" eventKey="/">Home</Nav.Link>

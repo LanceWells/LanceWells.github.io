@@ -10,6 +10,13 @@
     background-color: rgb(19, 19, 19);
 }
 
+a.nav-link {
+    background-color: #272727;
+    margin: 0px 16px;
+    border-radius: 5px;
+    color: #00cdf9;
+}
+
 #root {
     height: 100%;
     background-color: rgb(27, 27, 27);
