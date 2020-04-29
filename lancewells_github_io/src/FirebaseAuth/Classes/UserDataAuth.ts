@@ -161,8 +161,8 @@ export class UserDataAuth {
      * @description Gets the singleton instance of this object.
      */
     public static GetInstance(): UserDataAuth {
-        if (!this._instance) {
-            this._instance = new UserDataAuth();
+        if (!UserDataAuth._instance) {
+            UserDataAuth._instance = new UserDataAuth();
         }
 
         return this._instance;

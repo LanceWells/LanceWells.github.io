@@ -4,6 +4,8 @@ import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
 import { CreateUserResponse } from '../../FirebaseAuth/Types/CreateUserResponse';
 import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
+import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
+import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 
 /**
  * @description A series of properties to use to render this component.
@@ -74,12 +76,43 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         })
     }
 
+    private testUserAuth() {
+        let testPlayerData: PlayerCharacterData = new PlayerCharacterData(
+            "Another Name",
+            5000,
+            [
+                {
+                    key: 'Handaxe',
+                    type: 'Weapon'
+                },
+                {
+                    key: 'AngelicPotion',
+                    type: 'Potion'
+                }
+            ]
+        );
+
+        PlayerInventoryService.SaveCharacterData(testPlayerData).then(() => {
+            PlayerInventoryService.FetchCharacterData("Another Name").then(response => {
+                console.log(response);
+                ;
+            });
+            PlayerInventoryService.FetchAllCharacters().then(response => {
+                console.log(response);
+                ;
+            })
+        });
+    }
+
     /**
      * @description Renders thi object.
      */
     public render() {
         return (
             <div className="login-container">
+                <button onClick={this.testUserAuth.bind(this)}>
+                    Test Button
+                </button>
                 <div className="login-dialog">
                     <h2 className="login-header">
                         {this.state.pageState.toString()}

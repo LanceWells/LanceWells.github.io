@@ -20,9 +20,9 @@ export class ItemSource {
      * @param type The type of item to search for.
      */
     public static GetItem(index: string, type: TItemType): IItem | undefined {
-        var item: IItemJson | undefined = undefined;
-        var listToSearch: IItemJson[] | undefined = undefined;
-        var constructedItem: IItem | undefined = undefined;
+        let item: IItemJson | undefined = undefined;
+        let listToSearch: IItemJson[] | undefined = undefined;
+        let constructedItem: IItem | undefined = undefined;
 
         switch (type) {
             case "Weapon":
@@ -65,11 +65,11 @@ export class ItemSource {
      * @param keywords The list of keywords to compare against all items.
      */
     public static SearchItems(keywords: string[]): IItem[] {
-        var masterList: IItemJson[] = [];
-        var matchingItems: IItem[] = [];
+        let masterList: IItemJson[] = [];
+        let matchingItems: IItem[] = [];
 
         // Filter out all empty keywords.
-        var nonEmptyKeywords: string[] = keywords.filter(k => !this.IsMatch(k, /\s+/) && k.length > 0);
+        let nonEmptyKeywords: string[] = keywords.filter(k => !this.IsMatch(k, /\s+/) && k.length > 0);
 
         // Trim off the whitespace for any keyword.
         nonEmptyKeywords = nonEmptyKeywords.map(k => k.trim());
@@ -79,15 +79,12 @@ export class ItemSource {
         masterList = masterList.concat(ItemMap_Weapons);
         masterList = masterList.concat(ItemMap_Wondrous);
 
-        var filteredItems = masterList.filter(item => nonEmptyKeywords.every(keyword => this.ContainsKeyword(keyword, item)))
-
-        // nonEmptyKeywords.forEach(k => {
-        // var filteredItems = masterList.filter(item => this.ContainsKeyword(k, item));
+        let filteredItems = masterList.filter(item => nonEmptyKeywords.every(keyword => this.ContainsKeyword(keyword, item)))
 
         // Verify that the item isn't already in the matching items list.
         filteredItems.forEach(f => {
             // Convert the item first. We need this to access the equality string.
-            var converted = this.ConvertJsonToItem(f);
+            let converted = this.ConvertJsonToItem(f);
 
             // If the item can be converted, and the list of existing items does not already include this
             // item, then add it.
@@ -95,12 +92,11 @@ export class ItemSource {
                 matchingItems.push(converted);
             }
         });
-        // });
 
         // If the list of keywords that was provided was empty, just return everything.
         if (nonEmptyKeywords.length <= 0) {
             masterList.forEach(m => {
-                var converted = this.ConvertJsonToItem(m);
+                let converted = this.ConvertJsonToItem(m);
                 if (converted !== undefined) {
                     matchingItems.push(converted);
                 }
@@ -115,7 +111,7 @@ export class ItemSource {
      * @param item The json item to be converted to an item.
      */
     private static ConvertJsonToItem(item: IItemJson): IItem | undefined {
-        var constructedItem: IItem | undefined = undefined;
+        let constructedItem: IItem | undefined = undefined;
 
         if (IItemIsItemWeapon(item)) {
             constructedItem = ItemWeapon.fromJson(item)
@@ -139,8 +135,8 @@ export class ItemSource {
      * @param item The item to evaluate.
      */
     private static ContainsKeyword(keyword: string, item: IItemJson): boolean {
-        var upperKeyword = keyword.toLocaleUpperCase();
-        var doesMatch: boolean = false;
+        let upperKeyword = keyword.toLocaleUpperCase();
+        let doesMatch: boolean = false;
         
         doesMatch = doesMatch || item.key.toLocaleUpperCase().includes(upperKeyword);
         doesMatch = doesMatch || item.type.toLocaleUpperCase().includes(upperKeyword);
@@ -163,9 +159,9 @@ export class ItemSource {
      * @param regex The regular expression to compare against.
      */
     private static IsMatch(phrase: string, regex: RegExp): boolean {
-        var isMatch: boolean = false;
+        let isMatch: boolean = false;
 
-        var match: RegExpMatchArray | null = phrase.match(regex);
+        let match: RegExpMatchArray | null = phrase.match(regex);
         isMatch = isMatch || (match != null && match.length > 0);
 
         return isMatch;
