@@ -93,8 +93,8 @@ export class PlayerInventoryService {
                 .withConverter(PlayerInventoryService.PlayerCharacterDataConverter)
                 .get()
                 .then(docSnapshot => {
-                    // Calling .data() doesn't cost anything extra, so go ahead and get the list of characters
-                    // as the full objects regardless.
+                    // Calling .data() doesn't cost anything extra in terms of database reads, so go ahead and
+                    // get the list of characters as the full objects regardless.
                     docSnapshot.forEach(charData => {
                         let newCharData = charData.data();
                         allCharData.push(newCharData);

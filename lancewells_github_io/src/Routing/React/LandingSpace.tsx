@@ -1,5 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../LandingSpace.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React from 'react';
 import {
@@ -11,7 +11,7 @@ import { LoginPage } from '../../LoginPage/React/LoginPage';
 // import { GamePage } from '../../GamePage/React/GamePage';
 import { ProtectedRoute } from '../../Login/React/ProtectedRoute';
 import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
-import { Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 // Use the hash router instead of a browser router so that refreshes and direct-links to pages work.
 //https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
@@ -19,10 +19,26 @@ export default function LandingSpace() {
     return (
         <div className="landing-space">
             <div className="page-nav">
-                <Nav defaultActiveKey="/">
-                    <Nav.Link href="/#/character_creator" eventKey="character_creator">Character Creator</Nav.Link>
-                    <Nav.Link href="/" eventKey="login">Login</Nav.Link>
-                </Nav>
+                <Navbar expand="lg" bg="dark">
+                    <Navbar.Brand style={{ color: "white" }} href="/">LantsPants.com</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-pagebar-nav" />
+                    <Navbar.Collapse>
+                        <Nav defaultActiveKey="/">
+                            <Nav.Link
+                                href="/#/character_creator"
+                                eventKey="character_creator"
+                                style={{ color: "white" }}>
+                                Character Creator
+                            </Nav.Link>
+                            <Nav.Link
+                                href="/"
+                                eventKey="login"
+                                style={{ color: "white" }}>
+                                Login
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
             </div>
             <div className="page-content">
                 <Router>
@@ -35,6 +51,7 @@ export default function LandingSpace() {
         </div>
     )
 }
+
 
 // <ProtectedRoute path="/" children={<GamePage />} />
 // <Nav.Link href="/#/" eventKey="/">Home</Nav.Link>
