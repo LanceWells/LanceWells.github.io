@@ -27,7 +27,7 @@ export default function LandingSpace() {
                     <Navbar.Collapse>
                         <Nav defaultActiveKey="/">
                             <Nav.Link
-                                href="/"
+                                href="/#/login"
                                 eventKey="login"
                                 style={{ color: "white" }}>
                                 Login
@@ -48,7 +48,7 @@ export default function LandingSpace() {
                                 href="/#/characterManager"
                                 eventKey="characterManager"
                                 style={{ color: "white" }}>
-                                Character Manager
+                                Characters
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
@@ -58,6 +58,7 @@ export default function LandingSpace() {
                 <Router>
                     <Switch>
                         <Route exact path="/" children={<LoginPage />} />
+                        <Route exact path="/login" children={<LoginPage />} />
                         <Route exact path="/character_creator" children={<CharacterImage />} />
                         <ProtectedRoute path="/inventory" children={<Inventory />} />
                         <ProtectedRoute path="/characterManager" children={<CharacterManager />} />

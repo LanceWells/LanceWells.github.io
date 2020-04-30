@@ -6,8 +6,8 @@
     top: 0;
     font-family: "Press Start 2P";
     font-size: larger;
-    height: 5%;
-    max-height: 5%;
+    height: 7%;
+    max-height: 7%;
     color: white;
     width: 100%;
     z-index: 9999;
@@ -37,8 +37,8 @@ nav {
 }
 
 .page-content {
-    height: 95%;
-    max-height: 95%;
+    height: 93%;
+    max-height: 93%;
     overflow: visible;
 }
 

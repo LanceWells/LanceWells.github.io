@@ -92,7 +92,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
             ]
         );
 
-        PlayerInventoryService.SaveCharacterData(testPlayerData).then(() => {
+        PlayerInventoryService.CreateCharacterData(testPlayerData).then(() => {
             PlayerInventoryService.FetchCharacterData("Another Name").then(response => {
                 console.log(response);
                 ;

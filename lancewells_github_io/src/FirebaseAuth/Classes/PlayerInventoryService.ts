@@ -33,7 +33,7 @@ export class PlayerInventoryService {
         }
     }
 
-    public static async SaveCharacterData(characterData: PlayerCharacterData): Promise<void> {
+    public static async CreateCharacterData(characterData: PlayerCharacterData): Promise<void> {
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
 
         if (uid !== undefined) {
@@ -44,6 +44,23 @@ export class PlayerInventoryService {
                 .doc(characterData.Name)
                 .withConverter(PlayerInventoryService.PlayerCharacterDataConverter)
                 .set(characterData)
+                .catch(reason => {
+                    console.error(reason);
+                });
+        }
+    }
+
+    public static async UpdateCharacterData(characterData: PlayerCharacterData): Promise<void> {
+        let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+
+        if (uid !== undefined) {
+            await firestore()
+                .collection(this.collection_userWritable)
+                .doc(this.document_playerInventory)
+                .collection(uid)
+                .doc(characterData.Name)
+                .withConverter(PlayerInventoryService.PlayerCharacterDataConverter)
+                .update(characterData)
                 .catch(reason => {
                     console.error(reason);
                 });
