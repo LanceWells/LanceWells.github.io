@@ -6,6 +6,7 @@ import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
 import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
+import { PartType } from '../../CharacterImage/Enums/PartType';
 
 /**
  * @description A series of properties to use to render this component.
@@ -77,6 +78,9 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     }
 
     private testUserAuth() {
+        let partMap: Map<PartType, string> = new Map();
+        partMap.set(PartType.ArmArmor, './images/Character_Image/Size_Average/Arm Armor/Androgynous/RedShoulderCloak.png');
+
         let testPlayerData: PlayerCharacterData = new PlayerCharacterData(
             "Another Name",
             5000,
@@ -89,18 +93,18 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                     key: 'AngelicPotion',
                     type: 'Potion'
                 }
-            ]
+            ],
+            partMap,
+            ""
         );
 
         PlayerInventoryService.CreateCharacterData(testPlayerData).then(() => {
+            console.log(testPlayerData);
+
             PlayerInventoryService.FetchCharacterData("Another Name").then(response => {
                 console.log(response);
                 ;
             });
-            PlayerInventoryService.FetchAllCharacters().then(response => {
-                console.log(response);
-                ;
-            })
         });
     }
 

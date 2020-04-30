@@ -2,32 +2,46 @@ import { UserDataAuth } from './UserDataAuth';
 import { firestore } from 'firebase';
 import { PlayerCharacterData } from '../Types/PlayerCharacterData';
 import { IItemKey } from '../../Items/Interfaces/IItem';
+import { PartType } from '../../CharacterImage/Enums/PartType';
 
 export class PlayerInventoryService {
-    private static collection_userWritable: string = "userWritable";
-    private static document_playerInventory: string = "playerInventory";
-    private static storage_currentCharacter: string = "currentCharacter";
+    private static readonly collection_userWritable: string = "userWritable";
+    private static readonly document_playerInventory: string = "playerInventory";
+    private static readonly storage_currentCharacter: string = "currentCharacter";
 
     private static PlayerCharacterDataConverter: firestore.FirestoreDataConverter<PlayerCharacterData> = {
         toFirestore: (playerCharacterData: PlayerCharacterData): firestore.DocumentData => {
+            // https://stackoverflow.com/questions/29085197/how-do-you-json-stringify-an-es6-map
+
+            let images: [PartType, string][] = Array.from(playerCharacterData.Images.entries());
+            let imagesStr: string = JSON.stringify(images);
+
             return {
                 name: playerCharacterData.Name,
                 copper: playerCharacterData.Copper,
-                items: playerCharacterData.GetItemsAsStringArray()
+                items: playerCharacterData.GetItemsAsStringArray(),
+                images: imagesStr,
+                borderColor: playerCharacterData.BorderColor
             }
         },
         fromFirestore: (snapshot, options): PlayerCharacterData => {
             let snapshotData = snapshot.data(options);
-            
+
             let playerName: string = snapshotData.name;
             let playerCopper: number = snapshotData.copper;
             let playerItemData: string[] = snapshotData.items;
+            let playerImagesString: string = snapshotData.images;
+            let playerImages: Map<PartType, string> = new Map(JSON.parse(playerImagesString));
+            let playerBorder: string = snapshotData.borderColor;
+
             let playerItems: IItemKey[] = PlayerCharacterData.GetStringArrayAsItems(playerItemData);
 
             let playerData: PlayerCharacterData = new PlayerCharacterData(
                 playerName,
                 playerCopper,
-                playerItems)
+                playerItems,
+                playerImages,
+                playerBorder);
 
             return playerData;
         }
@@ -53,14 +67,17 @@ export class PlayerInventoryService {
     public static async UpdateCharacterData(characterData: PlayerCharacterData): Promise<void> {
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
 
+        // I'm not certain why, but the 'withConverter' option doesn't appear to work the same for .update as
+        // it does for .set. Just use the converter in a brute-force method instead since this seems to work.
+        let charDataDocument = PlayerInventoryService.PlayerCharacterDataConverter.toFirestore(characterData);
+        
         if (uid !== undefined) {
             await firestore()
                 .collection(this.collection_userWritable)
                 .doc(this.document_playerInventory)
                 .collection(uid)
                 .doc(characterData.Name)
-                .withConverter(PlayerInventoryService.PlayerCharacterDataConverter)
-                .update(characterData)
+                .update(charDataDocument)
                 .catch(reason => {
                     console.error(reason);
                 });

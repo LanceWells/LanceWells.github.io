@@ -15,6 +15,7 @@ import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
 import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { PartSelectionCallback } from '../Types/PartSelectionCallback';
 import { CharImageDownloadCallback } from '../Types/CharImageDownloadCallback';
+import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 
 /**
  * @description
@@ -71,6 +72,16 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         this.setState({
             charImageLayout: charImgLayout
         });
+        
+        CharacterStateManager.GetInstance().GetCurrentStaticCharacterData()
+            .then(charData => {
+                if (charData !== undefined) {
+                    let currentImageSelection = charImgLayout.ImageSelection;
+                    charData.Images = currentImageSelection;
+                    
+                    CharacterStateManager.GetInstance().UploadCharacterData(charData);
+                }
+            });
     }
 
     private handleCanvasDownload(downloadSource: string): void {

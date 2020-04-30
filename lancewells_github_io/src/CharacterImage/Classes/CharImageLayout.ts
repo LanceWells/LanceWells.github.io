@@ -6,14 +6,22 @@ import { CharacterImageMap } from './CharacterImageMap';
  * data as an organized list of images.
  */
 export class CharImageLayout {
-    private ImageSelection: Map<PartType, string> = new Map();
+    public static GetImagesFromMap(images: Map<PartType, string>): string[] {
+        let newImageMap = new CharImageLayout(images);
+        return newImageMap.GetImages();
+    }
+
+    private _imageSelection: Map<PartType, string> = new Map();
+    public get ImageSelection(): Map<PartType, string> {
+        return this._imageSelection;
+    }
 
     /**
      * @description Gets a new instance of this object.
      * @param partMap A map of part types to their respective strings. This may be an empty list.
      */
     public constructor(partMap: Map<PartType, string>) {
-        this.ImageSelection = partMap;
+        this._imageSelection = partMap;
     }
 
     /**
@@ -22,14 +30,14 @@ export class CharImageLayout {
      * @param image The image source to set.
      */
     public SetPartImage(partType: PartType, image: string): void {
-        this.ImageSelection.set(partType, image);
+        this._imageSelection.set(partType, image);
     }
 
     /**
      * @description Resets this image's parts to an empty list.
      */
     public ResetImage(): void {
-        this.ImageSelection = new Map();
+        this._imageSelection = new Map();
     }
 
     /**
@@ -52,9 +60,9 @@ export class CharImageLayout {
      * @param partType The type of part to check-for and add to the list if it does.
      */
     private EnlistImageIfExists(images: string[], partType: PartType) {
-        if (this.ImageSelection.has(partType)) {
+        if (this._imageSelection.has(partType)) {
             let image: string
-            image = this.ImageSelection.get(partType) as string;
+            image = this._imageSelection.get(partType) as string;
             images.push(image);
         }
     }
