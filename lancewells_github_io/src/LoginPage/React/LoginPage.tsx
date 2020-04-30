@@ -82,7 +82,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         partMap.set(PartType.ArmArmor, './images/Character_Image/Size_Average/Arm Armor/Androgynous/RedShoulderCloak.png');
 
         let testPlayerData: PlayerCharacterData = new PlayerCharacterData(
-            "Another Name",
+            "A new challenger!",
             5000,
             [
                 {
@@ -100,11 +100,6 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
 
         PlayerInventoryService.CreateCharacterData(testPlayerData).then(() => {
             console.log(testPlayerData);
-
-            PlayerInventoryService.FetchCharacterData("Another Name").then(response => {
-                console.log(response);
-                ;
-            });
         });
     }
 

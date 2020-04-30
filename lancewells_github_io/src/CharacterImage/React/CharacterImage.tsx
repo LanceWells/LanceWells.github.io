@@ -16,6 +16,8 @@ import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
 import { PartSelectionCallback } from '../Types/PartSelectionCallback';
 import { CharImageDownloadCallback } from '../Types/CharImageDownloadCallback';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
+import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
+import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 
 /**
  * @description
@@ -39,6 +41,7 @@ export interface ICharacterImageState {
     bodyType: BodyType;
     partType: PartType;
     charImageLayout: CharImageLayout;
+    checkingForCharacterImage: boolean;
 };
 
 /**
@@ -107,7 +110,35 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             charSize: CharacterSize.Average,
             bodyType: BodyType.AverageSizedFeminine,
             partType: PartType.Body,
-            charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout
+            charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout,
+            checkingForCharacterImage: true
+        }
+    }
+
+    public componentDidMount() {
+        this.CheckForCharacterImage();
+    }
+
+    private async CheckForCharacterImage() {
+        let charData: PlayerCharacterData | undefined = undefined;
+
+        // Check to see if we have some character data we can load for this person. If so, update the current
+        // layers so someone can modify their character!
+        let userHasAccount: boolean = await UserDataAuth.GetInstance().CheckForAccess();
+        if (userHasAccount) {
+            charData = await CharacterStateManager.GetInstance().GetCurrentStaticCharacterData();
+        }
+
+        if (charData !== undefined) {
+            this.setState({
+                charImageLayout: new CharImageLayout(charData.Images),
+                checkingForCharacterImage: false
+            });
+        }
+        else {
+            this.setState({
+                checkingForCharacterImage: false
+            })
         }
     }
 
