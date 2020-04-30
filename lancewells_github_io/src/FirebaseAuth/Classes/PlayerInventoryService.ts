@@ -6,6 +6,7 @@ import { IItemKey } from '../../Items/Interfaces/IItem';
 export class PlayerInventoryService {
     private static collection_userWritable: string = "userWritable";
     private static document_playerInventory: string = "playerInventory";
+    private static storage_currentCharacter: string = "currentCharacter";
 
     private static PlayerCharacterDataConverter: firestore.FirestoreDataConverter<PlayerCharacterData> = {
         toFirestore: (playerCharacterData: PlayerCharacterData): firestore.DocumentData => {
@@ -79,6 +80,36 @@ export class PlayerInventoryService {
         return response;
     }
 
+    public static async GetDefaultCharacter(): Promise<PlayerCharacterData | undefined> {
+        let response: PlayerCharacterData | undefined = undefined;
+        let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+
+        if (uid !== undefined) {
+            let playerDataRef = firestore()
+                .collection(this.collection_userWritable)
+                .doc(this.document_playerInventory)
+                .collection(uid)
+                .limit(1);
+
+            await playerDataRef
+                .withConverter(PlayerInventoryService.PlayerCharacterDataConverter)
+                .get()
+                .then(docSnapshot => {
+                    if (!docSnapshot.empty) {
+                        response = docSnapshot.docs[0].data();
+                    }
+                    else {
+                        console.error(`Could not find a default character.`);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        return response;
+    }
+
     public static async FetchAllCharacters(): Promise<PlayerCharacterData[]> {
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
         let allCharData: PlayerCharacterData[] = [];
@@ -106,5 +137,23 @@ export class PlayerInventoryService {
         }
 
         return allCharData;
+    }
+
+    public static SetCurrentCharacter(charName: string) {
+        localStorage.setItem(PlayerInventoryService.storage_currentCharacter, charName);
+    }
+
+    public static GetCurrentCharacterName(): string | null {
+        return localStorage.getItem(PlayerInventoryService.storage_currentCharacter);
+    }
+
+    public static async GetCurrentCharacter(): Promise<PlayerCharacterData | undefined> {
+        let charName: string | null = PlayerInventoryService.GetCurrentCharacterName();
+
+        if (!charName) {
+            return undefined;
+        }
+
+        return await PlayerInventoryService.FetchCharacterData(charName as string);
     }
 }

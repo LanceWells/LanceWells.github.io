@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserDataAuth } from '../Classes/UserDataAuth';
+import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
 
 export interface IProtectedRouteState {
     routeStatus: TRouteCheckStatus;
@@ -51,7 +51,7 @@ export class ProtectedRoute extends React.Component<IProtectedRouteProps, IProte
             }
             case "Redirect": {
                 return (
-                    <Redirect to='/login' />
+                    <Redirect to='/' />
                 );
             }
             case "Checking":
