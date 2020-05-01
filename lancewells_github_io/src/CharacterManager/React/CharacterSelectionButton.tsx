@@ -25,6 +25,7 @@ export class CharacterSelectionButton extends React.Component<ICharacterSelectio
                 className="character-selection-button"
                 onClick={() => this.props.characterSelectedCallback(this.props.characterData)}>
                 <CharacterImageCanvas
+                    showLoadingSpinner={false}
                     imagesToRender={CharImageLayout.GetImagesFromMap(this.props.characterData.Images)}
                     borderColor={this.props.characterData.BorderColor}
                 />

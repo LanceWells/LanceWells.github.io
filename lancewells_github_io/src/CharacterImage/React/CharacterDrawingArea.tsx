@@ -10,6 +10,7 @@ import { ColorResult, CirclePicker } from 'react-color';
  * @param downloadCallback A callback when the download button is clicked in this component.
  */
 export interface ICharacterDrawingAreaProps {
+    showLoadingSpinner: boolean;
     imagesToRender: string[];
     downloadCallback: CharImageDownloadCallback;
 }
@@ -59,6 +60,7 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
         return (
             <div className="character-drawing-area">
                 <CharacterImageCanvas
+                    showLoadingSpinner={this.props.showLoadingSpinner}
                     ref="charImageCanvas"
                     imagesToRender={this.props.imagesToRender}
                     borderColor={this.state.borderColor}

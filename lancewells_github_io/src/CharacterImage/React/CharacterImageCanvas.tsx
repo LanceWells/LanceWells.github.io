@@ -1,5 +1,6 @@
 import React from 'react';
 import { CharacterImageMap } from '../Classes/CharacterImageMap';
+import { Spinner } from 'react-bootstrap';
 
 /**
  * @description The properties for this class.
@@ -8,6 +9,7 @@ import { CharacterImageMap } from '../Classes/CharacterImageMap';
  * @param borderColor A css-tyle-string to be used to color the border for this character.
  */
 export interface ICharacterImageCanvasProps {
+    showLoadingSpinner: boolean;
     imagesToRender: string[];
     borderColor: string;
 };
@@ -60,8 +62,16 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
      * @description Renders this object.
      */
     public render() {
+        let showOnlySpinner: boolean = this.props.showLoadingSpinner;
+
         return (
             <div className='character-canvas-container'>
+                <Spinner
+                    className="character-canvas-spinner"
+                    animation="border"
+                    role="character image status"
+                    style={{ visibility: showOnlySpinner ? 'visible' : 'hidden'}}
+                />
                 <canvas
                     height={CharacterImageCanvas.canvasHeight}
                     width={CharacterImageCanvas.canvasWidth}
@@ -79,6 +89,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
                     width={CharacterImageCanvas.canvasWidth}
                     id='character-effects-canvas'
                     ref='characterEffectsCanvas'
+                    style={{ visibility: showOnlySpinner ? 'hidden' : 'visible' }}
                 />
             </div>
         );

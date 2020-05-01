@@ -180,6 +180,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         return (
             <div className="character-image">
                 <CharacterDrawingArea
+                    showLoadingSpinner={this.state.checkingForCharacterImage}
                     imagesToRender={charImages}
                     downloadCallback={canvasDownload.bind(this)}
                 />

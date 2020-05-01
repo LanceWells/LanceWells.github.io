@@ -30,6 +30,16 @@
     border-radius: 5px;
 }
 
+.character-canvas-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.character-canvas-spinner {
+    position: absolute;
+}
+
 .character-image-download {
     margin: 20px;
     width: 100%;
@@ -120,9 +130,6 @@
     .character-drawing-label {
         display: none;
     }
-    /* .character-image {
-        overflow: visible;
-    } */
     .part-selector {
         position: absolute;
         top: 384px;
@@ -140,6 +147,7 @@
         padding: 0px;
     }
     .character-canvas-container {
+        display: inline;
         max-width: 45%;
     }
     .circle-picker {
