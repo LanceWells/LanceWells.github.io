@@ -113,10 +113,8 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout,
             checkingForCharacterImage: true
         }
-    }
-
-    public componentDidMount() {
         this.CheckForCharacterImage();
+
     }
 
     private async CheckForCharacterImage() {
@@ -130,12 +128,14 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         }
 
         if (charData !== undefined) {
+            console.log(charData);
             this.setState({
                 charImageLayout: new CharImageLayout(charData.Images),
                 checkingForCharacterImage: false
             });
         }
         else {
+            console.log("Could not load char data");
             this.setState({
                 checkingForCharacterImage: false
             })
@@ -175,6 +175,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         };
 
         let charImages: string[] = this.state.charImageLayout.GetImages();
+        console.log(`Render called with images: ${charImages}`);
 
         return (
             <div className="character-image">
