@@ -12,6 +12,7 @@ export interface ICharacterImageCanvasProps {
     showLoadingSpinner: boolean;
     imagesToRender: string[];
     borderColor: string;
+    charScaleFactor: number;
 };
 
 /**
@@ -24,10 +25,12 @@ export interface ICharacterImageCanvasState {
  * @description Used to display a character image and its associated border, specified by the properties.
  */
 export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasProps, ICharacterImageCanvasState> {
-    private static canvasHeight: number = 512;
-    private static canvasWidth:  number = 256;
+    // private static canvasHeight: number = 512;
+    // private static canvasWidth:  number = 256;
+    private static canvasHeight: number = 128;
+    private static canvasWidth: number = 64;
 
-    private static charScaleFactor: number = 4;
+    // private static charScaleFactor: number = 4;
     private static charPartOffset: number = 32;
     private static shadowOffset: number = 90;
 
@@ -73,20 +76,20 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
                     style={{ visibility: showOnlySpinner ? 'visible' : 'hidden'}}
                 />
                 <canvas
-                    height={CharacterImageCanvas.canvasHeight}
-                    width={CharacterImageCanvas.canvasWidth}
+                    height={CharacterImageCanvas.canvasHeight * this.props.charScaleFactor}
+                    width={CharacterImageCanvas.canvasWidth * this.props.charScaleFactor}
                     id='character-staging-canvas'
                     ref='characterStagingCanvas'
                 />
                 <canvas
-                    height={CharacterImageCanvas.canvasHeight}
-                    width={CharacterImageCanvas.canvasWidth}
+                    height={CharacterImageCanvas.canvasHeight * this.props.charScaleFactor}
+                    width={CharacterImageCanvas.canvasWidth * this.props.charScaleFactor}
                     id='character-canvas'
                     ref='characterCanvas'
                 />
                 <canvas
-                    height={CharacterImageCanvas.canvasHeight}
-                    width={CharacterImageCanvas.canvasWidth}
+                    height={CharacterImageCanvas.canvasHeight * this.props.charScaleFactor}
+                    width={CharacterImageCanvas.canvasWidth * this.props.charScaleFactor}
                     id='character-effects-canvas'
                     ref='characterEffectsCanvas'
                     style={{ visibility: showOnlySpinner ? 'hidden' : 'visible' }}
@@ -180,9 +183,9 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
             stagingCanvasContext.drawImage(
                 itd,
                 0,
-                CharacterImageCanvas.charPartOffset * CharacterImageCanvas.charScaleFactor,
-                itd.width * CharacterImageCanvas.charScaleFactor,
-                itd.height * CharacterImageCanvas.charScaleFactor);
+                CharacterImageCanvas.charPartOffset * this.props.charScaleFactor,
+                itd.width * this.props.charScaleFactor,
+                itd.height * this.props.charScaleFactor);
         });
     }
 
@@ -211,7 +214,7 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         canvasContext.clearRect(0, 0, charCanvas.width, charCanvas.height);
 
         for (let i: number = 0; i < CharacterImageCanvas.borderCoordinates.length; i += 2) {
-            let thicknessScale: number = CharacterImageCanvas.charScaleFactor;
+            let thicknessScale: number =  this.props.charScaleFactor;
             let xCoord: number = CharacterImageCanvas.borderCoordinates[i];
             let yCoord: number = CharacterImageCanvas.borderCoordinates[i + 1];
 
@@ -266,9 +269,9 @@ export class CharacterImageCanvas extends React.Component<ICharacterImageCanvasP
         effectsCanvasContext.drawImage(
             shadowImg,
             0,
-            CharacterImageCanvas.shadowOffset * CharacterImageCanvas.charScaleFactor,
-            shadowImg.width * CharacterImageCanvas.charScaleFactor,
-            shadowImg.height * CharacterImageCanvas.charScaleFactor
+            CharacterImageCanvas.shadowOffset * this.props.charScaleFactor,
+            shadowImg.width * this.props.charScaleFactor,
+            shadowImg.height * this.props.charScaleFactor
             );
 
         effectsCanvasContext.drawImage(charBorderImg, 0, 0);

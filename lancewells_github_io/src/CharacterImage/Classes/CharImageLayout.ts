@@ -1,26 +1,64 @@
 import { PartType } from '../Enums/PartType';
-import { CharacterImageMap } from './CharacterImageMap';
+import { BodyType } from '../Enums/BodyType';
+
+type CharImageObject = {
+    imageSelection: [PartType, string][],
+    bodyType: BodyType
+}
 
 /**
  * A structure used to gather information about a character visually, then a means to fetch that character
  * data as an organized list of images.
  */
 export class CharImageLayout {
-    public static GetImagesFromMap(images: Map<PartType, string>): string[] {
-        let newImageMap = new CharImageLayout(images);
-        return newImageMap.GetImages();
+    public static GetLayoutFromString(objString: string) {
+        let obj: CharImageObject = JSON.parse(objString) as CharImageObject;
+        let partMap: Map<PartType, string> = new Map(obj.imageSelection);
+        let charLayout: CharImageLayout = new CharImageLayout(partMap, obj.bodyType);
+
+        return charLayout;
     }
 
+    /**
+     * @description A list of all parts that are available as options for the user to select. This also 
+     * determines the order in which parts will be rendered, from back-to-front, read top-to-bottom.
+     */
+    public static readonly PartOrder: PartType[] = [
+        PartType.BackAccessory,
+        PartType.Body,
+        PartType.Bottoms,
+        PartType.Shoes,
+        PartType.LowerArmor,
+        PartType.Tops,
+        PartType.UpperArmor,
+        PartType.MidAccessory,
+        PartType.ArmArmor,
+        PartType.HandWear,
+        PartType.Hair,
+        PartType.FacialWear,
+        PartType.HeadWear,
+        PartType.Pets,
+        PartType.Weapons,
+        PartType.Eyes
+    ];
+
     private _imageSelection: Map<PartType, string> = new Map();
+    private _bodyType: BodyType;
+
     public get ImageSelection(): Map<PartType, string> {
         return this._imageSelection;
+    }
+
+    public get BodyType(): BodyType {
+        return this._bodyType;
     }
 
     /**
      * @description Gets a new instance of this object.
      * @param partMap A map of part types to their respective strings. This may be an empty list.
      */
-    public constructor(partMap: Map<PartType, string>) {
+    public constructor(partMap: Map<PartType, string>, bodyType: BodyType) {
+        this._bodyType = bodyType;
         this._imageSelection = partMap;
     }
 
@@ -46,11 +84,22 @@ export class CharImageLayout {
     public GetImages(): string[] {
         let images: string[] = [];
         
-        CharacterImageMap.PartOrder.forEach(part => {
+        CharImageLayout.PartOrder.forEach(part => {
             this.EnlistImageIfExists(images, part);
         });
 
         return images;
+    }
+
+    public GetJsonString(): string {
+        let images: [PartType, string][] = Array.from(this._imageSelection);
+        let objectToStringify: CharImageObject = {
+            imageSelection: images,
+            bodyType: this._bodyType
+        }
+
+        let objString: string = JSON.stringify(objectToStringify);
+        return objString;
     }
 
     /**

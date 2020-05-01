@@ -20,8 +20,9 @@ export function CurrentCharacterStatus(props: ICurrentCharacterStatusProps) {
                 <h6>You are currently playing as . . . </h6>
                 <h1>{props.currentCharacterData.Name}</h1>
                 <CharacterImageCanvas
+                    charScaleFactor={4}
                     showLoadingSpinner={false}
-                    imagesToRender={CharImageLayout.GetImagesFromMap(props.currentCharacterData.Images)}
+                    imagesToRender={props.currentCharacterData.CharLayout.GetImages()}
                     borderColor={props.currentCharacterData.BorderColor}
                 />
             </div>

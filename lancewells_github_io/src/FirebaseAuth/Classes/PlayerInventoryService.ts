@@ -3,6 +3,7 @@ import { firestore } from 'firebase';
 import { PlayerCharacterData } from '../Types/PlayerCharacterData';
 import { IItemKey } from '../../Items/Interfaces/IItem';
 import { PartType } from '../../CharacterImage/Enums/PartType';
+import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 
 export class PlayerInventoryService {
     private static readonly collection_userWritable: string = "userWritable";
@@ -13,14 +14,14 @@ export class PlayerInventoryService {
         toFirestore: (playerCharacterData: PlayerCharacterData): firestore.DocumentData => {
             // https://stackoverflow.com/questions/29085197/how-do-you-json-stringify-an-es6-map
 
-            let images: [PartType, string][] = Array.from(playerCharacterData.Images.entries());
-            let imagesStr: string = JSON.stringify(images);
+            // let images: [PartType, string][] = Array.from(playerCharacterData.Images.entries());
+            // let imagesStr: string = JSON.stringify(images);
 
             return {
                 name: playerCharacterData.Name,
                 copper: playerCharacterData.Copper,
                 items: playerCharacterData.GetItemsAsStringArray(),
-                images: imagesStr,
+                charData: playerCharacterData.CharLayout.GetJsonString(),
                 borderColor: playerCharacterData.BorderColor
             }
         },
@@ -30,17 +31,19 @@ export class PlayerInventoryService {
             let playerName: string = snapshotData.name;
             let playerCopper: number = snapshotData.copper;
             let playerItemData: string[] = snapshotData.items;
-            let playerImagesString: string = snapshotData.images;
-            let playerImages: Map<PartType, string> = new Map(JSON.parse(playerImagesString));
+            // let playerImagesString: string = snapshotData.images;
+            // let playerImages: Map<PartType, string> = new Map(JSON.parse(playerImagesString));
+            let playerCharData: string = snapshotData.charData;
             let playerBorder: string = snapshotData.borderColor;
 
+            let charData: CharImageLayout = CharImageLayout.GetLayoutFromString(playerCharData);
             let playerItems: IItemKey[] = PlayerCharacterData.GetStringArrayAsItems(playerItemData);
 
             let playerData: PlayerCharacterData = new PlayerCharacterData(
                 playerName,
                 playerCopper,
                 playerItems,
-                playerImages,
+                charData,
                 playerBorder);
 
             return playerData;

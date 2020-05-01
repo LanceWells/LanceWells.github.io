@@ -7,6 +7,8 @@ import { LoginState } from '../Enums/LoginState';
 import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { PartType } from '../../CharacterImage/Enums/PartType';
+import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
+import { BodyType } from '../../CharacterImage/Enums/BodyType';
 
 /**
  * @description A series of properties to use to render this component.
@@ -78,8 +80,8 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     }
 
     private testUserAuth() {
-        let partMap: Map<PartType, string> = new Map();
-        partMap.set(PartType.ArmArmor, './images/Character_Image/Size_Average/Arm Armor/Androgynous/RedShoulderCloak.png');
+        // let partMap: Map<PartType, string> = new Map();
+        // partMap.set(PartType.ArmArmor, './images/Character_Image/Size_Average/Arm Armor/Androgynous/RedShoulderCloak.png');
 
         let testPlayerData: PlayerCharacterData = new PlayerCharacterData(
             "A new challenger!",
@@ -94,7 +96,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                     type: 'Potion'
                 }
             ],
-            partMap,
+            new CharImageLayout(new Map(), BodyType.AverageSizedMasculine),
             ""
         );
 

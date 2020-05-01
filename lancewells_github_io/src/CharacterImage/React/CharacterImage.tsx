@@ -38,7 +38,7 @@ export interface ICharacterImageProps {
  */
 export interface ICharacterImageState {
     charSize: CharacterSize;
-    bodyType: BodyType;
+    // bodyType: BodyType;
     partType: PartType;
     charImageLayout: CharImageLayout;
     checkingForCharacterImage: boolean;
@@ -56,14 +56,13 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
     }
 
     private handleBodyTypeChange(bodyType: BodyType) {
-        let charImageLayout: CharImageLayout = new CharImageLayout(new Map<PartType, string>())
+        let charImageLayout: CharImageLayout = new CharImageLayout(new Map<PartType, string>(), bodyType);
 
         if (CharacterImageMap.DefaultBodyParts.has(bodyType)) {
             charImageLayout = CharacterImageMap.DefaultBodyParts.get(bodyType) as CharImageLayout;
         }
 
         this.setState({
-            bodyType: bodyType,
             charImageLayout: charImageLayout
         });
     }
@@ -79,8 +78,9 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         CharacterStateManager.GetInstance().GetCurrentStaticCharacterData()
             .then(charData => {
                 if (charData !== undefined) {
-                    let currentImageSelection = charImgLayout.ImageSelection;
-                    charData.Images = currentImageSelection;
+                    // let currentImageSelection = charImgLayout.ImageSelection;
+                    // charData.Images = currentImageSelection;
+                    charData.CharLayout = this.state.charImageLayout;
                     
                     CharacterStateManager.GetInstance().UploadCharacterData(charData);
                 }
@@ -108,9 +108,8 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         super(props);
         this.state = {
             charSize: CharacterSize.Average,
-            bodyType: BodyType.AverageSizedFeminine,
             partType: PartType.Body,
-            charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout,
+            charImageLayout: new CharImageLayout(new Map(), BodyType.AverageSizedFeminine),
             checkingForCharacterImage: true
         }
         this.CheckForCharacterImage();
@@ -130,13 +129,14 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         if (charData !== undefined) {
             console.log(charData);
             this.setState({
-                charImageLayout: new CharImageLayout(charData.Images),
+                charImageLayout: charData.CharLayout,
                 checkingForCharacterImage: false
             });
         }
         else {
             console.log("Could not load char data");
             this.setState({
+                charImageLayout: CharacterImageMap.DefaultBodyParts.get(BodyType.AverageSizedFeminine) as CharImageLayout,
                 checkingForCharacterImage: false
             })
         }
@@ -156,7 +156,10 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
      * @description Renders this component.
      */
     public render() {
-        let imagePaths = CharacterImageMap.GetCharacterImagePaths(this.state.charSize, this.state.bodyType, this.state.partType);
+        let imagePaths = CharacterImageMap.GetCharacterImagePaths(
+            this.state.charSize,
+            this.state.charImageLayout.BodyType,
+            this.state.partType);
         
         let partTypeTabSelection: PartTypeSelectionCallback = (partType: PartType) => {
             this.handlePartTypeChange(partType);

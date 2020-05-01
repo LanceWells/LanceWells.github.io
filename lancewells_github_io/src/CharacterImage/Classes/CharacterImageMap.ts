@@ -114,29 +114,6 @@ export class CharacterImageMap
     );
 
     /**
-     * @description A list of all parts that are available as options for the user to select. This also 
-     * determines the order in which parts will be rendered, from back-to-front, read top-to-bottom.
-     */
-    public static PartOrder: PartType[] = [
-        PartType.BackAccessory,
-        PartType.Body,
-        PartType.Bottoms,
-        PartType.Shoes,
-        PartType.LowerArmor,
-        PartType.Tops,
-        PartType.UpperArmor,
-        PartType.MidAccessory,
-        PartType.ArmArmor,
-        PartType.HandWear,
-        PartType.Hair,
-        PartType.FacialWear,
-        PartType.HeadWear,
-        PartType.Pets,
-        PartType.Weapons,
-        PartType.Eyes
-    ];
-
-    /**
      * @description The image source for the shadow for the character.
      */
     public static CharacterShadowSource: string = "./images/Character_Image_Details/CharacterShadow.png"
@@ -165,19 +142,19 @@ export class CharacterImageMap
         [
             [
                 BodyType.AverageSizedFeminine,
-                new CharImageLayout(CharacterImageMap.AverageSizedFeminineDefaults)
+                new CharImageLayout(CharacterImageMap.AverageSizedFeminineDefaults, BodyType.AverageSizedFeminine)
             ],
             [
                 BodyType.AverageSizedMasculine,
-                new CharImageLayout(CharacterImageMap.AverageSizedMasculineDefaults)
+                new CharImageLayout(CharacterImageMap.AverageSizedMasculineDefaults, BodyType.AverageSizedMasculine)
             ],
             [
                 BodyType.ReptilianFeminine,
-                new CharImageLayout(CharacterImageMap.ReptilianFeminineDefaults)
+                new CharImageLayout(CharacterImageMap.ReptilianFeminineDefaults, BodyType.ReptilianFeminine)
             ],
             [
                 BodyType.ReptilianMasculine,
-                new CharImageLayout(CharacterImageMap.ReptilianMasculineDefaults)
+                new CharImageLayout(CharacterImageMap.ReptilianMasculineDefaults, BodyType.ReptilianMasculine)
             ],
         ]
     );

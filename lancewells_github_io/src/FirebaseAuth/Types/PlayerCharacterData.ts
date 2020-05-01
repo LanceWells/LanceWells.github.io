@@ -1,18 +1,19 @@
 import { IItemKey } from "../../Items/Interfaces/IItem";
 import { PartType } from "../../CharacterImage/Enums/PartType";
+import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 
 export class PlayerCharacterData {
     public Name: string;
     public Copper: number;
     public Items: IItemKey[];
-    public Images: Map<PartType, string>;
+    public CharLayout: CharImageLayout;
     public BorderColor: string;
 
-    public constructor(name: string, copper: number, items: IItemKey[], images: Map<PartType, string>, borderColor: string) {
+    public constructor(name: string, copper: number, items: IItemKey[], charLayout: CharImageLayout, borderColor: string) {
         this.Name = name;
         this.Copper = copper;
         this.Items = items;
-        this.Images = images;
+        this.CharLayout = charLayout;
         this.BorderColor = borderColor;
     }
 

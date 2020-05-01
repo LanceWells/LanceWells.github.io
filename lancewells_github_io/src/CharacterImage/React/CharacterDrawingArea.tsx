@@ -60,6 +60,7 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
         return (
             <div className="character-drawing-area">
                 <CharacterImageCanvas
+                    charScaleFactor={4}
                     showLoadingSpinner={this.props.showLoadingSpinner}
                     ref="charImageCanvas"
                     imagesToRender={this.props.imagesToRender}

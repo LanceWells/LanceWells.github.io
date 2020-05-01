@@ -8,7 +8,6 @@ import {
     Route
 } from "react-router-dom";
 import { LoginPage } from '../../LoginPage/React/LoginPage';
-// import { GamePage } from '../../GamePage/React/GamePage';
 import { ProtectedRoute } from '../../Login/React/ProtectedRoute';
 import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
 import { Navbar, Nav } from 'react-bootstrap';
@@ -26,12 +25,6 @@ export default function LandingSpace() {
                     <Navbar.Toggle aria-controls="basic-pagebar-nav" />
                     <Navbar.Collapse>
                         <Nav defaultActiveKey="/">
-                            <Nav.Link
-                                href="/#/login"
-                                eventKey="login"
-                                style={{ color: "white" }}>
-                                Login
-                            </Nav.Link>
                             <Nav.Link
                                 href="/#/character_creator"
                                 eventKey="character_creator"
@@ -68,6 +61,3 @@ export default function LandingSpace() {
         </div>
     )
 }
-
-// <ProtectedRoute path="/" children={<GamePage />} />
-// <Nav.Link href="/#/" eventKey="/">Home</Nav.Link>
