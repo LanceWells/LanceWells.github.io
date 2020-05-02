@@ -13,6 +13,7 @@ export interface ICharacterManagerProps {
 export interface ICharacterManagerState {
     currentCharacterData: PlayerCharacterData | undefined;
     allCharactersData: PlayerCharacterData[];
+    isLoading: boolean;
 }
 
 export class CharacterManager extends React.Component<ICharacterManagerProps, ICharacterManagerState> {
@@ -20,7 +21,8 @@ export class CharacterManager extends React.Component<ICharacterManagerProps, IC
         super(props);
         this.state = {
             currentCharacterData: undefined,
-            allCharactersData: []
+            allCharactersData: [],
+            isLoading: true
         };
     }
 
@@ -33,6 +35,7 @@ export class CharacterManager extends React.Component<ICharacterManagerProps, IC
                 <CharacterSelector
                     characterSelectedCallback={this.handleCharacterSelected.bind(this)}
                     allCharacterData={this.state.allCharactersData}
+                    isLoading={this.state.isLoading}
                 />
             </div>
         )
@@ -58,7 +61,8 @@ export class CharacterManager extends React.Component<ICharacterManagerProps, IC
 
             this.setState({
                 currentCharacterData: currentCharacter,
-                allCharactersData: characterData
+                allCharactersData: characterData,
+                isLoading: false
             });
 
             // Modify our existing singleton that tracks our current character selection.
