@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserDataAuth } from '../../Login/Classes/UserDataAuth';
+import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
 
 export interface IProtectedRouteState {
     routeStatus: TRouteCheckStatus;

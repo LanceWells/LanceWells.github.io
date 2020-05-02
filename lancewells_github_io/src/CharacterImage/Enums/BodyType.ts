@@ -1,6 +1,6 @@
 export enum BodyType {
-    AverageSizedMasculine = "Average-Sized Masculine",
     AverageSizedFeminine = "Average-Sized Feminine",
+    AverageSizedMasculine = "Average-Sized Masculine",
+    ReptilianFeminine = "Reptilian Feminine",
     ReptilianMasculine = "Reptilian Masculine",
-    ReptilianFeminine = "Reptilian Feminine"
 }

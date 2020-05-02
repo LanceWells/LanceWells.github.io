@@ -6,6 +6,7 @@ import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInvento
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { CharacterSelector } from './CharacterSelector';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
+import { NewCharacterForm } from './NewCharacterForm';
 
 export interface ICharacterManagerProps {
 }
@@ -14,25 +15,52 @@ export interface ICharacterManagerState {
     currentCharacterData: PlayerCharacterData | undefined;
     allCharactersData: PlayerCharacterData[];
     isLoading: boolean;
+    showNewCharForm: boolean;
 }
 
 export class CharacterManager extends React.Component<ICharacterManagerProps, ICharacterManagerState> {
+    private handleNewCharButtonClick(): void {
+        this.setState({
+            showNewCharForm: true
+        });
+    }
+
+    private handleHideModal(): void {
+        this.setState({
+            showNewCharForm: false
+        });
+    }
+
+    private handleSubmitNewCharForm(): void {
+        this.setState({
+            showNewCharForm: false
+        });
+        this.UpdateCharacterData();
+    }
+
     public constructor(props: ICharacterManagerProps) {
         super(props);
         this.state = {
             currentCharacterData: undefined,
             allCharactersData: [],
-            isLoading: true
+            isLoading: true,
+            showNewCharForm: false
         };
     }
 
     public render() {
         return (
             <div className="character-manager">
+                <NewCharacterForm
+                    show={this.state.showNewCharForm}
+                    onHideModal={this.handleHideModal.bind(this)}
+                    onFormSubmission={this.handleSubmitNewCharForm.bind(this)}
+                />
                 <CurrentCharacterStatus
                     currentCharacterData={this.state.currentCharacterData}
                 />
                 <CharacterSelector
+                    newCharacterButtonCallback={this.handleNewCharButtonClick.bind(this)}
                     characterSelectedCallback={this.handleCharacterSelected.bind(this)}
                     allCharacterData={this.state.allCharactersData}
                     isLoading={this.state.isLoading}

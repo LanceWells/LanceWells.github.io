@@ -8,7 +8,7 @@ import {
     Route
 } from "react-router-dom";
 import { LoginPage } from '../../LoginPage/React/LoginPage';
-import { ProtectedRoute } from '../../Login/React/ProtectedRoute';
+import { ProtectedRoute } from './ProtectedRoute';
 import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Inventory } from '../../Inventory/React/Inventory';

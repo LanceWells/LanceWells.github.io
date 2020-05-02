@@ -8,6 +8,7 @@ import { Spinner } from 'react-bootstrap';
 export interface ICharacterSelectorProps {
     allCharacterData: PlayerCharacterData[];
     characterSelectedCallback: SelectedCharacterCallback;
+    newCharacterButtonCallback: () => void;
     isLoading: boolean;
 }
 
@@ -40,7 +41,9 @@ export class CharacterSelector extends React.Component<ICharacterSelectorProps, 
                         style={{ visibility: showSpinner ? 'visible' : 'hidden' }}
                     />
                     {this.GetCharacterButtons()}
-                    <NewCharacterButton />
+                    <NewCharacterButton
+                        onClick={this.props.newCharacterButtonCallback}
+                    />
                 </div>
             </div>
         )
