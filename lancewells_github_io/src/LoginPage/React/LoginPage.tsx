@@ -78,41 +78,12 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         })
     }
 
-    private testUserAuth() {
-        // let partMap: Map<PartType, string> = new Map();
-        // partMap.set(PartType.ArmArmor, './images/Character_Image/Size_Average/Arm Armor/Androgynous/RedShoulderCloak.png');
-
-        let testPlayerData: PlayerCharacterData = new PlayerCharacterData(
-            "Anudder",
-            5000,
-            [
-                {
-                    key: 'Handaxe',
-                    type: 'Weapon'
-                },
-                {
-                    key: 'AngelicPotion',
-                    type: 'Potion'
-                }
-            ],
-            new CharImageLayout(new Map(), BodyType.AverageSizedMasculine),
-            ""
-        );
-
-        PlayerInventoryService.CreateCharacterData(testPlayerData).then(() => {
-            console.log(testPlayerData);
-        });
-    }
-
     /**
      * @description Renders thi object.
      */
     public render() {
         return (
             <div className="login-container">
-                <button onClick={this.testUserAuth.bind(this)}>
-                    Test Button
-                </button>
                 <div className="login-dialog">
                     <h2 className="login-header">
                         {this.state.pageState.toString()}
