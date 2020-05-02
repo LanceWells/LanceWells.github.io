@@ -49,9 +49,12 @@ export class CharacterManager extends React.Component<ICharacterManagerProps, IC
     }
 
     public render() {
+        let allCharacterNames: string[] = this.state.allCharactersData.map(acn => acn.Name);
+
         return (
             <div className="character-manager">
                 <NewCharacterForm
+                    existingCharacterNames={allCharacterNames}
                     show={this.state.showNewCharForm}
                     onHideModal={this.handleHideModal.bind(this)}
                     onFormSubmission={this.handleSubmitNewCharForm.bind(this)}

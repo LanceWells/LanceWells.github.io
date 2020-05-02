@@ -8,6 +8,7 @@ import { CharacterImageMap } from '../../CharacterImage/Classes/CharacterImageMa
 
 export interface INewCharacterFormProps {
     show: boolean;
+    existingCharacterNames: string[];
     onHideModal: () => void;
     onFormSubmission: () => void;
 }
@@ -61,6 +62,11 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         if (!this.currentNewCharName.match(validCharNameRegex)) {
             inputValid = false;
             validationErrors.push("Character names can only contain alphanumerics, underscores, and hyphens.")
+        }
+
+        if (this.props.existingCharacterNames.some(existingName => this.currentNewCharName === existingName)) {
+            inputValid = false;
+            validationErrors.push(`${this.currentNewCharName} already exists!`);
         }
 
         this.setState({
@@ -121,7 +127,11 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
                 <Modal.Header>
                     <Modal.Title>New Character Deets</Modal.Title>
                 </Modal.Header>
-                {this.state.validationErrors.map(ve => (<span color="red">{ve}</span>))}
+                <div className="new-character-form-errors">
+                    {
+                        this.state.validationErrors.map(errormessage => (<span>{errormessage}</span>))
+                    }
+                </div>
                 <form className="new-character-form" onSubmit={this.handleCreateCharacter.bind(this)}>
                     <br />
                     <span className="new-character-form-title">

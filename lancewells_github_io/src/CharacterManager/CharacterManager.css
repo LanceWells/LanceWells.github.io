@@ -107,3 +107,9 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #8e251d;
     font-family: "Press Start 2P";
 }
+
+.new-character-form-errors {
+    color: #ea323c;
+    text-align: center;
+    margin: 5px;
+}
