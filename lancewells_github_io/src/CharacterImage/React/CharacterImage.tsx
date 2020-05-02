@@ -38,7 +38,6 @@ export interface ICharacterImageProps {
  */
 export interface ICharacterImageState {
     charSize: CharacterSize;
-    // bodyType: BodyType;
     partType: PartType;
     charImageLayout: CharImageLayout;
     checkingForCharacterImage: boolean;
@@ -78,8 +77,6 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         CharacterStateManager.GetInstance().GetCurrentStaticCharacterData()
             .then(charData => {
                 if (charData !== undefined) {
-                    // let currentImageSelection = charImgLayout.ImageSelection;
-                    // charData.Images = currentImageSelection;
                     charData.CharLayout = this.state.charImageLayout;
                     
                     CharacterStateManager.GetInstance().UploadCharacterData(charData);

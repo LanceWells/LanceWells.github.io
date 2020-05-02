@@ -6,7 +6,6 @@ import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
 import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
-import { PartType } from '../../CharacterImage/Enums/PartType';
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 import { BodyType } from '../../CharacterImage/Enums/BodyType';
 

@@ -31,8 +31,6 @@ export class PlayerInventoryService {
             let playerName: string = snapshotData.name;
             let playerCopper: number = snapshotData.copper;
             let playerItemData: string[] = snapshotData.items;
-            // let playerImagesString: string = snapshotData.images;
-            // let playerImages: Map<PartType, string> = new Map(JSON.parse(playerImagesString));
             let playerCharData: string = snapshotData.charData;
             let playerBorder: string = snapshotData.borderColor;
 

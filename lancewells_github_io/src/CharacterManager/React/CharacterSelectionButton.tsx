@@ -2,7 +2,6 @@ import React from 'react';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { SelectedCharacterCallback } from '../Types/SelectedCharacterCallback';
 import { CharacterImageCanvas } from '../../CharacterImage/React/CharacterImageCanvas';
-import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 
 export interface ICharacterSelectionButtonProps {
     characterData: PlayerCharacterData;
