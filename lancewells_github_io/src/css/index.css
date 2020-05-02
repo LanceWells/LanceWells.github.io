@@ -7,7 +7,10 @@ body {
   background-color: #121212;
 }
 
-button {
+button,
+input[type=button],
+input[type=submit],
+input[type=reset] {
   background-color: rgb(61, 61, 61);
   border-color: transparent;
   box-shadow:
@@ -16,6 +19,14 @@ button {
   transition-duration: 75ms;
   color: white;
   font-family: "Press Start 2P";
+}
+
+button:disabled,
+input[type=button]:disabled,
+input[type=submit]:disabled,
+input[type=reset]:disabled {
+  background-color: #5d5d5d;
+  color: #b4b4b4;
 }
 
 button:hover {

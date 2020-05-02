@@ -78,3 +78,32 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 512px;
     min-width: 512px;
 }
+
+.new-character-form {
+    width: 100%;
+    text-align: center;
+    background-color: #1b1b1b;
+}
+
+.new-character-form-title {
+    font-size: larger;
+    color: white;
+    font-weight: 700;
+}
+
+.new-character-form-field {
+    width: 85%;
+    margin: 16px;
+    font-weight: 600;
+}
+
+.modal-content {
+    background-color: #1b1b1b;
+    color: white;
+    font-weight: 700;
+}
+
+.cancel-new-character-button {
+    background-color: #8e251d;
+    font-family: "Press Start 2P";
+}

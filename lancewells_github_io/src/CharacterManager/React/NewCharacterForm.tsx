@@ -123,12 +123,26 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
                 </Modal.Header>
                 {this.state.validationErrors.map(ve => (<span color="red">{ve}</span>))}
                 <form className="new-character-form" onSubmit={this.handleCreateCharacter.bind(this)}>
-                    <span>Character Name:</span>
                     <br />
-                    <input type="text" name="characterName" onChange={this.handleCharNameInput.bind(this)} />
+                    <span className="new-character-form-title">
+                        Character Name:
+                    </span>
+                    <input
+                        type="text"
+                        name="characterName"
+                        className="new-character-form-field new-character-form-name"
+                        onChange={this.handleCharNameInput.bind(this)}
+                    />
                     <br />
                     <br />
-                    <select id="new character body type" onChange={this.handleBodyTypeChange.bind(this)}>
+                    <span className="new-character-form-title">
+                        Body Type:
+                    </span>
+                    <select
+                        id="new character body type"
+                        className="new-character-form-field new-character-form-body-type"
+                        onChange={this.handleBodyTypeChange.bind(this)}
+                    >
                         {formBodyOptions}
                     </select>
                     <br />
@@ -147,9 +161,12 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
                     />
                     <span>Creating {this.currentNewCharName} . . .</span>
                 </div>
-                <button onClick={this.props.onHideModal}>
-                    Close without creating
-            </button>
+                <button
+                        className="cancel-new-character-button"
+                        onClick={this.props.onHideModal}
+                    >
+                        Close without creating
+                </button>
             </Modal>
         )
     }
