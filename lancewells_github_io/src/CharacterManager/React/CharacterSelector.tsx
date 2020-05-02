@@ -2,6 +2,7 @@ import React from 'react';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { CharacterSelectionButton } from './CharacterSelectionButton';
 import { SelectedCharacterCallback } from '../Types/SelectedCharacterCallback';
+import { NewCharacterButton } from './NewCharacterButton';
 
 export interface ICharacterSelectorProps {
     allCharacterData: PlayerCharacterData[];
@@ -21,7 +22,13 @@ export class CharacterSelector extends React.Component<ICharacterSelectorProps, 
     public render() {
         return (
             <div className="character-selector">
-                {this.GetCharacterButtons()}
+                <h2>
+                    Characters:
+                </h2>
+                <div className="character-selector-buttons">
+                    {this.GetCharacterButtons()}
+                    <NewCharacterButton />
+                </div>
             </div>
         )
     }

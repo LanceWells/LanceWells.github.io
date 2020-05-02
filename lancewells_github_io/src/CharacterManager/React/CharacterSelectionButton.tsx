@@ -20,17 +20,21 @@ export class CharacterSelectionButton extends React.Component<ICharacterSelectio
 
     public render() {
         return (
-            <button
-                className="character-selection-button"
-                onClick={() => this.props.characterSelectedCallback(this.props.characterData)}>
-                <CharacterImageCanvas
-                    charScaleFactor={1}
-                    showLoadingSpinner={false}
-                    imagesToRender={this.props.characterData.CharLayout.GetImages()}
-                    borderColor={this.props.characterData.BorderColor}
-                />
-                {this.props.characterData.Name}
-            </button>
+            <div className="character-selector-container">
+                <button
+                    className="character-selection-button"
+                    onClick={() => this.props.characterSelectedCallback(this.props.characterData)}>
+                    <CharacterImageCanvas
+                        charScaleFactor={2}
+                        showLoadingSpinner={false}
+                        imagesToRender={this.props.characterData.CharLayout.GetImages()}
+                        borderColor={this.props.characterData.BorderColor}
+                        />
+                </button>
+                <span className="character-selection-name">
+                    {this.props.characterData.Name}
+                </span>
+            </div>
         )
     }
 }

@@ -83,7 +83,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         // partMap.set(PartType.ArmArmor, './images/Character_Image/Size_Average/Arm Armor/Androgynous/RedShoulderCloak.png');
 
         let testPlayerData: PlayerCharacterData = new PlayerCharacterData(
-            "A new challenger!",
+            "Anudder",
             5000,
             [
                 {

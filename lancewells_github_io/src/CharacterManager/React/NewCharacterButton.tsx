@@ -15,7 +15,13 @@ export class NewCharacterButton extends React.Component<INewCharacterButtonProps
 
     public render() {
         return (
-            <div className="new-character-button">
+            <div className="character-selector-container">
+                <button className="new-character-button">
+                    +
+                </button>
+                <span className="character-selection-name">
+                    New Character
+                </span>
             </div>
         )
     }
