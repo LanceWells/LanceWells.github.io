@@ -2,10 +2,19 @@ import React from 'react';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { CharacterImageCanvas } from '../../CharacterImage/React/CharacterImageCanvas';
 
+/**
+ * The input properties for this component.
+ * @param currentCharacterData Data regarding the current character. This may be undefined, meaning that no
+ * character has been selected.
+ */
 export interface ICurrentCharacterStatusProps {
     currentCharacterData: PlayerCharacterData | undefined;
 }
 
+/**
+ * A display to render some information about the current user. For use in the character manager.
+ * @param props 
+ */
 export function CurrentCharacterStatus(props: ICurrentCharacterStatusProps) {
     let name: string = "";
     let images: string[] = [];

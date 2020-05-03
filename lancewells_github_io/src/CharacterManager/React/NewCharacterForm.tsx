@@ -6,6 +6,14 @@ import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
 import { CharacterImageMap } from '../../CharacterImage/Classes/CharacterImageMap';
 
+/**
+ * The input properties for this component.
+ * @param show If true, make this component visible and centered on-screen.
+ * @param existingCharacterNames A list of existing character names. This is strictly only the names for
+ * characters that have been created. This is to ensure a duplicate character is not created.
+ * @param onHideModal A callback for when the user requests that the modal is closed.
+ * @param onFormSubmission A callback for when the form has been submitted.
+ */
 export interface INewCharacterFormProps {
     show: boolean;
     existingCharacterNames: string[];
@@ -13,16 +21,29 @@ export interface INewCharacterFormProps {
     onFormSubmission: () => void;
 }
 
+/**
+ * A class used to maintain the state for this component.
+ * @param isCreating If true, render this component as though it is creating a new character.
+ * @param inputIsValid If false, prevent form submission and display validation errors.
+ * @param validationErrors A list of errors regarding character name validation.
+ */
 export interface INewCharacterFormState {
     isCreating: boolean;
     inputIsValid: boolean;
     validationErrors: string[];
 }
 
+/**
+ * A form contained within a modal. Used to provide a user with the means to create a new character.
+ */
 export class NewCharacterForm extends React.Component<INewCharacterFormProps, INewCharacterFormState> {
     private currentNewCharName: string;
     private currentBodyType: BodyType;
 
+    /**
+     * Creates a new instance of this object.
+     * @param props The input properties for this component.
+     */
     public constructor(props: INewCharacterFormProps) {
         super(props);
 
@@ -36,6 +57,10 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         };
     }
 
+    /**
+     * Handles when the user inputs data to the character name field.
+     * @param event The event arguments when the name field is changed.
+     */
     private handleCharNameInput(event: ChangeEvent<HTMLInputElement>): void {
         let input = event.target?.value;
         if (input) {
@@ -45,6 +70,10 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         this.validateInput();
     }
 
+    /**
+     * Handles when the user inputs data to the body type field.
+     * @param event The event arguments when the body type field is changed.
+     */
     private handleBodyTypeChange(event: ChangeEvent<HTMLSelectElement>): void {
         let input = event.target?.value;
         if (input) {
@@ -54,6 +83,9 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         this.validateInput();
     }
 
+    /**
+     * Validates the form's input. Will prevent submission if validation indicates errors.
+     */
     private validateInput() {
         let validCharNameRegex: RegExp = /^[A-Z0-9_ -]+$/i;
         let inputValid: boolean = true;
@@ -75,6 +107,11 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         });
     }
 
+    /**
+     * Handles the form's submission event. This creates a new character and informs watchers to proceed with
+     * their next events.
+     * @param event The event data concerning the submission.
+     */
     private handleCreateCharacter(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         this.setState({
@@ -107,6 +144,9 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         });
     }
 
+    /**
+     * Renders the component.
+     */
     public render() {
         let formBodyOptions: JSX.Element[] = Object.values(BodyType).map(bt => {
             return (
