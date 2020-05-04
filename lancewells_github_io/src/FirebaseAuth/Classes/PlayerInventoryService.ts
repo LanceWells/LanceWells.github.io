@@ -1,8 +1,7 @@
 import { UserDataAuth } from './UserDataAuth';
 import { firestore } from 'firebase';
 import { PlayerCharacterData } from '../Types/PlayerCharacterData';
-import { IItemKey } from '../../Items/Interfaces/IItem';
-import { PartType } from '../../CharacterImage/Enums/PartType';
+import { IItemKey } from '../../ItemData/Interfaces/IItem';
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 
 export class PlayerInventoryService {

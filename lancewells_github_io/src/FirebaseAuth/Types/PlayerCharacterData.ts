@@ -1,5 +1,4 @@
-import { IItemKey } from "../../Items/Interfaces/IItem";
-import { PartType } from "../../CharacterImage/Enums/PartType";
+import { IItemKey } from "../../ItemData/Interfaces/IItem";
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 
 export class PlayerCharacterData {
