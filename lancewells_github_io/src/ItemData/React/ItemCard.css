@@ -1,0 +1,189 @@
+.item-card {
+    justify-content: center;
+    align-items: baseline;
+    position: relative;
+    display: flex;
+    z-index: 1;
+    transition: 0.3s;
+    animation-delay: 0.1s;
+    animation-timing-function: ease-out;
+    filter: drop-shadow(0 0 6px rgb(0, 0, 0));
+}
+
+.item-card:hover {
+    /* transform: translateY(-16px); */
+    filter: drop-shadow(0 0 6px rgb(255, 235, 87));
+}
+
+.card-canvas {
+    border: none;
+    position: relative;
+    z-index: 1;
+}
+
+.card-title {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    text-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    font-family: "Open Sans";
+    font-weight: normal;
+}
+
+.card-info {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    width: 95%;
+    color: white;
+    overflow-y: hidden;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card-cost {
+    z-index: 3;
+    width: 100%;
+    position: absolute;
+    text-align: left;
+}
+
+.card-cost-text {
+    font-family: "Press Start 2P";
+    z-index: 4;
+    position: absolute;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.card-item-image {
+    position: absolute;
+    z-index: 5;
+}
+
+.card-details-button {
+    background-color: transparent;
+    border-color: transparent;
+    position: absolute;
+    z-index: 6;
+    box-shadow: 0px 0px 0px 0px transparent;
+}
+
+.card-details-button:hover {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: 0px 0px 0px 0px transparent;
+}
+
+.card-icons {
+    position: absolute;
+    z-index: 7;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.card-actions {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-icon {
+    background-image: radial-gradient(circle farthest-side,
+            rgb(19, 19, 19),
+            rgb(19, 19, 19),
+            rgb(19, 19, 19),
+            transparent);
+    border-radius: 16px;
+}
+
+.card-button-container {
+    width: 100%;
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-button {
+    width: 75%;
+    min-width: 75%;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-family: "Open Sans";
+    margin: 5px;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px 1px rgb(0, 0, 0);
+    transition: 0.2s;
+    position: relative;
+    align-content: center;
+    align-items: center;
+
+    background: rgb(31, 31, 31);
+    cursor: pointer;
+}
+
+.card-button:hover {
+    background-color: rgb(37, 37, 37);
+}
+
+.card-button-icon {
+    position: absolute;
+    z-index: 1;
+}
+
+.card-button-name {
+    height: 100%;
+    width: 80%;
+    text-align: left;
+    align-self: center;
+}
+
+.card-button-stats-container {
+    position: absolute;
+    width: 110%;
+    font-family: "Press Start 2P";
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card-button-stat {
+    border-radius: 16px;
+    padding: 8px;
+    font-size: larger;
+    box-shadow: 1px 1px 1px rgb(19, 19, 19);
+    z-index: 2;
+    text-shadow: 0 0 5px rgb(19, 19, 19);
+}
+
+.card-button-stat-icon {
+    position: absolute;
+    z-index: 1;
+}
+
+img {
+    image-rendering: optimizeSpeed;
+    /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;
+    /* Firefox                        */
+    image-rendering: -o-crisp-edges;
+    /* Opera                          */
+    image-rendering: -webkit-optimize-contrast;
+    /* Chrome (and eventually Safari) */
+    image-rendering: pixelated;
+    /* Chrome */
+    image-rendering: optimize-contrast;
+    /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;
+    /* IE8+                           */
+}

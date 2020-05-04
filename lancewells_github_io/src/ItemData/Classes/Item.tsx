@@ -1,5 +1,6 @@
 import React from 'react';
-import { IItem, IItemJson } from '../Interfaces/IItem';
+import { IItem } from '../Interfaces/IItem';
+import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
 import { ItemModifications } from '../Enums/ItemModifications';
 import { ItemType } from '../Enums/ItemType';

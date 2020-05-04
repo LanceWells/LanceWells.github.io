@@ -1,4 +1,4 @@
-import { IItemJson } from '../Interfaces/IItem';
+import { IItemJson } from '../Interfaces/IItemJson';
 import { Item } from './Item';
 import { SourceType } from "../Enums/SourceType";
 import { ItemType } from "../Enums/ItemType";

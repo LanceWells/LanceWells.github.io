@@ -2,6 +2,7 @@ import React from 'react';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { IItem } from '../../ItemData/Interfaces/IItem';
 import { ItemSource } from '../../ItemData/Classes/ItemSource';
+import { ItemCard } from '../../ItemData/React/ItemCard';
 
 export interface IInventoryProps {
 }
@@ -43,10 +44,15 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     public render() {
         let itemCards: JSX.Element[] = this.state.items.map(i => {
             return (
-                <div>
-                    {i.key}
-                    {i.type}
-                </div>
+                <ItemCard
+                    itemDetails={i}
+                    onItemClick={undefined}
+                    onAttackButton={undefined}
+                    onPurchaseButton={undefined}
+                    onRemoveButton={undefined}
+                    onAddButton={undefined}
+                    cardInteractions={[]}
+                />
             )
         })
 
