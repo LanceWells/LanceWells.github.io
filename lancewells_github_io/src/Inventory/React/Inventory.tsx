@@ -1,3 +1,5 @@
+import '../Inventory.css';
+
 import React from 'react';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { IItem } from '../../ItemData/Interfaces/IItem';
@@ -57,7 +59,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         })
 
         return (
-            <div>
+            <div className="inventory-container">
                 {itemCards}
             </div>
         )
