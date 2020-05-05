@@ -45,7 +45,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
     }
 
     GetWithdrawalEffectClause(): JSX.Element {
-        var clause: JSX.Element;
+        let clause: JSX.Element;
         if (this.hasWithdrawalEffect) {
             clause = (
                 <span>
@@ -66,7 +66,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
 }
 
 export function IItemIsItemPotion(item: IItemJson): item is ItemPotion {
-    var isType: boolean = true;
+    let isType: boolean = true;
 
     isType = isType && (item as ItemPotion).type === "Potion";
 

@@ -92,7 +92,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     }
 
     private GetAttackDetails(): JSX.Element {
-        var attackDetails: JSX.Element[] = Object.entries(this.attacks).map(element => {
+        let attackDetails: JSX.Element[] = Object.entries(this.attacks).map(element => {
             let name: string = element[0];
             let damageRolls: Attack[] = element[1];
             let rolls: JSX.Element[] = [];
@@ -126,7 +126,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     }
 
     private GetProperties(): JSX.Element {
-        var propertyDetails: JSX.Element[] = this.properties.map(property => {
+        let propertyDetails: JSX.Element[] = this.properties.map(property => {
             return (
                 <div>
                     {property}
@@ -143,7 +143,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
 }
 
 export function IItemIsItemWeapon(item: IItemJson): item is ItemWeapon {
-    var isType: boolean = true;
+    let isType: boolean = true;
 
     isType = isType && (item as ItemWeapon).type === "Weapon";
     isType = isType && (item as ItemWeapon).attacks !== undefined;

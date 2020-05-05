@@ -11,7 +11,7 @@ interface IAttackButtonProps {
 
 export function AttackButton(props: IAttackButtonProps) {
     let attackIndicators: JSX.Element[] = props.attacks.map(roll => {
-        var indicators: JSX.Element[] = [];
+        let indicators: JSX.Element[] = [];
 
         for (let i = 0; i < roll.diceCount; i++) {
             indicators.push(

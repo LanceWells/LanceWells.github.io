@@ -25,7 +25,7 @@ export class ItemWondrous extends Item implements IItemWondrousJson {
 }
 
 export function IItemIsItemWondrous(item: IItemJson): item is ItemWondrous {
-    var isType: boolean = true;
+    let isType: boolean = true;
 
     isType = isType && (item as ItemWondrous).type === ItemType.Wondrous;
 

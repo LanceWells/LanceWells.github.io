@@ -32,7 +32,7 @@ export class ItemArmor extends Item implements IItemArmorJson {
 }
 
 export function IItemIsItemArmor(item: IItemJson) : item is ItemArmor {
-    var isType: boolean = true;
+    let isType: boolean = true;
 
     isType = isType && (item as ItemArmor).type === ItemType.Armor;
     isType = isType && (item as ItemArmor).addDex !== undefined;

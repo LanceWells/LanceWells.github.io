@@ -21,7 +21,7 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
     }
 
     private GetCustomButtonProperties(): React.CSSProperties {
-        var properties: React.CSSProperties = {};
+        let properties: React.CSSProperties = {};
         if (!this.state.canPurchase) {
             properties = {
                 background: "#33984b",
