@@ -1,3 +1,5 @@
+import '../ItemShop.css';
+
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { IItem } from '../Interfaces/IItem';
