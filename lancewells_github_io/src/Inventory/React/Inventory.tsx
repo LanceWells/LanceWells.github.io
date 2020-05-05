@@ -4,21 +4,21 @@ import React from 'react';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { IItem } from '../../ItemData/Interfaces/IItem';
 import { ItemSource } from '../../ItemData/Classes/ItemSource';
-import { ItemCard } from '../../ItemData/React/ItemCard';
 import { ItemDetailsModal } from '../../ItemData/React/ItemDetailsModal';
 import { AttackRollModal } from '../../ItemData/React/AttackRollModal';
 import { ItemWondrous } from '../../ItemData/Classes/ItemWondrous';
 import { Attack } from '../../ItemData/Classes/Attack';
-import { CardInteractions } from '../../ItemData/Enums/CardInteractions';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { InventoryTab } from './InventoryTab';
 import { Tabs, Tab } from 'react-bootstrap';
+import { CharacterInfoContainer } from './CharacterInfoContainer';
 
 export interface IInventoryProps {
 }
 
 export interface IInventoryState {
     items: IItem[];
+    playerCopper: number;
     showItemDetails: boolean;
     focusedItem: IItem;
     showAttackWindow: boolean;
@@ -32,6 +32,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         super(props);
         this.state = {
             items: [],
+            playerCopper: 0,
             showItemDetails: false,
             focusedItem: new ItemWondrous(),
             showAttackWindow: false,
@@ -57,7 +58,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                 });
 
                 this.setState({
-                    items: newItems
+                    items: newItems,
+                    playerCopper: char.Copper
                 });
             }
         });
@@ -96,30 +98,14 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         })
     }
 
-    public render() {
-        // let itemCards: JSX.Element[] = this.state.items.map(i => {
-        //     return (
-        //         <ItemCard
-        //             itemDetails={i}
-        //             onItemClick={this.ShowItemDetails.bind(this)}
-        //             onAttackButton={this.ShowAttackWindow.bind(this)}
-        //             onPurchaseButton={undefined}
-        //             onRemoveButton={undefined}
-        //             onAddButton={undefined}
-        //             cardInteractions={[
-        //                 CardInteractions.Use
-        //             ]}
-        //         />
-        //     )
-        // });
-
+    private GetInventoryTabs(): JSX.Element[] {
         let itemTabs: JSX.Element[] = Object.values(ItemType).map(itemType => {
-            let filteredItemTypes: IItem[] = this.state.items.filter(item => item.type === itemType);
+            let filteredItems: IItem[] = this.state.items.filter(item => item.type === itemType);
 
             return (
-                <Tab eventKey={itemType.toString()} title={itemType.toString()}>
+                <Tab eventKey={itemType.toString()} title={`${itemType} (${filteredItems.length})`}>
                     <InventoryTab
-                        items={filteredItemTypes}
+                        items={filteredItems}
                         itemType={itemType}
                         itemClick={this.ShowItemDetails.bind(this)}
                         attackClick={this.ShowAttackWindow.bind(this)}
@@ -128,6 +114,10 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             )
         });
 
+        return itemTabs;
+    }
+
+    public render() {
         return (
             <div className="inventory-container">
                 <ItemDetailsModal
@@ -141,20 +131,17 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     attacks={this.state.attacks}
                     onHide={this.HideAttackWindow.bind(this)}
                 />
+                <CharacterInfoContainer
+                    playerCopper={this.state.playerCopper}
+                />
                 <Tabs
                     id="Inventory Tabs"
                     activeKey = { this.state.activeTab.toString() }
                     onSelect={this.HandleTabSelection.bind(this)}
                     >
-                    {itemTabs}
+                    {this.GetInventoryTabs()}
                 </Tabs>
             </div>
         )
     }
 }
-
-// { itemTypes }
-// activeKey = { this.state.activeTab.toString() }
-// <Tab eventKey={ItemType.Weapon.toString()} title={ItemType.Weapon.toString()}>
-//     Test!
-//                     </Tab>

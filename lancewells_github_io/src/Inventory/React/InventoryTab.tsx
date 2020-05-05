@@ -1,6 +1,5 @@
 import React from 'react';
 import { IItem } from '../../ItemData/Interfaces/IItem';
-import { Tab } from 'react-bootstrap';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { ItemClick } from '../../ItemData/Types/ItemClick';
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
@@ -40,7 +39,6 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                 />
             )
         });
-        // { itemCards }
 
         return (
             <div className="inventory-tab">
@@ -49,9 +47,3 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
         )
     }
 }
-// <Tab eventKey={this.props.itemType.toString()} title={this.props.itemType.toString()}>
-//     Test!
-// </Tab>
-// <Tab eventKey={this.props.itemType.toString()} title={this.props.itemType.toString()}>
-//     Test!
-//             </Tab>
