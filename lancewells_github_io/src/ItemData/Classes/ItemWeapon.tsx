@@ -145,7 +145,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
 export function IItemIsItemWeapon(item: IItemJson): item is ItemWeapon {
     let isType: boolean = true;
 
-    isType = isType && (item as ItemWeapon).type === "Weapon";
+    isType = isType && (item as ItemWeapon).type === ItemType.Weapon;
     isType = isType && (item as ItemWeapon).attacks !== undefined;
 
     return isType;

@@ -55,7 +55,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     }
 
     private RollAttack(): void {
-        var randomNumberList: number = Math.floor(Math.random() * this.randomRollNumbers.length);
+        let randomNumberList: number = Math.floor(Math.random() * this.randomRollNumbers.length);
 
         for (let i: number = 0; i < this.rollDelay.length; i++) {
             setTimeout(() => {
@@ -79,7 +79,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     }
 
     private RollDamage(): void {
-        var rolls: DamageRoll[] = this.props.attacks.map((attack) => {
+        let rolls: DamageRoll[] = this.props.attacks.map((attack) => {
             let rolledNumbers: number[] = [];
             for(let i = 0; i < attack.diceCount; i++) {
                 rolledNumbers.push(this.GetDieValue(attack.diceSize));
@@ -101,11 +101,11 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
 
     private GetDamageRollDisplay(): JSX.Element[] {
         return this.state.damageRoll.map((roll) => {
-            var rollStatement: string = "";
+            let rollStatement: string = "";
             
-            var diceRollsMessage: string = roll.rolledNumbers.join(" + ");
-            var rollModifierMessage: string = roll.modifier > 0 ? ` + ${roll.modifier}` : '';
-            var damageMessage: string = `${roll.damageType} damage`;
+            let diceRollsMessage: string = roll.rolledNumbers.join(" + ");
+            let rollModifierMessage: string = roll.modifier > 0 ? ` + ${roll.modifier}` : '';
+            let damageMessage: string = `${roll.damageType} damage`;
 
             rollStatement = `${diceRollsMessage}${rollModifierMessage}`;
 

@@ -10,6 +10,9 @@ import { AttackRollModal } from '../../ItemData/React/AttackRollModal';
 import { ItemWondrous } from '../../ItemData/Classes/ItemWondrous';
 import { Attack } from '../../ItemData/Classes/Attack';
 import { CardInteractions } from '../../ItemData/Enums/CardInteractions';
+import { ItemType } from '../../ItemData/Enums/ItemType';
+import { InventoryTab } from './InventoryTab';
+import { Tabs, Tab } from 'react-bootstrap';
 
 export interface IInventoryProps {
 }
@@ -21,6 +24,7 @@ export interface IInventoryState {
     showAttackWindow: boolean;
     attackName: string;
     attacks: Attack[];
+    activeTab: string;
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {
@@ -32,7 +36,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             focusedItem: new ItemWondrous(),
             showAttackWindow: false,
             attackName: "",
-            attacks: []
+            attacks: [],
+            activeTab: ItemType.Weapon.toString()
         };
 
         this.UpdateItems();
@@ -85,22 +90,43 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         });
     }
 
-    public render() {
-        let itemCards: JSX.Element[] = this.state.items.map(i => {
-            return (
-                <ItemCard
-                    itemDetails={i}
-                    onItemClick={this.ShowItemDetails.bind(this)}
-                    onAttackButton={this.ShowAttackWindow.bind(this)}
-                    onPurchaseButton={undefined}
-                    onRemoveButton={undefined}
-                    onAddButton={undefined}
-                    cardInteractions={[
-                        CardInteractions.Use
-                    ]}
-                />
-            )
+    private HandleTabSelection(key: string): void {
+        this.setState({
+            activeTab: key
         })
+    }
+
+    public render() {
+        // let itemCards: JSX.Element[] = this.state.items.map(i => {
+        //     return (
+        //         <ItemCard
+        //             itemDetails={i}
+        //             onItemClick={this.ShowItemDetails.bind(this)}
+        //             onAttackButton={this.ShowAttackWindow.bind(this)}
+        //             onPurchaseButton={undefined}
+        //             onRemoveButton={undefined}
+        //             onAddButton={undefined}
+        //             cardInteractions={[
+        //                 CardInteractions.Use
+        //             ]}
+        //         />
+        //     )
+        // });
+
+        let itemTabs: JSX.Element[] = Object.values(ItemType).map(itemType => {
+            let filteredItemTypes: IItem[] = this.state.items.filter(item => item.type === itemType);
+
+            return (
+                <Tab eventKey={itemType.toString()} title={itemType.toString()}>
+                    <InventoryTab
+                        items={filteredItemTypes}
+                        itemType={itemType}
+                        itemClick={this.ShowItemDetails.bind(this)}
+                        attackClick={this.ShowAttackWindow.bind(this)}
+                    />
+                </Tab>
+            )
+        });
 
         return (
             <div className="inventory-container">
@@ -115,8 +141,20 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     attacks={this.state.attacks}
                     onHide={this.HideAttackWindow.bind(this)}
                 />
-                {itemCards}
+                <Tabs
+                    id="Inventory Tabs"
+                    activeKey = { this.state.activeTab.toString() }
+                    onSelect={this.HandleTabSelection.bind(this)}
+                    >
+                    {itemTabs}
+                </Tabs>
             </div>
         )
     }
 }
+
+// { itemTypes }
+// activeKey = { this.state.activeTab.toString() }
+// <Tab eventKey={ItemType.Weapon.toString()} title={ItemType.Weapon.toString()}>
+//     Test!
+//                     </Tab>

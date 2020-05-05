@@ -17,6 +17,7 @@ import { CardInteractions } from '../Enums/CardInteractions';
 import { IItemJson } from '../Interfaces/IItemJson';
 import { IItemIsItemWeapon } from '../Classes/ItemWeapon';
 import { IItemIsItemPotion } from '../Classes/ItemPotion';
+import { ItemType } from '../Enums/ItemType';
 
 interface IItemCardProps {
     itemDetails: IItem;
@@ -77,10 +78,10 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     private GetCardBackSource() {
         let source: string;
         switch (this.props.itemDetails.type) {
-            case "Weapon":
+            case ItemType.Weapon:
                 source = "./images/Item_Shop/ItemCards/CardForge.png";
                 break;
-            case "Potion":
+            case ItemType.Potion:
                 source = "./images/Item_Shop/ItemCards/CardAlchemist.png";
                 break;
             default:

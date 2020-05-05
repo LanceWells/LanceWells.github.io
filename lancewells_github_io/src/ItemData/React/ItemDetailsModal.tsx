@@ -5,6 +5,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { IItem } from '../Interfaces/IItem';
 import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
+import { ItemType } from '../Enums/ItemType';
 
 interface IItemDetailsModalState {
     showAlert: boolean;
@@ -42,19 +43,19 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
      */
     private getTypeDisplay(item: IItemJson) {
         switch (item.type) {
-            case "Weapon":
+            case ItemType.Weapon:
                 {
                     return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
                 }
-            case "Armor":
+            case ItemType.Armor:
                 {
                     return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
                 }
-            case "Potion":
+            case ItemType.Potion:
                 {
                     return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
                 }
-            case "Wondrous":
+            case ItemType.Wondrous:
                 {
                     return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
                 }
