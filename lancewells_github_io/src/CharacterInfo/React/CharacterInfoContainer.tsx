@@ -14,7 +14,8 @@ import { LoginState } from '../../LoginPage/Enums/LoginState';
 enum LoadingState {
     Loading,
     Loaded,
-    Anonymous
+    Anonymous,
+    NoCharacters
 }
 
 interface ICharacterInfoContainerProps {
@@ -76,8 +77,9 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
         switch(this.state.loadingState) {
             case LoadingState.Loading:      return this.GetLoadingContent();
             case LoadingState.Loaded:       return this.GetLoadedContent();
-            case LoadingState.Anonymous:
-            default:                        return this.GetAnonContent();
+            case LoadingState.Anonymous:    return this.GetAnonContent();
+            case LoadingState.NoCharacters: 
+            default:                        return this.GetNoCharsContent();
         }
     }
 
@@ -124,6 +126,14 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
         )
     }
 
+    private GetNoCharsContent(): JSX.Element {
+        return (
+            <div>
+                No Characters
+            </div>
+        )
+    }
+
     private async UpdateCharDisplay(): Promise<void> {
         let userHasAccess: boolean = await UserDataAuth.GetInstance().CheckForAccess();
         let loadingState: LoadingState = LoadingState.Anonymous;
@@ -133,6 +143,9 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
             let staticCharData: PlayerCharacterData | undefined = undefined; 
             staticCharData = await CharacterStateManager.GetInstance().GetCurrentStaticCharacterData();
             
+            if (staticCharData === undefined) {
+                loadingState = LoadingState.NoCharacters;
+            }
             if (staticCharData !== undefined) {
                 newCharData = staticCharData;    
                 loadingState = LoadingState.Loaded;
