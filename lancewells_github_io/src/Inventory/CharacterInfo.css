@@ -1,0 +1,33 @@
+.character-info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #131313;
+    border-radius: 5px;
+    padding: 0px 10px;
+}
+
+.character-info-spinner {
+    position: absolute;
+}
+
+.character-money-display {
+    image-rendering: optimizeSpeed;
+    /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;
+    /* Firefox                        */
+    image-rendering: -o-crisp-edges;
+    /* Opera                          */
+    image-rendering: -webkit-optimize-contrast;
+    /* Chrome (and eventually Safari) */
+    image-rendering: pixelated;
+    /* Chrome */
+    image-rendering: optimize-contrast;
+    /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;
+    /* IE8+                           */
+}
+
+td {
+    padding: 0px 5px;
+}

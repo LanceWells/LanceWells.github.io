@@ -24,6 +24,10 @@ nav {
     background-color: rgb(19, 19, 19);
 }
 
+.navbar-nav {
+    flex-grow: 1;
+}
+
 #root {
     height: 100%;
     background-color: rgb(27, 27, 27);

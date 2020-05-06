@@ -13,6 +13,7 @@ import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Inventory } from '../../Inventory/React/Inventory';
 import { CharacterManager } from '../../CharacterManager/React/CharacterManager';
+import { CharacterInfoContainer } from '../../Inventory/React/CharacterInfoContainer';
 
 // Use the hash router instead of a browser router so that refreshes and direct-links to pages work.
 //https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually
@@ -44,6 +45,7 @@ export default function LandingSpace() {
                                 Characters
                             </Nav.Link>
                         </Nav>
+                        <CharacterInfoContainer />
                     </Navbar.Collapse>
                 </Navbar>
             </div>

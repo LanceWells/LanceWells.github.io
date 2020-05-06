@@ -137,16 +137,15 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
                     attacks={this.state.attacks}
                     onHide={this.HideAttackWindow.bind(this)}
                 />
-                <CharacterInfoContainer
-                    playerCopper={this.state.playerCopper}
-                />
-                <Tabs
-                    id="Inventory Tabs"
-                    activeKey = { this.state.activeTab.toString() }
-                    onSelect={this.HandleTabSelection.bind(this)}
+                <div className='inventory-tabs-container'>
+                    <Tabs
+                        id="Inventory Tabs"
+                        activeKey={this.state.activeTab.toString()}
+                        onSelect={this.HandleTabSelection.bind(this)}
                     >
-                    {this.GetInventoryTabs()}
-                </Tabs>
+                        {this.GetInventoryTabs()}
+                    </Tabs>
+                </div>
             </div>
         )
     }

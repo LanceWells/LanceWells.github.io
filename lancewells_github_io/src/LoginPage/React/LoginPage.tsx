@@ -45,9 +45,18 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         this.currentPassDupe = "";
 
         let loginState: LoginState = LoginState.CheckingCredentials;
-        if (UserDataAuth.GetInstance().CheckForAccess()) {
-            loginState = LoginState.LoggedIn;
-        }
+        UserDataAuth.GetInstance().CheckForAccess().then(accessGranted => {
+            if (accessGranted) {
+                this.setState({
+                    pageState: LoginState.LoggedIn
+                });
+            }
+            else {
+                this.setState({
+                    pageState: LoginState.LoggingOut
+                });
+            }
+        });
 
         this.state = {
             pageState: loginState,
