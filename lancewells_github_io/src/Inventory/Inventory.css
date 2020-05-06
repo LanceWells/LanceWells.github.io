@@ -3,3 +3,13 @@
     flex-wrap: wrap;
     justify-content: center;
 } 
+
+.nav-item {
+    font-family: "Press Start 2P";
+    color: white;
+    text-shadow: #131313;
+}
+
+.inventory-tab-icon {
+    padding-right: 5px;
+}

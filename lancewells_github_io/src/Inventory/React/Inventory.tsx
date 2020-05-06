@@ -103,7 +103,13 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             let filteredItems: IItem[] = this.state.items.filter(item => item.type === itemType);
 
             return (
-                <Tab eventKey={itemType.toString()} title={`${itemType} (${filteredItems.length})`}>
+                <Tab eventKey={itemType.toString()}
+                    title={
+                        <div>
+                            <img className="inventory-tab-icon" src={`./images/Inventory/Tab_${itemType}.png`}/>
+                            <span>{`${itemType} (${filteredItems.length})`}</span>
+                        </div>
+                    }>
                     <InventoryTab
                         items={filteredItems}
                         itemType={itemType}
