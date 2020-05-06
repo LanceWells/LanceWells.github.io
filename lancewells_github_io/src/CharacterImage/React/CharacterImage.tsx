@@ -41,6 +41,7 @@ export interface ICharacterImageState {
     partType: PartType;
     charImageLayout: CharImageLayout;
     checkingForCharacterImage: boolean;
+    borderStyle: string;
 };
 
 /**
@@ -84,6 +85,21 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             });
     }
 
+    private handleBorderSelection(borderStyle: string): void {
+        this.setState({
+            borderStyle: borderStyle
+        });
+
+        CharacterStateManager.GetInstance().GetCurrentStaticCharacterData()
+            .then(charData => {
+                if (charData !== undefined) {
+                    charData.BorderColor = borderStyle;
+
+                    CharacterStateManager.GetInstance().UploadCharacterData(charData);
+                }
+            });
+    }
+
     private handleCanvasDownload(downloadSource: string): void {
         if (downloadSource === undefined || downloadSource === "") {
             console.error("Character image was attempted to be downloaded with an empty, unset string.");
@@ -107,7 +123,8 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             charSize: CharacterSize.Average,
             partType: PartType.Body,
             charImageLayout: new CharImageLayout(new Map(), BodyType.AverageSizedFeminine),
-            checkingForCharacterImage: true
+            checkingForCharacterImage: true,
+            borderStyle: "#131313"
         }
         this.CheckForCharacterImage();
 
@@ -127,7 +144,8 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             console.log(charData);
             this.setState({
                 charImageLayout: charData.CharLayout,
-                checkingForCharacterImage: false
+                checkingForCharacterImage: false,
+                borderStyle: charData.BorderColor
             });
         }
         else {
@@ -180,9 +198,11 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         return (
             <div className="character-image">
                 <CharacterDrawingArea
+                    borderColor={this.state.borderStyle}
                     showLoadingSpinner={this.state.checkingForCharacterImage}
                     imagesToRender={charImages}
                     downloadCallback={canvasDownload.bind(this)}
+                    borderCallback={this.handleBorderSelection.bind(this)}
                 />
                 <PartSelector
                     partSelectionCallback={partSelection.bind(this)}

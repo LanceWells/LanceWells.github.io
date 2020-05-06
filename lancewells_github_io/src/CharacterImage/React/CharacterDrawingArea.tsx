@@ -1,5 +1,6 @@
 import React from 'react';
 import { CharImageDownloadCallback } from '../Types/CharImageDownloadCallback';
+import { BorderSelectionCallback } from '../Types/BorderSelectionCallback';
 import { CharacterImageCanvas } from './CharacterImageCanvas';
 import { ColorResult, CirclePicker } from 'react-color';
 
@@ -13,6 +14,8 @@ export interface ICharacterDrawingAreaProps {
     showLoadingSpinner: boolean;
     imagesToRender: string[];
     downloadCallback: CharImageDownloadCallback;
+    borderCallback: BorderSelectionCallback;
+    borderColor: string;
 }
 
 /**
@@ -22,7 +25,6 @@ export interface ICharacterDrawingAreaProps {
  * @param downloadUrl A data url that will be used when providing the callback for the download button.
  */
 export interface ICharacterDrawingAreaState {
-    borderColor: string;
     downloadUrl: string;
 }
 
@@ -48,7 +50,6 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
     public constructor(props: ICharacterDrawingAreaProps) {
         super(props);
         this.state = {
-            borderColor: "rgb(10, 10, 10)",
             downloadUrl: ""
         };
     }
@@ -64,14 +65,14 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
                     showLoadingSpinner={this.props.showLoadingSpinner}
                     ref="charImageCanvas"
                     imagesToRender={this.props.imagesToRender}
-                    borderColor={this.state.borderColor}
+                    borderColor={this.props.borderColor}
                 />
                 <span className="character-drawing-label">
                     Border Color
                 </span>
                 <CirclePicker
                     onChangeComplete={this.handleColorChange.bind(this)}
-                    color={this.state.borderColor}
+                    color={this.props.borderColor}
                     colors={CharacterDrawingArea.outlineColorOptions}
                 />
                 <button className="character-image-download"
@@ -84,9 +85,7 @@ export class CharacterDrawingArea extends React.Component<ICharacterDrawingAreaP
 
 
     private handleColorChange(color: ColorResult): void {
-        this.setState({
-            borderColor: color.hex
-        });
+        this.props.borderCallback(color.hex);
     }
 
     private fetchDownloadUrl(): string {
