@@ -11,7 +11,7 @@ import { Attack } from '../../ItemData/Classes/Attack';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { InventoryTab } from './InventoryTab';
 import { Tabs, Tab } from 'react-bootstrap';
-import { CharacterInfoContainer } from './CharacterInfoContainer';
+import { CharacterInfoContainer } from '../../CharacterInfo/React/CharacterInfoContainer';
 
 export interface IInventoryProps {
 }

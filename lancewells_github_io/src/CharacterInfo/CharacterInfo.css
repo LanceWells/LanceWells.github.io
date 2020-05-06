@@ -4,14 +4,23 @@
     align-items: center;
     background-color: #131313;
     border-radius: 5px;
-    padding: 0px 10px;
+    padding: 10px 10px;
+    align-items: baseline;
 }
 
 .character-info-spinner {
     position: absolute;
 }
 
+.character-info-name {
+    position: relative;
+
+}
+
 .character-money-display {
+    display: flex;
+    flex-direction: row;
+
     image-rendering: optimizeSpeed;
     /* STOP SMOOTHING, GIVE ME SPEED  */
     image-rendering: -moz-crisp-edges;
@@ -28,6 +37,32 @@
     /* IE8+                           */
 }
 
-td {
+.money-column {
     padding: 0px 5px;
+    text-align: center;
+}
+
+.money-icon {
+    position: relative;
+    top: -2px;
+    padding-right: 3px;
+}
+
+.character-money-add {
+    background-color: #0e071b;
+    border-radius: 50%;
+    box-shadow: none;
+    border-color: #424c6e;
+}
+
+@media (max-width: 600px) {
+    .character-info-container {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .character-money-display {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
 }

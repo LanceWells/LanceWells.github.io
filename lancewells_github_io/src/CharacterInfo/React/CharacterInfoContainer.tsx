@@ -58,12 +58,15 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
                     role="character info status"
                     style={{ visibility: showSpinner ? 'visible' : 'hidden' }}
                 />
-                <h4>
+                <span className="character-info-name">
                     {this.state.charData.Name}
-                </h4>
+                </span>
                 <MoneyDisplay
                     playerCopper={this.state.charData.Copper}
                 />
+                <button className="character-money-add">
+                    +
+                </button>
             </div>
         );
     }
