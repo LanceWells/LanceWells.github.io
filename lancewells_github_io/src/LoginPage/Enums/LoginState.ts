@@ -3,6 +3,5 @@ export enum LoginState {
     Login = "Login",
     LoggingIn = "Logging In",
     LoggedIn = "Logged In",
-    LoggingOut = "Logged Out",
     CreateAnAccount = "Create An Account"
 }

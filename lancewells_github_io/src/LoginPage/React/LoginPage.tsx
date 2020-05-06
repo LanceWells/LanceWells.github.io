@@ -4,15 +4,13 @@ import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
 import { CreateUserResponse } from '../../FirebaseAuth/Types/CreateUserResponse';
 import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
-import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
-import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
-import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
-import { BodyType } from '../../CharacterImage/Enums/BodyType';
+import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 
 /**
  * @description A series of properties to use to render this component.
  */
 interface ILoginPageProps {
+    onLogin: (loginState: LoginState) => void;
 };
 
 /**
@@ -45,18 +43,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         this.currentPassDupe = "";
 
         let loginState: LoginState = LoginState.CheckingCredentials;
-        UserDataAuth.GetInstance().CheckForAccess().then(accessGranted => {
-            if (accessGranted) {
-                this.setState({
-                    pageState: LoginState.LoggedIn
-                });
-            }
-            else {
-                this.setState({
-                    pageState: LoginState.LoggingOut
-                });
-            }
-        });
+        this.CheckForLogin();
 
         this.state = {
             pageState: loginState,
@@ -69,22 +56,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
      * to reflect whether the user has logged in using stored credentials.
      */
     public componentDidMount() {
-        UserDataAuth.GetInstance().CheckForAccess().then(granted => {
-            if (granted) {
-                this.setState({
-                    pageState: LoginState.LoggedIn
-                });
-            } else {
-                this.setState({
-                    pageState: LoginState.Login
-                })
-            }
-        }, onRejected => {
-            console.error("Rejected login:" + onRejected);
-            this.setState({
-                pageState: LoginState.Login
-            })
-        })
+        this.CheckForLogin();
     }
 
     /**
@@ -104,6 +76,25 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                 </div>
             </div>
         );
+    }
+
+    private async CheckForLogin() {
+        let loginState: LoginState = LoginState.Login;
+
+        try {
+            let accessGranted: boolean = await UserDataAuth.GetInstance().CheckForAccess();
+            if (accessGranted) {
+                loginState = LoginState.LoggedIn;
+            }
+        }
+        catch(error) {
+            console.error("Rejected login: " + error);
+        }
+
+        this.props.onLogin(loginState);
+        this.setState({
+            pageState: loginState
+        });
     }
 
     /**
@@ -232,6 +223,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                     this.setState({
                         pageState: LoginState.LoggedIn
                     });
+                    this.props.onLogin(LoginState.LoggedIn);
                 }
                 else {
                     this.setState({
@@ -248,6 +240,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     private submitLogout() {
         // Logout from the user data auth.
         UserDataAuth.GetInstance().Logout();
+        this.props.onLogin(LoginState.Login);
 
         // Set page state to LoggingOut, which should redirect to the home page.
         this.setState({
@@ -278,6 +271,8 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                     this.setState({
                         pageState: LoginState.LoggedIn
                     });
+                    
+                    this.props.onLogin(LoginState.Login);
                 }
             }, onReject => {
                 console.error("Failed to create a user account." + onReject);

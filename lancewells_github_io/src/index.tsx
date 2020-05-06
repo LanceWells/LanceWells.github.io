@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import * as serviceWorker from './serviceWorker';
-import LandingSpace from './Routing/React/LandingSpace';
+import { LandingSpace } from './Routing/React/LandingSpace';
 
 ReactDOM.render(<LandingSpace />, document.getElementById('root'));
 
