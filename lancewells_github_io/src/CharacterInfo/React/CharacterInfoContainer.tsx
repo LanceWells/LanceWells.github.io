@@ -175,7 +175,8 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
         CharacterStateManager.GetInstance().UploadCharacterData(charData).then(() => {
             this.setState({
                 charData: charData,
-                showMoneyAdjustModalProcessing: false
+                showMoneyAdjustModalProcessing: false,
+                showMoneyAdjustModal: false
             });
         });
     }

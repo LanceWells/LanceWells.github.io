@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import { Modal } from 'react-bootstrap';
 import { MoneyDisplay } from './MoneyDisplay';
 import { MoneyAdjustCallback } from '../Types/MoneyAdjustCallback';
-import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
+import { StylizedModal } from '../../Utilities/React/StylizedModal';
 
 interface IMoneyAdjustModalProps {
     show: boolean;
@@ -52,46 +52,33 @@ export class MoneyAdjustModal extends React.Component<IMoneyAdjustModalProps, IM
         let adjustedCopper: number = this.props.playerCopper + this.state.copperAdjustment;
 
         return (
-            <Modal
+            <StylizedModal
                 show={this.props.show}
                 onHide={this.props.hideModal}
-                centered={true}>
-                <Modal.Header>
-                    <Modal.Title>
-                        Money Adjustment
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="money-adjustment-container">
-                        <LoadingPlaceholder
-                        showSpinner={this.props.showAsProcessing}
-                        role="Money Adjustment Window Status">
-                            <MoneyDisplay
-                                playerCopper={adjustedCopper}
-                            />
-                            <form
-                                className="money-adjustment-form"
-                                onSubmit={this.HandleCopperSubmit.bind(this)}>
-                                <label>Money Changes (in copper, positive or negative)</label>
-                                <input
-                                    type="number"
-                                    id="copperAdjustment"
-                                    name="copperAdjustment"
-                                    min={-this.props.playerCopper}
-                                    max={this.props.playerCopper}
-                                    onChange={this.HandleCopperInput.bind(this)} />
-                                <input
-                                    type="submit"
-                                    value="Adjust that money"
-                                />
-                            </form>
-                        </LoadingPlaceholder>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button onClick={this.props.hideModal}>Close</button>
-                </Modal.Footer>
-            </Modal>
+                title="Money Adjustment"
+                isLoading={this.props.showAsProcessing}>
+                <div className="money-adjustment-container">
+                    <MoneyDisplay
+                        playerCopper={adjustedCopper}
+                    />
+                    <form
+                        className="money-adjustment-form"
+                        onSubmit={this.HandleCopperSubmit.bind(this)}>
+                        <label>Money Changes (in copper, positive or negative)</label>
+                        <input
+                            type="number"
+                            id="copperAdjustment"
+                            name="copperAdjustment"
+                            min={-this.props.playerCopper}
+                            max={this.props.playerCopper}
+                            onChange={this.HandleCopperInput.bind(this)} />
+                        <input
+                            type="submit"
+                            value="Adjust that money"
+                        />
+                    </form>
+                </div>
+            </StylizedModal>
         );
     }
 }
