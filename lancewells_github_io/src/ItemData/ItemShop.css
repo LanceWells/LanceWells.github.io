@@ -478,10 +478,12 @@ canvas, img {
     font-size: xx-large;
 } */
 
-.roll-window-damage {
-    width: 100%;
-    font-family: "Press Start 2P";
-    text-align: center;
+
+
+.attack-results-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 15em;
 }
 
 .attack-die-container {
@@ -497,10 +499,10 @@ canvas, img {
 
 .attack-die-value {
     font-family: "Press Start 2P";
-    font-size: x-large;
+    font-size: large;
     z-index: 1;
     text-align: center;
-    top: 7px;
+    top: 15px;
     width: 100%;
     position: absolute;
 }
@@ -508,6 +510,24 @@ canvas, img {
 .roll-window-attack-die {
     position: relative;
     animation: spin 5s infinite linear;
+}
+
+.attack-die-total {
+    text-align: center;
+    font-size: xx-large;
+    font-family: "Press Start 2P";
+    min-height: 2em;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.roll-window-damage {
+    width: 100%;
+    font-family: "Press Start 2P";
+    text-align: center;
+    min-height: 2em;
 }
 
 /* .roll-window-attack-number {

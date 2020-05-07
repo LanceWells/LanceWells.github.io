@@ -367,9 +367,9 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         }
         
         return (
-            <h3>
+            <span>
                 {finalDieText}
-            </h3>
+            </span>
         )
     }
 
@@ -516,17 +516,17 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                     />
                 </div>
                 <hr className='white-hr' />
-                <h5>Attack</h5>
-                <div className="attack-die-container">
-                    {this.GetDieToRoll()}
-                </div>
-                <div className="attack-die-total">
-                    {this.GetTotalRollText()}
-                </div>
-                <hr className='white-hr' />
-                <h5>Damage</h5>
-                <div className="roll-window-damage">
-                    {this.GetDamageRollDisplay()}
+                <div className="attack-results-container">
+                    <h5>Attack</h5>
+                    <div className="attack-die-container">
+                        {this.GetDieToRoll()}
+                    </div>
+                    <div className="attack-die-total">
+                        {this.GetTotalRollText()}
+                    </div>
+                    <div className="roll-window-damage">
+                        {this.GetDamageRollDisplay()}
+                    </div>
                 </div>
                 <button onClick={rollDisadvantage.bind(this)}>
                     With Disadvantage
