@@ -3,13 +3,13 @@ import '../CharacterInfo.css';
 import React from 'react';
 import { MoneyDisplay } from './MoneyDisplay';
 import { MoneyAdjustModal } from './MoneyAdjustModal';
-import { Spinner } from 'react-bootstrap';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 import { BodyType } from '../../CharacterImage/Enums/BodyType';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
+import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
 
 enum LoadingState {
     Loading,
@@ -74,12 +74,8 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
     }
 
     private GetContextualContent(): JSX.Element {
-        // if (this.props.loginState === LoginState.Login) {
-        //     return this.GetAnonContent();
-        // }
-
         switch(this.state.loadingState) {
-            case LoadingState.Loading:      return this.GetLoadingContent();
+            case LoadingState.Loading:      
             case LoadingState.Loaded:       return this.GetLoadedContent();
             case LoadingState.NoCharacters: return this.GetNoCharsContent();
             case LoadingState.Anonymous:    
@@ -87,37 +83,31 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
         }
     }
 
-    private GetLoadingContent(): JSX.Element {
-        return (
-            <Spinner
-                className="character-info-spinner"
-                animation="border"
-                role="character info status"
-            />
-        );
-    }
-
     private GetLoadedContent(): JSX.Element {
         return (
             <div className="character-info-content">
-                <MoneyAdjustModal
-                    show={this.state.showMoneyAdjustModal}
-                    hideModal={this.HandleHideMoneyAdjustModal.bind(this)}
-                    playerCopper={this.state.charData.Copper}
-                    showAsProcessing={this.state.showMoneyAdjustModalProcessing}
-                    moneyAdjustCallback={this.HandleCopperAdjustCallback.bind(this)}
-                />
-                <span className="character-info-name">
-                    {this.state.charData.Name}
-                </span>
-                <MoneyDisplay
-                    playerCopper={this.state.charData.Copper}
-                />
-                <button
-                    className="character-money-add"
-                    onClick={this.HandleMoneyAdjustButtonClick.bind(this)}>
-                    +
-                </button>
+                <LoadingPlaceholder
+                    showSpinner={this.state.loadingState === LoadingState.Loading}
+                    role="Character info status">
+                    <MoneyAdjustModal
+                        show={this.state.showMoneyAdjustModal}
+                        hideModal={this.HandleHideMoneyAdjustModal.bind(this)}
+                        playerCopper={this.state.charData.Copper}
+                        showAsProcessing={this.state.showMoneyAdjustModalProcessing}
+                        moneyAdjustCallback={this.HandleCopperAdjustCallback.bind(this)}
+                    />
+                    <span className="character-info-name">
+                        {this.state.charData.Name}
+                    </span>
+                    <MoneyDisplay
+                        playerCopper={this.state.charData.Copper}
+                    />
+                    <button
+                        className="character-money-add"
+                        onClick={this.HandleMoneyAdjustButtonClick.bind(this)}>
+                        +
+                    </button>
+                </LoadingPlaceholder>
             </div>
         );
     }
