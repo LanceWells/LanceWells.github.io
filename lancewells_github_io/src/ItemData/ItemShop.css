@@ -468,7 +468,7 @@ canvas, img {
     justify-content: center;
 }
 
-.roll-window-attack {
+/* .roll-window-attack {
     display: flex;
     width: 100%;
     font-family: "Press Start 2P";
@@ -476,7 +476,7 @@ canvas, img {
     justify-content: center;
     position: relative;
     font-size: xx-large;
-}
+} */
 
 .roll-window-damage {
     width: 100%;
@@ -484,17 +484,36 @@ canvas, img {
     text-align: center;
 }
 
-.roll-window-attack-die {
-    position: absolute;
+.attack-die-container {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.attack-die {
+    position: relative;
+}
+
+.attack-die-value {
+    font-family: "Press Start 2P";
+    font-size: x-large;
     z-index: 1;
-    top: -5px;
+    text-align: center;
+    top: 7px;
+    width: 100%;
+    position: absolute;
+}
+
+.roll-window-attack-die {
+    position: relative;
     animation: spin 5s infinite linear;
 }
 
-.roll-window-attack-number {
+/* .roll-window-attack-number {
     position: absolute;
     z-index: 2;
-}
+} */
 
 /* .roll-window-title {
     font-family: 'Press Start 2P';
