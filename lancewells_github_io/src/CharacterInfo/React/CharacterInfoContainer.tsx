@@ -47,6 +47,7 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
         }
 
         CharacterStateManager.GetInstance().AddObserver(this.characterStateManager_NotifyObservers.bind(this))
+        this.UpdateCharDisplay();
     }
 
     public characterStateManager_NotifyObservers(charData: PlayerCharacterData | undefined): void {
@@ -57,8 +58,11 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
         }
     }
 
-    public componentDidMount() {
-        this.UpdateCharDisplay();
+    public componentDidUpdate(prevProps: ICharacterInfoContainerProps): void {
+        if (this.props.loginState !== prevProps.loginState) {
+            // basically, use this to handle login or logout events. otherwise, just load what we have. the auto-login is messing with using only this.
+            this.UpdateCharDisplay();
+        }
     }
 
     public render() {
@@ -70,16 +74,16 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
     }
 
     private GetContextualContent(): JSX.Element {
-        if (this.props.loginState !== LoginState.LoggedIn) {
-            return this.GetAnonContent();
-        }
+        // if (this.props.loginState === LoginState.Login) {
+        //     return this.GetAnonContent();
+        // }
 
         switch(this.state.loadingState) {
             case LoadingState.Loading:      return this.GetLoadingContent();
             case LoadingState.Loaded:       return this.GetLoadedContent();
-            case LoadingState.Anonymous:    return this.GetAnonContent();
-            case LoadingState.NoCharacters: 
-            default:                        return this.GetNoCharsContent();
+            case LoadingState.NoCharacters: return this.GetNoCharsContent();
+            case LoadingState.Anonymous:    
+            default:                        return this.GetAnonContent();
         }
     }
 

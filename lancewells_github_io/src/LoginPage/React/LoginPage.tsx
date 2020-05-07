@@ -220,10 +220,10 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         loginPromise.then(
             loggedIn => {
                 if (loggedIn.DidLogin) {
+                    this.props.onLogin(LoginState.LoggedIn);
                     this.setState({
                         pageState: LoginState.LoggedIn
                     });
-                    this.props.onLogin(LoginState.LoggedIn);
                 }
                 else {
                     this.setState({
@@ -246,6 +246,8 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         this.setState({
             pageState: LoginState.Login
         });
+
+        CharacterStateManager.GetInstance().ChangeStaticCharacterData(undefined);
     }
 
     /**
@@ -268,11 +270,10 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                 });
 
                 if (onResolve.DidCreate) {
+                    this.props.onLogin(LoginState.Login);
                     this.setState({
                         pageState: LoginState.LoggedIn
                     });
-                    
-                    this.props.onLogin(LoginState.Login);
                 }
             }, onReject => {
                 console.error("Failed to create a user account." + onReject);
