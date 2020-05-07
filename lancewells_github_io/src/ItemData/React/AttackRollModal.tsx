@@ -28,6 +28,7 @@ interface IAttackRollModalState {
     // dieValues: number[];
     dieFaces: number[];
     rollType: RollType;
+    isRolling: boolean;
 }
 
 interface IAttackRollModalProps {
@@ -222,7 +223,8 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         // This is used to offset the initial roll with a 'cascading' effect of rolls.
         for (let i = 0; i < extraDieRolls * dieIndex; i++) {
             let nextRandomNumber: number = AttackRollModal.randomD20Numbers[randomIndex++ % randomNumberCount];
-            rollTimer.push(nextRandomNumber);
+            rollTimer.push( nextRandomNumber,
+                            nextRandomNumber);
         }
 
         for (let i = 0; i < standardFastRolls; i++) {
@@ -302,13 +304,38 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         //     rollType: rollType
         // });
         this.setState({
-            rollType: rollType
+            rollType: rollType,
+            isRolling: true
         })
         this.TossTheDice(dieCount);
     }
 
     private GetDieToRoll(): JSX.Element[] {
+        let highestValue: number = this.state.dieFaces.sort()[0];
+        let lowestValue: number = this.state.dieFaces.sort().reverse()[0];
+
         return this.state.dieFaces.map(dieFace => {
+            let dieColor: string = "#3d3d3d";
+
+            // if (!this.state.isRolling) {
+            //     if (dieFace === 20) {
+            //         dieColor = "#33984b";
+            //     }
+            //     if (dieFace === 1) {
+            //         dieColor = "#891e2b";
+            //     }
+            // }
+
+            if (!this.state.isRolling) {
+                if (dieFace === highestValue) {
+                    dieColor = "#33984b";
+                }
+                else if (dieFace === lowestValue) {
+                    dieColor = "#891e2b";
+                }
+            }
+
+
             return (
                 <div className="attack-die">
                     <div className="attack-die-value">
@@ -320,7 +347,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                         xmlns="http://www.w3.org/2000/svg"
                         width="64"
                         height="56" >
-                        <path fill="#891e2b" d="M0 27.712812921102035L16 0L48 0L64 27.712812921102035L48 55.42562584220407L16 55.42562584220407Z"></path>
+                        <path fill={dieColor} d="M0 27.712812921102035L16 0L48 0L64 27.712812921102035L48 55.42562584220407L16 55.42562584220407Z"></path>
                     </svg>
                 </div>
             )
@@ -360,6 +387,37 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
 
     private HandleFinalDieRoll(): void {
         this.RollDamage();
+        let diceValues = this.state.dieFaces;
+        let anyZeroes: boolean = diceValues.some(dv => dv === 0);
+        let anyTwenties: boolean = diceValues.some(dv => dv === 20);
+
+        switch (this.state.rollType) {
+            case RollType.Disadvantage: {
+                if (anyZeroes) {
+                    AttackRollModal.roll1Audio.play();
+                }
+                break;
+            }
+            case RollType.Advantage: {
+                if (anyTwenties) {
+                    AttackRollModal.roll20Audio.play();
+                }
+                break;
+            }
+            case RollType.Regular: {
+                if (anyZeroes) {
+                    AttackRollModal.roll1Audio.play();
+                }
+                if (anyTwenties) {
+                    AttackRollModal.roll20Audio.play();
+                }
+                break;
+            }
+        }
+
+        this.setState({
+            isRolling: false
+        });
     }
 
     private GetDamageRollDisplay(): JSX.Element[] {
@@ -387,7 +445,8 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             damageRoll: [],
             // dieValues: [],
             dieFaces: [],
-            rollType: RollType.Regular
+            rollType: RollType.Regular,
+            isRolling: false
         };
 
         AttackRollModal.roll1Audio.volume = 0.25;
@@ -407,7 +466,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         // https://codepen.io/wvr/pen/WrNgJp
 
         const rollAdvantage     = () => this.HandleRollDie(2, RollType.Advantage);
-        const rollDisadvantage  = () => this.HandleRollDie(3, RollType.Disadvantage);
+        const rollDisadvantage  = () => this.HandleRollDie(2, RollType.Disadvantage);
         const rollRegular       = () => this.HandleRollDie(1, RollType.Regular);
 
         return (
