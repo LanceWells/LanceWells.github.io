@@ -6,6 +6,7 @@ import { LoadingPlaceholder } from './LoadingPlaceholder';
 interface IStylizedModalProps {
     show: boolean;
     onHide: () => void;
+    onEnterModal: (() => void) | undefined;
     title: string;
     isLoading: boolean;
 }
@@ -25,7 +26,8 @@ export class StylizedModal extends React.Component<IStylizedModalProps, IStylize
             <Modal
                 show={this.props.show}
                 onHide={this.props.onHide}
-                centered={true}>
+                centered={true}
+                onEntering={this.props.onEnterModal}>
                 <Modal.Header>
                     <Modal.Title>
                         {this.props.title}

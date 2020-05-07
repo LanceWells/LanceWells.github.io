@@ -1,7 +1,7 @@
 import React from 'react';
 import { Attack } from '../Classes/Attack';
-import { Modal } from 'react-bootstrap';
 import { DamageType } from '../Enums/DamageType';
+import { StylizedModal } from '../../Utilities/React/StylizedModal';
 
 type DamageRoll = {
     damageType: DamageType;
@@ -129,57 +129,51 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         this.roll20Audio.volume = 0.25;
     }
 
-    public render() {
-        const handleModalShown: () => void = () => {
-            this.rollDieAudio.play();
-            this.RollAttack();
-            this.RollDamage();
-        };
+    private HandleModalShown(): void {
+        this.rollDieAudio.play();
+        this.RollAttack();
+        this.RollDamage();
+    }
 
+    public render() {
         // SVG Generated with:
         // https://codepen.io/wvr/pen/WrNgJp
 
         return (
-            <Modal
-                onEntering={handleModalShown}
+            <StylizedModal
                 show={this.props.show}
-                centered={true}
-                onHide={this.props.onHide}>
-                <Modal.Header>
-                    <Modal.Title className="pixel-font">
-                        {this.props.attackName}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="roll-window-image">
-                        <img
-                            alt="Dice Rolling"
-                            src="./images/Item_Shop/RollImage.png"
-                        />
-                    </div>
-                    <hr className='white-hr' />
-                    <h5>Attack</h5>
-                    <div className="roll-window-attack">
+                onHide={this.props.onHide}
+                onEnterModal={this.HandleModalShown.bind(this)}
+                title={this.props.attackName}
+                isLoading={false}>
+                <div className="roll-window-image">
+                    <img
+                        alt="Dice Rolling"
+                        src="./images/Item_Shop/RollImage.png"
+                    />
+                </div>
+                <hr className='white-hr' />
+                <h5>Attack</h5>
+                <div className="roll-window-attack">
+                    {this.state.attackRoll}
+                    <div className="roll-window-attack-number">
                         {this.state.attackRoll}
-                        <div className="roll-window-attack-number">
-                            {this.state.attackRoll}
-                        </div>
-                        <svg
-                            className="roll-window-attack-die"
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="64"
-                            height="56" >
-                            <path fill="#891e2b" d="M0 27.712812921102035L16 0L48 0L64 27.712812921102035L48 55.42562584220407L16 55.42562584220407Z"></path>
-                        </svg>
                     </div>
-                    <hr className='white-hr' />
-                    <h5>Damage</h5>
-                    <div className="roll-window-damage">
-                        {this.GetDamageRollDisplay()}
-                    </div>
-                </Modal.Body>
-            </Modal>
+                    <svg
+                        className="roll-window-attack-die"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="64"
+                        height="56" >
+                        <path fill="#891e2b" d="M0 27.712812921102035L16 0L48 0L64 27.712812921102035L48 55.42562584220407L16 55.42562584220407Z"></path>
+                    </svg>
+                </div>
+                <hr className='white-hr' />
+                <h5>Damage</h5>
+                <div className="roll-window-damage">
+                    {this.GetDamageRollDisplay()}
+                </div>
+            </StylizedModal>
         )
     }
 }

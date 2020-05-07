@@ -56,7 +56,8 @@ export class MoneyAdjustModal extends React.Component<IMoneyAdjustModalProps, IM
                 show={this.props.show}
                 onHide={this.props.hideModal}
                 title="Money Adjustment"
-                isLoading={this.props.showAsProcessing}>
+                isLoading={this.props.showAsProcessing}
+                onEnterModal={undefined}>
                 <div className="money-adjustment-container">
                     <MoneyDisplay
                         playerCopper={adjustedCopper}

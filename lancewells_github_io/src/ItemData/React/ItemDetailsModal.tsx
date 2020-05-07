@@ -1,11 +1,11 @@
 import '../ItemShop.css';
 
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
 import { IItem } from '../Interfaces/IItem';
 import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
 import { ItemType } from '../Enums/ItemType';
+import { StylizedModal } from '../../Utilities/React/StylizedModal';
 
 interface IItemDetailsModalState {
     showAlert: boolean;
@@ -75,39 +75,31 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
 
     render() {
         return (
-            <Modal
+            <StylizedModal
                 show={this.props.show}
                 onHide={this.props.hideModal}
-                centered={true}>
-                <Modal.Header>
-                    <Modal.Title className="pixel-font">
-                        {this.props.itemDetails.title}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className='item-preview'>
-                        <img src={this.props.itemDetails.iconSource} width={128} height={128} alt="item preview" />
+                title={this.props.itemDetails.title}
+                isLoading={false}
+                onEnterModal={undefined}>
+                <div className='item-preview'>
+                    <img src={this.props.itemDetails.iconSource} width={128} height={128} alt="item preview" />
+                </div>
+                <hr className='white-hr' />
+                <div className='item-details pixel-font'>
+                    <div className='item-tag'>
+                        {this.getSourceText(this.props.itemDetails.source)}
                     </div>
-                    <hr className='white-hr' />
-                    <div className='item-details pixel-font'>
-                        <div className='item-tag'>
-                            {this.getSourceText(this.props.itemDetails.source)}
-                        </div>
-                        <div className='item-tag'>
-                            {`${this.props.itemDetails.itemCost}x`}
-                            <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
-                        </div>
-                        <div className='item-tag'>
-                            {this.getTypeDisplay(this.props.itemDetails)}
-                        </div>
+                    <div className='item-tag'>
+                        {`${this.props.itemDetails.itemCost}x`}
+                        <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
                     </div>
-                    <hr className='white-hr' />
-                    {this.props.itemDetails.RenderItemDescription()}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant='dark' onClick={this.props.hideModal}>Close</Button>
-                </Modal.Footer>
-            </Modal>
+                    <div className='item-tag'>
+                        {this.getTypeDisplay(this.props.itemDetails)}
+                    </div>
+                </div>
+                <hr className='white-hr' />
+                {this.props.itemDetails.RenderItemDescription()}
+            </StylizedModal>
         );
     }
 }
