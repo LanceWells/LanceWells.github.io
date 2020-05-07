@@ -29,6 +29,7 @@ interface IAttackRollModalState {
     dieFaces: number[];
     rollType: RollType;
     isRolling: boolean;
+    finalDieValue: number | undefined;
 }
 
 interface IAttackRollModalProps {
@@ -305,14 +306,15 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         // });
         this.setState({
             rollType: rollType,
-            isRolling: true
+            isRolling: true,
+            finalDieValue: undefined
         })
         this.TossTheDice(dieCount);
     }
 
     private GetDieToRoll(): JSX.Element[] {
-        let highestValue: number = this.state.dieFaces.sort()[0];
-        let lowestValue: number = this.state.dieFaces.sort().reverse()[0];
+        // let highestValue: number = this.state.dieFaces.sort()[0];
+        // let lowestValue: number = this.state.dieFaces.sort().reverse()[0];
 
         return this.state.dieFaces.map(dieFace => {
             let dieColor: string = "#3d3d3d";
@@ -326,15 +328,18 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             //     }
             // }
 
-            if (!this.state.isRolling) {
-                if (dieFace === highestValue) {
-                    dieColor = "#33984b";
-                }
-                else if (dieFace === lowestValue) {
-                    dieColor = "#891e2b";
-                }
-            }
+            // if (!this.state.isRolling) {
+            //     if (dieFace === highestValue) {
+            //         dieColor = "#33984b";
+            //     }
+            //     else if (dieFace === lowestValue) {
+            //         dieColor = "#891e2b";
+            //     }
+            // }
 
+            // if (dieFace === this.state.finalDieValue) {
+            //     dieColor = "#33984b";
+            // }
 
             return (
                 <div className="attack-die">
@@ -352,6 +357,20 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                 </div>
             )
         })
+    }
+
+    private GetTotalRollText(): JSX.Element {
+        let finalDieText: string = "";
+
+        if (this.state.finalDieValue !== undefined) {
+            finalDieText = `${this.state.finalDieValue}`;
+        }
+        
+        return (
+            <h3>
+                {finalDieText}
+            </h3>
+        )
     }
 
     // private GetDieToRoll(): JSX.Element[] {
@@ -386,38 +405,51 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     // }
 
     private HandleFinalDieRoll(): void {
-        this.RollDamage();
         let diceValues = this.state.dieFaces;
-        let anyZeroes: boolean = diceValues.some(dv => dv === 0);
-        let anyTwenties: boolean = diceValues.some(dv => dv === 20);
-
+        let finalDie: number | undefined = undefined;
+        
         switch (this.state.rollType) {
             case RollType.Disadvantage: {
-                if (anyZeroes) {
-                    AttackRollModal.roll1Audio.play();
+                if (diceValues.length > 0) {
+                    finalDie = diceValues.slice(0).sort((a, b) => a - b)[0];
                 }
                 break;
             }
             case RollType.Advantage: {
-                if (anyTwenties) {
-                    AttackRollModal.roll20Audio.play();
+                if (diceValues.length > 0) {
+                    finalDie = diceValues.slice(0).sort((a, b) => a - b).reverse()[0];
                 }
                 break;
             }
             case RollType.Regular: {
-                if (anyZeroes) {
-                    AttackRollModal.roll1Audio.play();
-                }
-                if (anyTwenties) {
-                    AttackRollModal.roll20Audio.play();
+                if (diceValues.length > 0) {
+                    finalDie = diceValues[0];
                 }
                 break;
             }
         }
 
-        this.setState({
-            isRolling: false
-        });
+        setTimeout(() => {
+            if (finalDie === 20) {
+                AttackRollModal.roll20Audio.play();
+            }
+            else if (finalDie === 1) {
+                AttackRollModal.roll1Audio.play();
+            }
+            else {
+                AttackRollModal.rollStopAudio.play();
+            }
+            
+            this.setState({
+                isRolling: false,
+                finalDieValue: finalDie
+            });
+        }, 500);
+
+        setTimeout(() => {
+            AttackRollModal.rollStopAudio.play();
+            this.RollDamage();
+        }, 500 * 2);
     }
 
     private GetDamageRollDisplay(): JSX.Element[] {
@@ -446,13 +478,14 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             // dieValues: [],
             dieFaces: [],
             rollType: RollType.Regular,
-            isRolling: false
+            isRolling: false,
+            finalDieValue: undefined
         };
 
         AttackRollModal.roll1Audio.volume = 0.25;
         AttackRollModal.roll20Audio.volume = 0.25;
         AttackRollModal.rollDieAudio.volume = 0.25;
-        AttackRollModal.rollStopAudio.volume = 0.25;
+        AttackRollModal.rollStopAudio.volume = 0.1;
     }
 
     // private HandleModalShown(): void {
@@ -486,6 +519,9 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                 <h5>Attack</h5>
                 <div className="attack-die-container">
                     {this.GetDieToRoll()}
+                </div>
+                <div className="attack-die-total">
+                    {this.GetTotalRollText()}
                 </div>
                 <hr className='white-hr' />
                 <h5>Damage</h5>
