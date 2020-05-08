@@ -82,6 +82,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     private static readonly roll20Audio = new Audio("./sounds/roll20.wav");
     private static readonly roll1Audio = new Audio("./sounds/roll1.wav");
     private static readonly rollStopAudio: HTMLAudioElement = new Audio("./sounds/rollStop.wav");
+    private static readonly rollResultAudio = new Audio("./sounds/rollResult.wav");
 
     private static dieDelay: number = 350;
 
@@ -317,7 +318,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         // let lowestValue: number = this.state.dieFaces.sort().reverse()[0];
 
         return this.state.dieFaces.map(dieFace => {
-            let dieColor: string = "#3d3d3d";
+            let dieColor: string = "#891e2b";
 
             // if (!this.state.isRolling) {
             //     if (dieFace === 20) {
@@ -437,7 +438,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                 AttackRollModal.roll1Audio.play();
             }
             else {
-                AttackRollModal.rollStopAudio.play();
+                AttackRollModal.rollResultAudio.play();
             }
             
             this.setState({
@@ -482,16 +483,17 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             finalDieValue: undefined
         };
 
-        AttackRollModal.roll1Audio.volume = 0.25;
+        AttackRollModal.roll1Audio.volume = 0.1;
         AttackRollModal.roll20Audio.volume = 0.25;
         AttackRollModal.rollDieAudio.volume = 0.25;
+        AttackRollModal.rollResultAudio.volume = 0.1;
         AttackRollModal.rollStopAudio.volume = 0.1;
     }
 
     // private HandleModalShown(): void {
         // this.rollDieAudio.play();
-        // this.RollAttack();
-        // this.RollDamage();
+        // this.RollAttack()
+        // this.RollDamage()
     // }
 
     public render() {
