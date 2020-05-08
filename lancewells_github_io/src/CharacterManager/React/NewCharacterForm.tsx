@@ -5,6 +5,7 @@ import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterDat
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
 import { PlayerInventoryService } from '../../FirebaseAuth/Classes/PlayerInventoryService';
 import { CharacterImageMap } from '../../CharacterImage/Classes/CharacterImageMap';
+import { StylizedModal } from '../../Utilities/React/StylizedModal';
 
 /**
  * The input properties for this component.
@@ -159,14 +160,12 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
         let creatingMessage: boolean = this.state.isCreating;
 
         return (
-            <Modal
+            <StylizedModal
                 show={this.props.show}
-                centered={true}
                 onHide={this.props.onHideModal}
-            >
-                <Modal.Header>
-                    <Modal.Title>New Character Deets</Modal.Title>
-                </Modal.Header>
+                title="New Character Deets"
+                isLoading={false}
+                onEnterModal={undefined}>
                 <div className="new-character-form-errors">
                     {
                         this.state.validationErrors.map(errormessage => (<span>{errormessage}</span>))
@@ -204,20 +203,14 @@ export class NewCharacterForm extends React.Component<INewCharacterFormProps, IN
                         value="Create New Character"
                     />
                 </form>
-                <div style={{visibility: creatingMessage ? 'visible' : 'hidden'}}>
+                <div style={{ visibility: creatingMessage ? 'visible' : 'hidden' }}>
                     <Spinner
                         animation="border"
                         role="character button status"
                     />
                     <span>Creating {this.currentNewCharName} . . .</span>
                 </div>
-                <button
-                        className="cancel-new-character-button"
-                        onClick={this.props.onHideModal}
-                    >
-                        Close without creating
-                </button>
-            </Modal>
+            </StylizedModal>
         )
     }
 }
