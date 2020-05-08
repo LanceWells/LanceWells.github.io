@@ -153,16 +153,19 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
                 </div>
                 <div className="roll-window-buttons">
                     <button
+                        disabled={this.state.isRolling}
                         className="roll-window-button negative-button"
                         onClick={rollDisadvantage.bind(this)}>
                         With Disadvantage
                     </button>
                     <button
+                        disabled={this.state.isRolling}
                         className="roll-window-button"
                         onClick={rollRegular.bind(this)}>
                         Regular Roll
                     </button>
                     <button
+                        disabled={this.state.isRolling}
                         className="roll-window-button positive-button"
                         onClick={rollAdvantage.bind(this)}>
                         With Advantage
@@ -363,7 +366,6 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             }
 
             this.setState({
-                isRolling: false,
                 finalDieValue: finalDie
             });
         }, AttackRollModal.suspenseLength);
@@ -371,6 +373,9 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         setTimeout(() => {
             AttackRollModal.rollStopAudio.play();
             this.RollDamageDice();
+            this.setState({
+                isRolling: false
+            });
         }, AttackRollModal.suspenseLength * 2);
     }
 
