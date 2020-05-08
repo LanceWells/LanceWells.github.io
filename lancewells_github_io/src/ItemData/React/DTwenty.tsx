@@ -1,10 +1,21 @@
 import React from 'react';
 
 interface IMoneyAdjustModalProps {
+    /**
+     * The die face to show on the die currently.
+     */
     dieFace: number;
+
+    /**
+     * The color of the die.
+     */
     dieColor: string;
 }
 
+/**
+ * Gets a visual representation of a D20 to show to the user.
+ * @param props 
+ */
 export function DTwenty (props: IMoneyAdjustModalProps) {
     return (
         <div className="attack-die">

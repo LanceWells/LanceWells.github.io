@@ -59,7 +59,7 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
     }
 
     public componentDidUpdate(prevProps: ICharacterInfoContainerProps): void {
-        if (this.props.loginState !== prevProps.loginState) {
+        if (this.props.loginState !== prevProps.loginState || this.state.loadingState == LoadingState.NoCharacters) {
             // basically, use this to handle login or logout events. otherwise, just load what we have. the auto-login is messing with using only this.
             this.UpdateCharDisplay();
         }
