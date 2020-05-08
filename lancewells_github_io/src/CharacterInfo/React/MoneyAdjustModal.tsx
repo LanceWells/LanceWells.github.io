@@ -71,7 +71,6 @@ export class MoneyAdjustModal extends React.Component<IMoneyAdjustModalProps, IM
                             id="copperAdjustment"
                             name="copperAdjustment"
                             min={-this.props.playerCopper}
-                            max={this.props.playerCopper}
                             onChange={this.HandleCopperInput.bind(this)} />
                         <input
                             type="submit"
