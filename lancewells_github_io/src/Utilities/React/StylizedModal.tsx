@@ -41,7 +41,11 @@ export class StylizedModal extends React.Component<IStylizedModalProps, IStylize
                     </LoadingPlaceholder>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button onClick={this.props.onHide}>Close</button>
+                    <button
+                        className="negative-button"
+                        onClick={this.props.onHide}>
+                        Close
+                    </button>
                 </Modal.Footer>
             </Modal>
         );

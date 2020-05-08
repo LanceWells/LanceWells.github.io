@@ -530,6 +530,17 @@ canvas, img {
     min-height: 2em;
 }
 
+.roll-window-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.roll-window-button {
+    padding: 0px 5px;
+    font-weight: 700;
+}
+
 /* .roll-window-attack-number {
     position: absolute;
     z-index: 2;

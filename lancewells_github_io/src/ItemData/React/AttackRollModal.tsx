@@ -17,20 +17,58 @@ enum RollType {
 }
 
 interface IAttackRollModalState {
+    /**
+     * The damage values that have been rolled from using this modal.
+     */
     damageRoll: DamageRoll[];
+
+    /**
+     * The current die faces that are shown to the user. This will change rapidly while rolling.
+     */
     dieFaces: number[];
+
+    /**
+     * The type of roll that is performed. This will be adv/disadv/etc.
+     */
     rollType: RollType;
+
+    /**
+     * If true, the modal is currently rolling die. Prevents some components from rendering.
+     */
     isRolling: boolean;
+
+    /**
+     * The final die value. This will be a single number, if one exists.
+     */
     finalDieValue: number | undefined;
 }
 
 interface IAttackRollModalProps {
+    /**
+     * If true, show this modal.
+     */
     show: boolean;
+
+    /**
+     * The name of the attack to display in the title bar.
+     */
     attackName: string;
+
+    /**
+     * A series of attack values to compute damage for.
+     */
     attacks: Attack[];
+
+    /**
+     * A callback for when the user requests that this modal be closed.
+     */
     onHide: () => void;
 }
 
+/**
+ * A modal containing a dice rolling module. Computes random numbers for the attack as well as for the damage
+ * of the provided item.
+ */
 export class AttackRollModal extends React.Component<IAttackRollModalProps, IAttackRollModalState> {
     /**
      * Generating a bunch of random numbers on the fly, in quick succession, is somewhat expensive, so 
@@ -58,45 +96,88 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     private static readonly rollStopAudio: HTMLAudioElement = new Audio("./sounds/rollStop.wav");
     private static readonly rollResultAudio = new Audio("./sounds/rollResult.wav");
 
-    private GetRandomNumber(dieFaces: number): number {
-        return Math.ceil(Math.random() * (dieFaces));
+    /**
+     * Creates a new instance of this object.
+     * @param props A series of properties to pass to construct this object.
+     */
+    public constructor(props: IAttackRollModalProps) {
+        super(props);
+        this.state = {
+            damageRoll: [],
+            dieFaces: [],
+            rollType: RollType.Regular,
+            isRolling: false,
+            finalDieValue: undefined
+        };
+
+        AttackRollModal.roll1Audio.volume = 0.1;
+        AttackRollModal.roll20Audio.volume = 0.25;
+        AttackRollModal.rollDieAudio.volume = 0.25;
+        AttackRollModal.rollResultAudio.volume = 0.1;
+        AttackRollModal.rollStopAudio.volume = 0.1;
     }
 
-    private TossTheDice(dieCount: number) {
-        let rolls: number[][] = [];
-        for (let i: number = 0; i < dieCount; i++) {
-            let value: number = this.GetRandomNumber(20);
-            let randomNumberIndex: number = this.GetRandomNumber(AttackRollModal.randomD20Numbers.length);
-            let rollFrames: number[] = this.PopulateRollNumbers(randomNumberIndex, i, value);
+    public render() {
+        // SVG Generated with:
+        // https://codepen.io/wvr/pen/WrNgJp
 
-            rolls.push(rollFrames);
-        }
+        const rollAdvantage     = () => this.HandleRollDie(2, RollType.Advantage);
+        const rollDisadvantage  = () => this.HandleRollDie(2, RollType.Disadvantage);
+        const rollRegular       = () => this.HandleRollDie(1, RollType.Regular);
 
-        let longestDieArray: number = rolls[dieCount - 1].length;
-        AttackRollModal.rollDieAudio.play();
-        
-        for (let rollIndex = 0; rollIndex < longestDieArray; rollIndex++) {
-            setTimeout(() => {
-                let currentRolls: number[] = [];
-                for (let dieIndex = 0; dieIndex < rolls.length; dieIndex++) {
-                    let indexToGet = Math.min(rollIndex, rolls[dieIndex].length - 1);
+        return (
+            <StylizedModal
+                show={this.props.show}
+                onHide={this.props.onHide}
+                onEnterModal={undefined}
+                title={this.props.attackName}
+                isLoading={false}>
+                <div className="roll-window-image">
+                    <img
+                        alt="Dice Rolling"
+                        src="./images/Item_Shop/RollImage.png"
+                    />
+                </div>
+                <hr className='white-hr' />
+                <div className="attack-results-container">
+                    <h5>Attack</h5>
+                    <div className="attack-die-container">
+                        {this.GetDiceDisplay()}
+                    </div>
+                    <div className="attack-die-total">
+                        {this.GetTotalRollTextDisplay()}
+                    </div>
+                    <div className="roll-window-damage">
+                        {this.GetDamageRollDisplay()}
+                    </div>
+                </div>
+                <div className="roll-window-buttons">
+                    <button
+                        className="roll-window-button negative-button"
+                        onClick={rollDisadvantage.bind(this)}>
+                        With Disadvantage
+                    </button>
+                    <button
+                        className="roll-window-button"
+                        onClick={rollRegular.bind(this)}>
+                        Regular Roll
+                    </button>
+                    <button
+                        className="roll-window-button positive-button"
+                        onClick={rollAdvantage.bind(this)}>
+                        With Advantage
+                    </button>
+                </div>
+            </StylizedModal>
+        )
+    }
 
-                    if (rollIndex === rolls[dieIndex].length - 1) {
-                        AttackRollModal.rollStopAudio.play();
-                    }
-
-                    currentRolls.push(rolls[dieIndex][indexToGet]);
-                }
-
-                this.setState({
-                    dieFaces: currentRolls
-                });
-
-                if (rollIndex === longestDieArray - 1) {
-                    this.HandleFinalDieRoll();
-                }
-            }, AttackRollModal.dieFrameLength * rollIndex)
-        }
+    /**
+     * Gets a random number between 1 and the provided number.
+     * @param randomLimit The highest value to roll.
+     */
+    private GetRandomNumber(randomLimit: number): number {
+        return Math.ceil(Math.random() * (randomLimit));
     }
 
     /**
@@ -112,9 +193,9 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
     private PopulateRollNumbers(randomIndex: number, dieIndex: number, finalValue: number): number[] {
         let rollTimer: number[] = [];
 
-        let standardFastRolls:  number = 10;
-        let standardMedmRolls:  number = 8;
-        let standardSlowRolls:  number = 2;
+        let standardFastRolls: number = 10;
+        let standardMedmRolls: number = 8;
+        let standardSlowRolls: number = 2;
         let standardSnailRolls: number = 1;
 
         let extraDieRolls: number = 8 * dieIndex;
@@ -161,10 +242,55 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         return randomIndex;
     }
 
-    private RollDamage(): void {
+    /**
+     * Rolls the attack die. This incorporates a visual component, and will roll "virtual" dice on screen.
+     * @param dieCount The number of dice to roll.
+     */
+    private RollAttackDice(dieCount: number) {
+        let rolls: number[][] = [];
+        for (let i: number = 0; i < dieCount; i++) {
+            let value: number = this.GetRandomNumber(20);
+            let randomNumberIndex: number = this.GetRandomNumber(AttackRollModal.randomD20Numbers.length);
+            let rollFrames: number[] = this.PopulateRollNumbers(randomNumberIndex, i, value);
+
+            rolls.push(rollFrames);
+        }
+
+        let longestDieArray: number = rolls[dieCount - 1].length;
+        AttackRollModal.rollDieAudio.play();
+
+        for (let rollIndex = 0; rollIndex < longestDieArray; rollIndex++) {
+            setTimeout(() => {
+                let currentRolls: number[] = [];
+                for (let dieIndex = 0; dieIndex < rolls.length; dieIndex++) {
+                    let indexToGet = Math.min(rollIndex, rolls[dieIndex].length - 1);
+
+                    if (rollIndex === rolls[dieIndex].length - 1) {
+                        AttackRollModal.rollStopAudio.play();
+                    }
+
+                    currentRolls.push(rolls[dieIndex][indexToGet]);
+                }
+
+                this.setState({
+                    dieFaces: currentRolls
+                });
+
+                // This looks a little dumb, but it handles the final die roll effectively.
+                if (rollIndex === longestDieArray - 1) {
+                    this.FinalizeDieRoll();
+                }
+            }, AttackRollModal.dieFrameLength * rollIndex)
+        }
+    }
+
+    /**
+     * Rolls damage dice. This value appears after the attack dice have been rolled.
+     */
+    private RollDamageDice(): void {
         let rolls: DamageRoll[] = this.props.attacks.map((attack) => {
             let rolledNumbers: number[] = [];
-            for(let i = 0; i < attack.diceCount; i++) {
+            for (let i = 0; i < attack.diceCount; i++) {
                 rolledNumbers.push(this.GetRandomNumber(attack.diceSize));
             }
 
@@ -182,47 +308,28 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         });
     }
 
+    /**
+     * Handles a user request to roll the attack dice.
+     * @param dieCount The number of dice to roll.
+     * @param rollType If this is a normal roll, with advantage, or with disadvantage.
+     */
     private HandleRollDie(dieCount: number, rollType: RollType): void {
         this.setState({
             rollType: rollType,
             isRolling: true,
-            finalDieValue: undefined
+            finalDieValue: undefined,
+            damageRoll: []
         })
-        this.TossTheDice(dieCount);
+        this.RollAttackDice(dieCount);
     }
 
-    private GetDieToRoll(): JSX.Element[] {
-        return this.state.dieFaces.map(dieFace => {
-            let dieColor: string = "#891e2b";
-
-            return (
-                <DTwenty
-                    dieFace={dieFace}
-                    dieColor={dieColor}
-                />
-            )
-        })
-    }
-
-    private GetTotalRollText(): JSX.Element {
-        let finalDieText: string = "";
-
-        if (this.state.finalDieValue !== undefined) {
-            finalDieText = `${this.state.finalDieValue}`;
-        }
-        
-        return (
-            <span>
-                {finalDieText}
-            </span>
-        )
-    }
-
-
-    private HandleFinalDieRoll(): void {
+    /**
+     * Handles some of the stateful logic when our dice have finished rolling.
+     */
+    private FinalizeDieRoll(): void {
         let diceValues = this.state.dieFaces;
         let finalDie: number | undefined = undefined;
-        
+
         switch (this.state.rollType) {
             case RollType.Disadvantage: {
                 if (diceValues.length > 0) {
@@ -254,7 +361,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             else {
                 AttackRollModal.rollResultAudio.play();
             }
-            
+
             this.setState({
                 isRolling: false,
                 finalDieValue: finalDie
@@ -263,14 +370,50 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
 
         setTimeout(() => {
             AttackRollModal.rollStopAudio.play();
-            this.RollDamage();
+            this.RollDamageDice();
         }, AttackRollModal.suspenseLength * 2);
     }
 
+    /**
+     * Gets the final value to display for the last dice roll.
+     */
+    private GetTotalRollTextDisplay(): JSX.Element {
+        let finalDieText: string = "";
+
+        if (this.state.finalDieValue !== undefined) {
+            finalDieText = `${this.state.finalDieValue}`;
+        }
+
+        return (
+            <span>
+                {finalDieText}
+            </span>
+        )
+    }
+
+    /**
+     * Gets the attack dice visual component.
+     */
+    private GetDiceDisplay(): JSX.Element[] {
+        return this.state.dieFaces.map(dieFace => {
+            let dieColor: string = "#891e2b";
+
+            return (
+                <DTwenty
+                    dieFace={dieFace}
+                    dieColor={dieColor}
+                />
+            )
+        })
+    }
+
+    /**
+     * Gets the damage roll text to display to the user.
+     */
     private GetDamageRollDisplay(): JSX.Element[] {
         return this.state.damageRoll.map((roll) => {
             let rollStatement: string = "";
-            
+
             let isCrit: boolean = this.state.finalDieValue == 20;
             let critModifier: string = isCrit ? "2x" : "";
 
@@ -281,74 +424,11 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
             rollStatement = `${critModifier}${diceRollsMessage}${rollModifierMessage}`;
 
             return (
-                <div className={`text-color-${roll.damageType.toLowerCase()}`}>
+                <div
+                    className={`text-color-${roll.damageType.toLowerCase()}`}>
                     {rollStatement} {damageMessage}
                 </div>
             );
         });
-    }
-    
-    public constructor(props: IAttackRollModalProps) {
-        super(props);
-        this.state = {
-            damageRoll: [],
-            dieFaces: [],
-            rollType: RollType.Regular,
-            isRolling: false,
-            finalDieValue: undefined
-        };
-
-        AttackRollModal.roll1Audio.volume = 0.1;
-        AttackRollModal.roll20Audio.volume = 0.25;
-        AttackRollModal.rollDieAudio.volume = 0.25;
-        AttackRollModal.rollResultAudio.volume = 0.1;
-        AttackRollModal.rollStopAudio.volume = 0.1;
-    }
-
-    public render() {
-        // SVG Generated with:
-        // https://codepen.io/wvr/pen/WrNgJp
-
-        const rollAdvantage     = () => this.HandleRollDie(2, RollType.Advantage);
-        const rollDisadvantage  = () => this.HandleRollDie(2, RollType.Disadvantage);
-        const rollRegular       = () => this.HandleRollDie(1, RollType.Regular);
-
-        return (
-            <StylizedModal
-                show={this.props.show}
-                onHide={this.props.onHide}
-                onEnterModal={undefined}
-                title={this.props.attackName}
-                isLoading={false}>
-                <div className="roll-window-image">
-                    <img
-                        alt="Dice Rolling"
-                        src="./images/Item_Shop/RollImage.png"
-                    />
-                </div>
-                <hr className='white-hr' />
-                <div className="attack-results-container">
-                    <h5>Attack</h5>
-                    <div className="attack-die-container">
-                        {this.GetDieToRoll()}
-                    </div>
-                    <div className="attack-die-total">
-                        {this.GetTotalRollText()}
-                    </div>
-                    <div className="roll-window-damage">
-                        {this.GetDamageRollDisplay()}
-                    </div>
-                </div>
-                <button onClick={rollDisadvantage.bind(this)}>
-                    With Disadvantage
-                </button>
-                <button onClick={rollRegular.bind(this)}>
-                    Regular Roll
-                </button>
-                <button onClick={rollAdvantage.bind(this)}>
-                    With Advantage
-                </button>
-            </StylizedModal>
-        )
     }
 }
