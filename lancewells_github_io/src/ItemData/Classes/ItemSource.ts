@@ -35,7 +35,7 @@ export class ItemSource {
             case "Armor":
                 listToSearch = ItemMap_Armor;
                 break;
-            case ItemType.Potion:
+            case ItemType.Consumable:
                 listToSearch = ItemMap_Potions;
                 break;
             case ItemType.Wondrous:
@@ -815,7 +815,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 50,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'SmallMana',
@@ -828,7 +828,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: true,
         itemCost: 100,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'DarkContract',
@@ -841,7 +841,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'TiamatBrew',
@@ -854,7 +854,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: true,
         itemCost: 100,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'PoisonousMiasma',
@@ -867,7 +867,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'BurningMiasma',
@@ -880,7 +880,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'ElectricMiasma',
@@ -893,7 +893,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: false,
         itemCost: 100,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
     {
         key: 'AngelicPotion',
@@ -906,7 +906,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         modifications: [],
         hasWithdrawalEffect: true,
         itemCost: 250,
-        type: ItemType.Potion,
+        type: ItemType.Consumable,
     },
 ]
 

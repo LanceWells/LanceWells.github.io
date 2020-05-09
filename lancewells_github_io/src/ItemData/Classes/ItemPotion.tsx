@@ -17,7 +17,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
     public source: SourceType = SourceType.Homebrew;
     public itemCost: number = 0;
     public requiresAttunement: boolean = false;
-    public readonly type: ItemType = ItemType.Potion;
+    public readonly type: ItemType = ItemType.Consumable;
 
     public hasWithdrawalEffect: boolean = false;
     
@@ -68,7 +68,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
 export function IItemIsItemPotion(item: IItemJson): item is ItemPotion {
     let isType: boolean = true;
 
-    isType = isType && (item as ItemPotion).type === ItemType.Potion;
+    isType = isType && (item as ItemPotion).type === ItemType.Consumable;
 
     return isType;
 }

@@ -144,7 +144,7 @@ export class CharacterManager extends React.Component<ICharacterManagerProps, IC
             });
 
             // Modify our existing singleton that tracks our current character selection.
-            CharacterStateManager.GetInstance().ChangeStaticCharacterData(currentCharacter);
+            CharacterStateManager.GetInstance().ChangeCharacter(currentCharacter);
         });
     }
 }

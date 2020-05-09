@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react';
-import { Modal } from 'react-bootstrap';
 import { MoneyDisplay } from './MoneyDisplay';
 import { MoneyAdjustCallback } from '../Types/MoneyAdjustCallback';
 import { StylizedModal } from '../../Utilities/React/StylizedModal';

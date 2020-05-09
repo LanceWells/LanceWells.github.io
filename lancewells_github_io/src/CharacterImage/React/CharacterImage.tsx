@@ -75,7 +75,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             charImageLayout: charImgLayout
         });
         
-        CharacterStateManager.GetInstance().GetCurrentStaticCharacterData()
+        CharacterStateManager.GetInstance().GetCharacter()
             .then(charData => {
                 if (charData !== undefined) {
                     charData.CharLayout = this.state.charImageLayout;
@@ -90,7 +90,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
             borderStyle: borderStyle
         });
 
-        CharacterStateManager.GetInstance().GetCurrentStaticCharacterData()
+        CharacterStateManager.GetInstance().GetCharacter()
             .then(charData => {
                 if (charData !== undefined) {
                     charData.BorderColor = borderStyle;
@@ -137,7 +137,7 @@ export class CharacterImage extends React.Component<ICharacterImageProps, IChara
         // layers so someone can modify their character!
         let userHasAccount: boolean = await UserDataAuth.GetInstance().CheckForAccess();
         if (userHasAccount) {
-            charData = await CharacterStateManager.GetInstance().GetCurrentStaticCharacterData();
+            charData = await CharacterStateManager.GetInstance().GetCharacter();
         }
 
         if (charData !== undefined) {

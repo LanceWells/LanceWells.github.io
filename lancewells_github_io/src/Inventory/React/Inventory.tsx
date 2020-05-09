@@ -47,7 +47,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     private async UpdateItems() {
         let newItems: IItem[] = [];
 
-        CharacterStateManager.GetInstance().GetCurrentStaticCharacterData().then(char => {
+        CharacterStateManager.GetInstance().GetCharacter().then(char => {
             if (char !== undefined) {
                 char.Items.forEach(item => {
                     let foundItem: IItem | undefined = ItemSource.GetItem(item.key, item.type);

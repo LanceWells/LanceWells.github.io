@@ -1,11 +1,13 @@
 import { PlayerInventoryService } from './PlayerInventoryService';
 import { PlayerCharacterData } from '../Types/PlayerCharacterData';
 import { UserDataAuth } from './UserDataAuth';
+import { SnapshotListener } from '../Types/SnapshotListener';
 
 export type CharacterStateObserver = (charData: PlayerCharacterData | undefined) => void;
 
 export class CharacterStateManager {
     private _observers: CharacterStateObserver[] = [];
+    private _currentCharListener: SnapshotListener | undefined;
 
     private static _instance: CharacterStateManager;
 
@@ -36,7 +38,7 @@ export class CharacterStateManager {
         this._observers.forEach(obs => obs(this._currentCharacter))
     }
 
-    public async GetCurrentStaticCharacterData(): Promise<PlayerCharacterData | undefined> {
+    public async GetCharacter(): Promise<PlayerCharacterData | undefined> {
         let accessGranted: boolean = await UserDataAuth.GetInstance().CheckForAccess();
 
         if (accessGranted) {
@@ -58,11 +60,24 @@ export class CharacterStateManager {
         return this._currentCharacter;
     }
 
+    public async ChangeCharacter(charData: PlayerCharacterData | undefined) {
+        if (this._currentCharListener !== undefined) {
+            this._currentCharListener();
+        }
+
+        if (charData !== undefined) {
+            this._currentCharListener = PlayerInventoryService.ListenToCharacterUpdates(charData.Name, this.SetCharacter.bind(this));
+        }
+        else {
+            this.SetCharacter(undefined);
+        }
+    }
+
     /**
      * @description Called in order to update the local static object that tracks the character's state.
      * @param charData 
      */
-    public async ChangeStaticCharacterData(charData: PlayerCharacterData | undefined) {
+    private SetCharacter(charData: PlayerCharacterData | undefined) {
         this._currentCharacter = charData;
         this.NotifyObservers();
     }
@@ -75,12 +90,14 @@ export class CharacterStateManager {
         let accessGranted: boolean = await UserDataAuth.GetInstance().CheckForAccess();
 
         if (accessGranted) {
-            this.ChangeStaticCharacterData(charData);
-            PlayerInventoryService.UpdateCharacterData(charData);
+            this.SetCharacter(charData);
+            await PlayerInventoryService.UpdateCharacterData(charData);
         }
     }
 
     private _currentCharacter: PlayerCharacterData | undefined = undefined;
 
-    private constructor() {}
+    private constructor() {
+        this._currentCharListener = undefined;
+    }
 }

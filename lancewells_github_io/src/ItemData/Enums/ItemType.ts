@@ -1,6 +1,6 @@
 export enum ItemType {
     Weapon = "Weapons",
     Armor = "Armor",
-    Potion = "Potions",
+    Consumable = "Consumables",
     Wondrous = "Wondrous Items"
 }

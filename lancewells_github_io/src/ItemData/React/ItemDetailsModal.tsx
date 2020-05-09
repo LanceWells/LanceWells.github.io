@@ -51,7 +51,7 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                 {
                     return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
                 }
-            case ItemType.Potion:
+            case ItemType.Consumable:
                 {
                     return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
                 }

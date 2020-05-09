@@ -5,6 +5,12 @@ import { CreateUserResponse } from '../../FirebaseAuth/Types/CreateUserResponse'
 import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
+import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
+import { ItemShopData } from '../../Shops/Types/ItemShopData';
+import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
+import { ItemSource } from '../../ItemData/Classes/ItemSource';
+import { ItemType } from '../../ItemData/Enums/ItemType';
+import { IItem } from '../../ItemData/Interfaces/IItem';
 
 /**
  * @description A series of properties to use to render this component.
@@ -59,6 +65,24 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         this.CheckForLogin();
     }
 
+    private HandleTestButton(): void {
+        let firstItem: IItem = ItemSource.GetItem("Javelin", ItemType.Weapon) as IItem;
+        let secondItem: IItem = ItemSource.GetItem("FireyRing", ItemType.Wondrous) as IItem;
+        
+        let itemShop: ItemShopData = {
+            ID: "",
+            Name: "Test Shop Name",
+            ShopKeeper: ShopKeepers.Indigo,
+            Items: [
+                firstItem,
+                secondItem
+            ]
+        }
+        // let createdShop = GameRoomService.AddShop(itemShop);
+        let receivedShop = GameRoomService.GetShopByShopId("-M6qoSn88jT2iGbQtnI7");
+        ;
+    }
+
     /**
      * @description Renders thi object.
      */
@@ -68,10 +92,11 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                 <div className="login-dialog">
                     <h2 className="login-header">
                         {this.state.pageState.toString()}
-                    </h2>
+                    </h2> 
                     <div className="login-error-messages">
                         {this.getErrorMessages()}
                     </div>
+                    <button onClick={this.HandleTestButton}>Test Button</button>
                     {this.GetInternalRenderBits()}
                 </div>
             </div>
@@ -247,7 +272,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
             pageState: LoginState.Login
         });
 
-        CharacterStateManager.GetInstance().ChangeStaticCharacterData(undefined);
+        CharacterStateManager.GetInstance().ChangeCharacter(undefined);
     }
 
     /**

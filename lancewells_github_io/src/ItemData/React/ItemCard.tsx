@@ -81,7 +81,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             case ItemType.Weapon:
                 source = "./images/Item_Shop/ItemCards/CardForge.png";
                 break;
-            case ItemType.Potion:
+            case ItemType.Consumable:
                 source = "./images/Item_Shop/ItemCards/CardAlchemist.png";
                 break;
             default:

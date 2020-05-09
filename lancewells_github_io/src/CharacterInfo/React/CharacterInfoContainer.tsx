@@ -135,7 +135,7 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
 
         if (userHasAccess) {
             let staticCharData: PlayerCharacterData | undefined = undefined; 
-            staticCharData = await CharacterStateManager.GetInstance().GetCurrentStaticCharacterData();
+            staticCharData = await CharacterStateManager.GetInstance().GetCharacter();
             
             if (staticCharData === undefined) {
                 loadingState = LoadingState.NoCharacters;

@@ -3,6 +3,8 @@ import { firestore } from 'firebase';
 import { PlayerCharacterData } from '../Types/PlayerCharacterData';
 import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
+import { CharacterUpdateCallback } from '../Types/CharacterUpdateCallback';
+import { SnapshotListener } from '../Types/SnapshotListener';
 
 export class PlayerInventoryService {
     private static readonly collection_userWritable: string = "userWritable";
@@ -114,6 +116,32 @@ export class PlayerInventoryService {
         return response;
     }
 
+    public static ListenToCharacterUpdates(playerName: string, charCallback: CharacterUpdateCallback): SnapshotListener | undefined {
+        let snapshotListener: SnapshotListener | undefined = undefined;
+        let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+
+        if (uid !== undefined) {
+            let playerDataRef = firestore()
+                .collection(this.collection_userWritable)
+                .doc(this.document_playerInventory)
+                .collection(uid)
+                .doc(playerName);
+
+            snapshotListener = playerDataRef
+                .withConverter(PlayerInventoryService.PlayerCharacterDataConverter)
+                .onSnapshot(docSnapshot => {
+                    if (docSnapshot.exists) {
+                        charCallback(docSnapshot.data());
+                    }
+                    else {
+                        console.error(`Could not find character document for ${playerName}.`);
+                    }
+                });
+        }
+
+        return snapshotListener;
+    }
+
     public static async GetDefaultCharacter(): Promise<PlayerCharacterData | undefined> {
         let response: PlayerCharacterData | undefined = undefined;
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
@@ -181,13 +209,13 @@ export class PlayerInventoryService {
         return localStorage.getItem(PlayerInventoryService.storage_currentCharacter);
     }
 
-    public static async GetCurrentCharacter(): Promise<PlayerCharacterData | undefined> {
-        let charName: string | null = PlayerInventoryService.GetCurrentCharacterName();
+    // public static async GetCurrentCharacter(): Promise<PlayerCharacterData | undefined> {
+    //     let charName: string | null = PlayerInventoryService.GetCurrentCharacterName();
 
-        if (!charName) {
-            return undefined;
-        }
+    //     if (!charName) {
+    //         return undefined;
+    //     }
 
-        return await PlayerInventoryService.FetchCharacterData(charName as string);
-    }
+    //     return await PlayerInventoryService.FetchCharacterData(charName as string);
+    // }
 }
