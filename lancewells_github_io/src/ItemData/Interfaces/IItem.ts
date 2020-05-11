@@ -6,4 +6,5 @@ export interface IItem extends IItemJson {
     GetEqualityString(): string;
     GetCarpetType(): CarpetBorder;
     GetCardbackSource(): string;
+    GetItemTextStyle(): React.CSSProperties;
 }

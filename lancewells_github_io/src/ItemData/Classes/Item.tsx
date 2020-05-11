@@ -29,6 +29,8 @@ export abstract class Item implements IItem {
     }
 
     public abstract GetCarpetType(): CarpetBorder;
+    public abstract GetItemTextStyle(): React.CSSProperties;
+
     public GetCardbackSource(): string { return "./images/Item_Shop/ItemCards/CardDungeon.png"; };
 
     

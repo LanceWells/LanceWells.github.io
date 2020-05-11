@@ -1,7 +1,6 @@
 import React from 'react';
 import { PurchaseClick } from '../../Types/CardButtonCallbackTypes/PurchaseClick';
 import { IItem } from '../../Interfaces/IItem';
-import { MoneyDisplay } from '../../../CharacterInfo/React/MoneyDisplay';
 
 interface IPurchaseButtonProps {
     item: IItem;

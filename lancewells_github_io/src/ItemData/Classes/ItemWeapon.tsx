@@ -93,6 +93,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     }
 
     public GetCarpetType(): CarpetBorder { return CarpetBorder.Blue }
+    public GetItemTextStyle(): React.CSSProperties { return { color: 'rgb(199, 207, 221)' } };
     public GetCardbackSource(): string { return "./images/Item_Shop/ItemCards/CardForge.png"; };
 
     private GetAttackDetails(): JSX.Element {

@@ -75,7 +75,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                             <Route exact path="/login" children={<LoginPage onLogin={this.HandleLoginStateChange.bind(this)}/>} />
                             <Route exact path="/character_creator" children={<CharacterImage />} />
                             <Route path="/shop" children={<Shop />} />
-                            <ProtectedRoute path="/inventory" children={<Inventory />} />
+                            <ProtectedRoute path="/inventory" children={<Inventory loginState={this.state.loginState}/>} />
                             <ProtectedRoute path="/characterManager" children={<CharacterManager />} />
                         </Switch>
                     </Router>

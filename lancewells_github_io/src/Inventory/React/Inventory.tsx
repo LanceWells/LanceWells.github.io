@@ -11,22 +11,31 @@ import { Attack } from '../../ItemData/Classes/Attack';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { InventoryTab } from './InventoryTab';
 import { Tabs, Tab } from 'react-bootstrap';
-import { CharacterInfoContainer } from '../../CharacterInfo/React/CharacterInfoContainer';
 import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
+import { LoginState } from '../../LoginPage/Enums/LoginState';
+import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
+import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
+
+enum LoadingState {
+    Loading,
+    Loaded,
+    Anonymous,
+    NoCharacters
+}
 
 export interface IInventoryProps {
+    loginState: LoginState;
 }
 
 export interface IInventoryState {
     items: IItem[];
-    playerCopper: number;
     showItemDetails: boolean;
     focusedItem: IItem;
     showAttackWindow: boolean;
     attackName: string;
     attacks: Attack[];
     activeTab: string;
-    loading: boolean;
+    loadingState: LoadingState;
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {
@@ -34,38 +43,59 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         super(props);
         this.state = {
             items: [],
-            playerCopper: 0,
             showItemDetails: false,
             focusedItem: new ItemWondrous(),
             showAttackWindow: false,
             attackName: "",
             attacks: [],
             activeTab: ItemType.Weapon.toString(),
-            loading: true,
+            loadingState: LoadingState.Loading,
         };
 
+        this.UpdateItems();
+        CharacterStateManager.GetInstance().AddObserver(this.characterStateManager_NotifyObservers.bind(this))
+    }
+
+    public componentDidUpdate(prevProps: IInventoryProps): void {
+        if (this.props.loginState !== prevProps.loginState || this.state.loadingState == LoadingState.NoCharacters) {
+            // basically, use this to handle login or logout events. otherwise, just load what we have. the
+            // auto-login is messing with using only this.
+            this.UpdateItems();
+        }
+    }
+
+    public characterStateManager_NotifyObservers(charData: PlayerCharacterData | undefined): void {
         this.UpdateItems();
     }
 
     private async UpdateItems() {
         let newItems: IItem[] = [];
+        let loadingState: LoadingState = LoadingState.Anonymous;
+        let userHasAccess: boolean = await UserDataAuth.GetInstance().CheckForAccess();
 
-        CharacterStateManager.GetInstance().GetCharacter().then(char => {
-            if (char !== undefined) {
-                char.Items.forEach(item => {
+        if (userHasAccess) {
+            let staticCharData: PlayerCharacterData | undefined = undefined; 
+            staticCharData = await CharacterStateManager.GetInstance().GetCharacter();
+            
+            if (staticCharData === undefined) {
+                loadingState = LoadingState.NoCharacters;
+            }
+            else {
+                staticCharData.Items.forEach(item => {
                     let foundItem: IItem | undefined = ItemSource.GetItem(item.key, item.type);
 
-                    if (foundItem !== undefined) {
+                    if (foundItem) {
                         newItems.push(foundItem);
                     }
                 });
 
-                this.setState({
-                    items: newItems,
-                    playerCopper: char.Copper,
-                    loading: false
-                });
+                loadingState = LoadingState.Loaded;
             }
+        }
+
+        this.setState({
+            items: newItems,
+            loadingState: loadingState,
         });
     }
 
@@ -131,7 +161,7 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
         return (
             <div className="inventory-container">
                 <LoadingPlaceholder
-                    showSpinner={this.state.loading}
+                    showSpinner={this.state.loadingState === LoadingState.Loading}
                     role="Inventory Loading Status">
                     <ItemDetailsModal
                         show={this.state.showItemDetails}

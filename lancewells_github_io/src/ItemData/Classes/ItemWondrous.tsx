@@ -25,6 +25,7 @@ export class ItemWondrous extends Item implements IItemWondrousJson {
     }
 
     public GetCarpetType(): CarpetBorder { return CarpetBorder.Purple }
+    public GetItemTextStyle(): React.CSSProperties { return { color: 'rgb(255, 235, 87)' } };
 }
 
 export function IItemIsItemWondrous(item: IItemJson): item is ItemWondrous {

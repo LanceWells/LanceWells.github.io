@@ -66,6 +66,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
     }
 
     public GetCarpetType(): CarpetBorder { return CarpetBorder.Green }
+    public GetItemTextStyle(): React.CSSProperties { return { color: 'rgb(253, 210, 237)' } };
     public GetCardbackSource(): string { return "./images/Item_Shop/ItemCards/CardAlchemist.png"; };
 }
 

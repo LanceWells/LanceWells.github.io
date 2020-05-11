@@ -3,9 +3,7 @@ import '../css/DamageType.css'
 
 import React from 'react';
 import { IItem } from '../Interfaces/IItem';
-import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
-import { ItemType } from '../Enums/ItemType';
 import { StylizedModal } from '../../Utilities/React/StylizedModal';
 import { MoneyDisplay } from '../../CharacterInfo/React/MoneyDisplay';
 
@@ -38,35 +36,6 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
         };
     }
 
-    /**
-     * @description Performs an enum-<p> lookup to get something nice and pixelated to represent the type
-     * of the item that is being displayed.
-     * @param type The item to lookup and return a <p> element that represents it.
-     */
-    private getTypeDisplay(item: IItemJson) {
-        switch (item.type) {
-            case ItemType.Weapon:
-                {
-                    return (<p style={{ color: 'rgb(199, 207, 221)' }}>Weapon</p>);
-                }
-            case ItemType.Armor:
-                {
-                    return (<p style={{ color: 'rgb(148, 253, 255)' }}>Armor</p>);
-                }
-            case ItemType.Consumable:
-                {
-                    return (<p style={{ color: 'rgb(253, 210, 237)' }}>Potion</p>);
-                }
-            case ItemType.Wondrous:
-                {
-                    return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
-                }
-            default:
-                {
-                    return (<p style={{ color: 'rgb(255, 235, 87)' }}>Wondrous Item</p>);
-                }
-        }
-    }
 
     public constructor(props: IItemDetailsModalProps) {
         super(props);
@@ -95,8 +64,8 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                         copperCount={this.props.itemDetails.itemCopperCost}
                         hideEmptyCurrencies={true}
                     />
-                    <div className='item-tag'>
-                        {this.getTypeDisplay(this.props.itemDetails)}
+                    <div className='item-tag' style={this.props.itemDetails.GetItemTextStyle()}>
+                        {this.props.itemDetails.type}
                     </div>
                 </div>
                 <hr className='white-hr' />
@@ -105,8 +74,3 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
         );
     }
 }
-
-// <div className='item-tag'>
-//     {`${this.props.itemDetails.itemCopperCost}x`}
-//     <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
-// </div>

@@ -32,6 +32,7 @@ export class ItemArmor extends Item implements IItemArmorJson {
     }
 
     public GetCarpetType(): CarpetBorder { return CarpetBorder.Red }
+    public GetItemTextStyle(): React.CSSProperties { return { color: 'rgb(148, 253, 255)' } };
 }
 
 export function IItemIsItemArmor(item: IItemJson) : item is ItemArmor {
