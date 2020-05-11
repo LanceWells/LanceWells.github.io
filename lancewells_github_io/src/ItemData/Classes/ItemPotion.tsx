@@ -66,6 +66,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
     }
 
     public GetCarpetType(): CarpetBorder { return CarpetBorder.Green }
+    public GetCardbackSource(): string { return "./images/Item_Shop/ItemCards/CardAlchemist.png"; };
 }
 
 export function IItemIsItemPotion(item: IItemJson): item is ItemPotion {

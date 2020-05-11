@@ -1,7 +1,7 @@
 import React from 'react';
 import { CarpetMap } from './CarpetMap';
 import { ItemCard } from '../../ItemData/React/ItemCard';
-import { ItemClick } from '../../ItemData/Types/ItemClick';
+import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { PurchaseClick } from '../../ItemData/Types/CardButtonCallbackTypes/PurchaseClick';
 import { CardInteractions } from '../../ItemData/Enums/CardInteractions';
 

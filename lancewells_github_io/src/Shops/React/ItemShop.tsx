@@ -4,7 +4,7 @@ import React from 'react';
 import { IItem } from "../../ItemData/Interfaces/IItem";
 import { BazaarCarpet } from './BazaarCarpet';
 import { ItemWondrous } from '../../ItemData/Classes/ItemWondrous';
-import { ItemClick } from '../../ItemData/Types/ItemClick';
+import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { ItemDetailsModal } from '../../ItemData/React/ItemDetailsModal';
 import { PurchaseClick } from '../../ItemData/Types/CardButtonCallbackTypes/PurchaseClick';
 import { CarpetMap } from './CarpetMap';

@@ -152,20 +152,3 @@
     z-index: 2;
     text-shadow: 0 0 5px rgb(19, 19, 19);
 }
-
-img {
-    image-rendering: optimizeSpeed;
-    /* STOP SMOOTHING, GIVE ME SPEED  */
-    image-rendering: -moz-crisp-edges;
-    /* Firefox                        */
-    image-rendering: -o-crisp-edges;
-    /* Opera                          */
-    image-rendering: -webkit-optimize-contrast;
-    /* Chrome (and eventually Safari) */
-    image-rendering: pixelated;
-    /* Chrome */
-    image-rendering: optimize-contrast;
-    /* CSS3 Proposed                  */
-    -ms-interpolation-mode: nearest-neighbor;
-    /* IE8+                           */
-}

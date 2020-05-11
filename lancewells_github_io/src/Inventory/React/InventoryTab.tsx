@@ -1,7 +1,7 @@
 import React from 'react';
 import { IItem } from '../../ItemData/Interfaces/IItem';
 import { ItemType } from '../../ItemData/Enums/ItemType';
-import { ItemClick } from '../../ItemData/Types/ItemClick';
+import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
 import { ItemCard } from '../../ItemData/React/ItemCard';
 import { CardInteractions } from '../../ItemData/Enums/CardInteractions';

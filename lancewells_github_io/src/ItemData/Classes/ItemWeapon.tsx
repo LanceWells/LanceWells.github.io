@@ -93,6 +93,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     }
 
     public GetCarpetType(): CarpetBorder { return CarpetBorder.Blue }
+    public GetCardbackSource(): string { return "./images/Item_Shop/ItemCards/CardForge.png"; };
 
     private GetAttackDetails(): JSX.Element {
         let attackDetails: JSX.Element[] = Object.entries(this.attacks).map(element => {
