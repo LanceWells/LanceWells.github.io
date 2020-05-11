@@ -36,6 +36,7 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                     cardInteractions={[
                         CardInteractions.Use
                     ]}
+                    showCardCost={false}
                 />
             )
         });

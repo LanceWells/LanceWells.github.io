@@ -142,3 +142,8 @@
     z-index: 2;
     text-shadow: 0 0 5px rgb(19, 19, 19);
 }
+
+.card-cost-display {
+    font-family: "Press Start 2P";
+    text-shadow: 2px 2px 1px rgb(19, 19, 19);
+}

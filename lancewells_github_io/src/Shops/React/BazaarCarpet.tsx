@@ -43,6 +43,7 @@ export class BazaarCarpet extends React.Component<IBazaarCarpetProps, IBazaarCar
                     onRemoveButton={undefined}
                     onAddButton={undefined}
                     cardInteractions={[CardInteractions.Purchase]}
+                    showCardCost={true}
                 />
             );
         });

@@ -19,6 +19,7 @@ import { IItemIsItemWeapon } from '../Classes/ItemWeapon';
 import { IItemIsItemPotion } from '../Classes/ItemPotion';
 import { CardIconMap } from '../Classes/CardIconMap';
 import { IconTooltip } from '../Types/IconTooltip';
+import { MoneyDisplay } from '../../CharacterInfo/React/MoneyDisplay';
 
 interface IItemCardProps {
     itemDetails: IItem;
@@ -28,6 +29,7 @@ interface IItemCardProps {
     onRemoveButton: RemoveClick | undefined;
     onAddButton: AddClick | undefined;
     cardInteractions: CardInteractions[];
+    showCardCost: boolean;
 }
 
 interface IItemCardState {
@@ -266,6 +268,21 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         });
     }
 
+    private GetCardCost(): JSX.Element {
+        let element: JSX.Element = (<div></div>);
+        
+        if (this.props.showCardCost) {
+            element = (
+                <MoneyDisplay
+                    copperCount={this.props.itemDetails.itemCopperCost}
+                    hideEmptyCurrencies={true}
+                />
+            )
+        }
+
+        return element;
+    }
+
     /**
      * Renders an instance of this object.
      */
@@ -343,6 +360,9 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                         width={this.cardWidth}
                         height={this.cardHeight}
                     />
+                </div>
+                <div className="card-cost-display">
+                    {this.GetCardCost()}
                 </div>
                 <div className="card-actions">
                     {this.GetCardButtons()}
