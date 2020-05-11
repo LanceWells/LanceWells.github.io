@@ -24,8 +24,7 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
         let properties: React.CSSProperties = {};
         if (!this.state.canPurchase) {
             properties = {
-                background: "#33984b",
-                cursor: "default"
+                background: "#1e6f50",
             }
         }
 
@@ -57,7 +56,8 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
             <button
                 className="card-button"
                 style={this.GetCustomButtonProperties()}
-                onClick={handleButtonClick}>
+                onClick={handleButtonClick}
+                disabled={!this.state.canPurchase}>
                 <img
                     alt="card purchase button"
                     className="card-button-icon"

@@ -77,6 +77,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
             charData.Items.push(item);
 
             await CharacterStateManager.GetInstance().ChangeCharacter(charData);
+            await CharacterStateManager.GetInstance().UploadCharacterData(charData);
         }
     }
 
