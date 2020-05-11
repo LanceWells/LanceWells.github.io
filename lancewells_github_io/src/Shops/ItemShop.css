@@ -34,5 +34,5 @@
     border-image-slice: 256 fill;
     border-image-repeat: repeat;
     border-image-width: 128px;
-    border-image-outset: 64px 64px;
+    border-image-outset: 64px 0px;
 }
