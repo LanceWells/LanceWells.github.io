@@ -42,14 +42,17 @@ export class CharacterStateManager {
             // applicable character.
             if (this._currentCharacter === undefined) {
                 let playerName: string | null = PlayerInventoryService.GetCurrentCharacterName();
+                let currentChar: PlayerCharacterData | undefined;
 
                 // If we have a player name in local storage, try loading that first.
                 if (playerName) {
-                    this._currentCharacter = await PlayerInventoryService.FetchCharacterData(playerName);
+                    currentChar = await PlayerInventoryService.FetchCharacterData(playerName);
                 }
                 else {
-                    this._currentCharacter = await PlayerInventoryService.GetDefaultCharacter();
+                    currentChar = await PlayerInventoryService.GetDefaultCharacter();
                 }
+
+                this.ChangeCharacter(currentChar);
             }
         }
 
@@ -64,9 +67,8 @@ export class CharacterStateManager {
         if (charData !== undefined) {
             this._currentCharListener = PlayerInventoryService.ListenToCharacterUpdates(charData.Name, this.SetCharacter.bind(this));
         }
-        else {
-            this.SetCharacter(undefined);
-        }
+
+        this.SetCharacter(charData);
     }
 
     /**
@@ -77,7 +79,7 @@ export class CharacterStateManager {
         let accessGranted: boolean = await UserDataAuth.GetInstance().CheckForAccess();
 
         if (accessGranted) {
-            this.SetCharacter(charData);
+            // this.SetCharacter(charData);
             await PlayerInventoryService.UpdateCharacterData(charData);
         }
     }

@@ -77,8 +77,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 charData.Copper -= item.itemCopperCost;
                 charData.Items.push(item);
 
-                await CharacterStateManager.GetInstance().ChangeCharacter(charData);
+                // await CharacterStateManager.GetInstance().ChangeCharacter(charData);
                 await CharacterStateManager.GetInstance().UploadCharacterData(charData);
+                // await CharacterStateManager.GetInstance().ChangeCharacter(charData);
             }
             else {
                 alert("Not enough moolah!");
