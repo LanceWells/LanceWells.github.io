@@ -25,12 +25,14 @@
 }
 
 .shop-rug {
-    border-image-slice: 32 fill;
-    border-image-width: 32px;
-    border-image-outset: 32px;
-    border-image-repeat: repeat;
-    margin: 64px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    width: 100%;
+    
+    border: 64px solid transparent;
+    border-image-slice: 256 fill;
+    border-image-repeat: repeat;
+    border-image-width: 128px;
+    border-image-outset: 64px 64px;
 }
