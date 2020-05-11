@@ -26,7 +26,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     public details: string = "";
     public iconSource: string = "";
     public source: SourceType = SourceType.Homebrew;
-    public itemCost: number = 0;
+    public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Weapon;
     

@@ -8,7 +8,7 @@ export interface IItemJson extends IItemKey {
     details: string;
     iconSource: string;
     source: SourceType;
-    itemCost: number;
+    itemCopperCost: number;
     requiresAttunement: boolean;
     modifications: ItemModifications[];
 }

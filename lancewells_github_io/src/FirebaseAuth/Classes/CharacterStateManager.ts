@@ -8,8 +8,8 @@ export type CharacterStateObserver = (charData: PlayerCharacterData | undefined)
 export class CharacterStateManager {
     private _observers: CharacterStateObserver[] = [];
     private _currentCharListener: SnapshotListener | undefined;
-
     private static _instance: CharacterStateManager;
+    private _currentCharacter: PlayerCharacterData | undefined = undefined;
 
     public static GetInstance() {
         if (!this._instance) {
@@ -32,10 +32,6 @@ export class CharacterStateManager {
         if (existingObserver === undefined) {
             this._observers.splice(existingObserver, 1);
         }
-    }
-
-    private NotifyObservers(): void {
-        this._observers.forEach(obs => obs(this._currentCharacter))
     }
 
     public async GetCharacter(): Promise<PlayerCharacterData | undefined> {
@@ -74,15 +70,6 @@ export class CharacterStateManager {
     }
 
     /**
-     * @description Called in order to update the local static object that tracks the character's state.
-     * @param charData 
-     */
-    private SetCharacter(charData: PlayerCharacterData | undefined) {
-        this._currentCharacter = charData;
-        this.NotifyObservers();
-    }
-
-    /**
      * @description Called in order to modify the current character data, and submit that data to the server.
      * @param charData 
      */
@@ -95,7 +82,18 @@ export class CharacterStateManager {
         }
     }
 
-    private _currentCharacter: PlayerCharacterData | undefined = undefined;
+    private NotifyObservers(): void {
+        this._observers.forEach(obs => obs(this._currentCharacter))
+    }
+
+    /**
+     * @description Called in order to update the local static object that tracks the character's state.
+     * @param charData 
+     */
+    private SetCharacter(charData: PlayerCharacterData | undefined) {
+        this._currentCharacter = charData;
+        this.NotifyObservers();
+    }
 
     private constructor() {
         this._currentCharListener = undefined;

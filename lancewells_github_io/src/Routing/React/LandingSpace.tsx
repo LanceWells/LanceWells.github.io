@@ -15,6 +15,7 @@ import { Inventory } from '../../Inventory/React/Inventory';
 import { CharacterManager } from '../../CharacterManager/React/CharacterManager';
 import { CharacterInfoContainer } from '../../CharacterInfo/React/CharacterInfoContainer';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
+import { Shop } from '../../Shops/React/ShopPage';
 
 export interface ILandingSpaceProps {
 }
@@ -73,6 +74,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                             <Route exact path="/" children={<LoginPage onLogin={this.HandleLoginStateChange.bind(this)}/>} />
                             <Route exact path="/login" children={<LoginPage onLogin={this.HandleLoginStateChange.bind(this)}/>} />
                             <Route exact path="/character_creator" children={<CharacterImage />} />
+                            <Route path="/shop" children={<Shop />} />
                             <ProtectedRoute path="/inventory" children={<Inventory />} />
                             <ProtectedRoute path="/characterManager" children={<CharacterManager />} />
                         </Switch>

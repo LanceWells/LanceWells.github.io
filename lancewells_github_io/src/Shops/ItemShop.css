@@ -1,0 +1,586 @@
+.shop-page {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+
+
+
+
+
+
+
+
+
+
+.ItemShop {
+    flex: 50%;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    background: #121212;
+}
+
+.item-layer {
+    padding: 8px 16px;
+}
+
+.shopkeeper-area {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: baseline;
+}
+
+.bazaar-area {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.shop-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 33%;
+    max-width: 100%;
+}
+
+.shop-rug {
+    border-image-slice: 32 fill;
+    border-image-width: 32px;
+    border-image-outset: 32px;
+    border-image-repeat: repeat;
+    margin: 64px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+@keyframes hover {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(16px);
+    }
+}
+
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/drop-shadow */
+@keyframes float {
+    0% {
+        transform: translateY(-16px);
+        filter: drop-shadow(0px 12px 3px rgba(0, 0, 0, 0.8));
+    }
+
+    100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0px 6px 3px rgba(0, 0, 0, 0.8));
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeAndGrow {
+    0% {
+        opacity: 0.0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1.0;
+        transform: scale(1.0);
+    }
+}
+
+@keyframes withdrawal {
+    0% {
+        color: #93388f;
+        text-shadow: 0 0 6px #3b1443;
+    }
+    25% {
+        color: #0098dc;
+        text-shadow: 0 0 6px #00396d;
+    }
+    50% {
+        color: #93388f;
+        text-shadow: 0 0 6px #3b1443;
+    }
+    100% {
+        color: #0098dc;
+        text-shadow: 0 0 6px #00396d;
+    }
+}
+
+.added-alert {
+    display: flex;
+    align-items: center;
+}
+
+.item-layer {
+    animation-name: float;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+
+.item-cost {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Press Start 2P';
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.item-preview {
+    width: 100%;
+    text-align: center;
+}
+
+.pixel-font {
+    font-family: 'Press Start 2P';
+}
+
+.modal-content {
+    background: rgb(18, 18, 18);
+    color: white;
+}
+
+.item-description-title {
+    font-family: 'Press Start 2P';
+    text-align: left;
+}
+
+.white-hr {
+    border: 1px dashed #808080;
+    width: 33%
+}
+
+.item-details {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.item-tag {
+    padding: 0px 16px;
+}
+
+.item-coin {
+    position: absolute;
+}
+/* 
+.card-actions {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-icon {
+    background-image: radial-gradient(circle farthest-side,
+            rgb(19, 19, 19),
+            rgb(19, 19, 19),
+            rgb(19, 19, 19),
+            transparent);
+    border-radius: 16px;
+}
+
+.card-button-container {
+    width: 100%;
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-button {
+    width: 75%;
+    min-width: 75%;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-family: "Open Sans";
+    margin: 5px;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
+    transition: 0.2s;
+    position: relative;
+    align-content: center;
+    align-items: center;
+    
+    background: rgb(31, 31, 31);
+    cursor: pointer;
+}
+
+.card-button:hover {
+    background-color: rgb(37, 37, 37);
+}
+
+.card-button-icon {
+    position: absolute;
+    z-index: 1;
+}
+
+.card-button-name {
+    height: 100%;
+    width: 80%;
+    text-align: left;
+    align-self: center;
+}
+
+.card-button-stats-container {
+    position: absolute;
+    width: 110%;
+    font-family: "Press Start 2P";
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card-button-stat {
+    border-radius: 16px;
+    padding: 8px;
+    font-size: larger;
+    box-shadow: 1px 1px 1px rgb(19, 19, 19);
+    z-index: 2;
+    text-shadow: 0 0 5px rgb(19, 19, 19);
+}
+
+.card-button-stat-icon {
+    position: absolute;
+    z-index: 1;
+} */
+
+/* 
+ * All of the filters below were generated using:
+ * https://codepen.io/sosuke/pen/Pjoqqp
+ */
+
+.badge {
+    border-radius: 5px;
+}
+
+/* ACID Damage Type */
+.text-color-acid {
+    color: rgb(153, 230, 95);
+}
+.badge-color-acid {
+    color: #1a1932;
+    background-color: rgb(153, 230, 95);
+}
+.icon-color-acid {
+    filter: invert(100%) sepia(21%) saturate(6550%) hue-rotate(36deg) brightness(112%) contrast(80%);
+}
+
+/* BLUDGEONING Damage Type */
+.text-color-bludgeoning {
+    color: rgb(137, 30, 43);
+}
+.badge-color-bludgeoning {
+    color: #ffffff;
+    background-color: rgb(137, 30, 43);
+}
+.icon-color-bludgeoning {
+    filter: invert(12%) sepia(100%) saturate(2426%) hue-rotate(338deg) brightness(90%) contrast(90%);
+}
+
+/* COLD Damage Type */
+.text-color-cold {
+    color: rgb(12, 241, 255);
+}
+.badge-color-cold {
+    color: #1a1932;
+    background-color: rgb(12, 241, 255);
+}
+.icon-color-cold {
+    filter: invert(78%) sepia(26%) saturate(2002%) hue-rotate(136deg) brightness(100%) contrast(103%);
+}
+
+/* FIRE Damage Type */
+.text-color-fire {
+    color: rgb(237, 118, 20);
+}
+.badge-color-fire {
+    color: #1a1932;
+    background-color: rgb(237, 118, 20);
+}
+.icon-color-fire {
+    filter: invert(45%) sepia(92%) saturate(1253%) hue-rotate(358deg) brightness(99%) contrast(87%);
+}
+
+/* FORCE Damage Type */
+.text-color-force {
+    color: rgb(3, 25, 63);
+}
+.badge-color-force {
+    color: #ffffff;
+    background-color: rgb(3, 25, 63);
+}
+.icon-color-force {
+    filter: invert(11%) sepia(27%) saturate(3655%) hue-rotate(198deg) brightness(90%) contrast(105%);
+}
+
+/* LIGHTNING Damage Type */
+.text-color-lightning {
+    color: rgb(255, 200, 37);
+}
+.badge-color-lightning {
+    color: #1a1932;
+    background-color: rgb(255, 200, 37);
+}
+.icon-color-lightning {
+    filter: invert(89%) sepia(19%) saturate(5418%) hue-rotate(338deg) brightness(109%) contrast(101%);
+}
+
+/* NECROTIC Damage Type */
+.text-color-necrotic {
+    color: rgb(101, 115, 146);
+}
+.badge-color-necrotic {
+    color: #ffffff;
+    background-color: rgb(101, 115, 146);
+}
+.icon-color-necrotic {
+    filter: invert(41%) sepia(36%) saturate(313%) hue-rotate(182deg) brightness(100%) contrast(92%);
+}
+
+/* PIERCING Damage Type */
+.text-color-piercing {
+    color: rgb(234, 50, 60);
+}
+.badge-color-piercing {
+    color: #ffffff;
+    background-color: rgb(234, 50, 60);
+}
+.icon-color-piercing {
+    filter: invert(29%) sepia(67%) saturate(6694%) hue-rotate(345deg) brightness(101%) contrast(83%);
+}
+
+/* POISON Damage Type */
+.text-color-poison {
+    color: rgb(30, 111, 80);
+}
+.badge-color-poison {
+    color: #ffffff;
+    background-color: rgb(30, 111, 80);
+}
+.icon-color-poison {
+    filter: invert(34%) sepia(51%) saturate(526%) hue-rotate(105deg) brightness(94%) contrast(94%);
+}
+
+/* PSYCHIC Damage Type */
+.text-color-psychic {
+    color: rgb(246, 129, 135);
+}
+.badge-color-psychic {
+    color: #1a1932;
+    background-color: rgb(246, 129, 135);
+}
+.icon-color-psychic {
+    filter: invert(57%) sepia(43%) saturate(526%) hue-rotate(308deg) brightness(98%) contrast(97%);
+}
+
+/* RADIANT Damage Type */
+.text-color-radiant {
+    color: rgb(255, 235, 87);
+}
+.badge-color-radiant {
+    color: #1a1932;
+    background-color: rgb(255, 235, 87);
+}
+.icon-color-radiant {
+    filter: invert(77%) sepia(78%) saturate(337%) hue-rotate(0deg) brightness(103%) contrast(104%);
+}
+
+/* SLASHING Damage Type */
+.text-color-slashing {
+    color: rgb(101, 115, 146);
+}
+.badge-color-slashing {
+    color: #ffffff;
+    background-color: rgb(101, 115, 146);
+}
+.icon-color-slashing {
+    filter: invert(47%) sepia(7%) saturate(1611%) hue-rotate(184deg) brightness(91%) contrast(86%);
+}
+
+/* THUNDER Damage Type */
+.text-color-thunder {
+    color: rgb(249, 230, 207);
+}
+.badge-color-thunder {
+    color: #1a1932;
+    background-color: rgb(249, 230, 207);
+}
+.icon-color-thunder {
+    filter: invert(95%) sepia(7%) saturate(1585%) hue-rotate(313deg) brightness(105%) contrast(95%);
+}
+
+.text-color-withdrawal {
+    font-weight: bold;
+    animation-name: withdrawal;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+}
+
+.text-color-plain {
+    color: white;
+}
+
+/* https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas */
+/* http://jsfiddle.net/namuol/VAXrL/1459/ */
+/* https://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
+canvas, img {
+    image-rendering: optimizeSpeed;
+    /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;
+    /* Firefox                        */
+    image-rendering: -o-crisp-edges;
+    /* Opera                          */
+    image-rendering: -webkit-optimize-contrast;
+    /* Chrome (and eventually Safari) */
+    image-rendering: pixelated;
+    /* Chrome */
+    image-rendering: optimize-contrast;
+    /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;
+    /* IE8+                           */
+}
+
+.roll-window-image {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* .roll-window-attack {
+    display: flex;
+    width: 100%;
+    font-family: "Press Start 2P";
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    font-size: xx-large;
+} */
+
+
+
+.attack-results-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 15em;
+}
+
+.attack-die-container {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.attack-die {
+    position: relative;
+}
+
+.attack-die-value {
+    font-family: "Press Start 2P";
+    font-size: large;
+    z-index: 1;
+    text-align: center;
+    top: 15px;
+    width: 100%;
+    position: absolute;
+}
+
+.roll-window-attack-die {
+    position: relative;
+    animation: spin 5s infinite linear;
+}
+
+.attack-die-total {
+    text-align: center;
+    font-size: xx-large;
+    font-family: "Press Start 2P";
+    min-height: 2em;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.roll-window-damage {
+    width: 100%;
+    font-family: "Press Start 2P";
+    text-align: center;
+    min-height: 2em;
+}
+
+.roll-window-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.roll-window-button {
+    padding: 0px 5px;
+    font-weight: 700;
+}
+
+/* .roll-window-attack-number {
+    position: absolute;
+    z-index: 2;
+} */
+
+/* .roll-window-title {
+    font-family: 'Press Start 2P';
+}
+
+.roll-window-attack-roll {
+    font-family: 'Press Start 2P';
+    text-align: center;
+    font-size: xx-large;
+    display: flex;
+    position: relative;
+}
+
+.roll-window-attack-roll-number {
+    position: absolute;
+    z-index: 2;
+}
+
+.roll-window-attack-roll-die {
+    position: absolute;
+    z-index: 1;
+}
+
+.roll-window-damage-roll {
+    font-family: 'Press Start 2P';
+    text-align: center;
+} */

@@ -90,7 +90,7 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                         {this.getSourceText(this.props.itemDetails.source)}
                     </div>
                     <div className='item-tag'>
-                        {`${this.props.itemDetails.itemCost}x`}
+                        {`${this.props.itemDetails.itemCopperCost}x`}
                         <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
                     </div>
                     <div className='item-tag'>

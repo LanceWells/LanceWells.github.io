@@ -192,7 +192,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Light
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Whack":
@@ -222,7 +222,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Finesse,
             WeaponProperties.Thrown
         ],
-        itemCost: 2,
+        itemCopperCost: 2000,
         type: ItemType.Weapon,
         attacks: {
             "Stab":
@@ -250,7 +250,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.TwoHanded
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Smash":
@@ -279,7 +279,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Light,
             WeaponProperties.Thrown
         ],
-        itemCost: 5,
+        itemCopperCost: 5000,
         type: ItemType.Weapon,
         attacks: {
             "Hack":
@@ -307,7 +307,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Thrown
         ],
-        itemCost: 5,
+        itemCopperCost: 5000,
         type: ItemType.Weapon,
         attacks: {
             "Poke":
@@ -336,7 +336,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Light,
             WeaponProperties.Thrown
         ],
-        itemCost: 2,
+        itemCopperCost: 2000,
         type: ItemType.Weapon,
         attacks: {
             "Smack":
@@ -363,7 +363,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         longRange: 60,
         properties: [
         ],
-        itemCost: 5,
+        itemCopperCost: 5000,
         type: ItemType.Weapon,
         attacks: {
             "Smash":
@@ -391,7 +391,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Versatile
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Whap (1h)":
@@ -428,7 +428,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Light
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Slash":
@@ -457,7 +457,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Thrown,
             WeaponProperties.Versatile
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Stab (1h)":
@@ -495,7 +495,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Finesse,
             WeaponProperties.Light
         ],
-        itemCost: 10,
+        itemCopperCost: 10000,
         type: ItemType.Weapon,
         attacks: {
             "Stab":
@@ -523,7 +523,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.TwoHanded
         ],
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Weapon,
         attacks: {
             "Curse":
@@ -558,7 +558,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Finesse,
             WeaponProperties.Thrown
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Throw":
@@ -588,7 +588,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Loading,
             WeaponProperties.TwoHanded
         ],
-        itemCost: 25,
+        itemCopperCost: 25000,
         type: ItemType.Weapon,
         attacks: {
             "Fire":
@@ -617,7 +617,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Ammunition,
             WeaponProperties.TwoHanded
         ],
-        itemCost: 25,
+        itemCopperCost: 25000,
         type: ItemType.Weapon,
         attacks: {
             "Fire":
@@ -645,7 +645,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Ammunition
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Throw":
@@ -673,7 +673,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Versatile
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Slash (1h)":
@@ -712,7 +712,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Reach,
             WeaponProperties.TwoHanded
         ],
-        itemCost: 1,
+        itemCopperCost: 1000,
         type: ItemType.Weapon,
         attacks: {
             "Slash":
@@ -740,7 +740,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Versatile
         ],
-        itemCost: 15,
+        itemCopperCost: 15000,
         type: ItemType.Weapon,
         attacks: {
             "Slash (1h)":
@@ -777,7 +777,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Versatile
         ],
-        itemCost: 15,
+        itemCopperCost: 15000,
         type: ItemType.Weapon,
         attacks: {
             "Slash (1h)":
@@ -814,7 +814,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: false,
-        itemCost: 50,
+        itemCopperCost: 50000,
         type: ItemType.Consumable,
     },
     {
@@ -827,7 +827,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: true,
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Consumable,
     },
     {
@@ -840,7 +840,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: false,
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Consumable,
     },
     {
@@ -853,7 +853,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: true,
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Consumable,
     },
     {
@@ -866,7 +866,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: false,
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Consumable,
     },
     {
@@ -879,7 +879,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: false,
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Consumable,
     },
     {
@@ -892,7 +892,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: false,
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Consumable,
     },
     {
@@ -905,7 +905,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         modifications: [],
         hasWithdrawalEffect: true,
-        itemCost: 250,
+        itemCopperCost: 250000,
         type: ItemType.Consumable,
     },
 ]
@@ -923,7 +923,7 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         source: SourceType.Homebrew,
         requiresAttunement: true,
         modifications: [],
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Wondrous,
     },
     {
@@ -935,7 +935,7 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         source: SourceType.Homebrew,
         requiresAttunement: true,
         modifications: [],
-        itemCost: 100,
+        itemCopperCost: 100000,
         type: ItemType.Wondrous,
     },
     {
@@ -947,7 +947,7 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         source: SourceType.Homebrew,
         requiresAttunement: true,
         modifications: [],
-        itemCost: 50,
+        itemCopperCost: 50000,
         type: ItemType.Wondrous,
     },
 ]

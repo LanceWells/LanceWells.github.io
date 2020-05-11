@@ -33,7 +33,7 @@ export abstract class Item implements IItem {
     details: string = "";
     iconSource: string = "";
     source: SourceType = SourceType.Homebrew;
-    itemCost: number = 0;
+    itemCopperCost: number = 0;
     requiresAttunement: boolean = false;
     modifications: ItemModifications[] = [];
     type: ItemType = ItemType.Wondrous;

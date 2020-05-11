@@ -75,7 +75,7 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
                         style={{
                             boxShadow: "none"
                         }}>
-                        {this.props.item.itemCost}
+                        {this.props.item.itemCopperCost}
                     </div>
                     <img
                         alt="coin icon"
