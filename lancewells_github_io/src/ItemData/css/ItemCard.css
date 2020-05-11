@@ -98,28 +98,18 @@
 }
 
 .card-button {
-    width: 75%;
-    min-width: 75%;
     display: flex;
     justify-content: center;
-    font-weight: bold;
-    font-family: "Open Sans";
-    margin: 5px;
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
-    box-shadow: 2px 2px 2px 1px rgb(0, 0, 0);
-    transition: 0.2s;
-    position: relative;
-    align-content: center;
     align-items: center;
 
-    background: rgb(31, 31, 31);
-    cursor: pointer;
-}
+    width: 75%;
+    min-width: 75%;
+    
+    font-weight: bold;
 
-.card-button:hover {
-    background-color: rgb(37, 37, 37);
+    margin: 5px;
+    padding: 5px;
+    position: relative;
 }
 
 .card-button-icon {

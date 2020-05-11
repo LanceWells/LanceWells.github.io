@@ -12,6 +12,7 @@ import { ItemType } from '../../ItemData/Enums/ItemType';
 import { InventoryTab } from './InventoryTab';
 import { Tabs, Tab } from 'react-bootstrap';
 import { CharacterInfoContainer } from '../../CharacterInfo/React/CharacterInfoContainer';
+import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
 
 export interface IInventoryProps {
 }
@@ -25,6 +26,7 @@ export interface IInventoryState {
     attackName: string;
     attacks: Attack[];
     activeTab: string;
+    loading: boolean;
 }
 
 export class Inventory extends React.Component<IInventoryProps, IInventoryState> {
@@ -38,7 +40,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
             showAttackWindow: false,
             attackName: "",
             attacks: [],
-            activeTab: ItemType.Weapon.toString()
+            activeTab: ItemType.Weapon.toString(),
+            loading: true,
         };
 
         this.UpdateItems();
@@ -59,7 +62,8 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
 
                 this.setState({
                     items: newItems,
-                    playerCopper: char.Copper
+                    playerCopper: char.Copper,
+                    loading: false
                 });
             }
         });
@@ -126,26 +130,30 @@ export class Inventory extends React.Component<IInventoryProps, IInventoryState>
     public render() {
         return (
             <div className="inventory-container">
-                <ItemDetailsModal
-                    show={this.state.showItemDetails}
-                    hideModal={this.HideItemDetails.bind(this)}
-                    itemDetails={this.state.focusedItem}
-                />
-                <AttackRollModal
-                    show={this.state.showAttackWindow}
-                    attackName={this.state.attackName}
-                    attacks={this.state.attacks}
-                    onHide={this.HideAttackWindow.bind(this)}
-                />
-                <div className='inventory-tabs-container'>
-                    <Tabs
-                        id="Inventory Tabs"
-                        activeKey={this.state.activeTab.toString()}
-                        onSelect={this.HandleTabSelection.bind(this)}
-                    >
-                        {this.GetInventoryTabs()}
-                    </Tabs>
-                </div>
+                <LoadingPlaceholder
+                    showSpinner={this.state.loading}
+                    role="Inventory Loading Status">
+                    <ItemDetailsModal
+                        show={this.state.showItemDetails}
+                        hideModal={this.HideItemDetails.bind(this)}
+                        itemDetails={this.state.focusedItem}
+                    />
+                    <AttackRollModal
+                        show={this.state.showAttackWindow}
+                        attackName={this.state.attackName}
+                        attacks={this.state.attacks}
+                        onHide={this.HideAttackWindow.bind(this)}
+                    />
+                    <div className='inventory-tabs-container'>
+                        <Tabs
+                            id="Inventory Tabs"
+                            activeKey={this.state.activeTab.toString()}
+                            onSelect={this.HandleTabSelection.bind(this)}
+                        >
+                            {this.GetInventoryTabs()}
+                        </Tabs>
+                    </div>
+                </LoadingPlaceholder>
             </div>
         )
     }

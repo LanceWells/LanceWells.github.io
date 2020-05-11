@@ -75,19 +75,3 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
         )
     }
 }
-
-
-// <div className="card-button-stats-container">
-//     <div className="card-button-stat"
-//         style={{
-//             boxShadow: "none"
-//         }}>
-//         {this.props.item.itemCopperCost}
-//     </div>
-//     <img
-//         alt="coin icon"
-//         className="card-button-stat-icon"
-//         width={this.props.cardIconSize}
-//         height={this.props.cardIconSize}
-//         src='./images/Item_Shop/itemCoinStill.png' />
-// </div>

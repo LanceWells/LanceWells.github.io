@@ -29,7 +29,7 @@ export function AttackButton(props: IAttackButtonProps) {
     });
 
     return (
-        <div
+        <button
             className="card-button"
             onClick={() => { props.callbackFunction(props.attackName, props.attacks) }}>
             <img
@@ -47,6 +47,6 @@ export function AttackButton(props: IAttackButtonProps) {
             <div className="card-button-stats-container">
                 {attackIndicators}
             </div>
-        </div>
+        </button>
     )
 }

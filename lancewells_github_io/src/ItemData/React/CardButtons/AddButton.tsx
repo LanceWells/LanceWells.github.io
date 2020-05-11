@@ -10,7 +10,7 @@ interface IAddButtonProps {
 
 export function AddButton(props: IAddButtonProps) {
     return (
-        <div
+        <button
             className="card-button"
             onClick={() => { props.callbackFunction(props.item) }}>
             <img
@@ -25,6 +25,6 @@ export function AddButton(props: IAddButtonProps) {
             <div className="card-button-name">
                 Stage Item
             </div>
-        </div>
+        </button>
     )
 }

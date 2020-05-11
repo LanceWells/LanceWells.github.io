@@ -10,7 +10,7 @@ interface IRemoveButtonProps {
 
 export function RemoveButton(props: IRemoveButtonProps) {
     return (
-        <div
+        <button
             className="card-button"
             onClick={() => { props.callbackFunction(props.item) }}>
             <img
@@ -25,6 +25,6 @@ export function RemoveButton(props: IRemoveButtonProps) {
             <div className="card-button-name">
                 Drop Item
             </div>
-        </div>
+        </button>
     )
 }
