@@ -19,8 +19,6 @@ import { ItemShopData } from '../Types/ItemShopData';
  * Describes the properties that are passed into this class.
  */
 interface IItemShopProps {
-    // purchaseCallback: PurchaseClick;
-    // items: IItem[];
     shopData: ItemShopData;
 };
 
@@ -54,17 +52,6 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     }
 
     /**
-     * @description
-     * Shows or hides the item details modal.
-     * @param show If true, show the modal; otherwise false.
-     */
-    setModalVisiblity(show: boolean) {
-        this.setState({
-            showItemDialog: show,
-        });
-    }
-
-    /**
      * @description Handles an item click event.
      * @param item The item details that are provided as a result of the click event (this is a set of
      * properties that represent the item that was clicked).
@@ -72,9 +59,14 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     onItemClick(item: IItem) {
         this.setState({
             itemDetails: item,
+            showItemDialog: true
         });
+    }
 
-        this.setModalVisiblity(true);
+    onItemDialogClose() {
+        this.setState({
+            showItemDialog: false
+        });
     }
 
     private async HandleItemPurchase(item: IItem): Promise<void> {
@@ -114,86 +106,12 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         });
 
         return carpetMaps;
-        
-        // let carpetArmorItems     : IItem[] = [];
-        // let carpetPotionsItems   : IItem[] = [];
-        // let carpetWeaponsItems   : IItem[] = [];
-        // let carpetWondrousItems  : IItem[] = [];
-
-        // this.props.items.forEach(item => {
-        //     switch(item.type) {
-        //         case ItemType.Armor    : carpetArmorItems.push(item);       break;
-        //         case ItemType.Armor   : carpetPotionsItems.push(item);     break;
-        //         case ItemType.Weapon   : carpetWeaponsItems.push(item);     break;
-        //         case ItemType.Wondrous : carpetWondrousItems.push(item);    break;
-        //         default         : carpetWondrousItems.push(item);    break;
-        //     }
-        // });
-
-        // // It's not the prettiest, but there's an advantage to the JSX method below. It reduces the number
-        // // of individual objects we have to track the item types. There's already a bit of an overhead to
-        // // to using a one-to-one mapping from item type to carpet, so this helps mitigate that pain.
-
-        // let carpets: JSX.Element[] = [];
-        // if (carpetArmorItems.length > 0) {
-        //     carpets.push(
-        //         <BazaarCarpet
-        //             onPurchaseClick={onItemPurchase}
-        //             carpetMap={new CarpetMap(CarpetBorder.Green, ItemType.Armor, carpetArmorItems)}
-        //             onItemClick={onItemClick}
-        //         />
-        //     )
-        // }
-
-        // if (carpetPotionsItems.length > 0) {
-        //     carpets.push(
-        //         <BazaarCarpet
-        //             onPurchaseClick={onItemPurchase}
-        //             carpetMap={new CarpetMap(CarpetBorder.Green, ItemType.Consumable, carpetPotionsItems)}
-        //             onItemClick={onItemClick}
-        //         />
-        //     )
-        // }
-
-        // if (carpetWeaponsItems.length > 0) {
-        //     carpets.push(
-        //         <BazaarCarpet
-        //             onPurchaseClick={onItemPurchase}
-        //             carpetMap={new CarpetMap(CarpetBorder.Purple, ItemType.Weapon, carpetWeaponsItems)}
-        //             onItemClick={onItemClick}
-        //         />
-        //     )
-        // }
-
-        // if (carpetWondrousItems.length > 0) {
-        //     carpets.push(
-        //         <BazaarCarpet
-        //             onPurchaseClick={onItemPurchase}
-        //             carpetMap={new CarpetMap(CarpetBorder.Blue, ItemType.Wondrous, carpetWondrousItems)}
-        //             onItemClick={onItemClick}
-        //         />
-        //     )
-        // }
-
-        // return carpets;
     }
 
     /**
      * @description Renders an instance of this class.
      */
     render() {
-        /* Keep these as consts because if we were to use a function callback when closing the Modal,
-         * that would result in an exception (because we're then in a state that doesn't recognize)
-         * ItemShop as 'this'. */
-
-        const handleItemClick: ItemClick = (itemDetails: IItem) => this.onItemClick(itemDetails);
-
-        const hideDetailsModal = () => {
-            this.setState({
-                showItemDialog: false,
-            });
-        };
-
         return (
             <div className="ItemShop">
                 <h1>Item Shop</h1>
@@ -203,11 +121,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
-                    {this.getBazaarCarpets(handleItemClick, this.HandleItemPurchase.bind(this))}
+                    {this.getBazaarCarpets(this.onItemClick.bind(this), this.HandleItemPurchase.bind(this))}
                 </div>
                 <ItemDetailsModal
                     show={this.state.showItemDialog}
-                    hideModal={hideDetailsModal}
+                    hideModal={this.onItemDialogClose.bind(this)}
                     itemDetails={this.state.itemDetails} />
             </div>
         );

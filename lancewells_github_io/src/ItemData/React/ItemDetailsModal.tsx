@@ -6,6 +6,7 @@ import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
 import { ItemType } from '../Enums/ItemType';
 import { StylizedModal } from '../../Utilities/React/StylizedModal';
+import { MoneyDisplay } from '../../CharacterInfo/React/MoneyDisplay';
 
 interface IItemDetailsModalState {
     showAlert: boolean;
@@ -89,10 +90,10 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                     <div className='item-tag'>
                         {this.getSourceText(this.props.itemDetails.source)}
                     </div>
-                    <div className='item-tag'>
-                        {`${this.props.itemDetails.itemCopperCost}x`}
-                        <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
-                    </div>
+                    <MoneyDisplay
+                        copperCount={this.props.itemDetails.itemCopperCost}
+                        hideEmptyCurrencies={true}
+                    />
                     <div className='item-tag'>
                         {this.getTypeDisplay(this.props.itemDetails)}
                     </div>
@@ -103,3 +104,8 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
         );
     }
 }
+
+// <div className='item-tag'>
+//     {`${this.props.itemDetails.itemCopperCost}x`}
+//     <img src='./images/Item_Shop/itemCoin.gif' alt="animated coin icon" />
+// </div>

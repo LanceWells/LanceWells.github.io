@@ -100,7 +100,8 @@ export class CharacterInfoContainer extends React.Component<ICharacterInfoContai
                         {this.state.charData.Name}
                     </span>
                     <MoneyDisplay
-                        playerCopper={this.state.charData.Copper}
+                        copperCount={this.state.charData.Copper}
+                        hideEmptyCurrencies={false}
                     />
                     <button
                         className="character-money-add"

@@ -59,7 +59,8 @@ export class MoneyAdjustModal extends React.Component<IMoneyAdjustModalProps, IM
                 onEnterModal={undefined}>
                 <div className="money-adjustment-container">
                     <MoneyDisplay
-                        playerCopper={adjustedCopper}
+                        copperCount={adjustedCopper}
+                        hideEmptyCurrencies={false}
                     />
                     <form
                         className="money-adjustment-form"
