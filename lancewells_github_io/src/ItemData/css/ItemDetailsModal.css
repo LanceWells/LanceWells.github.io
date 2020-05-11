@@ -1,0 +1,44 @@
+@keyframes withdrawal {
+    0% {
+        color: #93388f;
+        text-shadow: 0 0 6px #3b1443;
+    }
+    25% {
+        color: #0098dc;
+        text-shadow: 0 0 6px #00396d;
+    }
+    50% {
+        color: #93388f;
+        text-shadow: 0 0 6px #3b1443;
+    }
+    100% {
+        color: #0098dc;
+        text-shadow: 0 0 6px #00396d;
+    }
+}
+
+.item-preview {
+    display: flex;
+    justify-content: center;
+}
+
+.item-details {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.item-tag {
+    padding: 0px 16px;
+}
+
+.text-color-withdrawal {
+    font-weight: bold;
+    animation-name: withdrawal;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+}

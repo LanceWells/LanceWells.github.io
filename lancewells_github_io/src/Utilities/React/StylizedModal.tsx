@@ -1,3 +1,5 @@
+import '../css/StylizedModal.css';
+
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 

@@ -4,9 +4,10 @@ import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
 import { ItemModifications } from '../Enums/ItemModifications';
 import { ItemType } from '../Enums/ItemType';
+import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 
 export abstract class Item implements IItem {
-    RenderItemDescription(): JSX.Element {
+    public RenderItemDescription(): JSX.Element {
         return (
             <div>
                 <div
@@ -23,9 +24,11 @@ export abstract class Item implements IItem {
         );
     }
 
-    GetEqualityString(): string {
+    public GetEqualityString(): string {
         return (JSON.stringify(this as IItemJson));
     }
+
+    public abstract GetCarpetType(): CarpetBorder;
     
     key: string = "";
     title: string = "";

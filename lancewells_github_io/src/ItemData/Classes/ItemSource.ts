@@ -32,7 +32,7 @@ export class ItemSource {
             case ItemType.Weapon:
                 listToSearch = ItemMap_Weapons;
                 break;
-            case "Armor":
+            case ItemType.Armor:
                 listToSearch = ItemMap_Armor;
                 break;
             case ItemType.Consumable:

@@ -2,6 +2,7 @@ import { IItemJson } from '../Interfaces/IItemJson';
 import { Item } from './Item';
 import { SourceType } from "../Enums/SourceType";
 import { ItemType } from "../Enums/ItemType";
+import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 
 export interface IItemArmorJson extends IItemJson {
     armorBonus: number;
@@ -29,6 +30,8 @@ export class ItemArmor extends Item implements IItemArmorJson {
         return Object.assign(item, json, {
         });
     }
+
+    public GetCarpetType(): CarpetBorder { return CarpetBorder.Red }
 }
 
 export function IItemIsItemArmor(item: IItemJson) : item is ItemArmor {

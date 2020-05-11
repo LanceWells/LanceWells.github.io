@@ -1,10 +1,5 @@
 import { IItem } from '../../ItemData/Interfaces/IItem';
-
-export enum CarpetBorder {
-    Purple = "url(/images/Item_Shop/Items/Rugs/purplerug.png)",
-    Green = "url(/images/Item_Shop/Items/Rugs/greenrug.png)",
-    Blue = "url(/images/Item_Shop/Items/Rugs/bluerug.png)"
-}
+import { CarpetBorder } from '../Enums/CarpetBorder';
 
 /**
  * @description A class used to represent a 'carpet'. A carpet is a section of an item shop, where

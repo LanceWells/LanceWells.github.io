@@ -1,6 +1,7 @@
 import React from 'react';
 import { PurchaseClick } from '../../Types/CardButtonCallbackTypes/PurchaseClick';
 import { IItem } from '../../Interfaces/IItem';
+import { MoneyDisplay } from '../../../CharacterInfo/React/MoneyDisplay';
 
 interface IPurchaseButtonProps {
     item: IItem;
@@ -54,7 +55,7 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
         }
 
         return (
-            <div
+            <button
                 className="card-button"
                 style={this.GetCustomButtonProperties()}
                 onClick={handleButtonClick}>
@@ -69,23 +70,24 @@ export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurch
                     }} />
                 <div className="card-button-name" ref="purchase-text">
                     {this.GetPurchaseStateText()}
-            </div>
-                <div className="card-button-stats-container">
-                    <div className="card-button-stat"
-                        style={{
-                            boxShadow: "none"
-                        }}>
-                        {this.props.item.itemCopperCost}
-                    </div>
-                    <img
-                        alt="coin icon"
-                        className="card-button-stat-icon"
-                        width={this.props.cardIconSize}
-                        height={this.props.cardIconSize}
-                        src='./images/Item_Shop/itemCoinStill.png' />
                 </div>
-            </div>
+            </button>
         )
     }
 }
- 
+
+
+// <div className="card-button-stats-container">
+//     <div className="card-button-stat"
+//         style={{
+//             boxShadow: "none"
+//         }}>
+//         {this.props.item.itemCopperCost}
+//     </div>
+//     <img
+//         alt="coin icon"
+//         className="card-button-stat-icon"
+//         width={this.props.cardIconSize}
+//         height={this.props.cardIconSize}
+//         src='./images/Item_Shop/itemCoinStill.png' />
+// </div>

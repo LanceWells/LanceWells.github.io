@@ -4,5 +4,5 @@ export enum ItemModifications {
     PlusThree = "+3",
     Attuned = "Attuned",
     Adamantine = "Adamantine",
-    SilverPlated = "SilverPlated"
+    SilverPlated = "Silver-Plated"
 }

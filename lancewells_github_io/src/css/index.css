@@ -43,3 +43,24 @@ h1, h2, h3, h4, h5, h6 {
 .positive-button {
   background-color: #1e6f50;
 }
+
+/* https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas */
+/* http://jsfiddle.net/namuol/VAXrL/1459/ */
+/* https://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
+canvas,
+img {
+  image-rendering: optimizeSpeed;
+  /* STOP SMOOTHING, GIVE ME SPEED  */
+  image-rendering: -moz-crisp-edges;
+  /* Firefox                        */
+  image-rendering: -o-crisp-edges;
+  /* Opera                          */
+  image-rendering: -webkit-optimize-contrast;
+  /* Chrome (and eventually Safari) */
+  image-rendering: pixelated;
+  /* Chrome */
+  image-rendering: optimize-contrast;
+  /* CSS3 Proposed                  */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE8+                           */
+}

@@ -1,4 +1,4 @@
-import '../ItemCard.css';
+import '../css/ItemCard.css';
 
 import React from 'react';
 import { Button } from 'react-bootstrap';

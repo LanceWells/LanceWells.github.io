@@ -7,7 +7,8 @@ import { ItemWondrous } from '../../ItemData/Classes/ItemWondrous';
 import { ItemClick } from '../../ItemData/Types/ItemClick';
 import { ItemDetailsModal } from '../../ItemData/React/ItemDetailsModal';
 import { PurchaseClick } from '../../ItemData/Types/CardButtonCallbackTypes/PurchaseClick';
-import { CarpetMap, CarpetBorder } from './CarpetMap';
+import { CarpetMap } from './CarpetMap';
+import { CarpetBorder } from '../Enums/CarpetBorder';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { GroupItemsByType } from '../../ItemData/Classes/ItemUtilityFunctions';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
@@ -94,11 +95,15 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         mappedKeys.map(itemType => {
             let items: IItem[] | undefined = organizedItems.get(itemType);
 
-            if (items) {
+            if (items && items.length > 0) {
+                // We intentionally organized these by item type. Assume that if we grab just the first item's
+                // carpet value, that applies to the rest.
+                let carpetType: CarpetBorder = items[0].GetCarpetType();
+
                 carpetMaps.push(
                     <BazaarCarpet
                         onPurchaseClick={onItemPurchase}
-                        carpetMap={new CarpetMap(CarpetBorder.Green, itemType, items)}
+                        carpetMap={new CarpetMap(carpetType, itemType, items)}
                         onItemClick={onItemClick}
                     />
                 );

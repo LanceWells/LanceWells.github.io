@@ -5,6 +5,7 @@ import { ItemType } from "../Enums/ItemType";
 import { WeaponProperties } from "../Enums/WeaponProperties";
 import { Item } from './Item';
 import { Attack } from './Attack';
+import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 
 export interface IItemWeaponJson extends IItemJson {
     shortRange: number;
@@ -90,6 +91,8 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
             </div>
         );
     }
+
+    public GetCarpetType(): CarpetBorder { return CarpetBorder.Blue }
 
     private GetAttackDetails(): JSX.Element {
         let attackDetails: JSX.Element[] = Object.entries(this.attacks).map(element => {

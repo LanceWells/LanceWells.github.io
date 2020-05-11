@@ -15,12 +15,6 @@
     filter: drop-shadow(0 0 6px rgb(255, 235, 87));
 }
 
-.card-canvas {
-    border: none;
-    position: relative;
-    z-index: 1;
-}
-
 .card-title {
     position: absolute;
     z-index: 2;
@@ -43,7 +37,7 @@
     flex-wrap: wrap;
 }
 
-.card-cost {
+/* .card-cost {
     z-index: 3;
     width: 100%;
     position: absolute;
@@ -56,7 +50,7 @@
     position: absolute;
     display: table-cell;
     vertical-align: middle;
-}
+} */
 
 .card-item-image {
     position: absolute;
@@ -101,13 +95,6 @@
             rgb(19, 19, 19),
             transparent);
     border-radius: 16px;
-}
-
-.card-button-container {
-    width: 100%;
-    min-width: 100%;
-    display: flex;
-    justify-content: space-between;
 }
 
 .card-button {
@@ -164,11 +151,6 @@
     box-shadow: 1px 1px 1px rgb(19, 19, 19);
     z-index: 2;
     text-shadow: 0 0 5px rgb(19, 19, 19);
-}
-
-.card-button-stat-icon {
-    position: absolute;
-    z-index: 1;
 }
 
 img {

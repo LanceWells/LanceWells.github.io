@@ -3,6 +3,7 @@ import { IItemJson } from '../Interfaces/IItemJson';
 import { Item } from './Item';
 import { SourceType } from "../Enums/SourceType";
 import { ItemType } from "../Enums/ItemType";
+import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 
 export interface IItemPotionJson extends IItemJson {
     hasWithdrawalEffect: boolean;
@@ -63,6 +64,8 @@ export class ItemPotion extends Item implements IItemPotionJson {
 
         return clause;
     }
+
+    public GetCarpetType(): CarpetBorder { return CarpetBorder.Green }
 }
 
 export function IItemIsItemPotion(item: IItemJson): item is ItemPotion {

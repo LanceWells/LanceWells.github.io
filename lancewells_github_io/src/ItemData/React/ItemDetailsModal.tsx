@@ -1,4 +1,5 @@
-import '../ItemShop.css';
+import '../css/ItemDetailsModal.css';
+import '../css/DamageType.css'
 
 import React from 'react';
 import { IItem } from '../Interfaces/IItem';

@@ -1,0 +1,186 @@
+/* 
+ * All of the filters below were generated using:
+ * https://codepen.io/sosuke/pen/Pjoqqp
+ */
+
+/* ACID Damage Type */
+.text-color-acid {
+    color: rgb(153, 230, 95);
+}
+
+.badge-color-acid {
+    color: #1a1932;
+    background-color: rgb(153, 230, 95);
+}
+
+.icon-color-acid {
+    filter: invert(100%) sepia(21%) saturate(6550%) hue-rotate(36deg) brightness(112%) contrast(80%);
+}
+
+/* BLUDGEONING Damage Type */
+.text-color-bludgeoning {
+    color: rgb(137, 30, 43);
+}
+
+.badge-color-bludgeoning {
+    color: #ffffff;
+    background-color: rgb(137, 30, 43);
+}
+
+.icon-color-bludgeoning {
+    filter: invert(12%) sepia(100%) saturate(2426%) hue-rotate(338deg) brightness(90%) contrast(90%);
+}
+
+/* COLD Damage Type */
+.text-color-cold {
+    color: rgb(12, 241, 255);
+}
+
+.badge-color-cold {
+    color: #1a1932;
+    background-color: rgb(12, 241, 255);
+}
+
+.icon-color-cold {
+    filter: invert(78%) sepia(26%) saturate(2002%) hue-rotate(136deg) brightness(100%) contrast(103%);
+}
+
+/* FIRE Damage Type */
+.text-color-fire {
+    color: rgb(237, 118, 20);
+}
+
+.badge-color-fire {
+    color: #1a1932;
+    background-color: rgb(237, 118, 20);
+}
+
+.icon-color-fire {
+    filter: invert(45%) sepia(92%) saturate(1253%) hue-rotate(358deg) brightness(99%) contrast(87%);
+}
+
+/* FORCE Damage Type */
+.text-color-force {
+    color: rgb(3, 25, 63);
+}
+
+.badge-color-force {
+    color: #ffffff;
+    background-color: rgb(3, 25, 63);
+}
+
+.icon-color-force {
+    filter: invert(11%) sepia(27%) saturate(3655%) hue-rotate(198deg) brightness(90%) contrast(105%);
+}
+
+/* LIGHTNING Damage Type */
+.text-color-lightning {
+    color: rgb(255, 200, 37);
+}
+
+.badge-color-lightning {
+    color: #1a1932;
+    background-color: rgb(255, 200, 37);
+}
+
+.icon-color-lightning {
+    filter: invert(89%) sepia(19%) saturate(5418%) hue-rotate(338deg) brightness(109%) contrast(101%);
+}
+
+/* NECROTIC Damage Type */
+.text-color-necrotic {
+    color: rgb(101, 115, 146);
+}
+
+.badge-color-necrotic {
+    color: #ffffff;
+    background-color: rgb(101, 115, 146);
+}
+
+.icon-color-necrotic {
+    filter: invert(41%) sepia(36%) saturate(313%) hue-rotate(182deg) brightness(100%) contrast(92%);
+}
+
+/* PIERCING Damage Type */
+.text-color-piercing {
+    color: rgb(234, 50, 60);
+}
+
+.badge-color-piercing {
+    color: #ffffff;
+    background-color: rgb(234, 50, 60);
+}
+
+.icon-color-piercing {
+    filter: invert(29%) sepia(67%) saturate(6694%) hue-rotate(345deg) brightness(101%) contrast(83%);
+}
+
+/* POISON Damage Type */
+.text-color-poison {
+    color: rgb(30, 111, 80);
+}
+
+.badge-color-poison {
+    color: #ffffff;
+    background-color: rgb(30, 111, 80);
+}
+
+.icon-color-poison {
+    filter: invert(34%) sepia(51%) saturate(526%) hue-rotate(105deg) brightness(94%) contrast(94%);
+}
+
+/* PSYCHIC Damage Type */
+.text-color-psychic {
+    color: rgb(246, 129, 135);
+}
+
+.badge-color-psychic {
+    color: #1a1932;
+    background-color: rgb(246, 129, 135);
+}
+
+.icon-color-psychic {
+    filter: invert(57%) sepia(43%) saturate(526%) hue-rotate(308deg) brightness(98%) contrast(97%);
+}
+
+/* RADIANT Damage Type */
+.text-color-radiant {
+    color: rgb(255, 235, 87);
+}
+
+.badge-color-radiant {
+    color: #1a1932;
+    background-color: rgb(255, 235, 87);
+}
+
+.icon-color-radiant {
+    filter: invert(77%) sepia(78%) saturate(337%) hue-rotate(0deg) brightness(103%) contrast(104%);
+}
+
+/* SLASHING Damage Type */
+.text-color-slashing {
+    color: rgb(101, 115, 146);
+}
+
+.badge-color-slashing {
+    color: #ffffff;
+    background-color: rgb(101, 115, 146);
+}
+
+.icon-color-slashing {
+    filter: invert(47%) sepia(7%) saturate(1611%) hue-rotate(184deg) brightness(91%) contrast(86%);
+}
+
+/* THUNDER Damage Type */
+.text-color-thunder {
+    color: rgb(249, 230, 207);
+}
+
+.badge-color-thunder {
+    color: #1a1932;
+    background-color: rgb(249, 230, 207);
+}
+
+.icon-color-thunder {
+    filter: invert(95%) sepia(7%) saturate(1585%) hue-rotate(313deg) brightness(105%) contrast(95%);
+}

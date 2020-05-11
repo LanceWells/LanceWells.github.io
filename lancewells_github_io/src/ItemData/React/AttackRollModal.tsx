@@ -1,3 +1,5 @@
+import '../css/AttackRollModal.css'
+
 import React from 'react';
 import { Attack } from '../Classes/Attack';
 import { DamageType } from '../Enums/DamageType';

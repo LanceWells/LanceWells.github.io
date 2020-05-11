@@ -16,7 +16,7 @@ export function Shop(props: IShopProps) {
      * Runs only when the URL has changed. Updates the rendered store for this page.
      */
     useEffect(() => {
-        let shopRegex: RegExp = /\/shop\/([-A-Z0-9]+)/i;
+        let shopRegex: RegExp = /\/shop\/([-_A-Z0-9]+)/i;
         let shopMatch: RegExpExecArray | null = shopRegex.exec(location.pathname);
         let shopId: string | undefined = undefined;
 
