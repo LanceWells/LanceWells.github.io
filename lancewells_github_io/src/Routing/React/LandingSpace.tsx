@@ -14,6 +14,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { Inventory } from '../../Inventory/React/Inventory';
 import { CharacterManager } from '../../CharacterManager/React/CharacterManager';
 import { CharacterInfoContainer } from '../../CharacterInfo/React/CharacterInfoContainer';
+import { CharacterInfoDisplay } from '../../CharacterInfo/React/CharacterInfoDisplay';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
 import { Shop } from '../../Shops/React/ShopPage';
 
@@ -62,7 +63,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                                     Characters
                             </Nav.Link>
                             </Nav>
-                            <CharacterInfoContainer
+                            <CharacterInfoDisplay
                                 loginState={this.state.loginState}
                             />
                         </Navbar.Collapse>
@@ -74,7 +75,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                             <Route exact path="/" children={<LoginPage onLogin={this.HandleLoginStateChange.bind(this)}/>} />
                             <Route exact path="/login" children={<LoginPage onLogin={this.HandleLoginStateChange.bind(this)}/>} />
                             <Route exact path="/character_creator" children={<CharacterImage />} />
-                            <Route path="/shop" children={<Shop />} />
+                            <Route path="/shop" children={<Shop loginState={this.state.loginState}/>} />
                             <ProtectedRoute path="/inventory" children={<Inventory loginState={this.state.loginState}/>} />
                             <ProtectedRoute path="/characterManager" children={<CharacterManager />} />
                         </Switch>

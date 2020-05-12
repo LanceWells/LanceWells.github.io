@@ -4,13 +4,18 @@ import { ItemShopData } from '../Types/ItemShopData';
 import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
 import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
 import { ItemShop } from '../../Shops/React/ItemShop';
+import { useLoadingState } from '../../Utilities/Hooks/useLoadingState';
+import { LoadingState } from '../../Utilities/Enums/LoadingState';
+import { LoginState } from '../../LoginPage/Enums/LoginState';
 
 interface IShopProps {
+    loginState: LoginState;
 }
 
 export function Shop(props: IShopProps) {
     const [shopInfo, setShopInfo] = useState<ItemShopData | undefined>(undefined);
     const location = useLocation();
+    const loadingState = useLoadingState(props.loginState);
 
     /**
      * Runs only when the URL has changed. Updates the rendered store for this page.
@@ -26,15 +31,15 @@ export function Shop(props: IShopProps) {
                 setShopInfo(shop);
             });
         }
-    }, [location.pathname])
+    }, [location.pathname, shopInfo])
 
     return (
-        <LoadingPlaceholder showSpinner={shopInfo === undefined} role="Shop Loading Status">
+        <LoadingPlaceholder showSpinner={loadingState === LoadingState.Loading} role="Shop Loading Status">
             <div className="shop-page">
                 {GetShop(shopInfo)}
             </div>
         </LoadingPlaceholder>
-    )
+    );
 }
 
 function GetShop(shopData: ItemShopData | undefined): JSX.Element {
