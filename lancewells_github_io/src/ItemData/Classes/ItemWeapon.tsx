@@ -6,6 +6,7 @@ import { WeaponProperties } from "../Enums/WeaponProperties";
 import { Item } from './Item';
 import { Attack } from './Attack';
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
+import { CardIconMap } from './CardIconMap';
 
 export interface IItemWeaponJson extends IItemJson {
     shortRange: number;
@@ -133,9 +134,10 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     private GetProperties(): JSX.Element {
         let propertyDetails: JSX.Element[] = this.properties.map(property => {
             return (
-                <div>
-                    {property}
-                </div>
+                <p>
+                    <h6>{property}</h6>
+                    {CardIconMap.CardIconWeaponsMap.get(property)?.fullDetails ?? ""}
+                </p>
             );
         });
 
