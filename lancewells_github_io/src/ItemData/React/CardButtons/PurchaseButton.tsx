@@ -22,6 +22,7 @@ export function PurchaseButton(props: IPurchaseButtonProps) {
         if (props.availablePlayerCopper && props.availablePlayerCopper < props.item.itemCopperCost) {
             setButtonOption(PurchaseButtonOption.NotEnoughMoney);
         }
+        // Don't handle purchased events. This is taken care of in the button click callback.
         else if (buttonOption !== PurchaseButtonOption.Purchased) {
             setButtonOption(PurchaseButtonOption.CanPurchase);
         }
@@ -35,16 +36,14 @@ export function PurchaseButton(props: IPurchaseButtonProps) {
 
             window.setTimeout(() => {
                 setButtonOption(PurchaseButtonOption.CanPurchase);
-            });
+            }, 2500);
         }
     }
-
-    let styleProperties: React.CSSProperties = GetButtonStyle(buttonOption);
 
     return (
         <button
             className="card-button"
-            style={styleProperties}
+            style={GetButtonStyle(buttonOption)}
             onClick={HandleButtonClick}
             disabled={buttonOption !== PurchaseButtonOption.CanPurchase}>
             <img
