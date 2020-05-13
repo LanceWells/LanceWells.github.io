@@ -47,7 +47,6 @@ export function CharacterInfoDisplay(props: ICharacterInfoDisplayProps) {
             setShowMoneyAdjustModalProcessing(true);
 
             CharacterStateManager.GetInstance().UploadCharacterData(charData).then(() => {
-                // setCharData(charData);
                 setShowMoneyAdjustModalProcessing(false);
                 setShowMoneyAdjustModal(false);
             });

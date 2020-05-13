@@ -22,8 +22,7 @@ export function PurchaseButton(props: IPurchaseButtonProps) {
         if (props.availablePlayerCopper && props.availablePlayerCopper < props.item.itemCopperCost) {
             setButtonOption(PurchaseButtonOption.NotEnoughMoney);
         }
-        // Don't handle purchased events. This is taken care of in the button click callback.
-        else if (buttonOption !== PurchaseButtonOption.Purchased) {
+        else if (buttonOption !== PurchaseButtonOption.Purchased) { // Don't handle purchased events. This is taken care of in the button click callback.
             setButtonOption(PurchaseButtonOption.CanPurchase);
         }
     }, [buttonOption, props.availablePlayerCopper]);
