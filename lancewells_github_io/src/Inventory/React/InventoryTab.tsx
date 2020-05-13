@@ -37,6 +37,7 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                         CardInteractions.Use
                     ]}
                     showCardCost={false}
+                    availablePlayerCopper={undefined}
                 />
             )
         });

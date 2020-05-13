@@ -30,6 +30,7 @@ interface IItemCardProps {
     onAddButton: AddClick | undefined;
     cardInteractions: CardInteractions[];
     showCardCost: boolean;
+    availablePlayerCopper: number | undefined;
 }
 
 interface IItemCardState {
@@ -114,6 +115,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
                     callbackFunction={this.props.onPurchaseButton}
+                    availablePlayerCopper={this.props.availablePlayerCopper}
                 />
             )
 

@@ -21,6 +21,7 @@ import { ItemShopData } from '../Types/ItemShopData';
  */
 interface IItemShopProps {
     shopData: ItemShopData;
+    charData: PlayerCharacterData | undefined;
 };
 
 /**
@@ -112,6 +113,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                         onPurchaseClick={onItemPurchase}
                         carpetMap={new CarpetMap(carpetType, itemType, items)}
                         onItemClick={onItemClick}
+                        availablePlayerCopper={this.props.charData?.Copper}
                     />
                 );
             }

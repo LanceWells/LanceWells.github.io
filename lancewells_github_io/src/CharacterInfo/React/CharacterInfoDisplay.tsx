@@ -6,8 +6,8 @@ import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
 import { MoneyAdjustModal } from './MoneyAdjustModal';
 import { MoneyDisplay } from './MoneyDisplay';
 import { useState } from 'react';
-import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { useLoadingState } from '../../Utilities/Hooks/useLoadingState';
+import { useCharData } from '../../Utilities/Hooks/useCharData';
 import { MoneyAdjustCallback } from '../Types/MoneyAdjustCallback';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
@@ -17,29 +17,29 @@ interface ICharacterInfoDisplayProps {
 }
 
 export function CharacterInfoDisplay(props: ICharacterInfoDisplayProps) {
-    const [charData, setCharData] = useState<PlayerCharacterData | undefined>(undefined);
     const [showMoneyAdjustModal, setShowMoneyAdjustModal] = useState(false);
     const [showMoneyAdjustModalProcessing, setShowMoneyAdjustModalProcessing] = useState(false);
     const loadingState = useLoadingState(props.loginState);
+    const charData = useCharData(loadingState);
 
-    useEffect(() => {
-        if (loadingState === LoadingState.Loaded || loadingState == LoadingState.NoCharacters) {
-            CharacterStateManager.GetInstance().GetCharacter().then(char => {
-                if (char) {
-                    setCharData(char);
-                }
-            });
-        }
-    }, [loadingState, charData]);
-
-    const handleShowMoneyAdjust = function() {
+    /**
+     * Handler for when the user requests that the money display modal be shown via a callback.
+     */
+    const handleShowMoneyAdjust = function () {
         setShowMoneyAdjustModal(true);
     };
 
-    const handleHideMoneyAdjust = function() {
+    /**
+     * Handler for when the user requests that the modal be closed via a callback.
+     */
+    const handleHideMoneyAdjust = function () {
         setShowMoneyAdjustModal(false);
     }
 
+    /**
+     * Handler for when the user requests that the character money be adjusted by some amount.
+     * @param newCopperTotal The new copper total to modify for the character.
+     */
     const handleAdjustCopper: MoneyAdjustCallback = function (newCopperTotal: number) {
         if (charData) {
             charData.Copper = newCopperTotal;
@@ -47,21 +47,15 @@ export function CharacterInfoDisplay(props: ICharacterInfoDisplayProps) {
             setShowMoneyAdjustModalProcessing(true);
 
             CharacterStateManager.GetInstance().UploadCharacterData(charData).then(() => {
-                setCharData(charData);
+                // setCharData(charData);
                 setShowMoneyAdjustModalProcessing(false);
                 setShowMoneyAdjustModal(false);
             });
         }
     }
 
-    const characterStateManager_NotifyObservers = function (charData: PlayerCharacterData | undefined): void {
-        if (charData) {
-            setCharData(charData);
-        }
-    }
-
-    CharacterStateManager.GetInstance().AddObserver(characterStateManager_NotifyObservers);
-
+    // Set the default content that will be shown. Note that this is overridden in the event that the user
+    // either is not logged in, or does not have any characters.
     let content: JSX.Element = (
         <div className="character-info-content">
             <LoadingPlaceholder
@@ -90,7 +84,8 @@ export function CharacterInfoDisplay(props: ICharacterInfoDisplayProps) {
         </div>
     );
 
-    switch(loadingState) {
+    // Override the default content if the user either doesn't have any characters or is not logged in.
+    switch (loadingState) {
         case LoadingState.NoCharacters:
             content = GetNoCharsContent();
             break;
@@ -101,6 +96,7 @@ export function CharacterInfoDisplay(props: ICharacterInfoDisplayProps) {
             break;
     }
 
+    // Render the element.
     return (
         <div className="character-info-container">
             {content}

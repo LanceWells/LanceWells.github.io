@@ -15,6 +15,7 @@ interface IBazaarCarpetProps {
     carpetMap: CarpetMap;
     onItemClick: ItemClick;
     onPurchaseClick: PurchaseClick;
+    availablePlayerCopper: number | undefined;
 }
 
 interface IBazaarCarpetState {
@@ -44,6 +45,7 @@ export class BazaarCarpet extends React.Component<IBazaarCarpetProps, IBazaarCar
                     onAddButton={undefined}
                     cardInteractions={[CardInteractions.Purchase]}
                     showCardCost={true}
+                    availablePlayerCopper={this.props.availablePlayerCopper}
                 />
             );
         });

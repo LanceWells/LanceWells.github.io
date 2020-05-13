@@ -13,7 +13,6 @@ import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Inventory } from '../../Inventory/React/Inventory';
 import { CharacterManager } from '../../CharacterManager/React/CharacterManager';
-import { CharacterInfoContainer } from '../../CharacterInfo/React/CharacterInfoContainer';
 import { CharacterInfoDisplay } from '../../CharacterInfo/React/CharacterInfoDisplay';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
 import { Shop } from '../../Shops/React/ShopPage';

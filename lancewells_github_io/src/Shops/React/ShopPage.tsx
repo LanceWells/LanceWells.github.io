@@ -4,9 +4,11 @@ import { ItemShopData } from '../Types/ItemShopData';
 import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
 import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
 import { ItemShop } from '../../Shops/React/ItemShop';
+import { useCharData } from '../../Utilities/Hooks/useCharData';
 import { useLoadingState } from '../../Utilities/Hooks/useLoadingState';
 import { LoadingState } from '../../Utilities/Enums/LoadingState';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
+import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 
 interface IShopProps {
     loginState: LoginState;
@@ -16,6 +18,7 @@ export function Shop(props: IShopProps) {
     const [shopInfo, setShopInfo] = useState<ItemShopData | undefined>(undefined);
     const location = useLocation();
     const loadingState = useLoadingState(props.loginState);
+    const charData = useCharData(loadingState);
 
     /**
      * Runs only when the URL has changed. Updates the rendered store for this page.
@@ -36,13 +39,13 @@ export function Shop(props: IShopProps) {
     return (
         <LoadingPlaceholder showSpinner={loadingState === LoadingState.Loading} role="Shop Loading Status">
             <div className="shop-page">
-                {GetShop(shopInfo)}
+                {GetShop(shopInfo, charData)}
             </div>
         </LoadingPlaceholder>
     );
 }
 
-function GetShop(shopData: ItemShopData | undefined): JSX.Element {
+function GetShop(shopData: ItemShopData | undefined, charData: PlayerCharacterData | undefined): JSX.Element {
     let element: JSX.Element;
     element = (
         <div>
@@ -53,6 +56,7 @@ function GetShop(shopData: ItemShopData | undefined): JSX.Element {
         element = (
             <ItemShop
                 shopData={shopData}
+                charData={charData}
             />
         );
     }

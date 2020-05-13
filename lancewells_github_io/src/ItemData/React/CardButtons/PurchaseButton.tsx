@@ -1,76 +1,87 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PurchaseClick } from '../../Types/CardButtonCallbackTypes/PurchaseClick';
 import { IItem } from '../../Interfaces/IItem';
+
+enum PurchaseButtonOption {
+    NotEnoughMoney = "Not enough money!",
+    CanPurchase = "Purchase",
+    Purchased = "Purchased!"
+}
 
 interface IPurchaseButtonProps {
     item: IItem;
     cardIconSize: number;
     callbackFunction: PurchaseClick;
+    availablePlayerCopper: number | undefined;
 }
 
-interface IPurchaseButtonState {
-    canPurchase: boolean;
+export function PurchaseButton(props: IPurchaseButtonProps) {
+    const [buttonOption, setButtonOption] = useState(PurchaseButtonOption.CanPurchase);
+
+    useEffect(() => {
+        if (props.availablePlayerCopper && props.availablePlayerCopper < props.item.itemCopperCost) {
+            setButtonOption(PurchaseButtonOption.NotEnoughMoney);
+        }
+        else if (buttonOption !== PurchaseButtonOption.Purchased) {
+            setButtonOption(PurchaseButtonOption.CanPurchase);
+        }
+    }, [buttonOption, props.availablePlayerCopper]);
+
+    function HandleButtonClick(): void {
+        if (buttonOption === PurchaseButtonOption.CanPurchase) {
+            props.callbackFunction(props.item);
+
+            setButtonOption(PurchaseButtonOption.Purchased);
+
+            window.setTimeout(() => {
+                setButtonOption(PurchaseButtonOption.CanPurchase);
+            });
+        }
+    }
+
+    let styleProperties: React.CSSProperties = GetButtonStyle(buttonOption);
+
+    return (
+        <button
+            className="card-button"
+            style={styleProperties}
+            onClick={HandleButtonClick}
+            disabled={buttonOption !== PurchaseButtonOption.CanPurchase}>
+            <img
+                alt="card purchase button"
+                className="card-button-icon"
+                src='./images/Item_Shop/ItemCards/Icons/Button_Purchase.png'
+                width={props.cardIconSize}
+                height={props.cardIconSize}
+                style={{
+                    left: `-${props.cardIconSize / 2}px`
+                }} />
+            <div className="card-button-name">
+                {buttonOption}
+            </div>
+        </button>
+    )
 }
 
-export class PurchaseButton extends React.Component<IPurchaseButtonProps, IPurchaseButtonState> {
-    constructor(props: IPurchaseButtonProps) {
-        super(props)
-        this.state = {
-            canPurchase: true
-        };
-    }
-
-    private GetCustomButtonProperties(): React.CSSProperties {
-        let properties: React.CSSProperties = {};
-        if (!this.state.canPurchase) {
-            properties = {
-                background: "#1e6f50",
-            }
+function GetButtonStyle(purchaseOption: PurchaseButtonOption): React.CSSProperties {
+    let properties: React.CSSProperties = {};
+    switch (purchaseOption) {
+        case PurchaseButtonOption.Purchased: {
+            properties = { background: "#1e6f50" }
+            break;
         }
-
-        return properties;
-    }
-
-    private GetPurchaseStateText(): string {
-        return this.state.canPurchase ? "Purchase" : "Purchased!";
-    }
-
-    public render() {
-        const handleButtonClick = () => {
-            if (this.state.canPurchase) {
-                this.setState({
-                    canPurchase: false
-                },
-                () => {
-                    window.setTimeout(() => {
-                        this.setState({
-                            canPurchase: true
-                        })
-                    }, 2500)
-                });
-                this.props.callbackFunction(this.props.item);
-            }
+        case PurchaseButtonOption.CanPurchase: {
+            properties = {};
+            break;
         }
-
-        return (
-            <button
-                className="card-button"
-                style={this.GetCustomButtonProperties()}
-                onClick={handleButtonClick}
-                disabled={!this.state.canPurchase}>
-                <img
-                    alt="card purchase button"
-                    className="card-button-icon"
-                    src='./images/Item_Shop/ItemCards/Icons/Button_Purchase.png'
-                    width={this.props.cardIconSize}
-                    height={this.props.cardIconSize}
-                    style={{
-                        left: `-${this.props.cardIconSize / 2}px`
-                    }} />
-                <div className="card-button-name" ref="purchase-text">
-                    {this.GetPurchaseStateText()}
-                </div>
-            </button>
-        )
+        case PurchaseButtonOption.NotEnoughMoney: {
+            properties = { background: "#891e2b" };
+            break;
+        }
+        default: {
+            break;
+        }
     }
+
+    return properties;
 }
