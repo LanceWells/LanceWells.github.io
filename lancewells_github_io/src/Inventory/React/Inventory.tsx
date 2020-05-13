@@ -17,6 +17,7 @@ import { useLoadingState } from '../../Utilities/Hooks/useLoadingState';
 import { useCharData } from '../../Utilities/Hooks/useCharData';
 import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
+import { RemoveClick } from '../../ItemData/Types/CardButtonCallbackTypes/RemoveClick';
 
 export interface IInventoryProps {
     loginState: LoginState;
@@ -106,6 +107,12 @@ export function Inventory(props: IInventoryProps) {
         setShowAttackWindow(true);
     }
 
+    function HandleRemoveClick(item: IItem): void {
+        // if (charData) {
+        //     charData.Items.findIndex(i => i)
+        // }
+    }
+
     return (
         <div className="inventory-container">
             <LoadingPlaceholder
@@ -128,7 +135,7 @@ export function Inventory(props: IInventoryProps) {
                         activeKey={activeTab.toString()}
                         onSelect={HandleTabSelection}
                     >
-                        {GetInventoryTabs(items, HandleItemClick, HandleAttackClick)}
+                        {GetInventoryTabs(items, HandleItemClick, HandleAttackClick, HandleRemoveClick)}
                     </Tabs>
                 </div>
             </LoadingPlaceholder>
@@ -142,7 +149,7 @@ export function Inventory(props: IInventoryProps) {
  * @param handleItemClick Handles when a user clicks for an item display.
  * @param handleAttackClick Handles when a user clicks an attack button for an item.
  */
-function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAttackClick: AttackClick): JSX.Element[] {
+function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAttackClick: AttackClick, handleRemoveClick: RemoveClick): JSX.Element[] {
     let itemTabs: JSX.Element[] = Object.values(ItemType).map(itemType => {
         let filteredItems: IItem[] = items.filter(item => item.type === itemType);
 
@@ -159,6 +166,7 @@ function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAtta
                     itemType={itemType}
                     itemClick={handleItemClick}
                     attackClick={handleAttackClick}
+                    removeClick={handleRemoveClick}
                 />
             </Tab>
         )

@@ -72,13 +72,12 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     }
 
     private async HandleItemPurchase(item: IItem): Promise<void> {
-        let charData: PlayerCharacterData | undefined = await CharacterStateManager.GetInstance().GetCharacter();
-        if (charData) {
-            if (charData.Copper >= item.itemCopperCost) {
-                charData.Copper -= item.itemCopperCost;
-                charData.Items.push(item);
+        if (this.props.charData) {
+            if (this.props.charData.Copper >= item.itemCopperCost) {
+                this.props.charData.Copper -= item.itemCopperCost;
+                this.props.charData.Items.push(item);
 
-                await CharacterStateManager.GetInstance().UploadCharacterData(charData);
+                await CharacterStateManager.GetInstance().UploadCharacterData(this.props.charData);
             }
         }
     }

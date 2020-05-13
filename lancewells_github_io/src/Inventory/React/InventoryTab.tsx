@@ -5,12 +5,14 @@ import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClic
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
 import { ItemCard } from '../../ItemData/React/ItemCard';
 import { CardInteractions } from '../../ItemData/Enums/CardInteractions';
+import { RemoveClick } from '../../ItemData/Types/CardButtonCallbackTypes/RemoveClick';
 
 interface IInventoryTabProps {
     items: IItem[];
     itemType: ItemType;
     itemClick: ItemClick;
     attackClick: AttackClick;
+    removeClick: RemoveClick;
 }
 
 interface IInventoryTabState {
@@ -31,10 +33,11 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                     onItemClick={this.props.itemClick}
                     onAttackButton={this.props.attackClick}
                     onPurchaseButton={undefined}
-                    onRemoveButton={undefined}
+                    onRemoveButton={this.props.removeClick}
                     onAddButton={undefined}
                     cardInteractions={[
-                        CardInteractions.Use
+                        CardInteractions.Use,
+                        CardInteractions.Remove
                     ]}
                     showCardCost={false}
                     availablePlayerCopper={undefined}

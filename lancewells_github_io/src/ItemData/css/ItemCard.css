@@ -1,3 +1,23 @@
+@keyframes progressRed {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes textWarn {
+    0% {
+        color: #ffffff;
+    }
+
+    100% {
+        color: #657392;
+    }
+}
+
 .item-card {
     justify-content: center;
     align-items: baseline;
@@ -36,21 +56,6 @@
     align-items: center;
     flex-wrap: wrap;
 }
-
-/* .card-cost {
-    z-index: 3;
-    width: 100%;
-    position: absolute;
-    text-align: left;
-}
-
-.card-cost-text {
-    font-family: "Press Start 2P";
-    z-index: 4;
-    position: absolute;
-    display: table-cell;
-    vertical-align: middle;
-} */
 
 .card-item-image {
     position: absolute;
@@ -114,7 +119,7 @@
 
 .card-button-icon {
     position: absolute;
-    z-index: 1;
+    z-index: 3;
 }
 
 .card-button-name {
@@ -122,6 +127,24 @@
     width: 80%;
     text-align: left;
     align-self: center;
+    z-index: 2;
+}
+
+.card-button-progress-bar-red {
+    animation-name: progressRed;
+    animation-duration: 2s;
+
+    position: absolute;
+    background-color: #891e2b;
+    min-height: 100%;
+    justify-self: flex-start;
+    left: 0;
+    z-index: 1;
+}
+
+.card-button-name-warn {
+    animation-name: textWarn;
+    animation-duration: 2s;
 }
 
 .card-button-stats-container {
@@ -139,7 +162,7 @@
     padding: 8px;
     font-size: larger;
     box-shadow: 1px 1px 1px rgb(19, 19, 19);
-    z-index: 2;
+    z-index: 4;
     text-shadow: 0 0 5px rgb(19, 19, 19);
 }
 
