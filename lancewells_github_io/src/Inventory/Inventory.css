@@ -1,7 +1,11 @@
 .inventory-container {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     flex-direction: row;
+    flex-grow: 1; */
+    overflow-y: scroll;
+    max-height: 100%;
+    min-height: 100%;
 } 
 
 .nav-item {
@@ -15,7 +19,7 @@
 }
 
 .inventory-tabs-container {
-    height: 100%;
+    /* min-height: 100%; */
     flex-grow: 1;
 }
 
