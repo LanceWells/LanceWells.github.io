@@ -111,6 +111,7 @@ export function Inventory(props: IInventoryProps) {
         // if (charData) {
         //     charData.Items.findIndex(i => i)
         // }
+        setShowItemDetails(false);
     }
 
     return (
@@ -122,6 +123,7 @@ export function Inventory(props: IInventoryProps) {
                     show={showItemDetails}
                     hideModal={HandleHideDetails}
                     itemDetails={focusedItem}
+                    removeCallback={HandleRemoveClick}
                 />
                 <AttackRollModal
                     show={showAttackWindow}

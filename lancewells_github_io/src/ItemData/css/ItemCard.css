@@ -1,4 +1,4 @@
-@keyframes progressRed {
+/* @keyframes progressRed {
     0% {
         width: 0%;
     }
@@ -16,7 +16,7 @@
     100% {
         color: #657392;
     }
-}
+} */
 
 .item-card {
     justify-content: center;
@@ -130,6 +130,15 @@
     z-index: 2;
 }
 
+/* .card-button-remove {
+    padding: 0 0;
+    width: 100%;
+}
+
+.card-button-remove-name {
+    z-index: 2;
+}
+
 .card-button-progress-bar-red {
     animation-name: progressRed;
     animation-duration: 2s;
@@ -145,7 +154,7 @@
 .card-button-name-warn {
     animation-name: textWarn;
     animation-duration: 2s;
-}
+} */
 
 .card-button-stats-container {
     position: absolute;

@@ -134,7 +134,9 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                 <ItemDetailsModal
                     show={this.state.showItemDialog}
                     hideModal={this.onItemDialogClose.bind(this)}
-                    itemDetails={this.state.itemDetails} />
+                    itemDetails={this.state.itemDetails}
+                    removeCallback={undefined}
+                    />
             </div>
         );
     }

@@ -1,10 +1,12 @@
+import '../../css/ItemDetailsModal.css';
+
 import React, { useState } from 'react';
 import { RemoveClick } from '../../Types/CardButtonCallbackTypes/RemoveClick';
 import { IItem } from '../../Interfaces/IItem';
 
 interface IRemoveButtonProps {
     item: IItem;
-    cardIconSize: number;
+    // cardIconSize: number;
     callbackFunction: RemoveClick;
 }
 
@@ -14,12 +16,12 @@ export function RemoveButton(props: IRemoveButtonProps) {
     const [progressTimeout, setProgressTimeout] = useState<NodeJS.Timeout>();
 
     function HandleMouseDown(event: React.MouseEvent) {
-        let clearInterval: NodeJS.Timeout = setTimeout(() => {
+        let interval: NodeJS.Timeout = setTimeout(() => {
             setReadyToDelete(true);
         }, 2000);
         
         setStartedToDelete(true);
-        setProgressTimeout(clearInterval);
+        setProgressTimeout(interval);
     }
 
     function HandleMouseUp(event: React.MouseEvent) {
@@ -29,6 +31,15 @@ export function RemoveButton(props: IRemoveButtonProps) {
             props.callbackFunction(props.item);
             setReadyToDelete(false);
         }
+        if (progressTimeout) {
+            clearInterval(progressTimeout);
+        }
+    }
+
+    function HandleMouseLeave(event: React.MouseEvent) {
+        setReadyToDelete(false);
+        setStartedToDelete(false);
+
         if (progressTimeout) {
             clearInterval(progressTimeout);
         }
@@ -44,25 +55,20 @@ export function RemoveButton(props: IRemoveButtonProps) {
         return content;
     }
 
+    let buttonText = readyToDelete ? "Release to delete" : "Drop Item (Press & Hold)";
+
     return (
         <button
-            className="card-button"
+            className="card-button-remove negative-button"
             onMouseDown={HandleMouseDown}
             onMouseUp={HandleMouseUp}
+            onMouseLeave={HandleMouseLeave}
             >
-            <img
-                alt="Remove Button"
-                className="card-button-icon"
-                src='./images/Item_Shop/ItemCards/Icons/Button_Remove.png'
-                width={props.cardIconSize}
-                height={props.cardIconSize}
-                style={{
-                    left: `-${props.cardIconSize / 2}px`
-                }} />
+
             {GetProgressBar()}
             <div className={startedDelete ? "card-button-progress-bar-red" : ""}/>
-            <div className={`card-button-name ${startedDelete ? "card-button-name-warn" : ""}`}>
-                Drop Item
+            <div className={`card-button-remove-name ${startedDelete ? "card-button-name-warn" : ""}`}>
+                {buttonText}
             </div>
         </button>
     )

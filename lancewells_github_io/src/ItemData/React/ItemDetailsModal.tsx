@@ -6,6 +6,8 @@ import { IItem } from '../Interfaces/IItem';
 import { SourceType } from '../Enums/SourceType';
 import { StylizedModal } from '../../Utilities/React/StylizedModal';
 import { MoneyDisplay } from '../../CharacterInfo/React/MoneyDisplay';
+import { RemoveClick } from '../Types/CardButtonCallbackTypes/RemoveClick';
+import { RemoveButton } from './CardButtons/RemoveButton';
 
 interface IItemDetailsModalState {
     showAlert: boolean;
@@ -15,6 +17,7 @@ interface IItemDetailsModalProps {
     show: boolean;
     hideModal: () => void;
     itemDetails: IItem;
+    removeCallback: RemoveClick | undefined;
 }
 
 export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, IItemDetailsModalState> {
@@ -45,6 +48,22 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
     }
 
     render() {
+        let removeButton = (<div/>);
+        if (this.props.removeCallback) {
+            removeButton = (
+                <RemoveButton
+                    item={this.props.itemDetails}
+                    callbackFunction={this.props.removeCallback}
+                />
+            )
+        }
+        // let removeButton: JSX.Element = (
+        //     <RemoveButton
+        //         item={this.props.itemDetails}
+
+        //     />
+        // )
+
         return (
             <StylizedModal
                 show={this.props.show}
@@ -70,6 +89,7 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                 </div>
                 <hr className='white-hr' />
                 {this.props.itemDetails.RenderItemDescription()}
+                {removeButton}
             </StylizedModal>
         );
     }

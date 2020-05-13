@@ -122,18 +122,18 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             buttons = buttons.concat(purchaseButton);
         }
 
-        if (this.props.cardInteractions.some(interaction => interaction === "Remove")
-         && this.props.onRemoveButton !== undefined) {
-             let removeButton: JSX.Element = (
-                 <RemoveButton
-                    item={this.props.itemDetails}
-                    cardIconSize={this.iconDefaultSize * this.cardRatio}
-                    callbackFunction={this.props.onRemoveButton}
-                 />
-             )
+        // if (this.props.cardInteractions.some(interaction => interaction === "Remove")
+        //  && this.props.onRemoveButton !== undefined) {
+        //      let removeButton: JSX.Element = (
+        //          <RemoveButton
+        //             item={this.props.itemDetails}
+        //             cardIconSize={this.iconDefaultSize * this.cardRatio}
+        //             callbackFunction={this.props.onRemoveButton}
+        //          />
+        //      )
 
-            buttons = buttons.concat(removeButton);
-        }
+        //     buttons = buttons.concat(removeButton);
+        // }
 
         if (this.props.cardInteractions.some(interaction => interaction === "Add")
          && this.props.onAddButton !== undefined) {

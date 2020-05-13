@@ -17,6 +17,27 @@
     }
 }
 
+@keyframes progressRed {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes textWarn {
+    0% {
+        color: #ffffff;
+    }
+
+    100% {
+        color: #f2d2ed;
+    }
+}
+
+
 .item-preview {
     display: flex;
     justify-content: center;
@@ -42,4 +63,37 @@
     animation-iteration-count: infinite;
     animation-direction: alternate-reverse;
     animation-timing-function: ease-in-out;
+}
+
+.card-button-remove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    padding: 0 0;
+    width: 100%;
+}
+
+.card-button-remove-name {
+    z-index: 2;
+}
+
+.card-button-progress-bar-red {
+    animation-name: progressRed;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+
+    position: absolute;
+    background-color: #891e2b;
+    min-height: 100%;
+    justify-self: flex-start;
+    left: 0;
+    z-index: 1;
+}
+
+.card-button-name-warn {
+    animation-name: textWarn;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
 }
