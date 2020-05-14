@@ -22,9 +22,25 @@ export class PlayerCharacterData {
 
     public static GetStringArrayAsItems(itemJson: string[]): IItemKey[] {
         let items: IItemKey[] = itemJson
-            .map(itemJson => JSON.parse(itemJson) as IItemKey | undefined)
+            .map(PlayerCharacterData.GetItemsFromJson)
             .filter(item => item !== undefined) as IItemKey[];
 
         return items;
+    }
+
+    private static GetItemsFromJson(value: string): IItemKey | undefined {
+        let retVal: IItemKey | undefined = undefined;
+
+        try {
+            let parsedResponse = JSON.parse(value);
+            if (parsedResponse as IItemKey) {
+                retVal = parsedResponse;
+            }
+        }
+        catch {
+            // Just ignore this for now. Return undefined.
+        }
+
+        return retVal;
     }
 }
