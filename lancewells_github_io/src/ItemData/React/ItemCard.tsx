@@ -226,7 +226,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         Promise.all(loadedImagesPromises)
             .then(resolved => {
                 console.log("Successfully loaded card images" + resolved);
-                this.DrawTitleText();
+                this.SetTitleTextSize();
             })
             .catch(reason => {
                 console.error("Failed to load card images" + reason);
@@ -236,7 +236,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     /**
      * Draws the title text for this card.
      */
-    private DrawTitleText() {
+    private SetTitleTextSize() {
         let titleText: string = this.props.itemDetails.title;
         let testDiv: HTMLDivElement = document.createElement("div") as HTMLDivElement;
         testDiv.innerText = titleText;
@@ -318,7 +318,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                             height: `${this.titleDefaultFontSize}px`,
                             top: `${this.titleDefaultTopOffset * this.cardRatio}px`,
                         }}>
-                        {this.props.itemDetails.title}
+                        {this.props.itemDetails.title + `+${this.props.itemDetails.adjustments?.magicBonus ?? -1}`}
                     </span>
 
                     <div

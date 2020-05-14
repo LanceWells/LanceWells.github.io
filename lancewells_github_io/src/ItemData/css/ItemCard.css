@@ -18,6 +18,10 @@
     }
 } */
 
+.card-display {
+    padding: 15px;
+}
+
 .item-card {
     justify-content: center;
     align-items: baseline;

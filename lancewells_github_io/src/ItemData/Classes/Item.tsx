@@ -5,6 +5,7 @@ import { SourceType } from '../Enums/SourceType';
 import { ItemModifications } from '../Enums/ItemModifications';
 import { ItemType } from '../Enums/ItemType';
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
+import { ItemAdjustments } from '../Types/ItemAdjustments';
 
 export abstract class Item implements IItem {
     public RenderItemDescription(): JSX.Element {
@@ -42,8 +43,9 @@ export abstract class Item implements IItem {
     source: SourceType = SourceType.Homebrew;
     itemCopperCost: number = 0;
     requiresAttunement: boolean = false;
-    modifications: ItemModifications[] = [];
     type: ItemType = ItemType.Wondrous;
+    adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
+
 
     protected readonly paragraphMargins: string = "0 15px 0 15px";
     protected readonly titleMargins: string = "15px 0 0 0";

@@ -1,6 +1,5 @@
 import { IItemKey } from './IItemKey'
 import { SourceType } from "../Enums/SourceType";
-import { ItemModifications } from "../Enums/ItemModifications";
 
 export interface IItemJson extends IItemKey {
     title: string;
@@ -10,5 +9,4 @@ export interface IItemJson extends IItemKey {
     source: SourceType;
     itemCopperCost: number;
     requiresAttunement: boolean;
-    modifications: ItemModifications[];
 }

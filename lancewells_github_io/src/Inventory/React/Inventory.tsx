@@ -155,16 +155,32 @@ function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAtta
     let itemTabs: JSX.Element[] = Object.values(ItemType).map(itemType => {
         let filteredItems: IItem[] = items.filter(item => item.type === itemType);
 
+        // https://stackoverflow.com/questions/8900732/sort-objects-in-an-array-alphabetically-on-one-property-of-the-array
+        let sortedItems: IItem[] = filteredItems.sort((a, b) => {
+            let upperA = a.title;
+            let upperB = b.title;
+            let retVal = 0;
+
+            if (upperA > upperB) {
+                retVal = 1;
+            }
+            else {
+                retVal = -1;
+            }
+
+            return retVal;
+        });
+
         return (
             <Tab eventKey={itemType.toString()}
                 title={
                     <div>
                         <img className="inventory-tab-icon" src={`./images/Inventory/Tab_${itemType}.png`}/>
-                        <span>{`${itemType} (${filteredItems.length})`}</span>
+                        <span>{`${itemType} (${sortedItems.length})`}</span>
                     </div>
                 }>
                 <InventoryTab
-                    items={filteredItems}
+                    items={sortedItems}
                     itemType={itemType}
                     itemClick={handleItemClick}
                     attackClick={handleAttackClick}

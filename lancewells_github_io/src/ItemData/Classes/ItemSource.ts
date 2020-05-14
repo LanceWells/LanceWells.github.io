@@ -186,7 +186,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/club.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -204,7 +209,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
                         damageType: DamageType.Bludgeoning
                     }
                 ]
-        }
+        },
     },
     {
         key: 'Dagger',
@@ -214,7 +219,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/dagger.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -244,7 +254,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/greatclub.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -272,7 +287,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/handaxe.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -301,7 +321,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/javelin.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 30,
         longRange: 120,
         properties: [
@@ -329,7 +354,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/light_hammer.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -358,7 +388,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/mace.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -385,7 +420,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/quarterstaff.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -422,7 +462,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/sickle.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -450,7 +495,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/spear.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -488,7 +538,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/shortsword.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -517,7 +572,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -551,7 +611,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -580,7 +645,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/light_crossbow.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 80,
         longRange: 230,
         properties: [
@@ -610,7 +680,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/shortbow.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 80,
         longRange: 230,
         properties: [
@@ -639,7 +714,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/sling.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 30,
         longRange: 120,
         properties: [
@@ -667,7 +747,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/battleaxe.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -704,7 +789,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/glaive.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -734,7 +824,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -771,7 +866,12 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         iconSource: './images/Item_Shop/Items/Weapons/longsword.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         shortRange: 20,
         longRange: 60,
         properties: [
@@ -812,7 +912,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/LowHealthPotion.png',
         source: SourceType.Official,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: false,
         itemCopperCost: 5000,
         type: ItemType.Consumable,
@@ -825,7 +930,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/LowManaPotion.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: true,
         itemCopperCost: 10000,
         type: ItemType.Consumable,
@@ -838,7 +948,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/DarkContractPotion.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: false,
         itemCopperCost: 10000,
         type: ItemType.Consumable,
@@ -851,7 +966,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/potion_tiamat.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: true,
         itemCopperCost: 10000,
         type: ItemType.Consumable,
@@ -864,7 +984,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/poison.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: false,
         itemCopperCost: 10000,
         type: ItemType.Consumable,
@@ -877,7 +1002,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/poison_burning.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: false,
         itemCopperCost: 10000,
         type: ItemType.Consumable,
@@ -890,7 +1020,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/poison_lightning.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: false,
         itemCopperCost: 10000,
         type: ItemType.Consumable,
@@ -903,7 +1038,12 @@ const ItemMap_Potions: IItemPotionJson[] =
         iconSource: './images/Item_Shop/Items/Potions/AngelicPotion.png',
         source: SourceType.Homebrew,
         requiresAttunement: false,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         hasWithdrawalEffect: true,
         itemCopperCost: 25000,
         type: ItemType.Consumable,
@@ -922,7 +1062,12 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
         source: SourceType.Homebrew,
         requiresAttunement: true,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         itemCopperCost: 10000,
         type: ItemType.Wondrous,
     },
@@ -934,7 +1079,12 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
         source: SourceType.Homebrew,
         requiresAttunement: true,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         itemCopperCost: 10000,
         type: ItemType.Wondrous,
     },
@@ -946,7 +1096,12 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         iconSource: './images/Item_Shop/Items/Rings/Ring Floral.png',
         source: SourceType.Homebrew,
         requiresAttunement: true,
-        modifications: [],
+        adjustments: {
+            magicBonus: 0,
+            modifications: [
+            ],
+            notes: ""
+        },
         itemCopperCost: 5000,
         type: ItemType.Wondrous,
     },

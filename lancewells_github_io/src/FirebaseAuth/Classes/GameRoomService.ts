@@ -24,7 +24,8 @@ export class GameRoomService {
         let itemsJson: IItemKey[] = shop.Items.map(i => {
             let minimalItem = {
                 key: i.key,
-                type: i.type
+                type: i.type,
+                adjustments: i.adjustments
             }
             return minimalItem;
         });
@@ -99,7 +100,15 @@ export class GameRoomService {
             if (parsedItems !== undefined && parsedItems as IItemKey[] != undefined) {
 
                 let providedItems: (IItem | undefined)[] = parsedItems.map(item => {
-                    return ItemSource.GetItem(item.key, item.type);
+                    let mappedItem: IItem | undefined = ItemSource.GetItem(item.key, item.type);
+
+                    // A shop/chest might specify some additional features for this item. By default, we're
+                    // just looking for the item from the item source. Apply some after-the-fact adjustments
+                    // if the item was found.
+                    if (mappedItem && item && item.adjustments) {
+                        mappedItem.adjustments = item.adjustments;
+                    }
+                    return mappedItem;
                 });
 
                 let definedItems: IItem[] = providedItems

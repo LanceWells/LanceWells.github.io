@@ -7,6 +7,8 @@ import { Item } from './Item';
 import { Attack } from './Attack';
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 import { CardIconMap } from './CardIconMap';
+import { ItemModifications } from '../Enums/ItemModifications';
+import { ItemAdjustments } from '../Types/ItemAdjustments';
 
 export interface IItemWeaponJson extends IItemJson {
     shortRange: number;
@@ -31,6 +33,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Weapon;
+    public adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
     
     public shortRange: number = 20;
     public longRange: number = 60;

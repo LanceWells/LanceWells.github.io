@@ -4,6 +4,8 @@ import { Item } from './Item';
 import { SourceType } from "../Enums/SourceType";
 import { ItemType } from "../Enums/ItemType";
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
+import { ItemModifications } from '../Enums/ItemModifications';
+import { ItemAdjustments } from '../Types/ItemAdjustments';
 
 export interface IItemPotionJson extends IItemJson {
     hasWithdrawalEffect: boolean;
@@ -19,6 +21,7 @@ export class ItemPotion extends Item implements IItemPotionJson {
     public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Consumable;
+    public adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
 
     public hasWithdrawalEffect: boolean = false;
     

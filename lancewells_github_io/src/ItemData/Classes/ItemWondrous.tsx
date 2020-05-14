@@ -3,6 +3,8 @@ import { Item } from './Item';
 import { SourceType } from "../Enums/SourceType";
 import { ItemType } from "../Enums/ItemType";
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
+import { ItemModifications } from '../Enums/ItemModifications';
+import { ItemAdjustments } from '../Types/ItemAdjustments';
 
 export interface IItemWondrousJson extends IItemJson {
 }
@@ -17,6 +19,7 @@ export class ItemWondrous extends Item implements IItemWondrousJson {
     public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Wondrous;
+    public adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
 
     static fromJson(json: IItemWondrousJson): ItemWondrous {
         let item = new ItemWondrous();
