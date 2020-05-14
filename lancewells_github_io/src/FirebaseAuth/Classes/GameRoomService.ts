@@ -100,7 +100,7 @@ export class GameRoomService {
             if (parsedItems !== undefined && parsedItems as IItemKey[] != undefined) {
 
                 let providedItems: (IItem | undefined)[] = parsedItems.map(item => {
-                    let mappedItem: IItem | undefined = ItemSource.GetItem(item.key, item.type);
+                    let mappedItem: IItem | undefined = ItemSource.GetItem(item);
 
                     // A shop/chest might specify some additional features for this item. By default, we're
                     // just looking for the item from the item source. Apply some after-the-fact adjustments

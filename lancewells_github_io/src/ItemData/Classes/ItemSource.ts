@@ -8,6 +8,7 @@ import { IItemJson } from "../Interfaces/IItemJson";
 import { SourceType } from "../Enums/SourceType";
 import { WeaponProperties } from "../Enums/WeaponProperties";
 import { DamageType } from "../Enums/DamageType";
+import { IItemKey } from "../Interfaces/IItemKey";
 
 /**
  * @description A class used to fetch items based on a specific index and call.
@@ -23,12 +24,12 @@ export class ItemSource {
      * @param index The index to search for the item.
      * @param type The type of item to search for.
      */
-    public static GetItem(index: string, type: ItemType): IItem | undefined {
+    public static GetItem(itemKey: IItemKey): IItem | undefined {
         let item: IItemJson | undefined = undefined;
         let listToSearch: IItemJson[] | undefined = undefined;
         let constructedItem: IItem | undefined = undefined;
 
-        switch (type) {
+        switch (itemKey.type) {
             case ItemType.Weapon:
                 listToSearch = ItemMap_Weapons;
                 break;
@@ -49,8 +50,12 @@ export class ItemSource {
         if (listToSearch !== undefined) {
             for (let i = 0; i < listToSearch.length; i++) {
                 let currentItem = listToSearch[i];
-                if (currentItem.key === index) {
+                if (currentItem.key === itemKey.key) {
                     item = currentItem;
+
+                    if (itemKey.adjustments) {
+                        item.adjustments = itemKey.adjustments
+                    }
                     break;
                 }
             }

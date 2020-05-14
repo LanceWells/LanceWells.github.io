@@ -66,21 +66,21 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     }
 
     private HandleTestButton(): void {
-        let firstItem: IItem = ItemSource.GetItem("Javelin", ItemType.Weapon) as IItem;
-        let secondItem: IItem = ItemSource.GetItem("FireyRing", ItemType.Wondrous) as IItem;
+        // let firstItem: IItem = ItemSource.GetItem("Javelin", ItemType.Weapon) as IItem;
+        // let secondItem: IItem = ItemSource.GetItem("FireyRing", ItemType.Wondrous) as IItem;
         
-        let itemShop: ItemShopData = {
-            ID: "",
-            Name: "Test Shop Name",
-            ShopKeeper: ShopKeepers.Indigo,
-            Items: [
-                firstItem,
-                secondItem
-            ]
-        }
-        // let createdShop = GameRoomService.AddShop(itemShop);
-        let receivedShop = GameRoomService.GetShopByShopId("-M6qoSn88jT2iGbQtnI7");
-        ;
+        // let itemShop: ItemShopData = {
+        //     ID: "",
+        //     Name: "Test Shop Name",
+        //     ShopKeeper: ShopKeepers.Indigo,
+        //     Items: [
+        //         firstItem,
+        //         secondItem
+        //     ]
+        // }
+        // // let createdShop = GameRoomService.AddShop(itemShop);
+        // let receivedShop = GameRoomService.GetShopByShopId("-M6qoSn88jT2iGbQtnI7");
+        // ;
     }
 
     /**

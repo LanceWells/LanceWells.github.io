@@ -18,6 +18,7 @@ import { useCharData } from '../../Utilities/Hooks/useCharData';
 import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
 import { RemoveClick } from '../../ItemData/Types/CardButtonCallbackTypes/RemoveClick';
+import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 
 export interface IInventoryProps {
     loginState: LoginState;
@@ -73,7 +74,7 @@ export function Inventory(props: IInventoryProps) {
 
         if (charData) {
             charData.Items.forEach(item => {
-                let foundItem: IItem | undefined = ItemSource.GetItem(item.key, item.type);
+                let foundItem: IItem | undefined = ItemSource.GetItem(item);
 
                 if (foundItem) {
                     newItems.push(foundItem);
@@ -108,10 +109,17 @@ export function Inventory(props: IInventoryProps) {
     }
 
     function HandleRemoveClick(item: IItem): void {
-        // if (charData) {
-        //     charData.Items.findIndex(i => i)
-        // }
         setShowItemDetails(false);
+
+        if (charData) {
+            let jsonStringToCompare = JSON.stringify(item);
+            let itemToRemove = charData.Items.findIndex(i => JSON.stringify(i) === jsonStringToCompare);
+
+            if (itemToRemove > -1) {
+                charData.Items.splice(itemToRemove, 1);
+                CharacterStateManager.GetInstance().UploadCharacterData(charData);
+            }
+        }
     }
 
     return (
