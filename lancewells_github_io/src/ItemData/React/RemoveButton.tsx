@@ -1,8 +1,8 @@
-import '../../css/ItemDetailsModal.css';
+import '../css/ItemDetailsModal.css';
 
 import React, { useState } from 'react';
-import { RemoveClick } from '../../Types/CardButtonCallbackTypes/RemoveClick';
-import { IItem } from '../../Interfaces/IItem';
+import { RemoveClick } from '../Types/CardButtonCallbackTypes/RemoveClick';
+import { IItem } from '../Interfaces/IItem';
 
 interface IRemoveButtonProps {
     item: IItem;

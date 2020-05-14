@@ -6,7 +6,7 @@ import { CardIcon } from './CardIcon';
 import { AttackButton } from './CardButtons/AttackButton';
 import { AddButton } from './CardButtons/AddButton';
 import { PurchaseButton } from './CardButtons/PurchaseButton';
-import { RemoveButton } from './CardButtons/RemoveButton';
+import { RemoveButton } from './RemoveButton';
 import { IItem } from '../Interfaces/IItem';
 import { ItemClick } from '../Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../Types/CardButtonCallbackTypes/AttackClick';
@@ -67,6 +67,10 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
     readonly iconDefaultLeftOffset: number = 81;
     readonly iconDefaultTopOffset: number = 17;
 
+    // MagicBonus measurements.
+    readonly magBonusDefualtTopOffset: number = 18;
+    readonly magBonusDefualtLeftOffset: number = 18;
+
     // Coin measurements.
     readonly coinDefaultSize: number = 16;
     readonly coinDefaultLeftOffset: number = 1;
@@ -121,19 +125,6 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
 
             buttons = buttons.concat(purchaseButton);
         }
-
-        // if (this.props.cardInteractions.some(interaction => interaction === "Remove")
-        //  && this.props.onRemoveButton !== undefined) {
-        //      let removeButton: JSX.Element = (
-        //          <RemoveButton
-        //             item={this.props.itemDetails}
-        //             cardIconSize={this.iconDefaultSize * this.cardRatio}
-        //             callbackFunction={this.props.onRemoveButton}
-        //          />
-        //      )
-
-        //     buttons = buttons.concat(removeButton);
-        // }
 
         if (this.props.cardInteractions.some(interaction => interaction === "Add")
          && this.props.onAddButton !== undefined) {
@@ -289,6 +280,12 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
      * Renders an instance of this object.
      */
     render() {
+        let cardBonus: string = "";
+        let itemMagicBonus: number = this.props.itemDetails.adjustments.magicBonus;
+        if (itemMagicBonus > 0) {
+            cardBonus = `+${itemMagicBonus}`;
+        }
+
         return (
             <div className="card-display">
                 <div
@@ -318,9 +315,16 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                             height: `${this.titleDefaultFontSize}px`,
                             top: `${this.titleDefaultTopOffset * this.cardRatio}px`,
                         }}>
-                        {this.props.itemDetails.title + `+${this.props.itemDetails.adjustments?.magicBonus ?? -1}`}
+                        {this.props.itemDetails.title}
                     </span>
-
+                    <div
+                        className="card-magic-bonus"
+                        style={{
+                            top: `${this.magBonusDefualtTopOffset * this.cardRatio}px`,
+                            left: `${this.magBonusDefualtLeftOffset * this.cardRatio}px`,
+                        }}>
+                        {cardBonus}
+                    </div>
                     <div
                         className="card-icons"
                         style={{

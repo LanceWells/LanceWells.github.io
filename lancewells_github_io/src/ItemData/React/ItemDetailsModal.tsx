@@ -7,7 +7,7 @@ import { SourceType } from '../Enums/SourceType';
 import { StylizedModal } from '../../Utilities/React/StylizedModal';
 import { MoneyDisplay } from '../../CharacterInfo/React/MoneyDisplay';
 import { RemoveClick } from '../Types/CardButtonCallbackTypes/RemoveClick';
-import { RemoveButton } from './CardButtons/RemoveButton';
+import { RemoveButton } from './RemoveButton';
 
 interface IItemDetailsModalState {
     showAlert: boolean;

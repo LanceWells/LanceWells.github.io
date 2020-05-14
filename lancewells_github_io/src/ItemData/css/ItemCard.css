@@ -1,22 +1,20 @@
-/* @keyframes progressRed {
+@keyframes magicModifier {
     0% {
-        width: 0%;
+        color: #f68187;
+    }
+
+    25% {
+        color: #99e65f;
+    }
+
+    50% {
+        color: #ffeb57;
     }
 
     100% {
-        width: 100%;
+        color: #0cf1ff;
     }
 }
-
-@keyframes textWarn {
-    0% {
-        color: #ffffff;
-    }
-
-    100% {
-        color: #657392;
-    }
-} */
 
 .card-display {
     padding: 15px;
@@ -35,7 +33,6 @@
 }
 
 .item-card:hover {
-    /* transform: translateY(-16px); */
     filter: drop-shadow(0 0 6px rgb(255, 235, 87));
 }
 
@@ -134,32 +131,6 @@
     z-index: 2;
 }
 
-/* .card-button-remove {
-    padding: 0 0;
-    width: 100%;
-}
-
-.card-button-remove-name {
-    z-index: 2;
-}
-
-.card-button-progress-bar-red {
-    animation-name: progressRed;
-    animation-duration: 2s;
-
-    position: absolute;
-    background-color: #891e2b;
-    min-height: 100%;
-    justify-self: flex-start;
-    left: 0;
-    z-index: 1;
-}
-
-.card-button-name-warn {
-    animation-name: textWarn;
-    animation-duration: 2s;
-} */
-
 .card-button-stats-container {
     position: absolute;
     width: 110%;
@@ -182,4 +153,32 @@
 .card-cost-display {
     font-family: "Press Start 2P";
     text-shadow: 2px 2px 1px rgb(19, 19, 19);
+}
+
+.card-magic-bonus {
+    animation-name: magicModifier;
+    animation-duration: 8s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+
+    position: absolute;
+    font-size: larger;
+    background-image: radial-gradient(circle farthest-side,
+        rgb(19, 19, 19),
+        rgb(19, 19, 19),
+        rgb(19, 19, 19),
+        transparent);
+
+    font-weight: 800;
+
+    text-shadow:
+    0px -1px 0 rgb(19, 19, 19),
+    1px 0px 0 rgb(19, 19, 19),
+    0px 1px 0 rgb(19, 19, 19),
+    -1px 0px 0 rgb(19, 19, 19),
+    0px -2px 0 rgb(19, 19, 19),
+    2px 0px 0 rgb(19, 19, 19),
+    0px 2px 0 rgb(19, 19, 19),
+    -2px 0px 0 rgb(19, 19, 19);
 }
