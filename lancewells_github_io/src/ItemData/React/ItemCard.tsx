@@ -6,12 +6,12 @@ import { CardIcon } from './CardIcon';
 import { AttackButton } from './CardButtons/AttackButton';
 import { AddButton } from './CardButtons/AddButton';
 import { PurchaseButton } from './CardButtons/PurchaseButton';
-import { RemoveButton } from './RemoveButton';
+import { AttuneButton } from './CardButtons/AttuneButton';
 import { IItem } from '../Interfaces/IItem';
 import { ItemClick } from '../Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../Types/CardButtonCallbackTypes/AttackClick';
 import { PurchaseClick } from '../Types/CardButtonCallbackTypes/PurchaseClick';
-import { RemoveClick } from '../Types/CardButtonCallbackTypes/RemoveClick';
+import { AttuneClick } from '../Types/CardButtonCallbackTypes/AttuneClick';
 import { AddClick } from '../Types/CardButtonCallbackTypes/AddClick';
 import { CardInteractions } from '../Enums/CardInteractions';
 import { IItemJson } from '../Interfaces/IItemJson';
@@ -26,11 +26,13 @@ interface IItemCardProps {
     onItemClick: ItemClick | undefined;
     onAttackButton: AttackClick | undefined;
     onPurchaseButton: PurchaseClick | undefined;
-    onRemoveButton: RemoveClick | undefined;
     onAddButton: AddClick | undefined;
+    onAttuneButton: AttuneClick | undefined;
+    onUnattuneButton: AttuneClick | undefined;
     cardInteractions: CardInteractions[];
     showCardCost: boolean;
     availablePlayerCopper: number | undefined;
+    availableAttunementSlots: number | undefined;
 }
 
 interface IItemCardState {
@@ -105,14 +107,14 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                             attacks={attacks}
                             callbackFunction={this.props.onAttackButton as AttackClick}
                         />
-                    )
+                    );
                 })
 
                 buttons = buttons.concat(attackButtons);
             }
         }
 
-        if (this.props.cardInteractions.some(interaction => interaction === "Purchase")
+        if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Purchase)
          && this.props.onPurchaseButton !== undefined) {
             let purchaseButton: JSX.Element = (
                 <PurchaseButton
@@ -121,12 +123,12 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     callbackFunction={this.props.onPurchaseButton}
                     availablePlayerCopper={this.props.availablePlayerCopper}
                 />
-            )
+            );
 
             buttons = buttons.concat(purchaseButton);
         }
 
-        if (this.props.cardInteractions.some(interaction => interaction === "Add")
+        if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Add)
          && this.props.onAddButton !== undefined) {
              let addButton: JSX.Element = (
                  <AddButton
@@ -134,10 +136,28 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
                     callbackFunction={this.props.onAddButton}
                  />
-             )
+             );
 
             buttons = buttons.concat(addButton);
         }
+
+        if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Attune)
+            && this.props.onAttuneButton
+            && this.props.onUnattuneButton
+            && this.props.availableAttunementSlots !== undefined
+            && this.props.itemDetails.requiresAttunement) {
+                let attuneButton: JSX.Element = (
+                    <AttuneButton
+                        item={this.props.itemDetails}
+                        cardIconSize={this.iconDefaultSize * this.cardRatio}
+                        availableAttunementSlots={this.props.availableAttunementSlots}
+                        attuneCallback={this.props.onAttuneButton}
+                        unattuneCallback={this.props.onUnattuneButton}
+                    />
+                );
+
+                buttons = buttons.concat(attuneButton);
+            }
 
 
         return buttons;

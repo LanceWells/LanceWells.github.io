@@ -5,14 +5,17 @@ import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClic
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
 import { ItemCard } from '../../ItemData/React/ItemCard';
 import { CardInteractions } from '../../ItemData/Enums/CardInteractions';
-import { RemoveClick } from '../../ItemData/Types/CardButtonCallbackTypes/RemoveClick';
+import { AttuneClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttuneClick';
+import { UnattuneClick } from '../../ItemData/Types/CardButtonCallbackTypes/UnattuneClick';
 
 interface IInventoryTabProps {
     items: IItem[];
     itemType: ItemType;
     itemClick: ItemClick;
     attackClick: AttackClick;
-    removeClick: RemoveClick;
+    attuneClick: AttuneClick;
+    unattuneClick: UnattuneClick;
+    availableAttunementSlots: number;
 }
 
 interface IInventoryTabState {
@@ -33,14 +36,17 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                     onItemClick={this.props.itemClick}
                     onAttackButton={this.props.attackClick}
                     onPurchaseButton={undefined}
-                    onRemoveButton={this.props.removeClick}
                     onAddButton={undefined}
+                    onAttuneButton={this.props.attuneClick}
+                    onUnattuneButton={this.props.unattuneClick}
                     cardInteractions={[
                         CardInteractions.Use,
-                        CardInteractions.Remove
+                        CardInteractions.Remove,
+                        CardInteractions.Attune
                     ]}
                     showCardCost={false}
                     availablePlayerCopper={undefined}
+                    availableAttunementSlots={this.props.availableAttunementSlots}
                 />
             )
         });

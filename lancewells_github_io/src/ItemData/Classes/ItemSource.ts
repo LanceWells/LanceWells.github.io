@@ -576,7 +576,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         details: '',
         iconSource: './images/Item_Shop/Items/Weapons/Cleric Staff Snake Green.png',
         source: SourceType.Homebrew,
-        requiresAttunement: false,
+        requiresAttunement: true,
         adjustments: {
             magicBonus: 0,
             modifications: [

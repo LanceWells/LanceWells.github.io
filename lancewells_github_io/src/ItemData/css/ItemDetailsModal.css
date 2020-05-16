@@ -97,3 +97,8 @@
     animation-duration: 2s;
     animation-fill-mode: forwards;
 }
+
+.item-description-notes {
+    width: 100%;
+    resize: none;
+}

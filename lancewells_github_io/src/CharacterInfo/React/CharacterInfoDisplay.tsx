@@ -1,6 +1,6 @@
 import '../CharacterInfo.css';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { LoadingState } from '../../Utilities/Enums/LoadingState';
 import { LoadingPlaceholder } from '../../Utilities/React/LoadingPlaceholder';
 import { MoneyAdjustModal } from './MoneyAdjustModal';
@@ -11,6 +11,7 @@ import { useCharData } from '../../Utilities/Hooks/useCharData';
 import { MoneyAdjustCallback } from '../Types/MoneyAdjustCallback';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
+import { AttunementCount } from './AttunementCount';
 
 interface ICharacterInfoDisplayProps {
     loginState: LoginState;
@@ -60,6 +61,7 @@ export function CharacterInfoDisplay(props: ICharacterInfoDisplayProps) {
             <LoadingPlaceholder
                 showSpinner={loadingState === LoadingState.Loading}
                 role="Character info status">
+                <AttunementCount charData={charData} />
                 <MoneyAdjustModal
                     show={showMoneyAdjustModal}
                     hideModal={handleHideMoneyAdjust}

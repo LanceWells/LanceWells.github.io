@@ -1,7 +1,7 @@
 import '../css/ItemDetailsModal.css';
 import '../css/DamageType.css'
 
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { IItem } from '../Interfaces/IItem';
 import { SourceType } from '../Enums/SourceType';
 import { StylizedModal } from '../../Utilities/React/StylizedModal';
@@ -18,6 +18,7 @@ interface IItemDetailsModalProps {
     hideModal: () => void;
     itemDetails: IItem;
     removeCallback: RemoveClick | undefined;
+    handleUpdatedItemNotes: ((event: ChangeEvent<HTMLTextAreaElement>) => void) | undefined;
 }
 
 export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, IItemDetailsModalState> {
@@ -57,12 +58,6 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                 />
             )
         }
-        // let removeButton: JSX.Element = (
-        //     <RemoveButton
-        //         item={this.props.itemDetails}
-
-        //     />
-        // )
 
         return (
             <StylizedModal
@@ -89,6 +84,13 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                 </div>
                 <hr className='white-hr' />
                 {this.props.itemDetails.RenderItemDescription()}
+                <hr className='white-hr' />
+                <textarea
+                    className="item-description-notes"
+                    placeholder="It's a note! Shhh, it's a secret note."
+                    onChange={this.props.handleUpdatedItemNotes}>
+                    {this.props.itemDetails.adjustments.notes}
+                </textarea>
                 {removeButton}
             </StylizedModal>
         );

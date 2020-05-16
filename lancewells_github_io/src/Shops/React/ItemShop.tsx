@@ -136,6 +136,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     hideModal={this.onItemDialogClose.bind(this)}
                     itemDetails={this.state.itemDetails}
                     removeCallback={undefined}
+                    handleUpdatedItemNotes={undefined}
                     />
             </div>
         );

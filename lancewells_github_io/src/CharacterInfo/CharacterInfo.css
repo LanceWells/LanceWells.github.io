@@ -57,6 +57,22 @@
     padding-top: 15px;
 }
 
+/* Attunement Info */
+.char-display-attunement-icon {
+    position: relative;
+    top: -2px;
+}
+
+.character-info-attunement {
+    margin-right: 15px;
+    padding: 2px;
+    border-radius: 5px;
+    border-color: rgb(42, 47, 78);
+    border-width: 1px;
+    border-style: solid;
+    background-color: rgb(14, 7, 27);
+}
+
 /* Mobile adjustments */
 @media (max-width: 600px) {
     .character-info-container {

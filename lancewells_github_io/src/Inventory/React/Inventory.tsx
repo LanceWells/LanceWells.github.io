@@ -1,6 +1,6 @@
 import '../Inventory.css';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { IItem } from '../../ItemData/Interfaces/IItem';
 import { ItemSource } from '../../ItemData/Classes/ItemSource';
 import { ItemDetailsModal } from '../../ItemData/React/ItemDetailsModal';
@@ -17,8 +17,11 @@ import { useLoadingState } from '../../Utilities/Hooks/useLoadingState';
 import { useCharData } from '../../Utilities/Hooks/useCharData';
 import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttackClick';
-import { RemoveClick } from '../../ItemData/Types/CardButtonCallbackTypes/RemoveClick';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
+import { AttuneClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttuneClick';
+import { UnattuneClick } from '../../ItemData/Types/CardButtonCallbackTypes/UnattuneClick';
+import { DnDConstants } from '../../Utilities/Classes/DndConstants';
+import { ItemModifications } from '../../ItemData/Enums/ItemModifications';
 
 export interface IInventoryProps {
     loginState: LoginState;
@@ -62,6 +65,11 @@ export function Inventory(props: IInventoryProps) {
      */
     const [activeTab, setActiveTab] = useState(ItemType.Weapon.toString());
 
+    /**
+     * The item notes that are currently being edited for an item. Will be saved once a user closes a modal.
+     */
+    const [updatedItemNotes, setUpdatedItemNotes] = useState<string | undefined>(undefined);
+
     const loadingState = useLoadingState(props.loginState);
     const charData = useCharData(loadingState);
 
@@ -87,6 +95,16 @@ export function Inventory(props: IInventoryProps) {
 
     function HandleHideDetails() {
         setShowItemDetails(false);
+        if (charData && updatedItemNotes && focusedItem.adjustments.notes !== updatedItemNotes) {
+            // focusedItem is a reference, so we can just update it here and re-submit this char data to be
+            // updated on the server.
+            focusedItem.adjustments.notes = updatedItemNotes;
+            CharacterStateManager.GetInstance().UploadCharacterData(charData);
+        }
+
+        // Ensure that these go back to being 'undefined'. We don't want to set the item notes for everything
+        // that the user opens.
+        setUpdatedItemNotes(undefined);
     }
     
     function HandleHideAttack() {
@@ -97,7 +115,7 @@ export function Inventory(props: IInventoryProps) {
         setActiveTab(key);
     }
 
-    function HandleItemClick(item: IItem): void {
+    function HandleShowDetails(item: IItem): void {
         setFocusedItem(item);
         setShowItemDetails(true);
     }
@@ -106,6 +124,36 @@ export function Inventory(props: IInventoryProps) {
         setAttackName(attackName);
         setAttacks(attackRolls);
         setShowAttackWindow(true);
+    }
+
+    function HandleAttuneClick(item: IItem): void {
+        let itemAlreadyAttuned = item.adjustments.modifications.some(m => m === ItemModifications.Attuned);
+
+        if (charData && !itemAlreadyAttuned) {
+            // Good newts! This is a reference to the item from the character inventory, so just add this
+            // modification and update the remote!
+            item.adjustments.modifications.push(ItemModifications.Attuned)
+            CharacterStateManager.GetInstance().UploadCharacterData(charData);
+        }
+    }
+
+    function HandleUnattuneClick(item: IItem): void {
+        let itemIsAttuned = item.adjustments.modifications.some(m => m === ItemModifications.Attuned);
+
+        if (charData && itemIsAttuned) {
+            // Good newts! This is a reference to the item from the character inventory, so just remove this
+            // modification and update the remote!
+            let noAttunedMods = item.adjustments.modifications.filter(m => m !== ItemModifications.Attuned);
+            
+            item.adjustments.modifications = noAttunedMods;
+            CharacterStateManager.GetInstance().UploadCharacterData(charData);
+        }
+    }
+
+    function HandleUpdateItemNotes(event: ChangeEvent<HTMLTextAreaElement>) {
+        if (event && event.target && event.target.value) {
+            setUpdatedItemNotes(event.target.value);
+        }
     }
 
     function HandleRemoveClick(item: IItem): void {
@@ -132,6 +180,7 @@ export function Inventory(props: IInventoryProps) {
                     hideModal={HandleHideDetails}
                     itemDetails={focusedItem}
                     removeCallback={HandleRemoveClick}
+                    handleUpdatedItemNotes={HandleUpdateItemNotes}
                 />
                 <AttackRollModal
                     show={showAttackWindow}
@@ -145,7 +194,7 @@ export function Inventory(props: IInventoryProps) {
                         activeKey={activeTab.toString()}
                         onSelect={HandleTabSelection}
                     >
-                        {GetInventoryTabs(items, HandleItemClick, HandleAttackClick, HandleRemoveClick)}
+                        {GetInventoryTabs(items, HandleShowDetails, HandleAttackClick, HandleAttuneClick, HandleUnattuneClick)}
                     </Tabs>
                 </div>
             </LoadingPlaceholder>
@@ -159,9 +208,10 @@ export function Inventory(props: IInventoryProps) {
  * @param handleItemClick Handles when a user clicks for an item display.
  * @param handleAttackClick Handles when a user clicks an attack button for an item.
  */
-function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAttackClick: AttackClick, handleRemoveClick: RemoveClick): JSX.Element[] {
+function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAttackClick: AttackClick, handleAttuneClick: AttuneClick, handleUnattuneClick: UnattuneClick): JSX.Element[] {
     let itemTabs: JSX.Element[] = Object.values(ItemType).map(itemType => {
         let filteredItems: IItem[] = items.filter(item => item.type === itemType);
+        let remainingAttunements: number = DnDConstants.GetRemainingAttunementSlots(items);
 
         // https://stackoverflow.com/questions/8900732/sort-objects-in-an-array-alphabetically-on-one-property-of-the-array
         let sortedItems: IItem[] = filteredItems.sort((a, b) => {
@@ -192,7 +242,9 @@ function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAtta
                     itemType={itemType}
                     itemClick={handleItemClick}
                     attackClick={handleAttackClick}
-                    removeClick={handleRemoveClick}
+                    attuneClick={handleAttuneClick}
+                    unattuneClick={handleUnattuneClick}
+                    availableAttunementSlots={remainingAttunements}
                 />
             </Tab>
         )

@@ -3,5 +3,6 @@ export enum CardInteractions {
     Remove = "Remove",
     Add = "Add",
     Gather = "Gather",
-    Use = "Use"
+    Use = "Use",
+    Attune = "Attune"
 }

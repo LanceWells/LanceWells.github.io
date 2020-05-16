@@ -44,6 +44,10 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #1e6f50;
 }
 
+.neutral-button {
+  background-color: #3b1443;
+}
+
 /* https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas */
 /* http://jsfiddle.net/namuol/VAXrL/1459/ */
 /* https://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
