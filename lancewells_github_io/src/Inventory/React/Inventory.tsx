@@ -158,8 +158,16 @@ export function Inventory(props: IInventoryProps) {
         setShowItemDetails(false);
 
         if (charData) {
-            let jsonStringToCompare = JSON.stringify(item);
-            let itemToRemove = charData.Items.findIndex(i => JSON.stringify(i) === jsonStringToCompare);
+            // First, freshen up those items! Otherwise, when we use the JSON stringify to compare, we will
+            // get a slew of other, nonsense stuff related to things are not in ItemKey.
+            let itemAsFreshKey = DnDConstants.GetItemAsFreshItemKey(item);
+            let charDataFreshItems = DnDConstants.GetItemsAsFreshKeys(charData.Items);
+
+            // This is a little verbose, but it makes debugging easier!
+            let jsonStringToCompare = JSON.stringify(itemAsFreshKey);
+            let itemsAsString: string[] = charDataFreshItems.map(i => JSON.stringify(i));
+
+            let itemToRemove = itemsAsString.findIndex(i => i === jsonStringToCompare);
 
             if (itemToRemove > -1) {
                 charData.Items.splice(itemToRemove, 1);

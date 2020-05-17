@@ -59,6 +59,20 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
             )
         }
 
+        let showNotes = this.props.handleUpdatedItemNotes !== undefined;
+        let noteArea = (<div />);
+
+        if (showNotes) {
+            noteArea = (
+                <textarea
+                    className="item-description-notes"
+                    placeholder="It's a note! Shhh, it's a secret note."
+                    onChange={this.props.handleUpdatedItemNotes}>
+                    {this.props.itemDetails.adjustments.notes}
+                </textarea>
+            );
+        }
+
         return (
             <StylizedModal
                 show={this.props.show}
@@ -85,12 +99,7 @@ export class ItemDetailsModal extends React.Component<IItemDetailsModalProps, II
                 <hr className='white-hr' />
                 {this.props.itemDetails.RenderItemDescription()}
                 <hr className='white-hr' />
-                <textarea
-                    className="item-description-notes"
-                    placeholder="It's a note! Shhh, it's a secret note."
-                    onChange={this.props.handleUpdatedItemNotes}>
-                    {this.props.itemDetails.adjustments.notes}
-                </textarea>
+                {noteArea}
                 {removeButton}
             </StylizedModal>
         );

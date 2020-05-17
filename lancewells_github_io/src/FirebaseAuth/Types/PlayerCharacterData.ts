@@ -1,5 +1,7 @@
 import { IItemKey } from "../../ItemData/Interfaces/IItemKey";
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
+import { IItem } from "../../ItemData/Interfaces/IItem";
+import { DnDConstants } from "../../Utilities/Classes/DndConstants";
 
 export class PlayerCharacterData {
     public Name: string;
@@ -9,15 +11,18 @@ export class PlayerCharacterData {
     public BorderColor: string;
 
     public constructor(name: string, copper: number, items: IItemKey[], charLayout: CharImageLayout, borderColor: string) {
+        let itemsAsFreshKeys: IItemKey[] = DnDConstants.GetItemsAsFreshKeys(items);
+
         this.Name = name;
         this.Copper = copper;
-        this.Items = items;
+        this.Items = itemsAsFreshKeys;
         this.CharLayout = charLayout;
         this.BorderColor = borderColor;
     }
 
     public GetItemsAsStringArray(): string[] {
-        return this.Items.map(item => JSON.stringify(item));
+        let itemsAsFreshKeys: IItemKey[] = DnDConstants.GetItemsAsFreshKeys(this.Items);
+        return itemsAsFreshKeys.map(item => JSON.stringify(item));
     }
 
     public static GetStringArrayAsItems(itemJson: string[]): IItemKey[] {

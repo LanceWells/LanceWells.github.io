@@ -6,6 +6,7 @@ import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
 import { IItem } from '../../ItemData/Interfaces/IItem';
 import { ItemSource } from '../../ItemData/Classes/ItemSource';
 import { ItemType } from '../../ItemData/Enums/ItemType';
+import { DnDConstants } from '../../Utilities/Classes/DndConstants';
 
 /**
  * A class used to handle game room creation and handling with the firebase realtime database. Note that
@@ -19,7 +20,8 @@ export class GameRoomService {
 
     private static ShopDataConverter: firestore.FirestoreDataConverter<ItemShopData> = {
         toFirestore: (shopData: ItemShopData): firestore.DocumentData => {
-            let itemStrings: string[] = shopData.Items.map(i => JSON.stringify(i as IItemKey))
+            let itemKeys: IItemKey[] = DnDConstants.GetItemsAsFreshKeys(shopData.Items);
+            let itemStrings: string[] = itemKeys.map(i => JSON.stringify(i as IItemKey));
 
             return {
                 Items: itemStrings,

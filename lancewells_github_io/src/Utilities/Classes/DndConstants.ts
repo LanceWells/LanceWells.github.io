@@ -16,4 +16,22 @@ export class DnDConstants {
 
         return (Math.max(remainingAttuned, 0));
     }
+
+    public static GetItemsAsFreshKeys(items: IItemKey[]): IItemKey[] {
+        return items.map(i => DnDConstants.GetItemAsFreshItemKey(i));
+    }
+
+    public static GetItemAsFreshItemKey(item: IItemKey): IItemKey {
+        let newItemKey: IItemKey = {
+            key: item.key,
+            type: item.type,
+            adjustments: {
+                magicBonus: item.adjustments.magicBonus,
+                isAttuned: item.adjustments.isAttuned,
+                notes: item.adjustments.notes
+            }
+        }
+
+        return newItemKey;
+    }
 }
