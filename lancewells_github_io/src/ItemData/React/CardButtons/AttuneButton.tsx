@@ -19,7 +19,7 @@ interface IAttuneButtonProps {
 }
 
 export function AttuneButton(props: IAttuneButtonProps) {
-    let itemIsAttuned: boolean = props.item.adjustments.modifications.some(m => m === ItemModifications.Attuned);
+    let itemIsAttuned: boolean = props.item.adjustments.isAttuned;
     let buttonOption: AttuneButtonOption = itemIsAttuned ? AttuneButtonOption.Unattune : AttuneButtonOption.Attune;
 
     if (props.availableAttunementSlots <= 0 && !itemIsAttuned) {

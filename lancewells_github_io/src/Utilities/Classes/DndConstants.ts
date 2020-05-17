@@ -1,13 +1,10 @@
-import { ItemModifications } from "../../ItemData/Enums/ItemModifications";
 import { IItemKey } from "../../ItemData/Interfaces/IItemKey";
 
 export class DnDConstants {
     public static readonly TotalAttunementSlots: number = 3;
 
     public static GetAttunedItems(items: IItemKey[]): IItemKey[] {
-        return items.filter(
-            i => i.adjustments.modifications.some(
-                a => a === ItemModifications.Attuned))
+        return items.filter(i => i.adjustments.isAttuned);
     }
 
     public static GetRemainingAttunementSlots(items: IItemKey[]): number {

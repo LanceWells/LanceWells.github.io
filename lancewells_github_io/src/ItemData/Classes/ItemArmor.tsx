@@ -22,7 +22,7 @@ export class ItemArmor extends Item implements IItemArmorJson {
     public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Armor;
-    public adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
+    public adjustments: ItemAdjustments = { magicBonus: 0, isAttuned: false, notes: "" };
 
     public armorBonus: number = 0;
     public addDex: boolean = true;

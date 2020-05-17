@@ -11,6 +11,7 @@ import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
 import { ItemSource } from '../../ItemData/Classes/ItemSource';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { IItem } from '../../ItemData/Interfaces/IItem';
+import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
 
 /**
  * @description A series of properties to use to render this component.
@@ -66,21 +67,46 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     }
 
     private HandleTestButton(): void {
-        // let firstItem: IItem = ItemSource.GetItem("Javelin", ItemType.Weapon) as IItem;
-        // let secondItem: IItem = ItemSource.GetItem("FireyRing", ItemType.Wondrous) as IItem;
+        let firstItemKey: IItemKey = 
+        {
+            key: "PoisonousMiasma",
+            type: ItemType.Consumable,
+            adjustments:
+            {
+                magicBonus: 0,
+                isAttuned: false,
+                notes: ""
+            }
+        };
+
+        let secondItemKey: IItemKey = 
+        {
+            key: "BrutalLongsword",
+            type: ItemType.Weapon,
+            adjustments:
+            {
+                magicBonus: 0,
+                isAttuned: false,
+                notes: ""
+            }
+        };
+
+        let firstItem: IItem = ItemSource.GetItem(firstItemKey) as IItem;
+        let secondItem: IItem = ItemSource.GetItem(secondItemKey) as IItem;
         
-        // let itemShop: ItemShopData = {
-        //     ID: "",
-        //     Name: "Test Shop Name",
-        //     ShopKeeper: ShopKeepers.Indigo,
-        //     Items: [
-        //         firstItem,
-        //         secondItem
-        //     ]
-        // }
-        // // let createdShop = GameRoomService.AddShop(itemShop);
-        // let receivedShop = GameRoomService.GetShopByShopId("-M6qoSn88jT2iGbQtnI7");
-        // ;
+        let itemShop: ItemShopData = {
+            ID: "",
+            Name: "Test Shop Name",
+            ShopKeeper: ShopKeepers.Indigo,
+            Items: [
+                firstItem,
+                secondItem
+            ]
+        }
+        
+        let createdShop = GameRoomService.AddShop(itemShop);
+        // let receivedShop = GameRoomService.GetShopByShopId("NfyJ92g0JmXl5Ffru0oo");
+        ;
     }
 
     /**

@@ -2,7 +2,6 @@ import React from 'react';
 import { IItem } from '../Interfaces/IItem';
 import { IItemJson } from '../Interfaces/IItemJson';
 import { SourceType } from '../Enums/SourceType';
-import { ItemModifications } from '../Enums/ItemModifications';
 import { ItemType } from '../Enums/ItemType';
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 import { ItemAdjustments } from '../Types/ItemAdjustments';
@@ -44,7 +43,7 @@ export abstract class Item implements IItem {
     itemCopperCost: number = 0;
     requiresAttunement: boolean = false;
     type: ItemType = ItemType.Wondrous;
-    adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
+    adjustments: ItemAdjustments = { magicBonus: 0, isAttuned: false, notes: "" };
 
 
     protected readonly paragraphMargins: string = "0 15px 0 15px";

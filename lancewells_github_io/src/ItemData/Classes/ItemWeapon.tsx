@@ -33,7 +33,7 @@ export class ItemWeapon extends Item implements IItemWeaponJson {
     public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Weapon;
-    public adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
+    public adjustments: ItemAdjustments = { magicBonus: 0, isAttuned: false, notes: "" };
     
     public shortRange: number = 20;
     public longRange: number = 60;

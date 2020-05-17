@@ -127,25 +127,23 @@ export function Inventory(props: IInventoryProps) {
     }
 
     function HandleAttuneClick(item: IItem): void {
-        let itemAlreadyAttuned = item.adjustments.modifications.some(m => m === ItemModifications.Attuned);
+        let itemAlreadyAttuned = item.adjustments.isAttuned;
 
         if (charData && !itemAlreadyAttuned) {
             // Good newts! This is a reference to the item from the character inventory, so just add this
             // modification and update the remote!
-            item.adjustments.modifications.push(ItemModifications.Attuned)
+            item.adjustments.isAttuned = true;
             CharacterStateManager.GetInstance().UploadCharacterData(charData);
         }
     }
 
     function HandleUnattuneClick(item: IItem): void {
-        let itemIsAttuned = item.adjustments.modifications.some(m => m === ItemModifications.Attuned);
+        let itemIsAttuned = item.adjustments.isAttuned;
 
         if (charData && itemIsAttuned) {
             // Good newts! This is a reference to the item from the character inventory, so just remove this
             // modification and update the remote!
-            let noAttunedMods = item.adjustments.modifications.filter(m => m !== ItemModifications.Attuned);
-            
-            item.adjustments.modifications = noAttunedMods;
+            item.adjustments.isAttuned = false;
             CharacterStateManager.GetInstance().UploadCharacterData(charData);
         }
     }

@@ -19,7 +19,7 @@ export class ItemWondrous extends Item implements IItemWondrousJson {
     public itemCopperCost: number = 0;
     public requiresAttunement: boolean = false;
     public readonly type: ItemType = ItemType.Wondrous;
-    public adjustments: ItemAdjustments = { magicBonus: 0, modifications: [], notes: "" };
+    public adjustments: ItemAdjustments = { magicBonus: 0, isAttuned: false, notes: "" };
 
     static fromJson(json: IItemWondrousJson): ItemWondrous {
         let item = new ItemWondrous();

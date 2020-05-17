@@ -193,8 +193,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -226,8 +225,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -261,8 +259,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -294,8 +291,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -328,8 +324,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 30,
@@ -361,8 +356,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -395,8 +389,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -427,8 +420,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -469,8 +461,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -502,8 +493,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -545,8 +535,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -579,8 +568,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: true,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -618,8 +606,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -652,8 +639,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 80,
@@ -687,8 +673,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 80,
@@ -721,8 +706,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 30,
@@ -754,8 +738,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -796,8 +779,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -831,8 +813,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -873,8 +854,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         shortRange: 20,
@@ -919,8 +899,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: false,
@@ -937,8 +916,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: true,
@@ -955,8 +933,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: false,
@@ -973,8 +950,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: true,
@@ -991,8 +967,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: false,
@@ -1009,8 +984,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: false,
@@ -1027,8 +1001,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: false,
@@ -1045,8 +1018,7 @@ const ItemMap_Potions: IItemPotionJson[] =
         requiresAttunement: false,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         hasWithdrawalEffect: true,
@@ -1063,14 +1035,13 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         key: 'FireyRing',
         title: 'Firey Ring',
         description: 'A golden ring with a ruby fastened to its exterior. The ring is warm to the touch.',
-        details: 'Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
+        details: 'Grants the bearer access to the Fire Bolt cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Jewel Red.png',
         source: SourceType.Homebrew,
         requiresAttunement: true,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         itemCopperCost: 10000,
@@ -1080,14 +1051,13 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         key: 'FrigidRing',
         title: 'Frigid Ring',
         description: 'A silver ring with a sapphire fastened to its exterior. The ring is cold to the touch.',
-        details: 'Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier. Wearing more than one spell-ring at once will cause the user to take 1 level of exhaustion every 10 seconds.',
+        details: 'Grants the bearer access to the Ray of Frost cantrip. If the user has no spellcasting modifier, they may use their Wisdom modifier.',
         iconSource: './images/Item_Shop/Items/Rings/Ring Silver Jewel Green.png',
         source: SourceType.Homebrew,
         requiresAttunement: true,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         itemCopperCost: 10000,
@@ -1103,8 +1073,7 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         requiresAttunement: true,
         adjustments: {
             magicBonus: 0,
-            modifications: [
-            ],
+            isAttuned: false,
             notes: ""
         },
         itemCopperCost: 5000,

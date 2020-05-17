@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
 import { DnDConstants } from '../../Utilities/Classes/DndConstants';
@@ -24,6 +24,15 @@ export function AttunementCount(props: IAttunementCountProps) {
             delay={{ show: 0, hide: 400 }}
             overlay={
                 <Tooltip id="Attuned Items List">
+                    <span style={{fontWeight: "bold"}}>
+                        Remaining Attunement Slots
+                    </span>
+                    <br />
+                    <br />
+                    <span style={{ fontWeight: "bold" }}>
+                        Attuned Items:
+                    </span>
+                    <br />
                     {itemTitlesDisplay}
                 </Tooltip>
             }>
