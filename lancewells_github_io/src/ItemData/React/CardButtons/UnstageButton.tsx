@@ -1,14 +1,14 @@
 import React from 'react';
-import { AddClick } from '../../Types/CardButtonCallbackTypes/AddClick';
+import { UnstageClick } from '../../Types/CardButtonCallbackTypes/UnstageClick';
 import { IItem } from '../../Interfaces/IItem';
 
-interface IAddButtonProps {
+interface IUnstageButtonProps {
     item: IItem;
     cardIconSize: number;
-    callbackFunction: AddClick;
+    callbackFunction: UnstageClick;
 }
 
-export function AddButton(props: IAddButtonProps) {
+export function UnstageButton(props: IUnstageButtonProps) {
     return (
         <button
             className="card-button"
@@ -16,14 +16,14 @@ export function AddButton(props: IAddButtonProps) {
             <img
                 alt="Add Button"
                 className="card-button-icon"
-                src='./images/Item_Shop/ItemCards/Icons/Button_Add.png'
+                src='./images/Item_Shop/ItemCards/Icons/Button_Remove.png'
                 width={props.cardIconSize}
                 height={props.cardIconSize}
                 style={{
                     left: `-${props.cardIconSize / 2}px`
                 }} />
             <div className="card-button-name">
-                Stage Item
+                Unstage Item
             </div>
         </button>
     )

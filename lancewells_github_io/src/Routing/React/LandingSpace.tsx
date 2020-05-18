@@ -16,6 +16,7 @@ import { CharacterManager } from '../../CharacterManager/React/CharacterManager'
 import { CharacterInfoDisplay } from '../../CharacterInfo/React/CharacterInfoDisplay';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
 import { Shop } from '../../Shops/React/ShopPage';
+import { ShopCreator } from '../../ItemContainerManagement/React/ShopCreator';
 
 export interface ILandingSpaceProps {
 }
@@ -48,19 +49,25 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                                     eventKey="character_creator"
                                     style={{ color: "white" }}>
                                     Character Creator
-                            </Nav.Link>
+                                </Nav.Link>
                                 <Nav.Link
                                     href="/#/inventory"
                                     eventKey="inventory"
                                     style={{ color: "white" }}>
                                     Inventory
-                            </Nav.Link>
+                                </Nav.Link>
                                 <Nav.Link
                                     href="/#/characterManager"
                                     eventKey="characterManager"
                                     style={{ color: "white" }}>
                                     Characters
-                            </Nav.Link>
+                                </Nav.Link>
+                                <Nav.Link
+                                    href="/#/shopCreator"
+                                    eventKey="shopCreator"
+                                    style={{ color: "white" }}>
+                                    Shop Creator
+                                </Nav.Link>
                             </Nav>
                             <CharacterInfoDisplay
                                 loginState={this.state.loginState}
@@ -77,6 +84,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                             <Route path="/shop" children={<Shop loginState={this.state.loginState}/>} />
                             <ProtectedRoute path="/inventory" children={<Inventory loginState={this.state.loginState}/>} />
                             <ProtectedRoute path="/characterManager" children={<CharacterManager />} />
+                            <ProtectedRoute path="/shopCreator" children={<ShopCreator />} />
                         </Switch>
                     </Router>
                 </div>

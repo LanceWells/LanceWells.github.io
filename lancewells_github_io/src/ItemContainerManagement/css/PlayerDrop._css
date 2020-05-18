@@ -1,0 +1,37 @@
+.player-drop-box {
+    display: flex;
+    padding: 32px 8px;
+    justify-content: center;
+}
+
+.player-drop-column {
+    height: 100%;
+    background-color: #03193f;
+    padding: 16px;
+    margin: 8px;
+    border-radius: 8px;
+    border-color: #424c4e;
+    border-style: solid;
+    box-shadow: 2px 2px 2px 1px black;
+}
+
+.player-drop-column-dragging {
+    height: 100%;
+    background-color: #0069aa;
+    padding: 16px;
+    margin: 8px;
+    border-radius: 8px;
+    border-color: #fff;
+    border-style: dashed;
+    box-shadow: 2px 2px 2px 1px black;
+}
+
+.player-drop-name {
+    font-size: x-large;
+    text-align: center;
+}
+
+.player-box-container {
+    text-align: center;
+}
+

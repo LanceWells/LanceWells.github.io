@@ -36,7 +36,8 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                     onItemClick={this.props.itemClick}
                     onAttackButton={this.props.attackClick}
                     onPurchaseButton={undefined}
-                    onAddButton={undefined}
+                    onStageButton={undefined}
+                    onUnstageButton={undefined}
                     onAttuneButton={this.props.attuneClick}
                     onUnattuneButton={this.props.unattuneClick}
                     cardInteractions={[

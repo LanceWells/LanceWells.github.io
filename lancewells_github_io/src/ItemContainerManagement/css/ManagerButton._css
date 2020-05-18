@@ -1,0 +1,14 @@
+.manager-button {
+    border: none;
+    color: white;
+    padding: 16px;
+    margin: 8px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 2px 1px black;
+    transition: ease-in-out 0.1s;
+}
+
+.manager-button:hover {
+    -webkit-filter: brightness(1.3);
+    filter: brightness(1.3);
+}

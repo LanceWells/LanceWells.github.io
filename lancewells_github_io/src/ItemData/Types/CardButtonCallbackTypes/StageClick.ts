@@ -1,3 +1,3 @@
 import { IItem } from '../../Interfaces/IItem';
 
-export type AddClick = (item: IItem) => void;
+export type StageClick = (item: IItem) => void;

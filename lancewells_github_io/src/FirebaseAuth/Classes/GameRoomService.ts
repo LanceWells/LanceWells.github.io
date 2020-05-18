@@ -88,7 +88,7 @@ export class GameRoomService {
      * Adds a new shop to the current game room.
      * @param shop The shop details that will be added. The ID for this will be modified and returned.
      */
-    public static async AddShop(shop: ItemShopData): Promise<ItemShopData> {
+    public static async CreateShop(shop: ItemShopData): Promise<ItemShopData> {
         let updatedShopTab: ItemShopData = shop;
 
         await firestore()

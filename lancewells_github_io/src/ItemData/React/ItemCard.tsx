@@ -4,7 +4,8 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { CardIcon } from './CardIcon';
 import { AttackButton } from './CardButtons/AttackButton';
-import { AddButton } from './CardButtons/AddButton';
+import { StageButton } from './CardButtons/StageButton';
+import { UnstageButton } from './CardButtons/UnstageButton';
 import { PurchaseButton } from './CardButtons/PurchaseButton';
 import { AttuneButton } from './CardButtons/AttuneButton';
 import { IItem } from '../Interfaces/IItem';
@@ -12,7 +13,8 @@ import { ItemClick } from '../Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../Types/CardButtonCallbackTypes/AttackClick';
 import { PurchaseClick } from '../Types/CardButtonCallbackTypes/PurchaseClick';
 import { AttuneClick } from '../Types/CardButtonCallbackTypes/AttuneClick';
-import { AddClick } from '../Types/CardButtonCallbackTypes/AddClick';
+import { StageClick } from '../Types/CardButtonCallbackTypes/StageClick';
+import { UnstageClick } from '../Types/CardButtonCallbackTypes/UnstageClick';
 import { CardInteractions } from '../Enums/CardInteractions';
 import { IItemJson } from '../Interfaces/IItemJson';
 import { IItemIsItemWeapon } from '../Classes/ItemWeapon';
@@ -26,7 +28,8 @@ interface IItemCardProps {
     onItemClick: ItemClick | undefined;
     onAttackButton: AttackClick | undefined;
     onPurchaseButton: PurchaseClick | undefined;
-    onAddButton: AddClick | undefined;
+    onStageButton: StageClick | undefined;
+    onUnstageButton: UnstageClick |undefined;
     onAttuneButton: AttuneClick | undefined;
     onUnattuneButton: AttuneClick | undefined;
     cardInteractions: CardInteractions[];
@@ -128,17 +131,30 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             buttons = buttons.concat(purchaseButton);
         }
 
-        if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Add)
-         && this.props.onAddButton !== undefined) {
+        if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Stage)
+         && this.props.onStageButton !== undefined) {
              let addButton: JSX.Element = (
-                 <AddButton
+                 <StageButton
                     item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
-                    callbackFunction={this.props.onAddButton}
+                    callbackFunction={this.props.onStageButton}
                  />
              );
 
             buttons = buttons.concat(addButton);
+        }
+
+        if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Unstage)
+            && this.props.onUnstageButton !== undefined) {
+            let unstageButton: JSX.Element = (
+                <UnstageButton
+                    item={this.props.itemDetails}
+                    cardIconSize={this.iconDefaultSize * this.cardRatio}
+                    callbackFunction={this.props.onUnstageButton}
+                />
+            );
+
+            buttons = buttons.concat(unstageButton);
         }
 
         if (this.props.cardInteractions.some(interaction => interaction === CardInteractions.Attune)

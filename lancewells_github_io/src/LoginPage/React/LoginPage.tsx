@@ -104,7 +104,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
             ]
         }
         
-        let createdShop = GameRoomService.AddShop(itemShop);
+        let createdShop = GameRoomService.CreateShop(itemShop);
         // let receivedShop = GameRoomService.GetShopByShopId("NfyJ92g0JmXl5Ffru0oo");
         ;
     }

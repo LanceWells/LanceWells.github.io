@@ -1,0 +1,12 @@
+.staged-items-display {
+    width: 50%;
+    max-width: 50%;
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.staged-cards {
+    display: flex;
+    flex-wrap: wrap;
+}

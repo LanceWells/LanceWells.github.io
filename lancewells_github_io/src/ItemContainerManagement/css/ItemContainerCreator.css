@@ -1,0 +1,18 @@
+.item-container-creator {
+    display: flex;
+    justify-content: space-around;
+}
+
+.item-staging-container {
+    background-color: #272727;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #131313;
+}
+
+.card-staging {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    justify-content: center;
+}

@@ -1,0 +1,16 @@
+.item-filter-container {
+    width: 50%;
+    max-width: 50%;
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-staging-title {
+    text-align: center;
+    padding: 15px;
+}
+
+.item-filter {
+    width: 100%;
+}

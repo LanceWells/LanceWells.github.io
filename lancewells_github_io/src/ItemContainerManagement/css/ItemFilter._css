@@ -1,0 +1,25 @@
+.item-filter-available {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.item-filter-container {
+    height: 100%;
+    width: 50%;
+    background-color: #1b1b1b;
+    border-radius: 16px;
+    margin: 16px;
+    box-shadow: 2px 2px 2px 1px black;
+    padding: 16px;
+}
+
+.item-filter-search {
+    width: 100%;
+    padding: 16px;
+    text-align: center;
+}
+
+.item-filter {
+    width: 100%;
+}

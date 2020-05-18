@@ -97,20 +97,20 @@ export class ItemSource {
 
             // If the item can be converted, and the list of existing items does not already include this
             // item, then add it.
-            if (converted !== undefined && !matchingItems.some(m => converted?.GetEqualityString() === m.GetEqualityString())) {
+            if (converted) {
                 matchingItems.push(converted);
             }
         });
 
-        // If the list of keywords that was provided was empty, just return everything.
-        if (nonEmptyKeywords.length <= 0) {
-            masterList.forEach(m => {
-                let converted = this.ConvertJsonToItem(m);
-                if (converted !== undefined) {
-                    matchingItems.push(converted);
-                }
-            })
-        }
+        // // If the list of keywords that was provided was empty, just return everything.
+        // if (nonEmptyKeywords.length <= 0) {
+        //     masterList.forEach(m => {
+        //         let converted = this.ConvertJsonToItem(m);
+        //         if (converted !== undefined) {
+        //             matchingItems.push(converted);
+        //         }
+        //     })
+        // }
 
         return matchingItems;
     }
