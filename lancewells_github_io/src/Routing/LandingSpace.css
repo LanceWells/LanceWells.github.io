@@ -20,7 +20,7 @@ a.nav-link {
 
 nav {
     width: 100%;
-    background-color: rgb(19, 19, 19);
+    background-color: #0e071b;
 }
 
 .navbar-nav {
@@ -46,6 +46,14 @@ nav {
     flex-grow: 1;
     overflow: hidden;
     max-height: inherit;
+}
+
+.nav-dropdown {
+    color: white;
+    background-color: #272727;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 @media (max-width: 600px) {

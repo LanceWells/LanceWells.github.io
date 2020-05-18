@@ -10,7 +10,7 @@ import {
 import { LoginPage } from '../../LoginPage/React/LoginPage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { CharacterImage } from '../../CharacterImage/React/CharacterImage';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Inventory } from '../../Inventory/React/Inventory';
 import { CharacterManager } from '../../CharacterManager/React/CharacterManager';
 import { CharacterInfoDisplay } from '../../CharacterInfo/React/CharacterInfoDisplay';
@@ -39,7 +39,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
         return (
             <div className="landing-space">
                 <div className="page-nav">
-                    <Navbar expand="lg" bg="dark">
+                    <Navbar expand="lg" variant="dark">
                         <Navbar.Brand style={{ color: "white" }} href="/">LantsPants.com</Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-pagebar-nav" />
                         <Navbar.Collapse>
@@ -47,27 +47,34 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                                 <Nav.Link
                                     href="/#/character_creator"
                                     eventKey="character_creator"
-                                    style={{ color: "white" }}>
+                                    >
                                     Character Creator
                                 </Nav.Link>
-                                <Nav.Link
-                                    href="/#/inventory"
-                                    eventKey="inventory"
-                                    style={{ color: "white" }}>
-                                    Inventory
-                                </Nav.Link>
-                                <Nav.Link
-                                    href="/#/characterManager"
-                                    eventKey="characterManager"
-                                    style={{ color: "white" }}>
-                                    Characters
-                                </Nav.Link>
-                                <Nav.Link
-                                    href="/#/shopCreator"
-                                    eventKey="shopCreator"
-                                    style={{ color: "white" }}>
-                                    Shop Creator
-                                </Nav.Link>
+                                <NavDropdown
+                                    title="Player Tools"
+                                    id="Player Tools Dropdown"
+                                    >
+                                    <NavDropdown.Item
+                                        href="/#/inventory"
+                                        eventKey="inventory">
+                                        Inventory
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        href="/#/characterManager"
+                                        eventKey="characterManager">
+                                        Characters
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                                <NavDropdown
+                                    title="DM Tools"
+                                    id="DM Tools Dropdown"
+                                    >
+                                    <NavDropdown.Item
+                                        href="/#/shopCreator"
+                                        eventKey="shopCreator">
+                                        Shop Creator
+                                    </NavDropdown.Item>
+                                </NavDropdown>
                             </Nav>
                             <CharacterInfoDisplay
                                 loginState={this.state.loginState}
