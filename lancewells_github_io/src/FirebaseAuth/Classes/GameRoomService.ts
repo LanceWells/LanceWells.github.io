@@ -111,6 +111,7 @@ export class GameRoomService {
 
     public static async GetShopByShopId(shopId: string): Promise<ItemShopData | undefined> {
         let response: ItemShopData | undefined = undefined;
+        console.log("Getting shop from ID: " + shopId);
 
         await firestore()
             .collection(this.collection_userWritable)
