@@ -16,31 +16,6 @@
     position: relative;
 }
 
-/* Character Money */
-.character-money-display {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-.money-column {
-    padding: 0px 5px;
-    text-align: center;
-}
-
-.money-icon {
-    position: relative;
-    top: -2px;
-    padding-right: 3px;
-}
-
-.character-money-add {
-    background-color: #0e071b;
-    border-radius: 50%;
-    box-shadow: none;
-    border-color: #424c6e;
-}
-
 /* Money Adjustment Window */
 .money-adjustment-container {
     display: flex;

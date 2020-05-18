@@ -122,7 +122,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
     render() {
         return (
             <div className="ItemShop">
-                <h1>Item Shop</h1>
+                <h1>{this.props.shopData.Name}</h1>
                 <div className='shopkeeper-area'>
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                     <img src='./images/Item_Shop/shopkeeper.gif' alt="shopkeeper" />

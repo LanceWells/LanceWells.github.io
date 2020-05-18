@@ -1,3 +1,5 @@
+import "../MoneyDisplay.css";
+
 import React from 'react';
 import { MoneyConverter } from '../../Inventory/Classes/MoneyConverter';
 
