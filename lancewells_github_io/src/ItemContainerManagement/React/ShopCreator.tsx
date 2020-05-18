@@ -77,7 +77,6 @@ export function ShopCreator(props: IShopCreatorProps) {
                 setErrorMessage("There was a problem making that shop. Check for error messages and try again.");
                 setCreatingShop(false);
             });
-
     }
 
     return (

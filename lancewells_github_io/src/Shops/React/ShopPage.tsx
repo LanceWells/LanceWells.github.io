@@ -34,7 +34,7 @@ export function Shop(props: IShopProps) {
                 setShopInfo(shop);
             });
         }
-    }, [location.pathname, shopInfo])
+    }, [location.pathname])
 
     return (
         <LoadingPlaceholder showSpinner={loadingState === LoadingState.Loading} role="Shop Loading Status">
