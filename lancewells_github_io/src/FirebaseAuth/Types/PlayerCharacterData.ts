@@ -1,6 +1,5 @@
 import { IItemKey } from "../../ItemData/Interfaces/IItemKey";
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';
-import { IItem } from "../../ItemData/Interfaces/IItem";
 import { DnDConstants } from "../../Utilities/Classes/DndConstants";
 
 export class PlayerCharacterData {

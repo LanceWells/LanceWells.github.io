@@ -25,7 +25,7 @@ export function PurchaseButton(props: IPurchaseButtonProps) {
         else if (buttonOption !== PurchaseButtonOption.Purchased) { // Don't handle purchased events. This is taken care of in the button click callback.
             setButtonOption(PurchaseButtonOption.CanPurchase);
         }
-    }, [buttonOption, props.availablePlayerCopper]);
+    }, [buttonOption, props.availablePlayerCopper, props.item.itemCopperCost]);
 
     function HandleButtonClick(): void {
         if (buttonOption === PurchaseButtonOption.CanPurchase) {

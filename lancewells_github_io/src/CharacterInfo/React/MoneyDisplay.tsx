@@ -19,8 +19,6 @@ export class MoneyDisplay extends React.Component<IMoneyDisplayProps, IMoneyDisp
     }
 
     public render() {
-        let moneyCount: MoneyConverter = new MoneyConverter(this.props.copperCount);
-
         return (
             <div className="character-money-display">
                 {this.GetMoneyColumns()}
@@ -34,8 +32,9 @@ export class MoneyDisplay extends React.Component<IMoneyDisplayProps, IMoneyDisp
 
         if (moneyCount.Platinum > 0 || !this.props.hideEmptyCurrencies) {
             elements.push(
-                <div className="money-column">
+                <div key="platinum" className="money-column">
                     <img
+                        alt="money icon"
                         className='money-icon'
                         src='./images/Inventory/Coin_Platinum.png' />
                     {moneyCount.Platinum}
@@ -45,8 +44,9 @@ export class MoneyDisplay extends React.Component<IMoneyDisplayProps, IMoneyDisp
 
         if (moneyCount.Gold > 0 || !this.props.hideEmptyCurrencies) {
             elements.push(
-                <div className="money-column">
+                <div key="gold" className="money-column">
                     <img
+                        alt="money icon"
                         className='money-icon'
                         src='./images/Inventory/Coin_Gold.png' />
                     {moneyCount.Gold}
@@ -56,8 +56,9 @@ export class MoneyDisplay extends React.Component<IMoneyDisplayProps, IMoneyDisp
 
         if (moneyCount.Silver > 0 || !this.props.hideEmptyCurrencies) {
             elements.push(
-                <div className="money-column">
+                <div key="silver" className="money-column">
                     <img
+                        alt="money icon"
                         className='money-icon'
                         src='./images/Inventory/Coin_Silver.png' />
                     {moneyCount.Silver}
@@ -67,8 +68,9 @@ export class MoneyDisplay extends React.Component<IMoneyDisplayProps, IMoneyDisp
 
         if (moneyCount.Copper > 0 || !this.props.hideEmptyCurrencies) {
             elements.push(
-                <div className="money-column">
+                <div key="copper" className="money-column">
                     <img
+                        alt="money icon"
                         className='money-icon'
                         src='./images/Inventory/Coin_Copper.png' />
                     {moneyCount.Copper}

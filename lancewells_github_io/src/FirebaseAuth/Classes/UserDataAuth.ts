@@ -141,7 +141,7 @@ export class UserDataAuth {
      * @description Checks for access being granted to the user.
      */
     public async CheckForAccess(): Promise<boolean> {
-        if (this._authState == AuthState.Checking) {
+        if (this._authState === AuthState.Checking) {
             await new Promise<void>((resolve, reject) => {
                 // Reject the promise if we wait > X seconds before getting a response.
                 let timeoutWaiting = setTimeout(() => reject(), 10000);

@@ -5,13 +5,13 @@ import { CreateUserResponse } from '../../FirebaseAuth/Types/CreateUserResponse'
 import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
-import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
-import { ItemShopData } from '../../Shops/Types/ItemShopData';
-import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
-import { ItemSource } from '../../ItemData/Classes/ItemSource';
-import { ItemType } from '../../ItemData/Enums/ItemType';
-import { IItem } from '../../ItemData/Interfaces/IItem';
-import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
+// import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
+// import { ItemShopData } from '../../Shops/Types/ItemShopData';
+// import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
+// import { ItemSource } from '../../ItemData/Classes/ItemSource';
+// import { ItemType } from '../../ItemData/Enums/ItemType';
+// import { IItem } from '../../ItemData/Interfaces/IItem';
+// import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
 
 /**
  * @description A series of properties to use to render this component.
@@ -67,44 +67,44 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
     }
 
     private HandleTestButton(): void {
-        let firstItemKey: IItemKey = 
-        {
-            key: "PoisonousMiasma",
-            type: ItemType.Consumable,
-            adjustments:
-            {
-                magicBonus: 0,
-                isAttuned: false,
-                notes: ""
-            }
-        };
+        // let firstItemKey: IItemKey = 
+        // {
+        //     key: "PoisonousMiasma",
+        //     type: ItemType.Consumable,
+        //     adjustments:
+        //     {
+        //         magicBonus: 0,
+        //         isAttuned: false,
+        //         notes: ""
+        //     }
+        // };
 
-        let secondItemKey: IItemKey = 
-        {
-            key: "BrutalLongsword",
-            type: ItemType.Weapon,
-            adjustments:
-            {
-                magicBonus: 0,
-                isAttuned: false,
-                notes: ""
-            }
-        };
+        // let secondItemKey: IItemKey = 
+        // {
+        //     key: "BrutalLongsword",
+        //     type: ItemType.Weapon,
+        //     adjustments:
+        //     {
+        //         magicBonus: 0,
+        //         isAttuned: false,
+        //         notes: ""
+        //     }
+        // };
 
-        let firstItem: IItem = ItemSource.GetItem(firstItemKey) as IItem;
-        let secondItem: IItem = ItemSource.GetItem(secondItemKey) as IItem;
+        // let firstItem: IItem = ItemSource.GetItem(firstItemKey) as IItem;
+        // let secondItem: IItem = ItemSource.GetItem(secondItemKey) as IItem;
         
-        let itemShop: ItemShopData = {
-            ID: "",
-            Name: "Test Shop Name",
-            ShopKeeper: ShopKeepers.Indigo,
-            Items: [
-                firstItem,
-                secondItem
-            ]
-        }
+        // let itemShop: ItemShopData = {
+        //     ID: "",
+        //     Name: "Test Shop Name",
+        //     ShopKeeper: ShopKeepers.Indigo,
+        //     Items: [
+        //         firstItem,
+        //         secondItem
+        //     ]
+        // }
         
-        let createdShop = GameRoomService.CreateShop(itemShop);
+        // let createdShop = GameRoomService.CreateShop(itemShop);
         // let receivedShop = GameRoomService.GetShopByShopId("NfyJ92g0JmXl5Ffru0oo");
         ;
     }

@@ -244,7 +244,6 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
         let loadedImagesPromises: Promise<void>[] = imagesToLoad.map(image => {
             return new Promise<void>(resolve => {
                 image.onload = () => {
-                    console.log(`Loaded ${image.src}`)
                     resolve();
                 }
             });
@@ -252,7 +251,6 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
 
         Promise.all(loadedImagesPromises)
             .then(resolved => {
-                console.log("Successfully loaded card images" + resolved);
                 this.SetTitleTextSize();
             })
             .catch(reason => {

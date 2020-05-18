@@ -19,7 +19,7 @@ export function useCharData(loadingState: LoadingState): PlayerCharacterData | u
      * have changed login states or character data.
      */
     useEffect(() => {
-        if (loadingState === LoadingState.Loaded || loadingState == LoadingState.NoCharacters) {
+        if (loadingState === LoadingState.Loaded || loadingState === LoadingState.NoCharacters) {
             CharacterStateManager.GetInstance().GetCharacter().then(char => {
                 if (char) {
                     setCharData(char);

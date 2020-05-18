@@ -94,7 +94,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
         // Convert the array into something we can run map() on.
         let mappedKeys: ItemType[] = Array.from(organizedItems.keys());
 
-        mappedKeys.map(itemType => {
+        mappedKeys.forEach(itemType => {
             let items: IItem[] | undefined = organizedItems.get(itemType);
 
             if (items && items.length > 0) {

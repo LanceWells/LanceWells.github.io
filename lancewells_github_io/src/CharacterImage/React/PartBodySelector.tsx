@@ -54,6 +54,7 @@ export class PartBodySelector extends React.Component<IPartBodySelectorProps, IP
 
             return (
                 <Dropdown.Item
+                    key={bt.toString()}
                     onClick={itemClickCallback.bind(this)}>
                     {bt.toString()}
                 </Dropdown.Item>

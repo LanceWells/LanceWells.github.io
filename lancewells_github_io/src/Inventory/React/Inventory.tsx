@@ -21,7 +21,6 @@ import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterState
 import { AttuneClick } from '../../ItemData/Types/CardButtonCallbackTypes/AttuneClick';
 import { UnattuneClick } from '../../ItemData/Types/CardButtonCallbackTypes/UnattuneClick';
 import { DnDConstants } from '../../Utilities/Classes/DndConstants';
-import { ItemModifications } from '../../ItemData/Enums/ItemModifications';
 
 export interface IInventoryProps {
     loginState: LoginState;
@@ -239,7 +238,10 @@ function GetInventoryTabs(items: IItem[], handleItemClick: ItemClick, handleAtta
             <Tab eventKey={itemType.toString()}
                 title={
                     <div>
-                        <img className="inventory-tab-icon" src={`./images/Inventory/Tab_${itemType}.png`}/>
+                        <img
+                            alt="inventory tab icon"
+                            className="inventory-tab-icon"
+                            src={`./images/Inventory/Tab_${itemType}.png`}/>
                         <span>{`${itemType} (${sortedItems.length})`}</span>
                     </div>
                 }>

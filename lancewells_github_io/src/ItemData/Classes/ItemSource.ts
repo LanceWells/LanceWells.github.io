@@ -153,7 +153,7 @@ export class ItemSource {
         doesMatch = doesMatch || item.description.toLocaleUpperCase().includes(upperKeyword);
         doesMatch = doesMatch || item.details.toLocaleUpperCase().includes(upperKeyword);
         
-        doesMatch = doesMatch || upperKeyword.includes("ATTUNEMENT".toLocaleUpperCase()) && item.requiresAttunement;
+        doesMatch = doesMatch || (upperKeyword.includes("ATTUNEMENT".toLocaleUpperCase()) && item.requiresAttunement);
 
         if (IItemIsItemWeapon(item)) {
             doesMatch = doesMatch || item.properties.some(p => p.toLocaleUpperCase().includes(upperKeyword))

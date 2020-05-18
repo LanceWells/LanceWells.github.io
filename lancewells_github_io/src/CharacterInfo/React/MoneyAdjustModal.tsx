@@ -39,7 +39,7 @@ export class MoneyAdjustModal extends React.Component<IMoneyAdjustModalProps, IM
         // https://stackoverflow.com/questions/23437476/in-typescript-how-to-check-if-a-string-is-numeric
         if (input) {
             let inputAsNumber: number = Number(input);
-            if (inputAsNumber !== NaN) {
+            if (!isNaN(inputAsNumber)) {
                 this.setState({
                     copperAdjustment: inputAsNumber
                 });

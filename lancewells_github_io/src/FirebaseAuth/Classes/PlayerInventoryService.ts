@@ -51,6 +51,7 @@ export class PlayerInventoryService {
 
     public static async CreateCharacterData(characterData: PlayerCharacterData): Promise<void> {
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+        console.log("FIREBASE: Creating character data.");
 
         if (uid !== undefined) {
             await firestore()
@@ -68,6 +69,7 @@ export class PlayerInventoryService {
 
     public static async UpdateCharacterData(characterData: PlayerCharacterData): Promise<void> {
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+        console.log("FIREBASE: Updating character data.");
 
         // I'm not certain why, but the 'withConverter' option doesn't appear to work the same for .update as
         // it does for .set. Just use the converter in a brute-force method instead since this seems to work.
@@ -89,6 +91,7 @@ export class PlayerInventoryService {
     public static async FetchCharacterData(playerName: string): Promise<PlayerCharacterData | undefined> {
         let response: PlayerCharacterData | undefined = undefined;
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+        console.log("FIREBASE: Fetching character data.");
 
         if (uid !== undefined) {
             let playerDataRef = firestore()
@@ -132,6 +135,7 @@ export class PlayerInventoryService {
                 .onSnapshot(docSnapshot => {
                     if (docSnapshot.exists) {
                         charCallback(docSnapshot.data());
+                        console.log("FIREBASE: Listened character data.");
                     }
                     else {
                         console.error(`Could not find character document for ${playerName}.`);
@@ -145,6 +149,7 @@ export class PlayerInventoryService {
     public static async GetDefaultCharacter(): Promise<PlayerCharacterData | undefined> {
         let response: PlayerCharacterData | undefined = undefined;
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
+        console.log("FIREBASE: Default character data.");
 
         if (uid !== undefined) {
             let playerDataRef = firestore()
@@ -175,6 +180,7 @@ export class PlayerInventoryService {
     public static async FetchAllCharacters(): Promise<PlayerCharacterData[]> {
         let uid: string | undefined = UserDataAuth.GetInstance().GetUid();
         let allCharData: PlayerCharacterData[] = [];
+        console.log("FIREBASE: Fetch all characters.");
 
         if (uid !== undefined) {
             let playerDataRef = firestore()
@@ -208,14 +214,4 @@ export class PlayerInventoryService {
     public static GetCurrentCharacterName(): string | null {
         return localStorage.getItem(PlayerInventoryService.storage_currentCharacter);
     }
-
-    // public static async GetCurrentCharacter(): Promise<PlayerCharacterData | undefined> {
-    //     let charName: string | null = PlayerInventoryService.GetCurrentCharacterName();
-
-    //     if (!charName) {
-    //         return undefined;
-    //     }
-
-    //     return await PlayerInventoryService.FetchCharacterData(charName as string);
-    // }
 }

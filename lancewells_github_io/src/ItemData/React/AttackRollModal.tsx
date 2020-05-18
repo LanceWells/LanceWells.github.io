@@ -421,7 +421,7 @@ export class AttackRollModal extends React.Component<IAttackRollModalProps, IAtt
         return this.state.damageRoll.map((roll) => {
             let rollStatement: string = "";
 
-            let isCrit: boolean = this.state.finalDieValue == 20;
+            let isCrit: boolean = this.state.finalDieValue === 20;
             let critModifier: string = isCrit ? "2x" : "";
 
             let diceRollsMessage: string = roll.rolledNumbers.join(" + ");

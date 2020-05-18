@@ -3,7 +3,6 @@ import { Item } from './Item';
 import { SourceType } from "../Enums/SourceType";
 import { ItemType } from "../Enums/ItemType";
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
-import { ItemModifications } from '../Enums/ItemModifications';
 import { ItemAdjustments } from '../Types/ItemAdjustments';
 
 export interface IItemWondrousJson extends IItemJson {

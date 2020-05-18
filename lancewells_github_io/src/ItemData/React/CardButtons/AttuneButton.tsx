@@ -2,7 +2,6 @@ import React from 'react';
 import { IItem } from '../../Interfaces/IItem';
 import { AttuneClick } from '../../Types/CardButtonCallbackTypes/AttuneClick';
 import { UnattuneClick } from '../../Types/CardButtonCallbackTypes/UnattuneClick';
-import { ItemModifications } from '../../Enums/ItemModifications';
 
 enum AttuneButtonOption {
     Attune = "Attune",

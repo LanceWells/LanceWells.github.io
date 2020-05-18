@@ -90,6 +90,7 @@ export class GameRoomService {
      */
     public static async CreateShop(shop: ItemShopData): Promise<ItemShopData> {
         let updatedShopTab: ItemShopData = shop;
+        console.log("FIREBASE: Create shop.");
 
         await firestore()
             .collection(this.collection_userWritable)
@@ -111,26 +112,26 @@ export class GameRoomService {
 
     public static async GetShopByShopId(shopId: string): Promise<ItemShopData | undefined> {
         let response: ItemShopData | undefined = undefined;
-        console.log("Getting shop from ID: " + shopId);
+        console.log("FIREBASE: Get shop.");
 
-        await firestore()
-            .collection(this.collection_userWritable)
-            .doc(this.document_itemStorage)
-            .collection(this.collection_shops)
-            .doc(shopId)
-            .withConverter(GameRoomService.ShopDataConverter)
-            .get()
-            .then(docSnapshot => {
-                if (docSnapshot.exists) {
-                    response = docSnapshot.data();
-                }
-                else {
-                    console.error(`Could not find shop data for id ${shopId}`);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        // await firestore()
+        //     .collection(this.collection_userWritable)
+        //     .doc(this.document_itemStorage)
+        //     .collection(this.collection_shops)
+        //     .doc(shopId)
+        //     .withConverter(GameRoomService.ShopDataConverter)
+        //     .get()
+        //     .then(docSnapshot => {
+        //         if (docSnapshot.exists) {
+        //             response = docSnapshot.data();
+        //         }
+        //         else {
+        //             console.error(`Could not find shop data for id ${shopId}`);
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
 
         return response;
     }

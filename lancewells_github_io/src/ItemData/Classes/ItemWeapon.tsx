@@ -7,7 +7,6 @@ import { Item } from './Item';
 import { Attack } from './Attack';
 import { CarpetBorder } from '../../Shops/Enums/CarpetBorder';
 import { CardIconMap } from './CardIconMap';
-import { ItemModifications } from '../Enums/ItemModifications';
 import { ItemAdjustments } from '../Types/ItemAdjustments';
 
 export interface IItemWeaponJson extends IItemJson {

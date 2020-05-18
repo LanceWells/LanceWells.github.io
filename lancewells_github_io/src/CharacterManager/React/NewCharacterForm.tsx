@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent } from 'react';
-import { Modal, Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import { BodyType } from '../../CharacterImage/Enums/BodyType';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
 import { CharImageLayout } from '../../CharacterImage/Classes/CharImageLayout';

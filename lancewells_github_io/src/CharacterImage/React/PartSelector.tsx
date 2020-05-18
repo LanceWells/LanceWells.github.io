@@ -69,6 +69,7 @@ export class PartSelector extends React.Component<IPartSelectorProps, IPartSelec
     private GetPartButtons(): JSX.Element[] {
         return this.props.partOptions.map(po => 
             <PartButton
+                key={po}
                 partType={this.props.partType}
                 imageSource={po}
                 partSelectionCallback={this.props.partSelectionCallback}
