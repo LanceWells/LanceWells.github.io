@@ -105,6 +105,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
 
                     return (
                         <AttackButton
+                            key={"Attack " + name}
                             cardIconSize={this.iconDefaultSize * this.cardRatio}
                             attackName={name}
                             attacks={attacks}
@@ -121,6 +122,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
          && this.props.onPurchaseButton !== undefined) {
             let purchaseButton: JSX.Element = (
                 <PurchaseButton
+                    key="Purchase"
                     item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
                     callbackFunction={this.props.onPurchaseButton}
@@ -135,6 +137,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
          && this.props.onStageButton !== undefined) {
              let addButton: JSX.Element = (
                  <StageButton
+                    key="Stage"
                     item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
                     callbackFunction={this.props.onStageButton}
@@ -148,6 +151,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             && this.props.onUnstageButton !== undefined) {
             let unstageButton: JSX.Element = (
                 <UnstageButton
+                    key="Unstage"
                     item={this.props.itemDetails}
                     cardIconSize={this.iconDefaultSize * this.cardRatio}
                     callbackFunction={this.props.onUnstageButton}
@@ -164,6 +168,7 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             && this.props.itemDetails.requiresAttunement) {
                 let attuneButton: JSX.Element = (
                     <AttuneButton
+                        key="Attune"
                         item={this.props.itemDetails}
                         cardIconSize={this.iconDefaultSize * this.cardRatio}
                         availableAttunementSlots={this.props.availableAttunementSlots}

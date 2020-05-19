@@ -134,7 +134,7 @@ function GetShopkeeperOptions(): JSX.Element[] {
     let shopKeepers: ShopKeepers[] = Object.values(ShopKeepers);
     let options: JSX.Element[] = shopKeepers.map(o => {
         return (
-            <option value={o}>{o}</option>
+            <option key={o} value={o}>{o}</option>
         );
     });
 

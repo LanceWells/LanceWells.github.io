@@ -15,16 +15,17 @@ export function CardIcon(props: ICardIconProps) {
             placement='top'
             delay={{ show: 0, hide: 400 }}
             overlay={
-                <Tooltip id="card-tooltip">
-                    <span style={{fontWeight: "bold"}}>
+                <Tooltip key="tooltip" id="card-tooltip">
+                    <span key="title" style={{fontWeight: "bold"}}>
                         {props.tooltipTitle}
                     </span>
                     <br />
                     {props.tooltipText}
                 </Tooltip>
             }>
-            <div className="card-icon">
+            <div key="icon" className="card-icon">
                 <img
+                    key="image"
                     alt="Card Icon"
                     src={props.iconSource}
                     style={{

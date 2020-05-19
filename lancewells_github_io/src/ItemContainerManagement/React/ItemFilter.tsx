@@ -48,6 +48,7 @@ function GetCards(keywords: string[], handleStageItem: StageClick, onItemClick: 
     return items.map(i => {
         return (
             <ItemCard
+                key={i.title}
                 itemDetails={i}
                 onItemClick={onItemClick}
                 onAttackButton={undefined}

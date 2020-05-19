@@ -114,24 +114,24 @@ export class GameRoomService {
         let response: ItemShopData | undefined = undefined;
         console.log("FIREBASE: Get shop.");
 
-        // await firestore()
-        //     .collection(this.collection_userWritable)
-        //     .doc(this.document_itemStorage)
-        //     .collection(this.collection_shops)
-        //     .doc(shopId)
-        //     .withConverter(GameRoomService.ShopDataConverter)
-        //     .get()
-        //     .then(docSnapshot => {
-        //         if (docSnapshot.exists) {
-        //             response = docSnapshot.data();
-        //         }
-        //         else {
-        //             console.error(`Could not find shop data for id ${shopId}`);
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
+        await firestore()
+            .collection(this.collection_userWritable)
+            .doc(this.document_itemStorage)
+            .collection(this.collection_shops)
+            .doc(shopId)
+            .withConverter(GameRoomService.ShopDataConverter)
+            .get()
+            .then(docSnapshot => {
+                if (docSnapshot.exists) {
+                    response = docSnapshot.data();
+                }
+                else {
+                    console.error(`Could not find shop data for id ${shopId}`);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
         return response;
     }
