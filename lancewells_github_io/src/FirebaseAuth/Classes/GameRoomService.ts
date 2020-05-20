@@ -2,11 +2,13 @@
 import { firestore } from 'firebase';
 import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
 import { ItemShopData } from '../../Shops/Types/ItemShopData';
+import { ChestData } from '../../Chests/Types/ChestData';
 import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
 import { IItem } from '../../ItemData/Interfaces/IItem';
 import { ItemSource } from '../../ItemData/Classes/ItemSource';
 import { ItemType } from '../../ItemData/Enums/ItemType';
 import { DnDConstants } from '../../Utilities/Classes/DndConstants';
+import { ChestTypes } from '../../Chests/Enums/ChestTypes';
 
 /**
  * A class used to handle game room creation and handling with the firebase realtime database. Note that
@@ -17,6 +19,7 @@ export class GameRoomService {
     private static readonly collection_userWritable: string = "userWritable";
     private static readonly document_itemStorage: string = "itemStorage";
     private static readonly collection_shops: string = "shops";
+    private static readonly collection_chests: string = "chests";
 
     private static ShopDataConverter: firestore.FirestoreDataConverter<ItemShopData> = {
         toFirestore: (shopData: ItemShopData): firestore.DocumentData => {
@@ -50,6 +53,45 @@ export class GameRoomService {
                 ID: snapshot.id,
                 Name: name,
                 ShopKeeper: translatedShopkeeper,
+                Items: translatedItems
+            };
+
+            return playerData;
+        }
+    }
+
+    private static ChestDataConverter: firestore.FirestoreDataConverter<ChestData> = {
+        toFirestore: (chestData: ChestData): firestore.DocumentData => {
+            let itemKeys: IItemKey[] = DnDConstants.GetItemsAsFreshKeys(chestData.Items);
+            let itemStrings: string[] = itemKeys.map(i => JSON.stringify(i as IItemKey));
+
+            return {
+                Items: itemStrings,
+                Name: chestData.Name,
+                ChestType: chestData.ChestType,
+            }
+        },
+        fromFirestore: (snapshot, options): ChestData => {
+            let snapshotData = snapshot.data(options);
+
+            let items: string[] = snapshotData.Items;
+            let name: string = snapshotData.Name;
+            let typeOfChest: string = snapshotData.ChestType;
+
+            // Default to a standard shopkeeper in the event we don't understand what's stored in the DB.
+            let translatedChestType: ChestTypes = ChestTypes.Wooden;
+            if (typeOfChest as ChestTypes) {
+                translatedChestType = typeOfChest as ChestTypes;
+            }
+
+            let translatedItems: IItem[] = items
+                .map(i => GameRoomService.ConvertStoredItemToItem(i))
+                .filter(i => i !== undefined) as IItem[];
+
+            let playerData: ChestData = {
+                ID: snapshot.id,
+                Name: name,
+                ChestType: translatedChestType,
                 Items: translatedItems
             };
 
@@ -127,6 +169,58 @@ export class GameRoomService {
                 }
                 else {
                     console.error(`Could not find shop data for id ${shopId}`);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        return response;
+    }
+
+    /**
+    * Adds a new chest.
+    * @param chest The chest details that will be added. The ID for this will be modified and returned.
+    */
+    public static async CreateChest(chest: ChestData): Promise<ChestData> {
+        let updatedChestTab: ChestData = chest;
+        console.log("FIREBASE: Create shop.");
+
+        await firestore()
+            .collection(this.collection_userWritable)
+            .doc(this.document_itemStorage)
+            .collection(this.collection_chests)
+            .withConverter(GameRoomService.ChestDataConverter)
+            .add(chest)
+            .then(response => {
+                if (response && response.id) {
+                    updatedChestTab.ID = response.id;
+                }
+            })
+            .catch(reason => {
+                console.error(reason);
+            });
+
+        return updatedChestTab;
+    }
+
+    public static async GetChestByChestId(chestId: string): Promise<ChestData | undefined> {
+        let response: ChestData | undefined = undefined;
+        console.log("FIREBASE: Get shop.");
+
+        await firestore()
+            .collection(this.collection_userWritable)
+            .doc(this.document_itemStorage)
+            .collection(this.collection_chests)
+            .doc(chestId)
+            .withConverter(GameRoomService.ChestDataConverter)
+            .get()
+            .then(docSnapshot => {
+                if (docSnapshot.exists) {
+                    response = docSnapshot.data();
+                }
+                else {
+                    console.error(`Could not find shop data for id ${chestId}`);
                 }
             })
             .catch(error => {

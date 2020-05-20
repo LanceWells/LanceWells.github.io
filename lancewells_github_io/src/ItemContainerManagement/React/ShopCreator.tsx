@@ -67,7 +67,8 @@ export function ShopCreator(props: IShopCreatorProps) {
         GameRoomService.CreateShop(shopData)
             .then(shopResponse => {
                 if (shopResponse && shopResponse.ID) {
-                    let shopUrl: string = `http://lantspants.com/#/shop/${shopResponse.ID}`;
+                    let hostName: string = window.location.host;
+                    let shopUrl: string = `http://${hostName}/#/shop/${shopResponse.ID}`;
                     setShopLink(shopUrl);
                 }
                 setCreatingShop(false);
