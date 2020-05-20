@@ -68,3 +68,7 @@ img {
   -ms-interpolation-mode: nearest-neighbor;
   /* IE8+                           */
 }
+
+:focus {
+  outline: none !important;
+}

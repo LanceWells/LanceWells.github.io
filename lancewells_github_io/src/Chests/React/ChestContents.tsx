@@ -15,6 +15,9 @@ export interface IChestContentsProps {
 }
 
 export function ChestContents(props: IChestContentsProps) {
+
+    ChestItemStatics.ChestItemAppearAudio.volume = 0.1;
+
     return (
         <div className="chest-contents">
             <div className="chest-items">
@@ -30,21 +33,43 @@ export function ChestContents(props: IChestContentsProps) {
 
 
 function GetItemCards(items: IItem[], handleItemClick: ItemClick): JSX.Element[] {
-    return items.map(i => 
-        <ItemCard
-            key={i.title}
-            itemDetails={i}
-            onItemClick={handleItemClick}
-            onAttackButton={undefined}
-            onPurchaseButton={undefined}
-            onStageButton={undefined}
-            onUnstageButton={undefined}
-            onAttuneButton={undefined}
-            onUnattuneButton={undefined}
-            cardInteractions={[]}
-            showCardCost={false}
-            availablePlayerCopper={undefined}
-            availableAttunementSlots={undefined}
-        />
-    );
+    let itemElements: JSX.Element[] = [];
+
+    items.forEach((item, index) => {
+        let animationDelay = 750 * index;
+        
+        // This is a little weird. Yet, we should only be calling this function on a successful render, so it
+        // makes sense to tie in the audio cue with this feature.
+        setTimeout(() => ChestItemStatics.ChestItemAppearAudio.play(), animationDelay);
+
+        itemElements.push(
+            <div className="fadingCardContainer"
+                style={{
+                    animationDelay: `${animationDelay}ms`
+                }}>
+                <ItemCard
+                    key={index + item.title}
+
+                    itemDetails={item}
+                    onItemClick={handleItemClick}
+                    onAttackButton={undefined}
+                    onPurchaseButton={undefined}
+                    onStageButton={undefined}
+                    onUnstageButton={undefined}
+                    onAttuneButton={undefined}
+                    onUnattuneButton={undefined}
+                    cardInteractions={[]}
+                    showCardCost={false}
+                    availablePlayerCopper={undefined}
+                    availableAttunementSlots={undefined}
+                />
+            </div>
+        );
+    });
+
+    return itemElements;
+}
+
+class ChestItemStatics {
+    public static readonly ChestItemAppearAudio = new Audio("./sounds/chestItemAppear.wav");
 }

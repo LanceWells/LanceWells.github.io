@@ -11,10 +11,12 @@
 @keyframes itemsAppear {
     0% {
         opacity: 0;
+        top: -5px;
     }
 
     100% {
         opacity: 1;
+        top: 0px;
     }
 }
 
@@ -49,10 +51,6 @@
 }
 
 .chest-contents {
-    animation-name: itemsAppear;
-    animation-duration: 1.5s;
-    animation-delay: 0.25s;
-    opacity: 0;
     position: absolute;
     animation-fill-mode: forwards;
     z-index: 1;
@@ -65,4 +63,12 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     flex-grow: 1;
+}
+
+.fadingCardContainer {
+    opacity: 0;
+    position: relative;
+    animation-name: itemsAppear;
+    animation-duration: 0.75s;
+    animation-fill-mode: forwards;
 }
