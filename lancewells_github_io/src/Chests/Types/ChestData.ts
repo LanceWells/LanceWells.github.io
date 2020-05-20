@@ -10,5 +10,6 @@ export type ChestData = {
     ID: string;
     Name: string;
     ChestType: ChestTypes;
+    CopperInChest: number;
     Items: IItem[];
 }

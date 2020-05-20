@@ -106,6 +106,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         let chest: ChestData = {
             ID: "",
             Name: "Test Chest",
+            CopperInChest: 1747,
             ChestType: ChestTypes.Wooden,
             Items: [
                 firstItem,

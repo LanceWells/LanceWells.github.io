@@ -8,6 +8,15 @@
     }
 }
 
+@keyframes itemsAppear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
 
 .chest-page {
     height: 100%;
@@ -17,8 +26,14 @@
     justify-content: center;
 }
 
+.chest-display {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+
 .chest-button {
-    position: relative;
+    position: absolute;
     animation-name: chestFall;
     animation-duration: 1.5s;
     animation-fill-mode: forwards;
@@ -31,4 +46,23 @@
 .chest-button:disabled {
     background: transparent;
     box-shadow: unset;
+}
+
+.chest-contents {
+    animation-name: itemsAppear;
+    animation-duration: 1.5s;
+    animation-delay: 0.25s;
+    opacity: 0;
+    position: absolute;
+    animation-fill-mode: forwards;
+    z-index: 1;
+    transition: 1.5s;
+    flex-grow: 1;
+}
+
+.chest-items {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-grow: 1;
 }

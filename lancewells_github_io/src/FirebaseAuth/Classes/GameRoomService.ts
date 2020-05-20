@@ -69,6 +69,7 @@ export class GameRoomService {
                 Items: itemStrings,
                 Name: chestData.Name,
                 ChestType: chestData.ChestType,
+                CopperInChest: chestData.CopperInChest
             }
         },
         fromFirestore: (snapshot, options): ChestData => {
@@ -76,6 +77,7 @@ export class GameRoomService {
 
             let items: string[] = snapshotData.Items;
             let name: string = snapshotData.Name;
+            let copper: number = snapshotData.CopperInChest;
             let typeOfChest: string = snapshotData.ChestType;
 
             // Default to a standard shopkeeper in the event we don't understand what's stored in the DB.
@@ -92,7 +94,8 @@ export class GameRoomService {
                 ID: snapshot.id,
                 Name: name,
                 ChestType: translatedChestType,
-                Items: translatedItems
+                Items: translatedItems,
+                CopperInChest: copper
             };
 
             return playerData;
