@@ -5,7 +5,9 @@ import { ItemCard } from '../../ItemData/React/ItemCard';
 import { ItemClick } from '../../ItemData/Types/CardButtonCallbackTypes/ItemClick';
 import { MoneyDisplay } from '../../CharacterInfo/React/MoneyDisplay';
 import { ChestState } from '../Enums/ChestState';
+import { AddCopperClick } from '../Types/AddCopperClick';
 import { BagClick } from '../../ItemData/Types/CardButtonCallbackTypes/BagClick';
+import { AddCopperSlider } from './AddCopperSlider';
 
 export interface IChestContentsProps {
     items: IItem[];
@@ -13,6 +15,7 @@ export interface IChestContentsProps {
     charData: PlayerCharacterData | undefined;
     handleItemClick: ItemClick;
     handleBagClick: BagClick;
+    handleAddCopper: AddCopperClick;
     state: ChestState;
 }
 
@@ -21,7 +24,8 @@ const _delayBetweenAddingMoney: number = 250;
 
 export function ChestContents(props: IChestContentsProps) {
     const [currentCopperCount, setCurrentCopperCount] = useState(0);
-    const [doIncrementCopper, setDoIncrementCopper] = useState(false);
+    const [incrementingCopper, setIncrementingCopper] = useState(false);
+    const [enableSlider, setEnableSlider] = useState(false);
     
     let secondsToAddCopper: number = Math.min(Math.log(props.copperCount), 2.0);
     let msToAddCopper: number = Math.floor(secondsToAddCopper * 1000);
@@ -40,19 +44,42 @@ export function ChestContents(props: IChestContentsProps) {
 
         // Don't start adding money until we've finished display ALL THE CARDS!
         let timeToAddMoolah = props.items.length * _delayBetweenCards;
-        setTimeout(() => setDoIncrementCopper(true), timeToAddMoolah);
+        let timeToEnableSlider = timeToAddMoolah + msToAddCopper + _delayBetweenCards;
+        setTimeout(() => setIncrementingCopper(true), timeToAddMoolah);
+        setTimeout(() => setEnableSlider(true), timeToEnableSlider);
     }, []);
 
     // Increment that copper real slow-like. It adds drama!
     useEffect(() => {
-        if (currentCopperCount < props.copperCount && doIncrementCopper) {
+        if (currentCopperCount < props.copperCount && incrementingCopper) {
             let newCopperCount = Math.min(props.copperCount, currentCopperCount + copperToIncrement);
             setTimeout(() => {
                 setCurrentCopperCount(newCopperCount)
                 ChestItemStatics.ChestCoinAudio.play();
             }, _delayBetweenAddingMoney);
         }
-    }, [currentCopperCount, doIncrementCopper]);
+    }, [currentCopperCount, incrementingCopper]);
+
+    // This is a little funny, I don't particularly like it. If we've already enabled the slider, and
+    // we now have a different copper value coming from our props, that means that the copper count has
+    // changed and we need to reflect that. If we don't include this if, then we statically set the copper
+    // count as soon as this component mounts, which we don't want.
+    useEffect(() => {
+        if (enableSlider) {
+            setCurrentCopperCount(props.copperCount);
+        }
+    }, [props.copperCount]);
+
+
+    let slider: JSX.Element = (<div/>);
+    if (enableSlider) {
+        slider = (
+            <AddCopperSlider
+                availableCopper={props.copperCount}
+                handleAddCopper={props.handleAddCopper}
+            />
+        );
+    }
 
     return (
         <div className="chest-contents">
@@ -63,6 +90,7 @@ export function ChestContents(props: IChestContentsProps) {
                 copperCount={currentCopperCount}
                 hideEmptyCurrencies={true}
             />
+            {slider}
         </div>
     )
 }

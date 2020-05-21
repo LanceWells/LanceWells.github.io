@@ -85,3 +85,12 @@
     color: black;
     font-family: "Press Start 2P";
 }
+
+.add-copper-slider {
+    display: flex;
+    flex-direction: column;
+    font-family: "Press Start 2P";
+    justify-content: center;
+    align-items: center;
+    flex-grow: 0;
+}

@@ -12,6 +12,7 @@ import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterState
 import { BagClick } from '../../ItemData/Types/CardButtonCallbackTypes/BagClick';
 import { DnDConstants } from '../../Utilities/Classes/DndConstants';
 import { Toast } from 'react-bootstrap';
+import { AddCopperClick } from '../Types/AddCopperClick';
 
 export interface IChestDisplayProps {
     chestData: ChestData;
@@ -23,6 +24,7 @@ export function ChestDisplay(props: IChestDisplayProps) {
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [focusedItem, setFocusedItem] = useState<IItem>(new ItemWondrous());
     const [availableItems, setAvailableItems] = useState<IItem[]>(props.chestData.Items);
+    const [availableCoppper, setAvailableCopper] = useState(props.chestData.CopperInChest);
     const [toastText, setToastText] = useState<string | undefined>(undefined);
     const [showToast, setShowToast] = useState(false);
 
@@ -100,6 +102,20 @@ export function ChestDisplay(props: IChestDisplayProps) {
         }
     }
 
+    function HandleAddCopper(copperToAdd: number): void {
+        let cData = props.charData;
+        let newAvailableCopper = Math.max(availableCoppper - copperToAdd, 0);
+        ChestDisplayStatics.ChestBagItemAudio.play();
+        setToastText(`Added ${copperToAdd} copper to the bag!`);
+
+        if (cData) {
+            cData.Copper += copperToAdd;
+            CharacterStateManager.GetInstance().UploadCharacterData(cData);
+
+            setAvailableCopper(newAvailableCopper);
+        }
+    }
+
     return (
         <div className="chest-display">
             <ItemDetailsModal
@@ -109,7 +125,14 @@ export function ChestDisplay(props: IChestDisplayProps) {
                 handleUpdatedItemNotes={undefined}
                 itemDetails={focusedItem}
             />
-            {GetChestContents(chestState, props.chestData.CopperInChest, availableItems, props.charData, HandleItemClick, HandleBagItem)}
+            {GetChestContents(
+                chestState,
+                availableCoppper,
+                availableItems,
+                props.charData,
+                HandleItemClick,
+                HandleBagItem,
+                HandleAddCopper)}
             <ChestButton
                 state={chestState}
                 onClick={HandleChestClick}
@@ -123,7 +146,15 @@ export function ChestDisplay(props: IChestDisplayProps) {
     );
 }
 
-function GetChestContents(chestState: ChestState, copper: number, items: IItem[], charData: PlayerCharacterData | undefined, handleItemClick: ItemClick, handleBagClick: BagClick): JSX.Element {
+function GetChestContents(
+    chestState: ChestState,
+    copper: number,
+    items: IItem[],
+    charData: PlayerCharacterData | undefined,
+    handleItemClick: ItemClick,
+    handleBagClick: BagClick,
+    handleAddCopper: AddCopperClick): JSX.Element {
+
     let contents = (<div />);
     if (chestState === ChestState.ChestOpening) {
         contents = (
@@ -133,6 +164,7 @@ function GetChestContents(chestState: ChestState, copper: number, items: IItem[]
                 charData={charData}
                 handleItemClick={handleItemClick}
                 handleBagClick={handleBagClick}
+                handleAddCopper={handleAddCopper}
                 state={chestState}
             />
         )
