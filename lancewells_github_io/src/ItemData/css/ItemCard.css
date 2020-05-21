@@ -129,6 +129,7 @@
     text-align: left;
     align-self: center;
     z-index: 2;
+    font-family: "Open Sans";
 }
 
 .card-button-stats-container {
