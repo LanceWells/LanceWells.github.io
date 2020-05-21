@@ -36,6 +36,7 @@ function GetCards(items: IItem[], handleUnstageItem: UnstageClick, onItemClick: 
                 onUnstageButton={handleUnstageItem}
                 onAttuneButton={undefined}
                 onUnattuneButton={undefined}
+                onBagButton={undefined}
                 cardInteractions={[CardInteractions.Unstage]}
                 showCardCost={true}
                 availablePlayerCopper={undefined}

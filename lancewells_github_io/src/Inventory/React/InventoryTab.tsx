@@ -40,6 +40,7 @@ export class InventoryTab extends React.Component<IInventoryTabProps, IInventory
                     onUnstageButton={undefined}
                     onAttuneButton={this.props.attuneClick}
                     onUnattuneButton={this.props.unattuneClick}
+                    onBagButton={undefined}
                     cardInteractions={[
                         CardInteractions.Use,
                         CardInteractions.Remove,

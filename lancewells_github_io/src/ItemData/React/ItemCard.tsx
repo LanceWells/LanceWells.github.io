@@ -8,11 +8,13 @@ import { StageButton } from './CardButtons/StageButton';
 import { UnstageButton } from './CardButtons/UnstageButton';
 import { PurchaseButton } from './CardButtons/PurchaseButton';
 import { AttuneButton } from './CardButtons/AttuneButton';
+import { BagButton } from './CardButtons/BagButton';
 import { IItem } from '../Interfaces/IItem';
 import { ItemClick } from '../Types/CardButtonCallbackTypes/ItemClick';
 import { AttackClick } from '../Types/CardButtonCallbackTypes/AttackClick';
 import { PurchaseClick } from '../Types/CardButtonCallbackTypes/PurchaseClick';
 import { AttuneClick } from '../Types/CardButtonCallbackTypes/AttuneClick';
+import { BagClick } from '../Types/CardButtonCallbackTypes/BagClick';
 import { StageClick } from '../Types/CardButtonCallbackTypes/StageClick';
 import { UnstageClick } from '../Types/CardButtonCallbackTypes/UnstageClick';
 import { CardInteractions } from '../Enums/CardInteractions';
@@ -32,6 +34,7 @@ interface IItemCardProps {
     onUnstageButton: UnstageClick |undefined;
     onAttuneButton: AttuneClick | undefined;
     onUnattuneButton: AttuneClick | undefined;
+    onBagButton: BagClick | undefined;
     cardInteractions: CardInteractions[];
     showCardCost: boolean;
     availablePlayerCopper: number | undefined;
@@ -166,20 +169,32 @@ export class ItemCard extends React.Component<IItemCardProps, IItemCardState> {
             && this.props.onUnattuneButton
             && this.props.availableAttunementSlots !== undefined
             && this.props.itemDetails.requiresAttunement) {
-                let attuneButton: JSX.Element = (
-                    <AttuneButton
-                        key="Attune"
-                        item={this.props.itemDetails}
-                        cardIconSize={this.iconDefaultSize * this.cardRatio}
-                        availableAttunementSlots={this.props.availableAttunementSlots}
-                        attuneCallback={this.props.onAttuneButton}
-                        unattuneCallback={this.props.onUnattuneButton}
-                    />
-                );
+            let attuneButton: JSX.Element = (
+                <AttuneButton
+                    key="Attune"
+                    item={this.props.itemDetails}
+                    cardIconSize={this.iconDefaultSize * this.cardRatio}
+                    availableAttunementSlots={this.props.availableAttunementSlots}
+                    attuneCallback={this.props.onAttuneButton}
+                    unattuneCallback={this.props.onUnattuneButton}
+                />
+            );
 
-                buttons = buttons.concat(attuneButton);
-            }
+            buttons = buttons.concat(attuneButton);
+        }
 
+        if (this.props.onBagButton) {
+            let bagButton: JSX.Element = (
+                <BagButton
+                    key="Bag"
+                    item={this.props.itemDetails}
+                    cardIconSize={this.iconDefaultSize * this.cardRatio}
+                    callbackFunction={this.props.onBagButton}
+                />
+            );
+
+            buttons = buttons.concat(bagButton);
+        }
 
         return buttons;
     }

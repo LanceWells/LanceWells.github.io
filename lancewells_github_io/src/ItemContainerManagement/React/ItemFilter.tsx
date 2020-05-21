@@ -57,6 +57,7 @@ function GetCards(keywords: string[], handleStageItem: StageClick, onItemClick: 
                 onUnstageButton={undefined}
                 onAttuneButton={undefined}
                 onUnattuneButton={undefined}
+                onBagButton={undefined}
                 cardInteractions={[CardInteractions.Stage]}
                 showCardCost={true}
                 availablePlayerCopper={undefined}

@@ -45,6 +45,7 @@ export class BazaarCarpet extends React.Component<IBazaarCarpetProps, IBazaarCar
                     onUnattuneButton={undefined}
                     onStageButton={undefined}
                     onUnstageButton={undefined}
+                    onBagButton={undefined}
                     cardInteractions={[CardInteractions.Purchase]}
                     showCardCost={true}
                     availablePlayerCopper={this.props.availablePlayerCopper}

@@ -72,3 +72,16 @@
     animation-duration: 0.75s;
     animation-fill-mode: forwards;
 }
+
+.chest-contents > .character-money-display {
+    font-family: "Press Start 2P";
+    padding: 25px;
+}
+
+.chest-toast-container {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    color: black;
+    font-family: "Press Start 2P";
+}
