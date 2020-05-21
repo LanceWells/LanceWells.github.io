@@ -131,12 +131,13 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                     <div className="login-error-messages">
                         {this.getErrorMessages()}
                     </div>
-                    <button onClick={this.HandleTestButton}>Test Button</button>
                     {this.GetInternalRenderBits()}
                 </div>
             </div>
         );
     }
+
+    // <button onClick={this.HandleTestButton}>Test Button</button>
 
     private async CheckForLogin() {
         let loginState: LoginState = LoginState.Login;
