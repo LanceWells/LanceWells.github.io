@@ -100,19 +100,26 @@ export function ChestDisplay(props: IChestDisplayProps) {
                 setAvailableItems(availableItems);
             }
         }
+        else {
+            setToastText("Log in to add items!");
+        }
     }
 
     function HandleAddCopper(copperToAdd: number): void {
         let cData = props.charData;
-        let newAvailableCopper = Math.max(availableCoppper - copperToAdd, 0);
-        ChestDisplayStatics.ChestBagItemAudio.play();
-        setToastText(`Added ${copperToAdd} copper to the bag!`);
 
         if (cData) {
+            let newAvailableCopper = Math.max(availableCoppper - copperToAdd, 0);
+            ChestDisplayStatics.ChestBagItemAudio.play();
+            setToastText(`Added ${copperToAdd} copper to the bag!`);
+
             cData.Copper += copperToAdd;
             CharacterStateManager.GetInstance().UploadCharacterData(cData);
 
             setAvailableCopper(newAvailableCopper);
+        }
+        else {
+            setToastText("Log in to add copper!");
         }
     }
 
