@@ -100,17 +100,29 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
             }
         };
 
-        let firstItem: IItem = ItemSource.GetItem(firstItemKey) as IItem;
-        let secondItem: IItem = ItemSource.GetItem(secondItemKey) as IItem;
+        let sauceItemKey: IItemKey = 
+        {
+            key: "EdwardSteakSauce",
+            type: ItemType.Weapon,
+            adjustments:
+            {
+                magicBonus: 0,
+                isAttuned: false,
+                notes: ""
+            }
+        }
+
+        // let firstItem: IItem = ItemSource.GetItem(firstItemKey) as IItem;
+        // let secondItem: IItem = ItemSource.GetItem(secondItemKey) as IItem;
+        let sauceItem: IItem = ItemSource.GetItem(sauceItemKey) as IItem;
         
         let chest: ChestData = {
             ID: "",
-            Name: "Test Chest",
-            CopperInChest: 1747,
+            Name: "Edward's Chest",
+            CopperInChest: 420,
             ChestType: ChestTypes.Wooden,
             Items: [
-                firstItem,
-                secondItem
+                sauceItem
             ]
         }
         
@@ -136,8 +148,8 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
             </div>
         );
     }
+                    // <button onClick={this.HandleTestButton}>Test Button</button>
 
-    // <button onClick={this.HandleTestButton}>Test Button</button>
 
     private async CheckForLogin() {
         let loginState: LoginState = LoginState.Login;
