@@ -1,7 +1,6 @@
 import React from 'react';
 import { PartType } from '../Enums/PartType';
 import { PartTypeSelectionCallback } from '../Types/PartTypeSelectionCallback';
-import { Dropdown } from 'react-bootstrap';
 
 /**
  * @description The properties provided to this component.
