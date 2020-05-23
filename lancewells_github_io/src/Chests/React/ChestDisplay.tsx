@@ -13,10 +13,12 @@ import { BagClick } from '../../ItemData/Types/CardButtonCallbackTypes/BagClick'
 import { DnDConstants } from '../../Utilities/Classes/DndConstants';
 import { Toast } from 'react-bootstrap';
 import { AddCopperClick } from '../Types/AddCopperClick';
+import { LoadingState } from '../../Utilities/Enums/LoadingState';
 
 export interface IChestDisplayProps {
     chestData: ChestData;
     charData: PlayerCharacterData | undefined;
+    loadingState: LoadingState;
 }
 
 export function ChestDisplay(props: IChestDisplayProps) {
@@ -100,8 +102,11 @@ export function ChestDisplay(props: IChestDisplayProps) {
                 setAvailableItems(availableItems);
             }
         }
+        else if (props.loadingState === LoadingState.NoCharacters) {
+            setToastText("Make a character to take items!");
+        }
         else {
-            setToastText("Log in to add items!");
+            setToastText("Log in to take items!");
         }
     }
 
@@ -118,8 +123,11 @@ export function ChestDisplay(props: IChestDisplayProps) {
 
             setAvailableCopper(newAvailableCopper);
         }
+        else if (props.loadingState === LoadingState.NoCharacters) {
+            setToastText("Make a character to take money!");
+        }
         else {
-            setToastText("Log in to add copper!");
+            setToastText("Log in to add take money!");
         }
     }
 

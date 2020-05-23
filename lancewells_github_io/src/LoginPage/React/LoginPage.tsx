@@ -5,22 +5,6 @@ import { CreateUserResponse } from '../../FirebaseAuth/Types/CreateUserResponse'
 import { LoginResponse } from '../../FirebaseAuth/Types/LoginResponse';
 import { LoginState } from '../Enums/LoginState';
 import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
-import { IItem } from '../../ItemData/Interfaces/IItem';
-import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
-import { ItemType } from '../../ItemData/Enums/ItemType';
-import { ItemSource } from '../../ItemData/Classes/ItemSource';
-import { ItemShopData } from '../../Shops/Types/ItemShopData';
-import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
-import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
-import { ChestData } from '../../Chests/Types/ChestData';
-import { ChestTypes } from '../../Chests/Enums/ChestTypes';
-// import { GameRoomService } from '../../FirebaseAuth/Classes/GameRoomService';
-// import { ItemShopData } from '../../Shops/Types/ItemShopData';
-// import { ShopKeepers } from '../../Shops/Types/ShopKeepers';
-// import { ItemSource } from '../../ItemData/Classes/ItemSource';
-// import { ItemType } from '../../ItemData/Enums/ItemType';
-// import { IItem } from '../../ItemData/Interfaces/IItem';
-// import { IItemKey } from '../../ItemData/Interfaces/IItemKey';
 
 /**
  * @description A series of properties to use to render this component.

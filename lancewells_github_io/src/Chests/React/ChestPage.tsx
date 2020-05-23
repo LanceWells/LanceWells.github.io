@@ -41,13 +41,13 @@ export function ChestPage(props: IChestPageProps) {
     return (
         <LoadingPlaceholder showSpinner={loadingState === LoadingState.Loading} role="Chest Loading Status">
             <div className="chest-page">
-                {GetChest(chestInfo, charData)}
+                {GetChest(chestInfo, charData, loadingState)}
             </div>
         </LoadingPlaceholder>
     );
 }
 
-function GetChest(chestData: ChestData | undefined, charData: PlayerCharacterData | undefined): JSX.Element {
+function GetChest(chestData: ChestData | undefined, charData: PlayerCharacterData | undefined, loadingState: LoadingState): JSX.Element {
     let element: JSX.Element;
     element = (
         <div>
@@ -59,6 +59,7 @@ function GetChest(chestData: ChestData | undefined, charData: PlayerCharacterDat
             <ChestDisplay
                 chestData={chestData}
                 charData={charData}
+                loadingState={loadingState}
             />
         );
     }
