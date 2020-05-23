@@ -86,7 +86,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Gets a list of bazaar carpets for display.
      * @param onItemClick The click event-handler for item clicks.
      */
-    getBazaarCarpets(onItemClick: ItemClick, onItemPurchase: PurchaseClick): JSX.Element[] {
+    getBazaarCarpets(onItemClick: ItemClick, onItemPurchase: PurchaseClick | undefined): JSX.Element[] {
         let carpetMaps: JSX.Element[] = [];
         let organizedItems: Map<ItemType, IItem[]>;
         organizedItems = GroupItemsByType(this.props.shopData.Items);
@@ -120,6 +120,11 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
      * @description Renders an instance of this class.
      */
     render() {
+        let itemPurchaseHandler: PurchaseClick | undefined = undefined;
+        if (this.props.charData) {
+            itemPurchaseHandler = this.HandleItemPurchase.bind(this);
+        }
+
         return (
             <div className="ItemShop">
                 <h1>{this.props.shopData.Name}</h1>
@@ -129,7 +134,7 @@ export class ItemShop extends React.Component<IItemShopProps, IItemShopState> {
                     <img src='./images/Item_Shop/brazier-lit.gif' alt="animated left brazier" />
                 </div>
                 <div className='bazaar-area'>
-                    {this.getBazaarCarpets(this.onItemClick.bind(this), this.HandleItemPurchase.bind(this))}
+                    {this.getBazaarCarpets(this.onItemClick.bind(this), itemPurchaseHandler)}
                 </div>
                 <ItemDetailsModal
                     show={this.state.showItemDialog}

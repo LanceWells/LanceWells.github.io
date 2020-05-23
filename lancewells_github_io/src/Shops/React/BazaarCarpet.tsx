@@ -14,7 +14,7 @@ import { CardInteractions } from '../../ItemData/Enums/CardInteractions';
 interface IBazaarCarpetProps {
     carpetMap: CarpetMap;
     onItemClick: ItemClick;
-    onPurchaseClick: PurchaseClick;
+    onPurchaseClick: PurchaseClick | undefined;
     availablePlayerCopper: number | undefined;
 }
 
