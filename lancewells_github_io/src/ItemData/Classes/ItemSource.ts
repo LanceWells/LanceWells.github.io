@@ -1119,4 +1119,20 @@ const ItemMap_Wondrous: IItemWondrousJson[] =
         itemCopperCost: 5000,
         type: ItemType.Wondrous,
     },
+    {
+        key: 'BahamutScale',
+        title: "Platinum Scale",
+        description: 'A shimmering scale from a platinum god.',
+        details: "The radiance of this scale permeates even the darkest of caverns. Light reflected off the surface of the scale is visible in all locations save for total darkness. This scale is believed to have fallen froom the wings of Bahamut, The Platinum Dragon. On casing the Darkness spell, the darkness aura takes the following properties: * Rather than magical darkness, the aura is magical lightness. This lightness sheds bright light for 15 ft. and dim light for another 15 ft. * Creatures that enter the aura or are within the radius of the aura on cast take 1d4 lightning damage. This damage does not apply to the caster.",
+        iconSource: './images/Item_Shop/Items/Wondrous/Scale.gif',
+        source: SourceType.Homebrew,
+        requiresAttunement: true,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        itemCopperCost: 50000,
+        type: ItemType.Wondrous,
+    },
 ]
