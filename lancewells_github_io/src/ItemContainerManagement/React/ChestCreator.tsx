@@ -120,6 +120,8 @@ export function ChestCreator(props: IChestCreatorProps) {
                 >
                     {GetChestTypeOptions()}
                 </select>
+                <br /><br />
+                <h5 className="Chest-form-title">Copper</h5>
                 <input
                     type="number"
                     id="containerCreatorMoney"
