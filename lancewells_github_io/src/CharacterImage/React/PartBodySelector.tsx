@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dropdown } from 'react-bootstrap';
 import { BodyType } from '../Enums/BodyType';
 import { BodyTypeSelectionCallback } from '../Types/BodyTypeSelectionCallback';
 
@@ -36,15 +35,12 @@ export class PartBodySelector extends React.Component<IPartBodySelectorProps, IP
      */
     public render() {
         return (
-            <Dropdown>
-                <Dropdown.Toggle id="body-dropdown">
-                    Body Type Selection
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
+            <div className="char-image-type-selector-container">
+                <h6>Body Type Selection</h6>
+                <select className="char-image-type-selector-select">
                     {this.GetBodyTypes()}
-                </Dropdown.Menu>
-            </Dropdown>
+                </select>
+            </div>
         );
     }
 
@@ -53,11 +49,11 @@ export class PartBodySelector extends React.Component<IPartBodySelectorProps, IP
             let itemClickCallback = () => {this.props.SelectionCallback(bt)};
 
             return (
-                <Dropdown.Item
+                <option
                     key={bt.toString()}
                     onClick={itemClickCallback.bind(this)}>
                     {bt.toString()}
-                </Dropdown.Item>
+                </option>
             )
         })
     }

@@ -35,16 +35,12 @@ export class PartTypeSelector extends React.Component<IPartTypeSelectorProps, IP
      */
     public render() {
         return (
-            <Dropdown
-                className="part-type-selector">
-                <Dropdown.Toggle id="part-dropdown">
-                    Part Type Selection
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
+            <div className="char-image-type-selector-container">
+                <h6>Part Type Selection</h6>
+                <select className="char-image-type-selector-select">
                     {this.GetPartTypes()}
-                </Dropdown.Menu>
-            </Dropdown>
+                </select>
+            </div>
         );
     }
 
@@ -53,11 +49,11 @@ export class PartTypeSelector extends React.Component<IPartTypeSelectorProps, IP
             let itemClickCallback = () => {this.props.SelectionCallback(pt)};
 
             return (
-                <Dropdown.Item
+                <option
                     key={pt.toString()}
                     onClick={itemClickCallback.bind(this)}>
                     {pt.toString()}
-                </Dropdown.Item>
+                </option>
             )
         });
     }

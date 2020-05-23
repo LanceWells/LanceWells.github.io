@@ -119,6 +119,14 @@
     /* IE8+                           */
 }
 
+.char-iamge-type-selector-container {
+    display: flex;
+}
+
+.char-image-type-selector-select {
+    width: 100%;
+}
+
 @media (max-width: 600px) {
     .character-drawing-area {
         flex-direction: row;
