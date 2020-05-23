@@ -1,4 +1,4 @@
-import '../css/ShopCreator.css';
+import '../css/ContainerManager.css';
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { IItem } from '../../ItemData/Interfaces/IItem';
@@ -81,16 +81,16 @@ export function ShopCreator(props: IShopCreatorProps) {
     }
 
     return (
-        <div className="shop-creator">
+        <div className="container-manager">
             <form
-                className="shop-creator-form"
+                className="container-manager-form"
                 onSubmit={HandleSubmitShop}
             >
                 <h1>Shop</h1>
-                <span className="shop-creator-error-message">{errorMessage}</span>
+                <span className="container-manager-error-message">{errorMessage}</span>
                 <h5 className="shop-form-title">Shop Name</h5>
                 <input
-                    className="shop-creator-field"
+                    className="container-manager-field"
                     type="text"
                     name="Shop Name"
                     onInput={HandleShopNameChange}
@@ -98,7 +98,7 @@ export function ShopCreator(props: IShopCreatorProps) {
                 <br /><br />
                 <h5 className="shop-form-title">Shopkeeper</h5>
                 <select
-                    className="shop-creator-field"
+                    className="container-manager-field"
                     id="shopkeepers"
                     name="shopkeepers"
                     value={ShopKeepers.Indigo}
@@ -111,14 +111,14 @@ export function ShopCreator(props: IShopCreatorProps) {
                     showSpinner={creatingShop}
                     role="Creating Shop Status">
                     <input
-                        className="shop-creator-field"
+                        className="container-manager-field"
                         type="submit"
                         value="Create Shop"
                         disabled={!canCreateShop}
                     />
                 </LoadingPlaceholder>
                 <div
-                    className="shop-creator-link"
+                    className="container-manager-link"
                     style={{ visibility: shopLink === "" ? "hidden" : "visible" }}>
                     <span>Successfully created a shop! </span>
                     <a href={shopLink}>Here's the link.</a>

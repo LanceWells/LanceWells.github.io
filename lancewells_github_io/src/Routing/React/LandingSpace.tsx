@@ -18,6 +18,7 @@ import { LoginState } from '../../LoginPage/Enums/LoginState';
 import { Shop } from '../../Shops/React/ShopPage';
 import { ChestPage } from '../../Chests/React/ChestPage';
 import { ShopCreator } from '../../ItemContainerManagement/React/ShopCreator';
+import { ChestCreator } from '../../ItemContainerManagement/React/ChestCreator';
 
 export interface ILandingSpaceProps {
 }
@@ -75,6 +76,11 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                                         eventKey="shopCreator">
                                         Shop Creator
                                     </NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        href="/#/chestCreator"
+                                        eventKey="chestCreator">
+                                        Chest Creator
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                             <CharacterInfoDisplay
@@ -94,6 +100,7 @@ export class LandingSpace extends React.Component<ILandingSpaceProps, ILandingSp
                             <ProtectedRoute path="/inventory" children={<Inventory loginState={this.state.loginState}/>} />
                             <ProtectedRoute path="/characterManager" children={<CharacterManager />} />
                             <ProtectedRoute path="/shopCreator" children={<ShopCreator />} />
+                            <ProtectedRoute path="/chestCreator" children={<ChestCreator />} />
                         </Switch>
                     </Router>
                 </div>
