@@ -46,19 +46,5 @@ export function useCharData(loadingState: LoadingState): PlayerCharacterData | u
         }
     }, [loadingState, charData]);
 
-    // /**
-    // * A handler for when the character state manager has changed its character data.
-    // * @param charData The character data that has been changed.
-    // */
-    // const characterStateManager_NotifyObservers = function (charData: PlayerCharacterData | undefined): void {
-    //     if (charData) {
-    //         setCharData(charData);
-    //     }
-    // }
-
-    // // Ensure that we are notified by the character state manager whenever there are changes to the active
-    // // character.
-    // CharacterStateManager.GetInstance().AddObserver(characterStateManager_NotifyObservers);
-
     return charData;
 }

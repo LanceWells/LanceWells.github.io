@@ -75,61 +75,6 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
         this.CheckForLogin();
     }
 
-    private HandleTestButton(): void {
-        let firstItemKey: IItemKey = 
-        {
-            key: "PoisonousMiasma",
-            type: ItemType.Consumable,
-            adjustments:
-            {
-                magicBonus: 0,
-                isAttuned: false,
-                notes: ""
-            }
-        };
-
-        let secondItemKey: IItemKey = 
-        {
-            key: "BrutalLongsword",
-            type: ItemType.Weapon,
-            adjustments:
-            {
-                magicBonus: 0,
-                isAttuned: false,
-                notes: ""
-            }
-        };
-
-        let sauceItemKey: IItemKey = 
-        {
-            key: "EdwardSteakSauce",
-            type: ItemType.Weapon,
-            adjustments:
-            {
-                magicBonus: 0,
-                isAttuned: false,
-                notes: ""
-            }
-        }
-
-        // let firstItem: IItem = ItemSource.GetItem(firstItemKey) as IItem;
-        // let secondItem: IItem = ItemSource.GetItem(secondItemKey) as IItem;
-        let sauceItem: IItem = ItemSource.GetItem(sauceItemKey) as IItem;
-        
-        let chest: ChestData = {
-            ID: "",
-            Name: "Edward's Chest",
-            CopperInChest: 420,
-            ChestType: ChestTypes.Wooden,
-            Items: [
-                sauceItem
-            ]
-        }
-        
-        let createdShop = GameRoomService.CreateChest(chest);
-        // let receivedShop = GameRoomService.GetShopByShopId("NfyJ92g0JmXl5Ffru0oo");
-    }
-
     /**
      * @description Renders thi object.
      */
@@ -148,8 +93,6 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
             </div>
         );
     }
-                    // <button onClick={this.HandleTestButton}>Test Button</button>
-
 
     private async CheckForLogin() {
         let loginState: LoginState = LoginState.Login;
@@ -181,7 +124,7 @@ export class LoginPage extends React.Component<ILoginPageProps, ILoginPageState>
                         <h3>You are logged in as {UserDataAuth.GetInstance().Username}</h3>
                         <br /><br />
                         <div className="login-button-container">
-                            <button className="login-button" onClick={this.submitLogout.bind(this)}>
+                            <button className="login-button negative-button" onClick={this.submitLogout.bind(this)}>
                                 Log Out
                             </button>
                         </div>

@@ -50,16 +50,10 @@ body {
 }
 
 .login-button {
-    background: rgb(39, 39, 39);
-    box-shadow: 2px 2px 2px 1px rgb(19, 19, 19);
-    border: none;
-    border-radius: 6px;
     font-size: large;
-    color: #fff;
     font-family: "Press Start 2P";
     padding: 5px 15px;
     margin: 10px 5px;
-    display: block;
 }
 
 .login-error-messages {
