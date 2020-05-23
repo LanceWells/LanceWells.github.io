@@ -889,7 +889,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         key: 'EdwardSteakSauce',
         title: "Edward's Steak Sauce",
         description: 'A magic-infused all-in-one steak sauce.',
-        details: "The Edwards Steak Sauce company boasts a successful yet mysterious history. The brain child of one Edward Felm, the all-in-one steak sauce proved itself a massive hit on adventurer shelves across the continent. Its lethally acidic mixture simultaneously cooks, purifies, and tenderizes meat in efficient fashion. When applied to any object (or creature), the sauce deals 2d6+2 acid damage. Any impacted objects (or creatures) are instantly flavoured with Edward's 11 exotic herb & spice mixture. Impacted objects (or creatures) may be safely consumed after application, for up to 12 hours. If attuned to this bottle, the vial refills magically after a long rest.",
+        details: "The Edwards Steak Sauce company boasts a successful yet mysterious history. The brain child of one Edward Felm, the all-in-one steak sauce proved itself a massive hit on adventurer shelves across the continent. Its lethally acidic mixture simultaneously cooks, purifies, and tenderizes meat in efficient fashion. When applied to any object (or creature), the sauce deals 2d4 acid damage. Any impacted objects (or creatures) are instantly flavoured with Edward's 11 exotic herb & spice mixture. Impacted objects (or creatures) may be safely consumed after application, for up to 12 hours. If attuned to this bottle, the vial refills magically after a long rest.",
         iconSource: './images/Item_Shop/Items/Potions/SteakSauce.png',
         source: SourceType.Homebrew,
         requiresAttunement: true,
@@ -901,6 +901,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         shortRange: 20,
         longRange: 60,
         properties: [
+            WeaponProperties.Finesse
         ],
         itemCopperCost: 1000,
         type: ItemType.Weapon,
@@ -917,8 +918,8 @@ const ItemMap_Weapons: IItemWeaponJson[] =
                 [
                     {
                         diceCount: 2,
-                        diceSize: 6,
-                        modifier: 2,
+                        diceSize: 4,
+                        modifier: 0,
                         damageType: DamageType.Acid
                     }
                 ],
