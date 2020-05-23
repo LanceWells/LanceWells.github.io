@@ -2,18 +2,26 @@ import { LoadingState } from '../Enums/LoadingState';
 import { useState, useEffect } from 'react';
 import { UserDataAuth } from '../../FirebaseAuth/Classes/UserDataAuth';
 import { PlayerCharacterData } from '../../FirebaseAuth/Types/PlayerCharacterData';
-import { CharacterStateManager } from '../../FirebaseAuth/Classes/CharacterStateManager';
+import { CharacterStateManager, CharacterStateObserver } from '../../FirebaseAuth/Classes/CharacterStateManager';
 import { LoginState } from '../../LoginPage/Enums/LoginState';
 
 export function useLoadingState(loginState: LoginState) {
     const [loadingState, setLoadingState] = useState(LoadingState.Loading);
+    const [charDataExists, setCharDataExists] = useState(false);
 
     useEffect(() => {
         CheckForUserLogin().then(loadState => {
             setLoadingState(loadState);
         });
 
-    }, [loadingState, loginState]);
+    }, [loadingState, loginState, charDataExists]);
+
+    function ObserveCharChanges(charData: PlayerCharacterData | undefined) {
+        let anyCharSelected = charData !== undefined;
+        setCharDataExists(anyCharSelected);
+    }
+
+    CharacterStateManager.GetInstance().AddObserver(ObserveCharChanges);
 
     return loadingState;
 }
