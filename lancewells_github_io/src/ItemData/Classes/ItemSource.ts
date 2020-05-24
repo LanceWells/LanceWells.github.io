@@ -191,7 +191,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Light
         ],
-        itemCopperCost: 100,
+        itemCopperCost: 10,
         type: ItemType.Weapon,
         attacks: {
             "Whack":
@@ -257,7 +257,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.TwoHanded
         ],
-        itemCopperCost: 100,
+        itemCopperCost: 20,
         type: ItemType.Weapon,
         attacks: {
             "Smash":
@@ -322,7 +322,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Thrown
         ],
-        itemCopperCost: 500,
+        itemCopperCost: 50,
         type: ItemType.Weapon,
         attacks: {
             "Poke":
@@ -418,7 +418,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Versatile
         ],
-        itemCopperCost: 100,
+        itemCopperCost: 20,
         type: ItemType.Weapon,
         attacks: {
             "Whap (1h)":
@@ -589,7 +589,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
     {
         key: 'Darts',
         title: 'Darts',
-        description: 'A small thrown weapon. 20 darts line a leather pouch.',
+        description: 'A small thrown weapon.',
         details: '',
         iconSource: './images/Item_Shop/Items/Weapons/dart.png',
         source: SourceType.Official,
@@ -605,7 +605,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
             WeaponProperties.Finesse,
             WeaponProperties.Thrown
         ],
-        itemCopperCost: 100,
+        itemCopperCost: 5,
         type: ItemType.Weapon,
         attacks: {
             "Throw":
@@ -704,7 +704,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         properties: [
             WeaponProperties.Ammunition
         ],
-        itemCopperCost: 100,
+        itemCopperCost: 10,
         type: ItemType.Weapon,
         attacks: {
             "Throw":
@@ -942,7 +942,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
     {
         key: 'Greatsword',
         title: 'Greatsword',
-        description: 'A massive, mightyb pointy weapon.',
+        description: 'A massive, mighty, pointy weapon.',
         details: '',
         iconSource: './images/Item_Shop/Items/Weapons/Greatsword.png',
         source: SourceType.Official,
