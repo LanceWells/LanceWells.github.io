@@ -102,16 +102,6 @@ export class ItemSource {
             }
         });
 
-        // // If the list of keywords that was provided was empty, just return everything.
-        // if (nonEmptyKeywords.length <= 0) {
-        //     masterList.forEach(m => {
-        //         let converted = this.ConvertJsonToItem(m);
-        //         if (converted !== undefined) {
-        //             matchingItems.push(converted);
-        //         }
-        //     })
-        // }
-
         return matchingItems;
     }
 
@@ -883,6 +873,266 @@ const ItemMap_Weapons: IItemWeaponJson[] =
                         damageType: DamageType.Slashing
                     }
                 ]
+        },
+    },
+    {
+        key: 'Flail',
+        title: 'Flail',
+        description: 'A spike-studded ball attached to an iron chain.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/flail.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+        ],
+        itemCopperCost: 1000,
+        type: ItemType.Weapon,
+        attacks: {
+            "Thrash":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 8,
+                        modifier: 0,
+                        damageType: DamageType.Bludgeoning
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Greataxe',
+        title: 'Greataxe',
+        description: 'A massive axe. Used for chopping of trees or tree-like things . . . or fighting.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/Greataxe.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            WeaponProperties.Heavy,
+            WeaponProperties.TwoHanded
+        ],
+        itemCopperCost: 3000,
+        type: ItemType.Weapon,
+        attacks: {
+            "Greatchop":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 12,
+                        modifier: 0,
+                        damageType: DamageType.Slashing
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Greatsword',
+        title: 'Greatsword',
+        description: 'A massive, mightyb pointy weapon.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/Greatsword.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            WeaponProperties.Heavy,
+            WeaponProperties.TwoHanded
+        ],
+        itemCopperCost: 5000,
+        type: ItemType.Weapon,
+        attacks: {
+            "Greatslash":
+                [
+                    {
+                        diceCount: 2,
+                        diceSize: 6,
+                        modifier: 0,
+                        damageType: DamageType.Slashing
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Halberd',
+        title: 'Halberd',
+        description: 'An axe with a very long grip.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/Halberd.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            WeaponProperties.Heavy,
+            WeaponProperties.Reach,
+            WeaponProperties.TwoHanded
+        ],
+        itemCopperCost: 2000,
+        type: ItemType.Weapon,
+        attacks: {
+            "Lunge":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 10,
+                        modifier: 0,
+                        damageType: DamageType.Slashing
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Lance',
+        title: 'Lance',
+        description: 'A conical, metal spear. It also GMs on occasion.',
+        details: "Special: You have disadvantage when you use a lance to Attack a target within 5 feet of you. Also, a lance requires two hands to wield when you aren't mounted",
+        iconSource: './images/Item_Shop/Items/Weapons/Lance.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            WeaponProperties.Reach,
+            WeaponProperties.Special
+        ],
+        itemCopperCost: 1000,
+        type: ItemType.Weapon,
+        attacks: {
+            "Pierce":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 12,
+                        modifier: 0,
+                        damageType: DamageType.Piercing
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Maul',
+        title: 'Maul',
+        description: 'A massive, unwieldy hammer.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/Maul.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            WeaponProperties.Heavy,
+            WeaponProperties.TwoHanded
+        ],
+        itemCopperCost: 1000,
+        type: ItemType.Weapon,
+        attacks: {
+            "Smash":
+                [
+                    {
+                        diceCount: 2,
+                        diceSize: 6,
+                        modifier: 0,
+                        damageType: DamageType.Bludgeoning
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Morningstar',
+        title: 'Morningstar',
+        description: 'A spike-studded ball attached to a wooden shaft.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/Morningstar.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+        ],
+        itemCopperCost: 1500,
+        type: ItemType.Weapon,
+        attacks: {
+            "Smack":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 8,
+                        modifier: 0,
+                        damageType: DamageType.Piercing
+                    }
+                ],
+        },
+    },
+    {
+        key: 'Rapier',
+        title: 'Rapier',
+        description: 'A fancy, dexterous sword.',
+        details: '',
+        iconSource: './images/Item_Shop/Items/Weapons/Rapier.png',
+        source: SourceType.Official,
+        requiresAttunement: false,
+        adjustments: {
+            magicBonus: 0,
+            isAttuned: false,
+            notes: ""
+        },
+        shortRange: 20,
+        longRange: 60,
+        properties: [
+            WeaponProperties.Finesse
+        ],
+        itemCopperCost: 2500,
+        type: ItemType.Weapon,
+        attacks: {
+            "Stab Fancily":
+                [
+                    {
+                        diceCount: 1,
+                        diceSize: 8,
+                        modifier: 0,
+                        damageType: DamageType.Piercing
+                    }
+                ],
         },
     },
     {
