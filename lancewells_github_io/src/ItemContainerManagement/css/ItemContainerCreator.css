@@ -1,6 +1,7 @@
 .item-container-creator {
     display: flex;
     justify-content: space-around;
+    flex-grow: 1;
 }
 
 .item-staging-container {
@@ -8,6 +9,7 @@
     border-radius: 15px;
     border-style: solid;
     border-color: #131313;
+    flex-grow: 1;
 }
 
 .card-staging {
@@ -15,4 +17,5 @@
     flex-wrap: wrap;
     overflow-y: scroll;
     justify-content: center;
+    flex-grow: 1;
 }
