@@ -880,7 +880,7 @@ const ItemMap_Weapons: IItemWeaponJson[] =
         title: 'Flail',
         description: 'A spike-studded ball attached to an iron chain.',
         details: '',
-        iconSource: './images/Item_Shop/Items/Weapons/flail.png',
+        iconSource: './images/Item_Shop/Items/Weapons/Flail_weapon.png',
         source: SourceType.Official,
         requiresAttunement: false,
         adjustments: {
