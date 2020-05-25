@@ -114,7 +114,7 @@ class AttackButtonStatics {
             ],
             [
                 DamageType.Slashing,
-                "./images/Item_Shop/ItemCards/Icons/DamageIcons/Slashing.png"
+                "./images/Item_Shop/ItemCards/Icons/DamageIcons/Slashing_Damage.png"
             ],
             [
                 DamageType.Thunder,
