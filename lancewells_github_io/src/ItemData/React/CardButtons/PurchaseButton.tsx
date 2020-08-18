@@ -19,7 +19,7 @@ export function PurchaseButton(props: IPurchaseButtonProps) {
     const [buttonOption, setButtonOption] = useState(PurchaseButtonOption.CanPurchase);
 
     useEffect(() => {
-        if (props.availablePlayerCopper && props.availablePlayerCopper < props.item.itemCopperCost) {
+        if (props.availablePlayerCopper !== undefined && props.availablePlayerCopper < props.item.itemCopperCost) {
             setButtonOption(PurchaseButtonOption.NotEnoughMoney);
         }
         else if (buttonOption !== PurchaseButtonOption.Purchased) { // Don't handle purchased events. This is taken care of in the button click callback.
